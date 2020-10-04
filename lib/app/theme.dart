@@ -25,7 +25,7 @@ class AppTheme {
         fontWeight: FontWeight.w900,
       ),
       button: GoogleFonts.alegreyaSans(
-        fontSize: rem(1),
+        fontSize: px(20),
         fontWeight: FontWeight.w900,
       ),
     );
@@ -38,6 +38,7 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.background,
       buttonTheme: ButtonThemeData(
         buttonColor: Colors.red,
+        height: rem(2.5),
         textTheme: ButtonTextTheme.primary,
       ),
       appBarTheme: AppBarTheme(
