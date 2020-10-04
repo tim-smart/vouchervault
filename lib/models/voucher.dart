@@ -11,7 +11,6 @@ final uuidgen = Uuid();
 class Voucher extends Equatable {
   Voucher({
     String uuid,
-    this.store = '',
     this.description = '',
     this.code = '',
     this.expires,
@@ -19,7 +18,6 @@ class Voucher extends Equatable {
   }) : this.uuid = uuid ?? uuidgen.v4();
 
   final String uuid;
-  final String store;
   final String description;
   final String code;
   final DateTime expires;
@@ -31,7 +29,6 @@ class Voucher extends Equatable {
   List<Object> get props {
     return [
       uuid,
-      store,
       description,
       code,
       expires,
@@ -44,7 +41,6 @@ class Voucher extends Equatable {
 
   Voucher copyWith({
     String uuid,
-    String store,
     String description,
     String code,
     Option<DateTime> expires,
@@ -52,7 +48,6 @@ class Voucher extends Equatable {
   }) {
     return Voucher(
       uuid: uuid ?? this.uuid,
-      store: store ?? this.store,
       description: description ?? this.description,
       code: code ?? this.code,
       expires: (expires ?? expiresOption) | null,

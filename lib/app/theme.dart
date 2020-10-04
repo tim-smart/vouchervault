@@ -45,6 +45,9 @@ class AppTheme {
         centerTitle: false,
         color: AppColors.background,
         textTheme: textTheme,
+        iconTheme: IconThemeData(
+          color: textTheme.bodyText1.color,
+        ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: Colors.red,

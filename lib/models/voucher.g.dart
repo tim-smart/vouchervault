@@ -9,7 +9,6 @@ part of 'voucher.dart';
 Voucher _$VoucherFromJson(Map<String, dynamic> json) {
   return Voucher(
     uuid: json['uuid'] as String,
-    store: json['store'] as String,
     description: json['description'] as String,
     code: json['code'] as String,
     expires: json['expires'] == null
@@ -21,7 +20,6 @@ Voucher _$VoucherFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$VoucherToJson(Voucher instance) => <String, dynamic>{
       'uuid': instance.uuid,
-      'store': instance.store,
       'description': instance.description,
       'code': instance.code,
       'expires': instance.expires?.toIso8601String(),

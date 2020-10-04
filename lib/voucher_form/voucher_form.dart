@@ -4,34 +4,24 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/models/voucher.dart';
 
-class VoucherForm extends StatefulWidget {
-  @override
-  _VoucherFormState createState() => _VoucherFormState();
-}
+class VoucherForm extends StatelessWidget {
+  VoucherForm({
+    Key key,
+    @required this.formKey,
+    @required this.initialValue,
+  }) : super(key: key);
 
-class _VoucherFormState extends State<VoucherForm> {
-  var voucher = Voucher();
+  final Voucher initialValue;
+  final GlobalKey<FormBuilderState> formKey;
 
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
+      key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      onChanged: (data) => setState(() {
-        voucher = Voucher.fromJson(data).copyWith(
-          uuid: voucher.uuid,
-          code: voucher.code,
-        );
-      }),
+      initialValue: initialValue.toJson(),
       child: Column(
         children: [
-          FormBuilderTextField(
-            attribute: 'store',
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Store',
-            ),
-            validators: [FormBuilderValidators.required()],
-          ),
           SizedBox(height: AppTheme.space3),
           FormBuilderTextField(
             attribute: 'description',
@@ -65,13 +55,6 @@ class _VoucherFormState extends State<VoucherForm> {
               FormBuilderValidators.numeric(),
               FormBuilderValidators.min(0),
             ],
-          ),
-          SizedBox(height: AppTheme.space3),
-          RaisedButton(
-            onPressed: () {
-              print(voucher);
-            },
-            child: Text('Create'),
           ),
         ],
       ),
