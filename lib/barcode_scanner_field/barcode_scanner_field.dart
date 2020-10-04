@@ -1,7 +1,7 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:vouchervault/app/app.dart';
 
 class BarcodeScannerField extends FormField<String> {
@@ -16,12 +16,10 @@ class BarcodeScannerField extends FormField<String> {
                   height: AppTheme.rem(7),
                   color: AppColors.lightGrey,
                   textColor: Colors.black,
-                  onPressed: () => FlutterBarcodeScanner.scanBarcode(
-                    Colors.red.toString(),
-                    'Cancel',
-                    true,
-                    ScanMode.DEFAULT,
-                  ).then(field.didChange),
+                  onPressed: () => BarcodeScanner.scan().then((r) {
+                    if (r.type != ResultType.Barcode) return;
+                    field.didChange(r.rawContent);
+                  }),
                   child: Center(
                     child: optionOf(field.value)
                         .bind((s) => s.isEmpty ? none() : some(s))

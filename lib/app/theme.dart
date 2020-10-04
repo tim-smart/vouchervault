@@ -33,6 +33,7 @@ class AppTheme {
     return ThemeData(
       brightness: Brightness.light,
       primaryColor: Colors.red,
+      accentColor: Colors.red[800],
       textTheme: textTheme,
       backgroundColor: AppColors.background,
       scaffoldBackgroundColor: AppColors.background,
