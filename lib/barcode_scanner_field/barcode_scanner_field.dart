@@ -27,9 +27,12 @@ class BarcodeScannerField extends FormField<String> {
                         .bind((s) => s.isEmpty ? none() : some(s))
                         .fold(
                           () => Text('Scan barcode'),
-                          (code) => BarcodeWidget(
-                            data: code,
-                            barcode: Barcode.code128(),
+                          (code) => SizedBox(
+                            height: AppTheme.rem(5),
+                            child: BarcodeWidget(
+                              data: code,
+                              barcode: Barcode.code128(),
+                            ),
                           ),
                         ),
                   ),

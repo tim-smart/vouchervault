@@ -20,7 +20,6 @@ class VoucherForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilder(
       key: formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       initialValue: initialValue.toJson(),
       child: Column(
         children: [
