@@ -1,9 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/models/voucher.dart';
-
-final dateFormat = DateFormat('dd/MM/yyyy');
 
 class VoucherItem extends StatelessWidget {
   final Voucher voucher;
@@ -14,29 +13,6 @@ class VoucherItem extends StatelessWidget {
     @required this.voucher,
     @required this.onPressed,
   }) : super(key: key);
-
-  List<Widget> _buildDetailRow(
-    BuildContext context,
-    Color textColor,
-    IconData icon,
-    String text,
-  ) {
-    final theme = Theme.of(context);
-
-    return [
-      SizedBox(height: AppTheme.space2),
-      Row(children: [
-        Icon(icon, size: AppTheme.rem(1), color: textColor),
-        SizedBox(width: AppTheme.space2),
-        Text(
-          text,
-          style: theme.textTheme.bodyText1.copyWith(
-            color: textColor,
-          ),
-        ),
-      ]),
-    ];
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,22 +42,12 @@ class VoucherItem extends StatelessWidget {
                   style: theme.textTheme.headline3.copyWith(
                     color: textColor,
                   )),
-              ...voucher.expiresOption.fold(
-                  () => [],
-                  (dt) => _buildDetailRow(
-                        context,
-                        textColor,
-                        Icons.calendar_today,
-                        dateFormat.format(dt),
-                      )),
-              ...voucher.balanceOption.fold(
-                  () => [],
-                  (b) => _buildDetailRow(
-                        context,
-                        textColor,
-                        Icons.account_balance,
-                        '\$$b',
-                      )),
+              ...buildVoucherDetails(
+                context,
+                voucher,
+                textColor: textColor,
+                space: some(AppTheme.space2),
+              ),
             ],
           ),
         ),

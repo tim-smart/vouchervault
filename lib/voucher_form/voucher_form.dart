@@ -29,6 +29,7 @@ class VoucherForm extends StatelessWidget {
           SizedBox(height: AppTheme.space3),
           FormBuilderTextField(
             attribute: 'description',
+            textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Description',

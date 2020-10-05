@@ -7,7 +7,8 @@ import 'package:vouchervault/vouchers/vouchers.dart';
 class VoucherVaultApp extends StatelessWidget {
   Widget _buildProviders(Widget child) => MultiProvider(
         providers: [
-          BlocStreamProvider(create: (context) => VouchersBloc()),
+          BlocStreamProvider(
+              create: (context) => VouchersBloc()..add(VoucherActions.init)),
         ],
         child: child,
       );
