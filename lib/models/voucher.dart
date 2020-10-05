@@ -80,7 +80,9 @@ class Voucher extends Equatable {
   static Voucher fromFormValue(Map<String, dynamic> json) => Voucher(
         uuid: json['uuid'] as String,
         description: json['description'] as String,
-        code: json['code'] as String,
+        code: optionOf(json['code'] as String)
+            .bind((s) => s.isEmpty ? none() : some(s))
+            .getOrElse(() => null),
         expires: json['expires'],
         balance: (json['balance'] as num)?.toDouble(),
         color: _$enumDecodeNullable(_$VoucherColorEnumMap, json['color']),
