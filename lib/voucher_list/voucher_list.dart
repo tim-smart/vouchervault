@@ -8,9 +8,11 @@ class VoucherList extends StatelessWidget {
   const VoucherList({
     Key key,
     @required this.vouchers,
+    @required this.onPressed,
   }) : super(key: key);
 
   final IList<Voucher> vouchers;
+  final void Function(Voucher) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class VoucherList extends StatelessWidget {
         vouchers
             .map((v) => VoucherItem(
                   voucher: v,
-                  onPressed: () {},
+                  onPressed: () => onPressed(v),
                 ))
             .toList(),
       ),

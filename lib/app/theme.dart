@@ -34,6 +34,11 @@ class AppTheme {
         fontSize: rem(1),
         fontWeight: FontWeight.w400,
       ),
+      bodyText2: GoogleFonts.alegreyaSans(
+        color: Colors.black,
+        fontSize: rem(1),
+        fontWeight: FontWeight.w800,
+      ),
       button: GoogleFonts.alegreyaSans(
         fontSize: px(20),
         fontWeight: FontWeight.w900,
@@ -43,6 +48,7 @@ class AppTheme {
     return ThemeData(
       textTheme: textTheme,
       primaryColor: Colors.red,
+      accentColor: Colors.red[800],
       scaffoldBackgroundColor: AppColors.background,
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: Colors.red,

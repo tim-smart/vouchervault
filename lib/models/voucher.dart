@@ -64,6 +64,7 @@ class Voucher extends Equatable {
       code,
       expires,
       balance,
+      color,
     ];
   }
 

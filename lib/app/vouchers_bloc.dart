@@ -51,8 +51,24 @@ class VouchersState extends Equatable {
 class VoucherActions {
   static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
       add = (voucher) => (v, b, c) async {
+            final vouchers = v.vouchers.toList();
+            final index = vouchers.indexWhere((v) => voucher.uuid == v.uuid);
+
+            if (index >= 0) {
+              vouchers[index] = voucher;
+            } else {
+              vouchers.add(voucher);
+            }
+
             c.add(v.copyWith(
-              vouchers: v.vouchers.appendElement(voucher),
+              vouchers: ilist(vouchers),
+            ));
+          };
+
+  static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
+      remove = (voucher) => (v, b, c) async {
+            c.add(v.copyWith(
+              vouchers: v.vouchers.filter((v) => v.uuid != voucher.uuid),
             ));
           };
 }
