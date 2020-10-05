@@ -62,8 +62,10 @@ T _$enumDecodeNullable<T>(
 
 const _$VoucherColorEnumMap = {
   VoucherColor.GREY: 'GREY',
+  VoucherColor.BLUE: 'BLUE',
+  VoucherColor.GREEN: 'GREEN',
+  VoucherColor.ORANGE: 'ORANGE',
+  VoucherColor.PURPLE: 'PURPLE',
   VoucherColor.RED: 'RED',
   VoucherColor.YELLOW: 'YELLOW',
-  VoucherColor.GREEN: 'GREEN',
-  VoucherColor.BLUE: 'BLUE',
 };

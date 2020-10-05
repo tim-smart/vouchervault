@@ -5,6 +5,7 @@ import 'package:screen/screen.dart';
 
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/models/models.dart';
+import 'package:vouchervault/voucher_list/voucher_item.dart';
 
 class VoucherDialog extends StatefulWidget {
   final Voucher voucher;
@@ -40,6 +41,30 @@ class _VoucherDialogState extends State<VoucherDialog> {
   void dispose() {
     _initialBrightness.map((b) => Screen.setBrightness(b));
     super.dispose();
+  }
+
+  List<Widget> _buildDetailRow(
+    BuildContext context,
+    Color textColor,
+    IconData icon,
+    String text, {
+    Option<double> space = const None(),
+  }) {
+    final theme = Theme.of(context);
+
+    return [
+      SizedBox(height: space | AppTheme.space3),
+      Row(children: [
+        Icon(icon, size: AppTheme.rem(1), color: textColor),
+        SizedBox(width: AppTheme.space2),
+        Text(
+          text,
+          style: theme.textTheme.bodyText1.copyWith(
+            color: textColor,
+          ),
+        ),
+      ]),
+    ];
   }
 
   @override
@@ -102,6 +127,23 @@ class _VoucherDialogState extends State<VoucherDialog> {
                       ),
                     ],
                   ),
+                  ...widget.voucher.expiresOption.fold(
+                    () => [],
+                    (dt) => _buildDetailRow(
+                      context,
+                      textColor,
+                      Icons.calendar_today,
+                      dateFormat.format(dt),
+                    ),
+                  ),
+                  ...widget.voucher.balanceOption.fold(
+                      () => [],
+                      (b) => _buildDetailRow(
+                            context,
+                            textColor,
+                            Icons.account_balance,
+                            '\$$b',
+                          )),
                   SizedBox(height: AppTheme.space4),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

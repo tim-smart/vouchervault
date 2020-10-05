@@ -55,7 +55,8 @@ class _VoucherFormDialogState extends State<VoucherFormDialog> {
               child: Text(_action),
               onPressed: () {
                 if (_formKey.currentState.saveAndValidate()) {
-                  final voucher = Voucher.fromJson(_formKey.currentState.value);
+                  final voucher =
+                      Voucher.fromFormValue(_formKey.currentState.value);
                   Navigator.pop(context, voucher);
                 }
               },

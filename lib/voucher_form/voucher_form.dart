@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart' hide State;
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:vouchervault/app/app.dart';
@@ -19,7 +19,7 @@ class VoucherForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilder(
       key: formKey,
-      initialValue: initialValue.toJson(),
+      initialValue: initialValue.toFormValue(),
       child: Column(
         children: [
           FormBuilderCustomField(
@@ -43,22 +43,23 @@ class VoucherForm extends StatelessWidget {
               border: OutlineInputBorder(),
               labelText: 'Expires',
             ),
-            valueTransformer: (d) =>
-                optionOf<DateTime>(d).map((d) => d.toIso8601String()) | null,
           ),
           SizedBox(height: AppTheme.space3),
-          FormBuilderTextField(
+          FormBuilderCustomField<double>(
             attribute: 'balance',
-            keyboardType: TextInputType.numberWithOptions(signed: true),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Balance',
+            formField: FormField<double>(
+              builder: (field) => TextFormField(
+                initialValue:
+                    optionOf(field.value).map((d) => d.toString()) | '',
+                onChanged: (s) =>
+                    field.didChange(s.isEmpty ? null : double.parse(s)),
+                keyboardType: TextInputType.numberWithOptions(signed: true),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Balance',
+                ),
+              ),
             ),
-            valueTransformer: (s) => catching(() => double.parse(s)) | null,
-            validators: [
-              FormBuilderValidators.numeric(),
-              FormBuilderValidators.min(0),
-            ],
           ),
           SizedBox(height: AppTheme.space3),
           FormBuilderChoiceChip(

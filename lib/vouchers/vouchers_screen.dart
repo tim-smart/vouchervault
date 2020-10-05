@@ -9,8 +9,8 @@ import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
 import 'package:vouchervault/voucher_list/voucher_list.dart';
 
 class VouchersScreen extends StatelessWidget {
-  VoidCallback _onRemove(BuildContext context, Voucher v) =>
-      () => showDialog<bool>(
+  void Function(Voucher) _onRemove(BuildContext context) =>
+      (v) => showDialog<bool>(
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Are you sure?'),
@@ -51,7 +51,7 @@ class VouchersScreen extends StatelessWidget {
                   child: VoucherDialogContainer(
                     voucher: v,
                     onClose: () => Navigator.pop(context),
-                    onRemove: (v) => _onRemove(context, v),
+                    onRemove: _onRemove(context),
                     onEdit: (v) async {
                       final voucher = await Navigator.push<Voucher>(
                         context,

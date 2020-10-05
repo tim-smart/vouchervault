@@ -22,7 +22,8 @@ class VoucherDialogContainer extends StatelessWidget {
   Widget build(BuildContext context) =>
       BlocStreamBuilder<VouchersBloc, VouchersState>(
         builder: (context, s) => VoucherDialog(
-          voucher: s.data.vouchers.find((v) => v.uuid == voucher.uuid) | null,
+          voucher:
+              s.data.vouchers.find((v) => v.uuid == voucher.uuid) | Voucher(),
           onEdit: onEdit,
           onClose: onClose,
           onRemove: onRemove,

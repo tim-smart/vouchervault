@@ -10,10 +10,12 @@ final uuidgen = Uuid();
 
 enum VoucherColor {
   GREY,
+  BLUE,
+  GREEN,
+  ORANGE,
+  PURPLE,
   RED,
   YELLOW,
-  GREEN,
-  BLUE,
 }
 
 Color voucherColor(VoucherColor c) {
@@ -21,13 +23,17 @@ Color voucherColor(VoucherColor c) {
     case VoucherColor.BLUE:
       return Colors.blue;
     case VoucherColor.GREEN:
-      return Colors.green[500];
+      return Colors.green[600];
     case VoucherColor.GREY:
       return Colors.grey[700];
     case VoucherColor.RED:
       return Colors.red[700];
     case VoucherColor.YELLOW:
-      return Colors.yellow[600];
+      return Colors.yellow[700];
+    case VoucherColor.ORANGE:
+      return Colors.orange[800];
+    case VoucherColor.PURPLE:
+      return Colors.purple[500];
   }
 
   return Colors.grey[700];
@@ -70,6 +76,24 @@ class Voucher extends Equatable {
 
   dynamic toJson() => _$VoucherToJson(this);
   static Voucher fromJson(dynamic json) => _$VoucherFromJson(json);
+
+  static Voucher fromFormValue(Map<String, dynamic> json) => Voucher(
+        uuid: json['uuid'] as String,
+        description: json['description'] as String,
+        code: json['code'] as String,
+        expires: json['expires'],
+        balance: (json['balance'] as num)?.toDouble(),
+        color: _$enumDecodeNullable(_$VoucherColorEnumMap, json['color']),
+      );
+
+  dynamic toFormValue() => <String, dynamic>{
+        'uuid': uuid,
+        'description': description,
+        'code': code,
+        'expires': expires,
+        'balance': balance,
+        'color': _$VoucherColorEnumMap[color],
+      };
 
   Voucher copyWith({
     String uuid,
