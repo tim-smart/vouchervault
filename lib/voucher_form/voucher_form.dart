@@ -25,9 +25,6 @@ class VoucherForm extends StatelessWidget {
           FormBuilderCustomField(
             attribute: 'code',
             formField: BarcodeScannerField(),
-            validators: [
-              FormBuilderValidators.required(),
-            ],
           ),
           SizedBox(height: AppTheme.space3),
           FormBuilderTextField(

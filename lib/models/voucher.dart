@@ -40,7 +40,7 @@ class Voucher extends Equatable {
   Voucher({
     String uuid,
     this.description = '',
-    this.code = '',
+    this.code,
     this.expires,
     this.balance,
     this.color = VoucherColor.GREY,
@@ -49,6 +49,7 @@ class Voucher extends Equatable {
   final String uuid;
   final String description;
   final String code;
+  Option<String> get codeOption => optionOf(code);
   final DateTime expires;
   Option<DateTime> get expiresOption => optionOf(expires);
   final double balance;

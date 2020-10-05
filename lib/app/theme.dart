@@ -24,6 +24,16 @@ class AppTheme {
         fontStyle: FontStyle.italic,
         fontWeight: FontWeight.w900,
       ),
+      headline3: GoogleFonts.alegreyaSans(
+        color: Colors.black,
+        fontSize: px(20),
+        fontWeight: FontWeight.w700,
+      ),
+      bodyText1: GoogleFonts.alegreyaSans(
+        color: Colors.black,
+        fontSize: rem(1),
+        fontWeight: FontWeight.w400,
+      ),
       button: GoogleFonts.alegreyaSans(
         fontSize: px(20),
         fontWeight: FontWeight.w900,
@@ -31,14 +41,15 @@ class AppTheme {
     );
 
     return ThemeData(
-      brightness: Brightness.light,
-      primaryColor: Colors.red,
-      accentColor: Colors.red[800],
       textTheme: textTheme,
-      backgroundColor: AppColors.background,
+      primaryColor: Colors.red,
       scaffoldBackgroundColor: AppColors.background,
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: Colors.red,
+        accentColor: Colors.red[800],
+        backgroundColor: AppColors.background,
+      ),
       buttonTheme: ButtonThemeData(
-        buttonColor: Colors.red,
         height: rem(2.5),
         textTheme: ButtonTextTheme.primary,
       ),
@@ -53,6 +64,7 @@ class AppTheme {
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: Colors.red,
+        foregroundColor: Colors.white,
       ),
     );
   }

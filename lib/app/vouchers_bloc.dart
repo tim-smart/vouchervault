@@ -8,7 +8,27 @@ import 'package:vouchervault/models/models.dart';
 class VouchersState extends Equatable {
   VouchersState(this.vouchers);
 
-  final IVector<Voucher> vouchers;
+  final IList<Voucher> vouchers;
+
+  IList<Voucher> get sorted => vouchers.sort(order((a, b) {
+        final compare = a.description.compareTo(b.description);
+        final expiresCompare = a.expiresOption
+            .map((d) => d.millisecondsSinceEpoch)
+            .getOrElse(() => 0)
+            .compareTo(b.expiresOption
+                .map((d) => d.millisecondsSinceEpoch)
+                .getOrElse(() => 0));
+
+        if (compare == 0) {
+          return expiresCompare > 0
+              ? Ordering.GT
+              : (expiresCompare < 0 ? Ordering.LT : Ordering.EQ);
+        } else if (compare > 0) {
+          return Ordering.GT;
+        }
+
+        return Ordering.LT;
+      }));
 
   @override
   List<Object> get props => vouchers.toIterable().toList();
@@ -16,11 +36,11 @@ class VouchersState extends Equatable {
   dynamic toJson() => vouchers.map((v) => v.toJson()).toIterable().toList();
 
   static VouchersState fromJson(dynamic json) => VouchersState(
-        ivector((json as List<dynamic>).map((j) => Voucher.fromJson(j))),
+        ilist((json as List<dynamic>).map((j) => Voucher.fromJson(j))),
       );
 
   VouchersState copyWith({
-    IVector<Voucher> vouchers,
+    IList<Voucher> vouchers,
   }) {
     return VouchersState(
       vouchers ?? this.vouchers,
@@ -38,7 +58,7 @@ class VoucherActions {
 }
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
-  VouchersBloc() : super(VouchersState(emptyVector()));
+  VouchersBloc() : super(VouchersState(IList.from([])));
 
   @override
   dynamic toJson(VouchersState value) => value.toJson();

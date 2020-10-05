@@ -5,13 +5,18 @@ import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/app_scaffold/app_scaffold.dart';
 import 'package:vouchervault/models/models.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
+import 'package:vouchervault/voucher_list/voucher_list.dart';
 
 class VouchersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
       title: 'Vouchers',
-      slivers: [SliverFillRemaining()],
+      slivers: [
+        SliverPadding(padding: EdgeInsets.only(top: AppTheme.space3)),
+        BlocStreamBuilder<VouchersBloc, VouchersState>(
+            builder: (context, s) => VoucherList(vouchers: s.data.sorted)),
+      ],
       floatingActionButton: some(FloatingActionButton(
         onPressed: () async {
           final voucher = await Navigator.push<Voucher>(
