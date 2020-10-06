@@ -24,6 +24,8 @@ class VoucherItem extends StatelessWidget {
     return RaisedButton(
       padding: EdgeInsets.zero,
       elevation: 10,
+      focusElevation: 12,
+      highlightElevation: 12,
       shape: RoundedRectangleBorder(),
       color: color,
       textColor: textColor,

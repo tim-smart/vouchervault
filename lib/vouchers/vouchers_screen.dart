@@ -21,8 +21,13 @@ class VouchersScreen extends StatelessWidget {
             onPressed: (v) {
               showDialog(
                 context: context,
-                builder: (context) => Center(
-                  child: VoucherDialogContainer(voucher: v),
+                builder: (context) => Dismissible(
+                  key: Key('VoucherDialogDismissable'),
+                  direction: DismissDirection.vertical,
+                  onDismissed: (d) => Navigator.pop(context),
+                  child: Center(
+                    child: VoucherDialogContainer(voucher: v),
+                  ),
                 ),
               );
             },
