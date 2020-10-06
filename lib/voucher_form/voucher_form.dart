@@ -1,3 +1,4 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -17,6 +18,7 @@ class VoucherForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return FormBuilder(
       key: formKey,
       initialValue: initialValue.toFormValue(),
@@ -24,7 +26,35 @@ class VoucherForm extends StatelessWidget {
         children: [
           FormBuilderCustomField(
             attribute: 'code',
-            formField: BarcodeScannerField(labelText: 'Code'),
+            formField: BarcodeScannerField(
+              labelText: 'Code',
+              barcodeBuilder: some(
+                (context) =>
+                    optionOf(FormBuilder.of(context).fields['codeType'])
+                        .map((f) => f.currentState.value as String)
+                        .map(barcodeFromVoucherCodeValue)
+                        .getOrElse(() => Barcode.code128()),
+              ),
+            ),
+          ),
+          SizedBox(height: AppTheme.space3),
+          FormBuilderChoiceChip(
+            attribute: 'codeType',
+            alignment: WrapAlignment.spaceAround,
+            decoration: InputDecoration(
+              labelText: 'Barcode Type',
+              border: InputBorder.none,
+            ),
+            options: VoucherCodeType.values
+                .map((t) => FormBuilderFieldOption(
+                      value: voucherCodeTypeValue(t),
+                      child: Text(voucherCodeTypeLabel(t),
+                          style: theme.textTheme.bodyText2.copyWith(
+                            fontSize: AppTheme.rem(0.8),
+                          )),
+                    ))
+                .toList(),
+            validators: [FormBuilderValidators.required()],
           ),
           SizedBox(height: AppTheme.space3),
           FormBuilderTextField(

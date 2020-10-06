@@ -94,7 +94,7 @@ class _VoucherDialogState extends State<VoucherDialog> {
                           ),
                           color: Colors.white,
                         ),
-                        height: AppTheme.rem(7),
+                        height: AppTheme.rem(10),
                         child: Padding(
                           padding: EdgeInsets.all(AppTheme.space4),
                           child: BarcodeWidget(
@@ -102,7 +102,7 @@ class _VoucherDialogState extends State<VoucherDialog> {
                             style: theme.textTheme.bodyText2.copyWith(
                               color: Colors.black,
                             ),
-                            barcode: Barcode.code128(),
+                            barcode: voucherCodeType(widget.voucher.codeType),
                           ),
                         ),
                       ),

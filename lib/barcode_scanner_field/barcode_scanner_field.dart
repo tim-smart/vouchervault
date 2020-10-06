@@ -8,51 +8,55 @@ import 'package:vouchervault/app/app.dart';
 class BarcodeScannerField extends FormField<String> {
   BarcodeScannerField({
     String labelText = 'Code',
-  }) : super(
-          builder: (field) {
-            final theme = Theme.of(field.context);
-            return _buildProviders(
-              field.value,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Consumer<TextEditingController>(
-                    builder: (context, controller, child) => _buildScanButton(
-                      field.context,
-                      field.value,
-                      (s) {
-                        controller.value = TextEditingValue(
-                          text: s,
-                          selection: TextSelection.fromPosition(
-                              TextPosition(offset: s.length)),
-                        );
-                        field.didChange(s);
-                      },
-                    ),
+    Option<Barcode Function(BuildContext)> barcodeBuilder = const None(),
+  }) : super(builder: (field) {
+          final theme = Theme.of(field.context);
+          final barcodeType = barcodeBuilder.fold(
+            () => Barcode.code128(),
+            (f) => f(field.context),
+          );
+          return _buildProviders(
+            field.value,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Consumer<TextEditingController>(
+                  builder: (context, controller, child) => _buildScanButton(
+                    field.context,
+                    barcodeType,
+                    field.value,
+                    (s) {
+                      controller.value = TextEditingValue(
+                        text: s,
+                        selection: TextSelection.fromPosition(
+                            TextPosition(offset: s.length)),
+                      );
+                      field.didChange(s);
+                    },
                   ),
-                  SizedBox(height: AppTheme.space3),
-                  Consumer<TextEditingController>(
-                    builder: (context, controller, child) => TextField(
-                      controller: controller,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: labelText,
-                      ),
-                      onChanged: field.didChange,
+                ),
+                SizedBox(height: AppTheme.space3),
+                Consumer<TextEditingController>(
+                  builder: (context, controller, child) => TextField(
+                    controller: controller,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: labelText,
                     ),
+                    onChanged: field.didChange,
                   ),
-                  if (field.hasError) ...[
-                    SizedBox(height: AppTheme.space2),
-                    Text(
-                      field.errorText,
-                      style: TextStyle(color: theme.errorColor),
-                    ),
-                  ],
+                ),
+                if (field.hasError) ...[
+                  SizedBox(height: AppTheme.space2),
+                  Text(
+                    field.errorText,
+                    style: TextStyle(color: theme.errorColor),
+                  ),
                 ],
-              ),
-            );
-          },
-        );
+              ],
+            ),
+          );
+        });
 
   static Widget _buildProviders(String initialValue, Widget child) => Provider(
         create: (context) => TextEditingController(text: initialValue),
@@ -61,7 +65,11 @@ class BarcodeScannerField extends FormField<String> {
       );
 
   static Widget _buildScanButton(
-          BuildContext context, String data, void didChange(String s)) =>
+    BuildContext context,
+    Barcode barcodeType,
+    String data,
+    void didChange(String s),
+  ) =>
       FlatButton(
         height: AppTheme.rem(7),
         color: AppColors.lightGrey,
@@ -77,7 +85,8 @@ class BarcodeScannerField extends FormField<String> {
                   height: AppTheme.rem(5),
                   child: BarcodeWidget(
                     data: code,
-                    barcode: Barcode.code128(),
+                    barcode: barcodeType,
+                    errorBuilder: (context, err) => Text('Code not valid'),
                   ),
                 ),
               ),

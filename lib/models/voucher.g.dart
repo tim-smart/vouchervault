@@ -11,6 +11,7 @@ Voucher _$VoucherFromJson(Map<String, dynamic> json) {
     uuid: json['uuid'] as String,
     description: json['description'] as String,
     code: json['code'] as String,
+    codeType: _$enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']),
     expires: json['expires'] == null
         ? null
         : DateTime.parse(json['expires'] as String),
@@ -23,6 +24,7 @@ Map<String, dynamic> _$VoucherToJson(Voucher instance) => <String, dynamic>{
       'uuid': instance.uuid,
       'description': instance.description,
       'code': instance.code,
+      'codeType': _$VoucherCodeTypeEnumMap[instance.codeType],
       'expires': instance.expires?.toIso8601String(),
       'balance': instance.balance,
       'color': _$VoucherColorEnumMap[instance.color],
@@ -59,6 +61,12 @@ T _$enumDecodeNullable<T>(
   }
   return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
 }
+
+const _$VoucherCodeTypeEnumMap = {
+  VoucherCodeType.CODE128: 'CODE128',
+  VoucherCodeType.EAN13: 'EAN13',
+  VoucherCodeType.QR: 'QR',
+};
 
 const _$VoucherColorEnumMap = {
   VoucherColor.GREY: 'GREY',
