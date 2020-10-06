@@ -1,3 +1,4 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -64,10 +65,23 @@ final Map<VoucherCodeType, String> _codeTypeLabelMap = {
   VoucherCodeType.QR: 'QR Code',
 };
 String voucherCodeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type];
+
 VoucherCodeType voucherCodeTypeFromValue(String s) =>
-    _$enumDecode(_$VoucherCodeTypeEnumMap, s);
+    optionOf(_$enumDecodeNullable(_$VoucherCodeTypeEnumMap, s))
+        .getOrElse(() => VoucherCodeType.CODE128);
+
 Barcode barcodeFromVoucherCodeValue(String s) =>
     voucherCodeType(voucherCodeTypeFromValue(s));
+
+final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
+  BarcodeFormat.ean13: VoucherCodeType.EAN13,
+  BarcodeFormat.qr: VoucherCodeType.QR,
+};
+VoucherCodeType voucherCodeTypeFromBarcodeFormat(BarcodeFormat f) =>
+    optionOf(_barcodeFormatMap[f]).getOrElse(() => VoucherCodeType.CODE128);
+
+String voucherCodeTypeValueFromBarcodeFormat(BarcodeFormat f) =>
+    voucherCodeTypeValue(voucherCodeTypeFromBarcodeFormat(f));
 
 @JsonSerializable()
 class Voucher extends Equatable {

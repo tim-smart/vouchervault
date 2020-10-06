@@ -9,6 +9,7 @@ class BarcodeScannerField extends FormField<String> {
   BarcodeScannerField({
     String labelText = 'Code',
     Option<Barcode Function(BuildContext)> barcodeBuilder = const None(),
+    Option<void Function(BarcodeFormat)> onScan = const None(),
   }) : super(builder: (field) {
           final theme = Theme.of(field.context);
           final barcodeType = barcodeBuilder.fold(
@@ -25,13 +26,14 @@ class BarcodeScannerField extends FormField<String> {
                     field.context,
                     barcodeType,
                     field.value,
-                    (s) {
+                    (r) {
                       controller.value = TextEditingValue(
-                        text: s,
+                        text: r.rawContent,
                         selection: TextSelection.fromPosition(
-                            TextPosition(offset: s.length)),
+                            TextPosition(offset: r.rawContent.length)),
                       );
-                      field.didChange(s);
+                      field.didChange(r.rawContent);
+                      onScan.map((f) => f(r.format));
                     },
                   ),
                 ),
@@ -68,7 +70,7 @@ class BarcodeScannerField extends FormField<String> {
     BuildContext context,
     Barcode barcodeType,
     String data,
-    void didChange(String s),
+    void onScan(ScanResult r),
   ) =>
       FlatButton(
         height: AppTheme.rem(7),
@@ -76,7 +78,7 @@ class BarcodeScannerField extends FormField<String> {
         textColor: Colors.black,
         onPressed: () => BarcodeScanner.scan().then((r) {
           if (r.type != ResultType.Barcode) return;
-          didChange(r.rawContent);
+          onScan(r);
         }),
         child: Center(
           child: optionOf(data).bind((s) => s.isEmpty ? none() : some(s)).fold(

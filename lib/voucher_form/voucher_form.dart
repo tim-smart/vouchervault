@@ -29,12 +29,16 @@ class VoucherForm extends StatelessWidget {
             formField: BarcodeScannerField(
               labelText: 'Code',
               barcodeBuilder: some(
-                (context) =>
-                    optionOf(FormBuilder.of(context).fields['codeType'])
-                        .map((f) => f.currentState.value as String)
-                        .map(barcodeFromVoucherCodeValue)
-                        .getOrElse(() => Barcode.code128()),
+                (context) => optionOf(formKey.currentState.fields['codeType'])
+                    .map((f) => f.currentState.value as String)
+                    .map(barcodeFromVoucherCodeValue)
+                    .getOrElse(() => Barcode.code128()),
               ),
+              onScan: some((f) =>
+                  optionOf(formKey.currentState.fields['codeType'])
+                      .map((f) => f.currentState.didChange)
+                      .map((didChange) =>
+                          didChange(voucherCodeTypeValueFromBarcodeFormat(f)))),
             ),
           ),
           SizedBox(height: AppTheme.space3),
