@@ -2,6 +2,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/barcode_scanner_field/barcode_scanner_field.dart';
 import 'package:vouchervault/models/voucher.dart';
@@ -51,6 +52,10 @@ class VoucherForm extends StatelessWidget {
                       .map((didChange) =>
                           didChange(voucherCodeTypeValueFromBarcodeFormat(f)))),
             ),
+            valueTransformer: (s) =>
+                optionOf(s as String)
+                    .bind((s) => s.isEmpty ? none() : some(s)) |
+                null,
           ),
           FormBuilderChoiceChip(
             attribute: 'codeType',
@@ -78,6 +83,9 @@ class VoucherForm extends StatelessWidget {
               border: OutlineInputBorder(),
               labelText: 'Expires',
             ),
+            format: DateFormat('d/M/y'),
+            valueTransformer: (d) =>
+                optionOf(d).map((d) => d.toString()) | null,
           ),
           FormBuilderSwitch(
             attribute: 'removeOnceExpired',

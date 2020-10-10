@@ -112,43 +112,25 @@ class Voucher extends Equatable {
   final VoucherColor color;
 
   @override
-  List<Object> get props {
-    return [
-      uuid,
-      description,
-      code,
-      codeType,
-      expires,
-      removeOnceExpired,
-      balance,
-      color,
-    ];
-  }
+  List<Object> get props => [
+        uuid,
+        description,
+        code,
+        codeType,
+        expires,
+        removeOnceExpired,
+        balance,
+        color,
+      ];
 
   dynamic toJson() => _$VoucherToJson(this);
   static Voucher fromJson(dynamic json) => _$VoucherFromJson(json);
 
-  static Voucher fromFormValue(Map<String, dynamic> json) => Voucher(
-        uuid: json['uuid'] as String,
-        description: json['description'] as String,
-        code: optionOf(json['code'] as String)
-            .bind((s) => s.isEmpty ? none() : some(s))
-            .getOrElse(() => null),
-        codeType:
-            _$enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']),
-        expires: json['expires'],
-        removeOnceExpired: json['removeOnceExpired'],
-        balance: (json['balance'] as num)?.toDouble(),
-        color: _$enumDecodeNullable(_$VoucherColorEnumMap, json['color']),
-      );
+  static Voucher fromFormValue(Map<String, dynamic> json) => fromJson(json);
   dynamic toFormValue() => <String, dynamic>{
-        'uuid': uuid,
-        'description': description,
-        'code': code,
+        ...toJson(),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
         'expires': expires,
-        'removeOnceExpired': removeOnceExpired,
-        'balance': balance,
         'color': _$VoucherColorEnumMap[color],
       };
 
