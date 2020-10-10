@@ -24,6 +24,17 @@ class VoucherForm extends StatelessWidget {
       initialValue: initialValue.toFormValue(),
       child: Column(
         children: [
+          SizedBox(height: AppTheme.space1),
+          FormBuilderTextField(
+            attribute: 'description',
+            textCapitalization: TextCapitalization.words,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Description',
+            ),
+            validators: [FormBuilderValidators.required()],
+          ),
+          SizedBox(height: AppTheme.space3),
           FormBuilderCustomField(
             attribute: 'code',
             formField: BarcodeScannerField(
@@ -41,13 +52,12 @@ class VoucherForm extends StatelessWidget {
                           didChange(voucherCodeTypeValueFromBarcodeFormat(f)))),
             ),
           ),
-          SizedBox(height: AppTheme.space3),
           FormBuilderChoiceChip(
             attribute: 'codeType',
             alignment: WrapAlignment.spaceAround,
             decoration: InputDecoration(
-              labelText: 'Barcode Type',
               border: InputBorder.none,
+              contentPadding: EdgeInsets.zero,
             ),
             options: VoucherCodeType.values
                 .map((t) => FormBuilderFieldOption(
@@ -61,22 +71,23 @@ class VoucherForm extends StatelessWidget {
             validators: [FormBuilderValidators.required()],
           ),
           SizedBox(height: AppTheme.space3),
-          FormBuilderTextField(
-            attribute: 'description',
-            textCapitalization: TextCapitalization.words,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Description',
-            ),
-            validators: [FormBuilderValidators.required()],
-          ),
-          SizedBox(height: AppTheme.space3),
           FormBuilderDateTimePicker(
             attribute: 'expires',
             inputType: InputType.date,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Expires',
+            ),
+          ),
+          FormBuilderSwitch(
+            attribute: 'removeOnceExpired',
+            label: Text(
+              'Remove once expired',
+              style: theme.textTheme.bodyText1,
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.zero,
             ),
           ),
           SizedBox(height: AppTheme.space3),

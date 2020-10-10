@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'voucher_item.dart';
 
@@ -17,18 +18,20 @@ class VoucherList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final iterator = vouchers.iterator();
+
     return SliverList(
-      delegate: SliverChildListDelegate.fixed(
-        vouchers.foldLeft(
-          [],
-          (widgets, v) => [
-            ...widgets,
-            VoucherItem(
-              voucher: v,
-              onPressed: () => onPressed(v),
-            ),
-          ],
-        ),
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          iterator.moveNext();
+          final v = iterator.current;
+
+          return VoucherItem(
+            voucher: v,
+            onPressed: () => onPressed(v),
+          );
+        },
+        childCount: vouchers.length(),
       ),
     );
   }

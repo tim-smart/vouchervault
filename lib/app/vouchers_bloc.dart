@@ -2,7 +2,6 @@ import 'package:bloc_stream/bloc_stream.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
-import 'package:time/time.dart';
 import 'package:vouchervault/lib/lib.dart';
 
 import 'package:vouchervault/models/models.dart';
@@ -52,10 +51,11 @@ class VoucherActions {
     c.add(v.copyWith(
       vouchers: v.vouchers.foldLeft(
         isetWithOrder(_vouchersOrder, <Voucher>[]),
-        (acc, v) => v.expiresOption
-                .map(endOfDay)
-                .map((expires) => expires.isBefore(1.days.ago))
-                .getOrElse(() => false)
+        (acc, v) => (v.removeOnceExpired &&
+                v.expiresOption
+                    .map(endOfDay)
+                    .map((expires) => expires.isBefore(DateTime.now()))
+                    .getOrElse(() => false))
             ? acc
             : acc.insert(v),
       ),

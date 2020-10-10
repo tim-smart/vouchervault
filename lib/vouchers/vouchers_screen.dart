@@ -33,6 +33,7 @@ class VouchersScreen extends StatelessWidget {
             },
           ),
         ),
+        SliverPadding(padding: EdgeInsets.only(top: AppTheme.space6)),
       ],
       floatingActionButton: some(FloatingActionButton(
         onPressed: () async {

@@ -91,17 +91,22 @@ class Voucher extends Equatable {
     this.code,
     this.codeType = VoucherCodeType.CODE128,
     this.expires,
+    this.removeOnceExpired = true,
     this.balance,
     this.color = VoucherColor.GREY,
   }) : this.uuid = uuid ?? uuidgen.v4();
 
+  @JsonKey(nullable: false)
   final String uuid;
+
   final String description;
   final String code;
   final VoucherCodeType codeType;
   Option<String> get codeOption => optionOf(code);
   final DateTime expires;
   Option<DateTime> get expiresOption => optionOf(expires);
+  @JsonKey(defaultValue: true)
+  final bool removeOnceExpired;
   final double balance;
   Option<double> get balanceOption => optionOf(balance);
   final VoucherColor color;
@@ -114,6 +119,7 @@ class Voucher extends Equatable {
       code,
       codeType,
       expires,
+      removeOnceExpired,
       balance,
       color,
     ];
@@ -131,16 +137,17 @@ class Voucher extends Equatable {
         codeType:
             _$enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']),
         expires: json['expires'],
+        removeOnceExpired: json['removeOnceExpired'],
         balance: (json['balance'] as num)?.toDouble(),
         color: _$enumDecodeNullable(_$VoucherColorEnumMap, json['color']),
       );
-
   dynamic toFormValue() => <String, dynamic>{
         'uuid': uuid,
         'description': description,
         'code': code,
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
         'expires': expires,
+        'removeOnceExpired': removeOnceExpired,
         'balance': balance,
         'color': _$VoucherColorEnumMap[color],
       };
@@ -151,6 +158,7 @@ class Voucher extends Equatable {
     String code,
     VoucherCodeType codeType,
     Option<DateTime> expires,
+    bool removeOnceExpired,
     Option<double> balance,
     VoucherColor color,
   }) =>
@@ -160,6 +168,7 @@ class Voucher extends Equatable {
         code: code ?? this.code,
         codeType: codeType ?? this.codeType,
         expires: (expires ?? expiresOption) | null,
+        removeOnceExpired: removeOnceExpired ?? this.removeOnceExpired,
         balance: (balance ?? balanceOption) | null,
         color: color ?? this.color,
       );
