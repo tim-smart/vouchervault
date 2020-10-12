@@ -17,7 +17,7 @@ class VouchersScreen extends StatelessWidget {
         SliverPadding(padding: EdgeInsets.only(top: AppTheme.space3)),
         BlocStreamBuilder<VouchersBloc, VouchersState>(
           builder: (context, s) => VoucherList(
-            vouchers: s.data.vouchers,
+            vouchers: s.data.vouchersList,
             onPressed: (v) {
               showDialog(
                 context: context,

@@ -20,9 +20,10 @@ class VoucherForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final initialFormValue = initialValue.toFormValue();
     return FormBuilder(
       key: formKey,
-      initialValue: initialValue.toFormValue(),
+      initialValue: initialFormValue,
       child: Column(
         children: [
           SizedBox(height: AppTheme.space1),
@@ -43,6 +44,7 @@ class VoucherForm extends StatelessWidget {
               barcodeBuilder: some(
                 (context) => optionOf(formKey.currentState.fields['codeType'])
                     .map((f) => f.currentState.value as String)
+                    .orElse(() => optionOf(initialFormValue['codeType']))
                     .map(barcodeFromVoucherCodeValue)
                     .getOrElse(() => Barcode.code128()),
               ),
