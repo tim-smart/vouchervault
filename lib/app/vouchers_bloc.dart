@@ -26,15 +26,23 @@ final _vouchersOrder = order<Voucher>((a, b) {
 
 class VouchersState extends Equatable {
   VouchersState.fromIterable(Iterable<Voucher> vouchers)
-      : vouchers = isetWithOrder(_vouchersOrder, vouchers);
-  VouchersState(this.vouchers);
+      : this.vouchers = ISet.fromIterable(_vouchersOrder, vouchers),
+        vouchersList = vouchers.toList();
+
+  VouchersState.empty()
+      : vouchers = ISet.empty(_vouchersOrder),
+        vouchersList = [];
+
+  VouchersState(this.vouchers)
+      : vouchersList = vouchers.foldLeft([], (l, v) => l..add(v));
 
   final ISet<Voucher> vouchers;
+  final List<Voucher> vouchersList;
 
   @override
-  List<Object> get props => vouchers.toIterable().toList();
+  List<Object> get props => vouchersList;
 
-  dynamic toJson() => vouchers.toIterable().map((v) => v.toJson()).toList();
+  dynamic toJson() => vouchers.foldLeft([], (l, v) => l..add(v.toJson()));
   static VouchersState fromJson(dynamic json) => VouchersState.fromIterable(
         (json as List<dynamic>).map((j) => Voucher.fromJson(j)),
       );
@@ -74,7 +82,7 @@ class VoucherActions {
 }
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
-  VouchersBloc() : super(VouchersState.fromIterable([]));
+  VouchersBloc() : super(VouchersState.empty());
 
   @override
   dynamic toJson(VouchersState value) => value.toJson();
