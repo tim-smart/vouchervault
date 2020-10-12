@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'voucher_item.dart';
 

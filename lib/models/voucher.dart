@@ -113,7 +113,6 @@ class Voucher extends Equatable {
 
   @override
   List<Object> get props => [
-        uuid,
         description,
         code,
         codeType,

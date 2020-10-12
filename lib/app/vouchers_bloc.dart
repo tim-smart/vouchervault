@@ -7,6 +7,8 @@ import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/models/models.dart';
 
 final _vouchersOrder = order<Voucher>((a, b) {
+  if (a.uuid == b.uuid || a == b) return Ordering.EQ;
+
   final compare = a.description.compareTo(b.description);
   final expiresCompare = a.expiresOption
       .map((d) => d.millisecondsSinceEpoch)
@@ -15,11 +17,7 @@ final _vouchersOrder = order<Voucher>((a, b) {
           .map((d) => d.millisecondsSinceEpoch)
           .getOrElse(() => 0));
 
-  if (compare == 0) {
-    return expiresCompare > 0
-        ? Ordering.GT
-        : (expiresCompare < 0 ? Ordering.LT : Ordering.EQ);
-  } else if (compare > 0) {
+  if (compare > 0 || (compare == 0 && expiresCompare > 0)) {
     return Ordering.GT;
   }
 
@@ -65,16 +63,6 @@ class VoucherActions {
   static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
       add = (voucher) => (v, b, c) async {
             c.add(v.copyWith(vouchers: v.vouchers.insert(voucher)));
-          };
-
-  static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
-      update = (voucher) => (v, b, c) async {
-            c.add(v.copyWith(
-              vouchers: v.vouchers.transform<Voucher>(
-                _vouchersOrder,
-                (v) => v.uuid == voucher.uuid ? voucher : v,
-              ),
-            ));
           };
 
   static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)

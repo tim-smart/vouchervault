@@ -28,7 +28,7 @@ class VoucherDialogContainer extends StatelessWidget {
                       balance: some(balance - spend),
                     ),
                   )
-                      .map(VoucherActions.update)
+                      .map(VoucherActions.add)
                       .map(BlocStreamProvider.of<VouchersBloc>(context).add));
 
   void Function(Voucher) _onEdit(BuildContext context) => (v) async {
@@ -43,7 +43,7 @@ class VoucherDialogContainer extends StatelessWidget {
         );
 
         optionOf(voucher)
-            .map(VoucherActions.update)
+            .map(VoucherActions.add)
             .map(BlocStreamProvider.of<VouchersBloc>(context).add);
       };
 
