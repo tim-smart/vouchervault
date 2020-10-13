@@ -8,6 +8,12 @@
             "name": "vouchervault",
             "request": "launch",
             "type": "dart"
-        }
+        },
+        {
+            "name": "vouchervault profile",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
     ]
 }
