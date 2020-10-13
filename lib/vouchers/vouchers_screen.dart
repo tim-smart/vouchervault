@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_stream/flutter_bloc_stream.dart';
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/app_scaffold/app_scaffold.dart';
 import 'package:vouchervault/models/models.dart';
@@ -8,32 +9,36 @@ import 'package:vouchervault/voucher_dialog/voucher_dialog_container.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
 
-class VouchersScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AppScaffold(
+part 'vouchers_screen.g.dart';
+
+@swidget
+Widget vouchersScreen(BuildContext context) => AppScaffold(
       title: 'Vouchers',
       slivers: [
-        SliverPadding(padding: EdgeInsets.only(top: AppTheme.space3)),
-        BlocStreamBuilder<VouchersBloc, VouchersState>(
-          builder: (context, s) => VoucherList(
-            vouchers: s.data.vouchersList,
-            onPressed: (v) {
-              showDialog(
-                context: context,
-                builder: (context) => Dismissible(
-                  key: Key('VoucherDialogDismissable'),
-                  direction: DismissDirection.vertical,
-                  onDismissed: (d) => Navigator.pop(context),
-                  child: Center(
-                    child: VoucherDialogContainer(voucher: v),
+        SliverPadding(
+          padding: EdgeInsets.only(
+            top: AppTheme.space3,
+            bottom: AppTheme.space6,
+          ),
+          sliver: BlocStreamBuilder<VouchersBloc, VouchersState>(
+            builder: (context, s) => VoucherList(
+              vouchers: s.data.vouchersList,
+              onPressed: (v) {
+                showDialog(
+                  context: context,
+                  builder: (context) => Dismissible(
+                    key: Key('VoucherDialogDismissable'),
+                    direction: DismissDirection.vertical,
+                    onDismissed: (d) => Navigator.pop(context),
+                    child: Center(
+                      child: VoucherDialogContainer(voucher: v),
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
-        SliverPadding(padding: EdgeInsets.only(top: AppTheme.space6)),
       ],
       floatingActionButton: some(FloatingActionButton(
         onPressed: () async {
@@ -52,5 +57,3 @@ class VouchersScreen extends StatelessWidget {
         child: Icon(Icons.add),
       )),
     );
-  }
-}

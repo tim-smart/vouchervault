@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
@@ -37,10 +36,12 @@ Widget voucherItem(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(voucher.description,
-                style: theme.textTheme.headline3.copyWith(
-                  color: textColor,
-                )),
+            Text(
+              voucher.description,
+              style: theme.textTheme.headline3.copyWith(
+                color: textColor,
+              ),
+            ),
             if (voucher.hasDetails) ...[
               SizedBox(height: AppTheme.space2),
               ...buildVoucherDetails(
