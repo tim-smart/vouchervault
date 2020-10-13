@@ -111,6 +111,8 @@ class Voucher extends Equatable {
   Option<double> get balanceOption => optionOf(balance);
   final VoucherColor color;
 
+  bool get hasDetails => expiresOption.isSome() || balanceOption.isSome();
+
   @override
   List<Object> get props => [
         description,

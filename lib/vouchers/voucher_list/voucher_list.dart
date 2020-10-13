@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'voucher_item.dart';
 
 export 'voucher_item.dart';
 
-class VoucherList extends StatelessWidget {
-  const VoucherList({
-    Key key,
-    @required this.vouchers,
-    @required this.onPressed,
-  }) : super(key: key);
+part 'voucher_list.g.dart';
 
-  final List<Voucher> vouchers;
-  final void Function(Voucher) onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverList(
+@swidget
+Widget voucherList({
+  @required List<Voucher> vouchers,
+  @required void Function(Voucher) onPressed,
+}) =>
+    SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
           final v = vouchers[index];
@@ -28,5 +24,3 @@ class VoucherList extends StatelessWidget {
         childCount: vouchers.length,
       ),
     );
-  }
-}
