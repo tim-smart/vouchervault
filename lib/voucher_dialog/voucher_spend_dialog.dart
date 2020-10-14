@@ -7,6 +7,7 @@ part 'voucher_spend_dialog.g.dart';
 @hwidget
 Widget voucherSpendDialog(BuildContext context) {
   final amount = useState('');
+  void submit() => Navigator.pop(context, amount.value);
 
   return AlertDialog(
     title: Text('How much did you spend?'),
@@ -18,7 +19,7 @@ Widget voucherSpendDialog(BuildContext context) {
       ),
       keyboardType: TextInputType.numberWithOptions(signed: true),
       onChanged: (s) => amount.value = s,
-      onSubmitted: (s) => Navigator.pop(context, s),
+      onSubmitted: (s) => submit(),
     ),
     actions: [
       FlatButton(
@@ -26,7 +27,7 @@ Widget voucherSpendDialog(BuildContext context) {
         child: Text('Cancel'),
       ),
       FlatButton(
-        onPressed: () => Navigator.pop(context, amount.value),
+        onPressed: submit,
         child: Text('OK'),
       ),
     ],

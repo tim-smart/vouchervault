@@ -11,7 +11,7 @@ class AppScaffold extends StatelessWidget {
       {Key key,
       @required this.title,
       @required this.slivers,
-      this.actions = const None(),
+      this.actions = const [],
       this.floatingActionButton = const None(),
       this.leading = false})
       : super(key: key);
@@ -20,7 +20,7 @@ class AppScaffold extends StatelessWidget {
 
   final List<Widget> slivers;
 
-  final Option<List<Widget>> actions;
+  final List<Widget> actions;
 
   final Option<Widget> floatingActionButton;
 

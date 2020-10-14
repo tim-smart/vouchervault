@@ -34,3 +34,25 @@ class VoucherDialog extends HookWidget {
       onRemove: onRemove,
       onSpend: onSpend);
 }
+
+class _DialogWrap extends StatelessWidget {
+  const _DialogWrap(this.color, this.child, {Key key}) : super(key: key);
+
+  final Color color;
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext _context) => _dialogWrap(_context, color, child);
+}
+
+class _Barcode extends StatelessWidget {
+  const _Barcode(this.barcode, this.data, {Key key}) : super(key: key);
+
+  final Barcode barcode;
+
+  final String data;
+
+  @override
+  Widget build(BuildContext _context) => _barcode(_context, barcode, data);
+}

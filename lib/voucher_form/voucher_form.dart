@@ -18,6 +18,7 @@ Widget voucherForm(
 }) {
   final theme = Theme.of(context);
   final initialFormValue = initialValue.toFormValue();
+
   return FormBuilder(
     key: formKey,
     initialValue: initialFormValue,

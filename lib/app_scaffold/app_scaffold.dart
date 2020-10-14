@@ -11,7 +11,7 @@ Widget appScaffold(
   BuildContext context, {
   @required String title,
   @required List<Widget> slivers,
-  Option<List<Widget>> actions = const None(),
+  List<Widget> actions = const [],
   Option<Widget> floatingActionButton = const None(),
   bool leading = false,
 }) {
@@ -27,7 +27,7 @@ Widget appScaffold(
     body: CustomScrollView(
       slivers: [
         SliverAppBar(
-          actions: actions | [],
+          actions: actions,
           pinned: true,
           expandedHeight: AppTheme.rem(5),
           flexibleSpace: FlexibleSpaceBar(
