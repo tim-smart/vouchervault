@@ -26,6 +26,7 @@ Widget voucherForm(
       children: [
         SizedBox(height: AppTheme.space1),
         FormBuilderTextField(
+          autofocus: true,
           attribute: 'description',
           textCapitalization: TextCapitalization.words,
           decoration: InputDecoration(

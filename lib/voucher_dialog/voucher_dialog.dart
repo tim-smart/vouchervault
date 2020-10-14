@@ -31,6 +31,7 @@ Widget voucherDialog(
       color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
   var theme = Theme.of(context);
   theme = theme.copyWith(
+    backgroundColor: color,
     textTheme: theme.textTheme.apply(
       bodyColor: textColor,
       displayColor: textColor,
@@ -38,8 +39,8 @@ Widget voucherDialog(
   );
 
   return _DialogWrap(
-    voucherColor(voucher.color),
-    Padding(
+    theme: theme,
+    child: Padding(
       padding: EdgeInsets.all(AppTheme.space4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,36 +101,28 @@ Widget voucherDialog(
 }
 
 @swidget
-Widget _dialogWrap(BuildContext context, Color color, Widget child) {
-  // colors
-  final textColor =
-      color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
-  var theme = Theme.of(context);
-  theme = theme.copyWith(
-    textTheme: theme.textTheme.apply(
-      bodyColor: textColor,
-      displayColor: textColor,
-    ),
-  );
-
-  return Theme(
-    data: theme,
-    child: Padding(
-      padding: EdgeInsets.all(AppTheme.space4),
-      child: SizedBox(
-        width: double.infinity,
-        child: Material(
-          elevation: 20,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppTheme.rem(1)),
+Widget _dialogWrap(
+  BuildContext context, {
+  @required ThemeData theme,
+  @required Widget child,
+}) =>
+    Theme(
+      data: theme,
+      child: Padding(
+        padding: EdgeInsets.all(AppTheme.space4),
+        child: SizedBox(
+          width: double.infinity,
+          child: Material(
+            elevation: 20,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppTheme.rem(1)),
+            ),
+            color: theme.backgroundColor,
+            child: child,
           ),
-          color: color,
-          child: child,
         ),
       ),
-    ),
-  );
-}
+    );
 
 @swidget
 Widget _barcode(BuildContext context, Barcode barcode, String data) {

@@ -36,14 +36,16 @@ class VoucherDialog extends HookWidget {
 }
 
 class _DialogWrap extends StatelessWidget {
-  const _DialogWrap(this.color, this.child, {Key key}) : super(key: key);
+  const _DialogWrap({Key key, @required this.theme, @required this.child})
+      : super(key: key);
 
-  final Color color;
+  final ThemeData theme;
 
   final Widget child;
 
   @override
-  Widget build(BuildContext _context) => _dialogWrap(_context, color, child);
+  Widget build(BuildContext _context) =>
+      _dialogWrap(_context, theme: theme, child: child);
 }
 
 class _Barcode extends StatelessWidget {
