@@ -68,6 +68,7 @@ const _$VoucherCodeTypeEnumMap = {
   VoucherCodeType.CODE128: 'CODE128',
   VoucherCodeType.EAN13: 'EAN13',
   VoucherCodeType.QR: 'QR',
+  VoucherCodeType.TEXT: 'TEXT',
 };
 
 const _$VoucherColorEnumMap = {

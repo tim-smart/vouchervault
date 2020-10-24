@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  auto_size_text: ^2.1.0
   barcode_scan: ^3.0.1
   barcode_widget: ^1.5.0
   bloc_stream: ^4.3.1

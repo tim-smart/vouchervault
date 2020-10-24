@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -22,8 +23,8 @@ Widget voucherDialog(
   @required void Function(Voucher) onRemove,
   @required void Function(Voucher) onSpend,
 }) {
-  // Full brightness while we show the barcode
-  useFullBrightness();
+  // Full brightness unless text barcode
+  useFullBrightness(enabled: voucher.codeType != VoucherCodeType.TEXT);
 
   // colors
   final color = voucherColor(voucher.color);
@@ -54,7 +55,7 @@ Widget voucherDialog(
             () => [],
             (data) => [
               SizedBox(height: AppTheme.space3),
-              _Barcode(voucherCodeType(voucher.codeType), data),
+              _Barcode(voucher.codeType, data),
             ],
           ),
           if (voucher.hasDetails) ...[
@@ -125,8 +126,9 @@ Widget _dialogWrap(
     );
 
 @swidget
-Widget _barcode(BuildContext context, Barcode barcode, String data) {
+Widget _barcode(BuildContext context, VoucherCodeType type, String data) {
   final theme = Theme.of(context);
+  final barcode = barcodeFromVoucherCodeType(type);
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(
@@ -134,15 +136,27 @@ Widget _barcode(BuildContext context, Barcode barcode, String data) {
       ),
       color: Colors.white,
     ),
-    height: AppTheme.rem(10),
+    height: AppTheme.rem(barcode.fold(() => 6, (_) => 10)),
     child: Padding(
       padding: EdgeInsets.all(AppTheme.space4),
-      child: BarcodeWidget(
-        data: data,
-        style: theme.textTheme.bodyText2.copyWith(
-          color: Colors.black,
+      child: barcode.fold(
+        () => Center(
+          child: AutoSizeText(
+            data,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 100,
+            ),
+            maxLines: 1,
+          ),
         ),
-        barcode: barcode,
+        (type) => BarcodeWidget(
+          data: data,
+          style: theme.textTheme.bodyText2.copyWith(
+            color: Colors.black,
+          ),
+          barcode: type,
+        ),
       ),
     ),
   );

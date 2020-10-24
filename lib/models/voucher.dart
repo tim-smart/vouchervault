@@ -14,6 +14,7 @@ enum VoucherCodeType {
   CODE128,
   EAN13,
   QR,
+  TEXT,
 }
 
 enum VoucherColor {
@@ -56,13 +57,14 @@ final Map<VoucherCodeType, Barcode> _codeTypeMap = {
   VoucherCodeType.EAN13: Barcode.ean13(),
   VoucherCodeType.QR: Barcode.qrCode(),
 };
-Barcode voucherCodeType(VoucherCodeType type) =>
-    _codeTypeMap[type ?? VoucherCodeType.CODE128];
+Option<Barcode> barcodeFromVoucherCodeType(VoucherCodeType type) =>
+    optionOf(_codeTypeMap[type]);
 
 final Map<VoucherCodeType, String> _codeTypeLabelMap = {
   VoucherCodeType.CODE128: 'Code128',
   VoucherCodeType.EAN13: 'EAN-13',
   VoucherCodeType.QR: 'QR Code',
+  VoucherCodeType.TEXT: 'Text',
 };
 String voucherCodeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type];
 
@@ -70,8 +72,8 @@ VoucherCodeType voucherCodeTypeFromValue(String s) =>
     optionOf(_$enumDecodeNullable(_$VoucherCodeTypeEnumMap, s))
         .getOrElse(() => VoucherCodeType.CODE128);
 
-Barcode barcodeFromVoucherCodeValue(String s) =>
-    voucherCodeType(voucherCodeTypeFromValue(s));
+Option<Barcode> barcodeFromVoucherCodeValue(String s) =>
+    barcodeFromVoucherCodeType(voucherCodeTypeFromValue(s));
 
 final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
   BarcodeFormat.ean13: VoucherCodeType.EAN13,

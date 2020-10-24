@@ -1,4 +1,3 @@
-import 'package:barcode_widget/barcode_widget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -40,13 +39,11 @@ Widget voucherForm(
           attribute: 'code',
           formField: BarcodeScannerField(
             labelText: 'Code',
-            barcodeBuilder: some(
-              (context) => optionOf(formKey.currentState.fields['codeType'])
-                  .map((f) => f.currentState.value as String)
-                  .orElse(() => optionOf(initialFormValue['codeType']))
-                  .map(barcodeFromVoucherCodeValue)
-                  .getOrElse(() => Barcode.code128()),
-            ),
+            barcodeBuilder: (context) =>
+                optionOf(formKey.currentState.fields['codeType'])
+                    .map((f) => f.currentState.value as String)
+                    .orElse(() => optionOf(initialFormValue['codeType']))
+                    .bind(barcodeFromVoucherCodeValue),
             onScan: some((f) =>
                 optionOf(formKey.currentState.fields['codeType'])
                     .map((f) => f.currentState.didChange)

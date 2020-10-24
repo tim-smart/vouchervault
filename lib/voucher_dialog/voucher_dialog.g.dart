@@ -49,12 +49,12 @@ class _DialogWrap extends StatelessWidget {
 }
 
 class _Barcode extends StatelessWidget {
-  const _Barcode(this.barcode, this.data, {Key key}) : super(key: key);
+  const _Barcode(this.type, this.data, {Key key}) : super(key: key);
 
-  final Barcode barcode;
+  final VoucherCodeType type;
 
   final String data;
 
   @override
-  Widget build(BuildContext _context) => _barcode(_context, barcode, data);
+  Widget build(BuildContext _context) => _barcode(_context, type, data);
 }
