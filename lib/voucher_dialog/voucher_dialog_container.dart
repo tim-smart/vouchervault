@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:eyro_toast/eyro_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc_stream/flutter_bloc_stream.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
@@ -20,6 +22,11 @@ Widget voucherDialogContainer(
   final v = catching(() =>
           vouchersState.vouchersList.firstWhere((v) => v.uuid == voucher.uuid))
       .getOrElse(() => voucher);
+
+  void onTapBarcode() => v.codeOption.map((code) {
+        Clipboard.setData(ClipboardData(text: code));
+        EyroToast.showToast(text: 'Copied to clipboard');
+      });
 
   void onSpend(Voucher v) => showDialog<String>(
         context: context,
@@ -75,6 +82,7 @@ Widget voucherDialogContainer(
 
   return VoucherDialog(
     voucher: v,
+    onTapBarcode: onTapBarcode,
     onEdit: onEdit,
     onClose: () => Navigator.pop(context),
     onRemove: onRemove,

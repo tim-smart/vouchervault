@@ -3,6 +3,9 @@ PODS:
     - Flutter
     - MTBBarcodeScanner
     - SwiftProtobuf
+  - eyro_toast (0.1.0):
+    - Flutter
+    - Toast
   - Flutter (1.0.0)
   - flutter_keyboard_visibility (0.0.1):
     - Flutter
@@ -20,9 +23,11 @@ PODS:
   - shared_preferences (0.0.1):
     - Flutter
   - SwiftProtobuf (1.12.0)
+  - Toast (4.0.0)
 
 DEPENDENCIES:
   - barcode_scan (from `.symlinks/plugins/barcode_scan/ios`)
+  - eyro_toast (from `.symlinks/plugins/eyro_toast/ios`)
   - Flutter (from `Flutter`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
@@ -36,10 +41,13 @@ SPEC REPOS:
     - MTBBarcodeScanner
     - PhoneNumberKit
     - SwiftProtobuf
+    - Toast
 
 EXTERNAL SOURCES:
   barcode_scan:
     :path: ".symlinks/plugins/barcode_scan/ios"
+  eyro_toast:
+    :path: ".symlinks/plugins/eyro_toast/ios"
   Flutter:
     :path: Flutter
   flutter_keyboard_visibility:
@@ -57,6 +65,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   barcode_scan: a5c27959edfafaa0c771905bad0b29d6d39e4479
+  eyro_toast: b0faa8d790ab8d8e8a3bce717c5922e87de6a18c
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
@@ -67,6 +76,7 @@ SPEC CHECKSUMS:
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   SwiftProtobuf: 4ef85479c18ca85b5482b343df9c319c62bda699
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 

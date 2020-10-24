@@ -18,6 +18,7 @@ part 'voucher_dialog.g.dart';
 Widget voucherDialog(
   BuildContext context, {
   @required Voucher voucher,
+  @required VoidCallback onTapBarcode,
   @required void Function(Voucher) onEdit,
   @required VoidCallback onClose,
   @required void Function(Voucher) onRemove,
@@ -55,7 +56,11 @@ Widget voucherDialog(
             () => [],
             (data) => [
               SizedBox(height: AppTheme.space3),
-              _Barcode(voucher.codeType, data),
+              _Barcode(
+                type: voucher.codeType,
+                data: data,
+                onTap: onTapBarcode,
+              ),
             ],
           ),
           if (voucher.hasDetails) ...[
@@ -126,36 +131,44 @@ Widget _dialogWrap(
     );
 
 @swidget
-Widget _barcode(BuildContext context, VoucherCodeType type, String data) {
+Widget _barcode(
+  BuildContext context, {
+  @required VoucherCodeType type,
+  @required String data,
+  @required VoidCallback onTap,
+}) {
   final theme = Theme.of(context);
   final barcode = barcodeFromVoucherCodeType(type);
-  return Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(
-        AppTheme.rem(0.5),
-      ),
-      color: Colors.white,
-    ),
+  return SizedBox(
     height: AppTheme.rem(barcode.fold(() => 6, (_) => 10)),
-    child: Padding(
-      padding: EdgeInsets.all(AppTheme.space4),
-      child: barcode.fold(
-        () => Center(
-          child: AutoSizeText(
-            data,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 100,
+    child: Material(
+      elevation: 1,
+      borderRadius: BorderRadius.circular(AppTheme.rem(0.5)),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppTheme.rem(0.5)),
+        onTap: onTap,
+        child: Padding(
+          padding: EdgeInsets.all(AppTheme.space4),
+          child: barcode.fold(
+            () => Center(
+              child: AutoSizeText(
+                data,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 100,
+                ),
+                maxLines: 1,
+              ),
             ),
-            maxLines: 1,
+            (type) => BarcodeWidget(
+              backgroundColor: Colors.transparent,
+              data: data,
+              style: theme.textTheme.bodyText2.copyWith(
+                color: Colors.black,
+              ),
+              barcode: type,
+            ),
           ),
-        ),
-        (type) => BarcodeWidget(
-          data: data,
-          style: theme.textTheme.bodyText2.copyWith(
-            color: Colors.black,
-          ),
-          barcode: type,
         ),
       ),
     ),

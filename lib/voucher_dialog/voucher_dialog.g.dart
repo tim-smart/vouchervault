@@ -10,6 +10,7 @@ class VoucherDialog extends HookWidget {
   const VoucherDialog(
       {Key key,
       @required this.voucher,
+      @required this.onTapBarcode,
       @required this.onEdit,
       @required this.onClose,
       @required this.onRemove,
@@ -17,6 +18,8 @@ class VoucherDialog extends HookWidget {
       : super(key: key);
 
   final Voucher voucher;
+
+  final void Function() onTapBarcode;
 
   final void Function(Voucher) onEdit;
 
@@ -29,6 +32,7 @@ class VoucherDialog extends HookWidget {
   @override
   Widget build(BuildContext _context) => voucherDialog(_context,
       voucher: voucher,
+      onTapBarcode: onTapBarcode,
       onEdit: onEdit,
       onClose: onClose,
       onRemove: onRemove,
@@ -49,12 +53,17 @@ class _DialogWrap extends StatelessWidget {
 }
 
 class _Barcode extends StatelessWidget {
-  const _Barcode(this.type, this.data, {Key key}) : super(key: key);
+  const _Barcode(
+      {Key key, @required this.type, @required this.data, @required this.onTap})
+      : super(key: key);
 
   final VoucherCodeType type;
 
   final String data;
 
+  final void Function() onTap;
+
   @override
-  Widget build(BuildContext _context) => _barcode(_context, type, data);
+  Widget build(BuildContext _context) =>
+      _barcode(_context, type: type, data: data, onTap: onTap);
 }
