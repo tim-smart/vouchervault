@@ -22,7 +22,7 @@ Widget vouchersScreen(BuildContext context) => AppScaffold(
           ),
           sliver: BlocStreamBuilder<VouchersBloc, VouchersState>(
             builder: (context, s) => VoucherList(
-              vouchers: s.data.vouchersList,
+              vouchers: s.data.vouchers,
               onPressed: (v) {
                 showDialog(
                   context: context,

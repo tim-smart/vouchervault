@@ -20,7 +20,7 @@ Widget voucherDialogContainer(
   final bloc = useBlocStream<VouchersBloc>();
   final vouchersState = useBlocStreamState<VouchersBloc, VouchersState>();
   final v = catching(() =>
-          vouchersState.vouchersList.firstWhere((v) => v.uuid == voucher.uuid))
+          vouchersState.vouchers.firstWhere((v) => v.uuid == voucher.uuid))
       .getOrElse(() => voucher);
 
   void onTapBarcode() => v.codeOption.map((code) {
@@ -47,13 +47,11 @@ Widget voucherDialogContainer(
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => VoucherFormDialog(
-          initialValue: some(v),
-        ),
+        builder: (context) => VoucherFormDialog(initialValue: some(v)),
       ),
     );
 
-    optionOf(voucher).map(VoucherActions.add).map(bloc.add);
+    optionOf(voucher).map(VoucherActions.update).map(bloc.add);
   }
 
   void onRemove(v) => showDialog<bool>(

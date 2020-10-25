@@ -1,53 +1,36 @@
 import 'package:bloc_stream/bloc_stream.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
 import 'package:vouchervault/lib/lib.dart';
 
 import 'package:vouchervault/models/models.dart';
 
-final _vouchersOrder = order<Voucher>((a, b) {
-  if (a.uuid == b.uuid || a == b) return Ordering.EQ;
-
-  final compare = a.description.compareTo(b.description);
-  final expiresCompare = a.expiresOption
-      .map((d) => d.millisecondsSinceEpoch)
-      .getOrElse(() => 0)
-      .compareTo(b.expiresOption
+class VouchersState extends Equatable {
+  VouchersState(this.vouchers) {
+    vouchers.sort((a, b) {
+      final compare = a.description.compareTo(b.description);
+      final expiresCompare = a.expiresOption
           .map((d) => d.millisecondsSinceEpoch)
-          .getOrElse(() => 0));
+          .getOrElse(() => 0)
+          .compareTo(b.expiresOption
+              .map((d) => d.millisecondsSinceEpoch)
+              .getOrElse(() => 0));
 
-  if (compare > 0 || (compare == 0 && expiresCompare > 0)) {
-    return Ordering.GT;
+      return compare != 0 ? compare : expiresCompare;
+    });
   }
 
-  return Ordering.LT;
-});
-
-class VouchersState extends Equatable {
-  VouchersState.fromIterable(Iterable<Voucher> vouchers)
-      : this.vouchers = ISet.fromIterable(_vouchersOrder, vouchers),
-        vouchersList = vouchers.toList();
-
-  VouchersState.empty()
-      : vouchers = ISet.empty(_vouchersOrder),
-        vouchersList = [];
-
-  VouchersState(this.vouchers)
-      : vouchersList = vouchers.foldLeft([], (l, v) => l..add(v));
-
-  final ISet<Voucher> vouchers;
-  final List<Voucher> vouchersList;
+  final List<Voucher> vouchers;
 
   @override
-  List<Object> get props => vouchersList;
+  List<Object> get props => vouchers;
 
-  dynamic toJson() => vouchers.foldLeft([], (l, v) => l..add(v.toJson()));
-  static VouchersState fromJson(dynamic json) => VouchersState.fromIterable(
+  dynamic toJson() => vouchers.map((v) => v.toJson()).toList();
+  static VouchersState fromJson(dynamic json) => VouchersState(
         (json as List<dynamic>).map((j) => Voucher.fromJson(j)),
       );
 
-  VouchersState copyWith({ISet<Voucher> vouchers}) =>
+  VouchersState copyWith({List<Voucher> vouchers}) =>
       VouchersState(vouchers ?? this.vouchers);
 }
 
@@ -55,34 +38,47 @@ class VoucherActions {
   static final BlocStreamAction<VouchersState, VouchersBloc> init =
       (v, b, c) async {
     c.add(v.copyWith(
-      vouchers: v.vouchers.foldLeft(
-        isetWithOrder(_vouchersOrder, <Voucher>[]),
+      vouchers: v.vouchers.fold(
+        <Voucher>[],
         (acc, v) => (v.removeOnceExpired &&
                 v.expiresOption
                     .map(endOfDay)
                     .map((expires) => expires.isBefore(DateTime.now()))
                     .getOrElse(() => false))
             ? acc
-            : acc.insert(v),
+            : [...acc, v],
       ),
     ));
   };
 
   static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
       add = (voucher) => (v, b, c) async {
-            c.add(v.copyWith(vouchers: v.vouchers.insert(voucher)));
+            c.add(v.copyWith(vouchers: [
+              ...v.vouchers,
+              voucher,
+            ]));
+          };
+
+  static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
+      update = (voucher) => (v, b, c) async {
+            c.add(v.copyWith(
+              vouchers: v.vouchers
+                  .map((v) => v.uuid == voucher.uuid ? voucher : v)
+                  .toList(),
+            ));
           };
 
   static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
       remove = (voucher) => (v, b, c) async {
             c.add(v.copyWith(
-              vouchers: v.vouchers.filter((v) => v.uuid != voucher.uuid),
+              vouchers:
+                  v.vouchers.where((v) => v.uuid != voucher.uuid).toList(),
             ));
           };
 }
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
-  VouchersBloc() : super(VouchersState.empty());
+  VouchersBloc() : super(VouchersState([]));
 
   @override
   dynamic toJson(VouchersState value) => value.toJson();

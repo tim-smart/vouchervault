@@ -48,7 +48,14 @@ Widget voucherFormDialog(
               if (formKey.currentState.saveAndValidate()) {
                 final voucher =
                     Voucher.fromFormValue(formKey.currentState.value);
-                Navigator.pop(context, voucher);
+
+                Navigator.pop(
+                  context,
+                  initialValue.fold(
+                    () => voucher,
+                    (iv) => voucher.copyWith(uuid: iv.uuid),
+                  ),
+                );
               }
             },
           ),
