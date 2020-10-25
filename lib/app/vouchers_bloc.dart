@@ -27,7 +27,7 @@ class VouchersState extends Equatable {
 
   dynamic toJson() => vouchers.map((v) => v.toJson()).toList();
   static VouchersState fromJson(dynamic json) => VouchersState(
-        (json as List<dynamic>).map((j) => Voucher.fromJson(j)),
+        (json as List<dynamic>).map((j) => Voucher.fromJson(j)).toList(),
       );
 
   VouchersState copyWith({List<Voucher> vouchers}) =>

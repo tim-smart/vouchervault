@@ -40,7 +40,7 @@ Widget voucherDialogContainer(
                 (balance, spend) => v.copyWith(
                   balance: some(balance - spend),
                 ),
-              ).map(VoucherActions.add).map(bloc.add));
+              ).map(VoucherActions.update).map(bloc.add));
 
   Future<void> onEdit(Voucher v) async {
     final voucher = await Navigator.push<Voucher>(
