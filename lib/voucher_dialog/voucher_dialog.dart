@@ -7,7 +7,9 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/hooks/hooks.dart';
 import 'package:vouchervault/lib/lib.dart';
-import 'package:vouchervault/models/models.dart';
+import 'package:vouchervault/lib/barcode.dart' as B;
+import 'package:vouchervault/models/voucher.dart' as V;
+import 'package:vouchervault/models/voucher.dart' show Voucher;
 
 export 'voucher_dialog_container.dart';
 export 'voucher_spend_dialog.dart';
@@ -25,10 +27,10 @@ Widget voucherDialog(
   @required void Function(Voucher) onSpend,
 }) {
   // Full brightness unless text barcode
-  useFullBrightness(enabled: voucher.codeType != VoucherCodeType.TEXT);
+  useFullBrightness(enabled: voucher.codeType != V.VoucherCodeType.TEXT);
 
   // colors
-  final color = voucherColor(voucher.color);
+  final color = V.color(voucher.color);
   final textColor =
       color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
   var theme = Theme.of(context);
@@ -133,12 +135,12 @@ Widget _dialogWrap(
 @swidget
 Widget _barcode(
   BuildContext context, {
-  @required VoucherCodeType type,
+  @required V.VoucherCodeType type,
   @required String data,
   @required VoidCallback onTap,
 }) {
   final theme = Theme.of(context);
-  final barcode = barcodeFromVoucherCodeType(type);
+  final barcode = B.fromCodeType(type);
   return SizedBox(
     height: AppTheme.rem(barcode.fold(() => 6, (_) => 10)),
     child: Material(

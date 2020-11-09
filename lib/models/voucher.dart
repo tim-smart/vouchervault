@@ -1,5 +1,3 @@
-import 'package:barcode_scan/barcode_scan.dart';
-import 'package:barcode_widget/barcode_widget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -27,38 +25,21 @@ enum VoucherColor {
   YELLOW,
 }
 
-Color voucherColor(VoucherColor c) {
-  switch (c) {
-    case VoucherColor.BLUE:
-      return Colors.blue;
-    case VoucherColor.GREEN:
-      return Colors.green[600];
-    case VoucherColor.GREY:
-      return Colors.grey[700];
-    case VoucherColor.RED:
-      return Colors.red[700];
-    case VoucherColor.YELLOW:
-      return Colors.yellow[700];
-    case VoucherColor.ORANGE:
-      return Colors.orange[800];
-    case VoucherColor.PURPLE:
-      return Colors.purple[500];
-  }
-
-  return Colors.grey[700];
-}
-
-String voucherColorValue(VoucherColor c) => _$VoucherColorEnumMap[c];
-
-String voucherCodeTypeValue(VoucherCodeType c) => _$VoucherCodeTypeEnumMap[c];
-
-final Map<VoucherCodeType, Barcode> _codeTypeMap = {
-  VoucherCodeType.CODE128: Barcode.code128(),
-  VoucherCodeType.EAN13: Barcode.ean13(),
-  VoucherCodeType.QR: Barcode.qrCode(),
+// Color functions
+final _colors = <VoucherColor, Color>{
+  VoucherColor.BLUE: Colors.blue,
+  VoucherColor.GREEN: Colors.green[600],
+  VoucherColor.RED: Colors.red[700],
+  VoucherColor.YELLOW: Colors.yellow[700],
+  VoucherColor.ORANGE: Colors.orange[800],
+  VoucherColor.PURPLE: Colors.purple[500],
 };
-Option<Barcode> barcodeFromVoucherCodeType(VoucherCodeType type) =>
-    optionOf(_codeTypeMap[type]);
+Color color(VoucherColor c) =>
+    optionOf(_colors[c]).getOrElse(() => Colors.grey[700]);
+String colorToJson(VoucherColor c) => _$VoucherColorEnumMap[c];
+
+// Voucher code type functions
+String codeTypeToJson(VoucherCodeType c) => _$VoucherCodeTypeEnumMap[c];
 
 final Map<VoucherCodeType, String> _codeTypeLabelMap = {
   VoucherCodeType.CODE128: 'Code128',
@@ -66,24 +47,11 @@ final Map<VoucherCodeType, String> _codeTypeLabelMap = {
   VoucherCodeType.QR: 'QR Code',
   VoucherCodeType.TEXT: 'Text',
 };
-String voucherCodeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type];
+String codeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type];
 
-VoucherCodeType voucherCodeTypeFromValue(String s) =>
+VoucherCodeType codeTypeFromJson(String s) =>
     optionOf(_$enumDecodeNullable(_$VoucherCodeTypeEnumMap, s))
         .getOrElse(() => VoucherCodeType.CODE128);
-
-Option<Barcode> barcodeFromVoucherCodeValue(String s) =>
-    barcodeFromVoucherCodeType(voucherCodeTypeFromValue(s));
-
-final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
-  BarcodeFormat.ean13: VoucherCodeType.EAN13,
-  BarcodeFormat.qr: VoucherCodeType.QR,
-};
-VoucherCodeType voucherCodeTypeFromBarcodeFormat(BarcodeFormat f) =>
-    optionOf(_barcodeFormatMap[f]).getOrElse(() => VoucherCodeType.CODE128);
-
-String voucherCodeTypeValueFromBarcodeFormat(BarcodeFormat f) =>
-    voucherCodeTypeValue(voucherCodeTypeFromBarcodeFormat(f));
 
 @JsonSerializable()
 class Voucher extends Equatable {

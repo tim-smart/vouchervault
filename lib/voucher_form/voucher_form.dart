@@ -5,7 +5,10 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/barcode_scanner_field/barcode_scanner_field.dart';
-import 'package:vouchervault/models/voucher.dart';
+import 'package:vouchervault/models/voucher.dart'
+    show Voucher, VoucherCodeType, VoucherColor;
+import 'package:vouchervault/models/voucher.dart' as V;
+import 'package:vouchervault/lib/barcode.dart' as barcode;
 
 part 'voucher_form.g.dart';
 
@@ -43,12 +46,12 @@ Widget voucherForm(
                 optionOf(formKey.currentState.fields['codeType'])
                     .map((f) => f.currentState.value as String)
                     .orElse(() => optionOf(initialFormValue['codeType']))
-                    .bind(barcodeFromVoucherCodeValue),
+                    .bind(barcode.fromCodeTypeJson),
             onScan: some((f) =>
                 optionOf(formKey.currentState.fields['codeType'])
                     .map((f) => f.currentState.didChange)
                     .map((didChange) =>
-                        didChange(voucherCodeTypeValueFromBarcodeFormat(f)))),
+                        didChange(barcode.codeTypeValueFromFormat(f)))),
           ),
           valueTransformer: (s) =>
               optionOf(s as String).bind((s) => s.isEmpty ? none() : some(s)) |
@@ -63,8 +66,8 @@ Widget voucherForm(
           ),
           options: VoucherCodeType.values
               .map((t) => FormBuilderFieldOption(
-                    value: voucherCodeTypeValue(t),
-                    child: Text(voucherCodeTypeLabel(t),
+                    value: V.codeTypeToJson(t),
+                    child: Text(V.codeTypeLabel(t),
                         style: theme.textTheme.bodyText2.copyWith(
                           fontSize: AppTheme.rem(0.8),
                         )),
@@ -119,10 +122,10 @@ Widget voucherForm(
           alignment: WrapAlignment.spaceAround,
           options: VoucherColor.values
               .map((c) => FormBuilderFieldOption(
-                    value: voucherColorValue(c),
+                    value: V.colorToJson(c),
                     child: Material(
                       elevation: 2,
-                      color: voucherColor(c),
+                      color: V.color(c),
                       borderRadius: BorderRadius.circular(100),
                       child: SizedBox(
                         height: AppTheme.rem(1.2),

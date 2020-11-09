@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/lib.dart';
-import 'package:vouchervault/models/voucher.dart';
+import 'package:vouchervault/models/voucher.dart' as V;
 
 part 'voucher_item.g.dart';
 
 @swidget
 Widget voucherItem(
   BuildContext context, {
-  @required Voucher voucher,
+  @required V.Voucher voucher,
   @required VoidCallback onPressed,
 }) {
-  final color = voucherColor(voucher.color);
+  final color = V.color(voucher.color);
   final textColor =
       color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
   final theme = Theme.of(context);

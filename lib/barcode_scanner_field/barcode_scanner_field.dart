@@ -84,7 +84,7 @@ Widget _scanButton(
         onScan(r);
       }),
       child: Center(
-        child: (Option.map2(
+        child: Option.map2(
           barcodeType,
           optionOfString(data),
           // ignore: unnecessary_cast
@@ -96,6 +96,6 @@ Widget _scanButton(
               errorBuilder: (context, err) => Text('Code not valid'),
             ),
           ) as Widget,
-        )).getOrElse(() => Text('Scan barcode')),
+        ).getOrElse(() => Text('Scan barcode')),
       ),
     );
