@@ -3,6 +3,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/models/voucher.dart' as V;
+import 'package:vouchervault/models/voucher.dart' show Voucher;
 
 part 'voucher_item.g.dart';
 

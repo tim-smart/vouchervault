@@ -9,7 +9,7 @@ import 'package:vouchervault/hooks/hooks.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/lib/barcode.dart' as B;
 import 'package:vouchervault/models/voucher.dart' as V;
-import 'package:vouchervault/models/voucher.dart' show Voucher;
+import 'package:vouchervault/models/voucher.dart' show Voucher, VoucherCodeType;
 
 export 'voucher_dialog_container.dart';
 export 'voucher_spend_dialog.dart';

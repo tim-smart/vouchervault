@@ -41,19 +41,15 @@ Widget vouchersScreen(BuildContext context) => AppScaffold(
         ),
       ],
       floatingActionButton: some(FloatingActionButton(
-        onPressed: () async {
-          final voucher = await Navigator.push<Voucher>(
-            context,
-            MaterialPageRoute(
-              fullscreenDialog: true,
-              builder: (context) => VoucherFormDialog(),
-            ),
-          );
-
-          optionOf(voucher)
-              .map(VoucherActions.add)
-              .map(BlocStreamProvider.of<VouchersBloc>(context).add);
-        },
+        onPressed: () => Navigator.push<Voucher>(
+          context,
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => VoucherFormDialog(),
+          ),
+        ).then((v) => optionOf(v)
+            .map(VoucherActions.add)
+            .map(BlocStreamProvider.of<VouchersBloc>(context).add)),
         child: Icon(Icons.add),
       )),
     );
