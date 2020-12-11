@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
@@ -79,6 +81,14 @@ class VoucherActions {
               b.value.vouchers.where((v) => v.uuid != voucher.uuid).toList(),
         ));
       };
+
+  static VoucherAction import(String json) =>
+      (b, add) async => catching(() => jsonDecode(json))
+          .toOption()
+          .bind(optionOf)
+          .map((s) => print(s));
+  // .map(VouchersState.fromJson)
+  // .map(add);
 }
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
