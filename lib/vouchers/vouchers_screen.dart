@@ -8,7 +8,7 @@ import 'package:vouchervault/models/models.dart';
 import 'package:vouchervault/voucher_dialog/voucher_dialog_container.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
-import 'package:vouchervault/vouchers/vouchers_menu_container.dart';
+import 'package:vouchervault/vouchers/vouchers_menu/vouchers_menu_container.dart';
 
 part 'vouchers_screen.g.dart';
 

@@ -7,7 +7,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:share/share.dart';
 import 'package:vouchervault/app/vouchers_bloc.dart';
 import 'package:vouchervault/lib/files.dart' as files;
-import 'package:vouchervault/vouchers/vouchers_menu.dart';
+import 'package:vouchervault/vouchers/vouchers_menu/vouchers_menu.dart';
 
 part 'vouchers_menu_container.g.dart';
 
