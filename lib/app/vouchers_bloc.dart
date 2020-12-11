@@ -86,9 +86,8 @@ class VoucherActions {
       (b, add) async => catching(() => jsonDecode(json))
           .toOption()
           .bind(optionOf)
-          .map((s) => print(s));
-  // .map(VouchersState.fromJson)
-  // .map(add);
+          .map(VouchersState.fromJson)
+          .map(add);
 }
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
