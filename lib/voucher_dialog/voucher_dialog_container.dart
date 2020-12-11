@@ -6,6 +6,7 @@ import 'package:flutter_bloc_stream/flutter_bloc_stream.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/vouchers_bloc.dart';
+import 'package:vouchervault/lib/option_of_string.dart';
 import 'package:vouchervault/models/models.dart';
 import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
@@ -30,17 +31,11 @@ Widget voucherDialogContainer(
 
   void onSpend(Voucher v) => showDialog<String>(
         context: context,
-        child: VoucherSpendDialog(),
+        builder: (context) => VoucherSpendDialog(),
       )
-          .then((s) => optionOf(s)
-              .bind((s) => catching(() => double.parse(s)).toOption()))
-          .then((a) => Option.map2(
-                v.balanceOption,
-                a,
-                (balance, spend) => v.copyWith(
-                  balance: some(balance - spend),
-                ),
-              ).map(VoucherActions.update).map(bloc.add));
+          .then(optionOfString)
+          .then(VoucherActions.maybeUpdateBalance(v))
+          .then(bloc.add);
 
   Future<void> onEdit(Voucher v) async {
     final voucher = await Navigator.push<Voucher>(

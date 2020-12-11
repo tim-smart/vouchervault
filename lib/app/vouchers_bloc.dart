@@ -1,4 +1,4 @@
-import 'package:bloc_stream/bloc_stream.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
 import 'package:vouchervault/lib/lib.dart';
@@ -34,47 +34,51 @@ class VouchersState extends Equatable {
       VouchersState(vouchers ?? this.vouchers);
 }
 
+typedef VoucherAction = Future<void> Function(
+    VouchersBloc, void Function(VouchersState));
+
 class VoucherActions {
-  static final BlocStreamAction<VouchersState, VouchersBloc> init =
-      (v, b, c) async {
-    c.add(v.copyWith(
-      vouchers: v.vouchers.fold(
-        <Voucher>[],
-        (acc, v) => (v.removeOnceExpired &&
-                v.expiresOption
-                    .map(endOfDay)
-                    .map((expires) => expires.isBefore(DateTime.now()))
-                    .getOrElse(() => false))
-            ? acc
-            : [...acc, v],
-      ),
-    ));
-  };
+  static final VoucherAction init = (b, add) async => add(b.value.copyWith(
+        vouchers: b.value.vouchers.fold(
+          <Voucher>[],
+          (acc, v) => (v.removeOnceExpired &&
+                  v.expiresOption
+                      .map(endOfDay)
+                      .map((expires) => expires.isBefore(DateTime.now()))
+                      .getOrElse(() => false))
+              ? acc
+              : [...acc, v],
+        ),
+      ));
 
-  static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
-      add = (voucher) => (v, b, c) async {
-            c.add(v.copyWith(vouchers: [
-              ...v.vouchers,
-              voucher,
-            ]));
-          };
+  static VoucherAction add(Voucher voucher) => (b, add) async {
+        add(b.value.copyWith(vouchers: [
+          ...b.value.vouchers,
+          voucher,
+        ]));
+      };
 
-  static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
-      update = (voucher) => (v, b, c) async {
-            c.add(v.copyWith(
-              vouchers: v.vouchers
-                  .map((v) => v.uuid == voucher.uuid ? voucher : v)
-                  .toList(),
-            ));
-          };
+  static VoucherAction update(Voucher voucher) => (b, add) async {
+        add(b.value.copyWith(
+          vouchers: b.value.vouchers
+              .map((v) => v.uuid == voucher.uuid ? voucher : v)
+              .toList(),
+        ));
+      };
 
-  static final BlocStreamAction<VouchersState, VouchersBloc> Function(Voucher)
-      remove = (voucher) => (v, b, c) async {
-            c.add(v.copyWith(
-              vouchers:
-                  v.vouchers.where((v) => v.uuid != voucher.uuid).toList(),
-            ));
-          };
+  static VoucherAction Function(Option<String>) maybeUpdateBalance(Voucher v) =>
+      (s) => (b, add) => s
+          .bind((s) => catching(() => double.parse(s)).toOption())
+          .bind((amount) => v.balanceOption.map((balance) => balance - amount))
+          .map((balance) => update(v.copyWith(balance: some(balance))))
+          .fold(() => Future.value(), (action) => action(b, add));
+
+  static VoucherAction remove(Voucher voucher) => (b, add) async {
+        add(b.value.copyWith(
+          vouchers:
+              b.value.vouchers.where((v) => v.uuid != voucher.uuid).toList(),
+        ));
+      };
 }
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
