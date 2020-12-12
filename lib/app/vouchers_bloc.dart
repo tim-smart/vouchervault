@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
+import 'package:share/share.dart';
 import 'package:vouchervault/lib/lib.dart';
-
+import 'package:vouchervault/lib/files.dart' as files;
 import 'package:vouchervault/models/models.dart';
 
 class VouchersState extends Equatable {
@@ -82,12 +83,20 @@ class VoucherActions {
         ));
       };
 
-  static VoucherAction import(String json) =>
-      (b, add) async => catching(() => jsonDecode(json))
-          .toOption()
+  static VoucherAction import = (b, add) async => files.pick(['json']).then(
+      (f) => f
+          .map((f) => String.fromCharCodes(f.bytes))
+          .bind((json) => catching(() => jsonDecode(json)).toOption())
           .bind(optionOf)
           .map(VouchersState.fromJson)
-          .map(add);
+          .map(add));
+
+  static VoucherAction export = (b, add) async => files
+      .writeString('vouchervault.json', jsonEncode(b.value.toJson()))
+      .then((file) => Share.shareFiles(
+            [file.path],
+            subject: "VoucherVault export",
+          ));
 }
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
