@@ -5,6 +5,7 @@ import 'package:vouchervault/models/voucher.dart';
 
 final Map<VoucherCodeType, Barcode> _codeTypeMap = {
   VoucherCodeType.CODE128: Barcode.code128(),
+  VoucherCodeType.CODE39: Barcode.code39(),
   VoucherCodeType.EAN13: Barcode.ean13(),
   VoucherCodeType.QR: Barcode.qrCode(),
 };

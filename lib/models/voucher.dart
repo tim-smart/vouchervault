@@ -10,6 +10,7 @@ final uuidgen = Uuid();
 
 enum VoucherCodeType {
   CODE128,
+  CODE39,
   EAN13,
   QR,
   TEXT,
@@ -43,6 +44,7 @@ String codeTypeToJson(VoucherCodeType c) => _$VoucherCodeTypeEnumMap[c];
 
 final Map<VoucherCodeType, String> _codeTypeLabelMap = {
   VoucherCodeType.CODE128: 'Code128',
+  VoucherCodeType.CODE39: 'Code39',
   VoucherCodeType.EAN13: 'EAN-13',
   VoucherCodeType.QR: 'QR Code',
   VoucherCodeType.TEXT: 'Text',
