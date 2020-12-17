@@ -83,13 +83,12 @@ class VoucherActions {
         ));
       };
 
-  static VoucherAction import = (b, add) async => files.pick(['json']).then(
-      (f) => f
-          .map((f) => String.fromCharCodes(f.bytes))
-          .bind((json) => catching(() => jsonDecode(json)).toOption())
-          .bind(optionOf)
-          .map(VouchersState.fromJson)
-          .map(add));
+  static VoucherAction import = (b, add) => files.pick(['json']).then((r) => r
+      .map((r) => String.fromCharCodes(r.value2))
+      .bind((json) => catching(() => jsonDecode(json)).toOption())
+      .bind(optionOf)
+      .map(VouchersState.fromJson)
+      .map(add));
 
   static VoucherAction export = (b, add) async => files
       .writeString('vouchervault.json', jsonEncode(b.value.toJson()))
