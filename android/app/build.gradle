@@ -52,6 +52,23 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    flavorDimensions "app"
+
+    productFlavors {
+        fdroid {
+            dimension "app"
+            signingConfig null
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        if (variant.flavorName == "fdroid") {
+            variant.outputs.all { output ->
+                output.outputFileName = "app-fdroid-release.apk"
+            }
+        }
+    }
 }
 
 flutter {
