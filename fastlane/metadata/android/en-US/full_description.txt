@@ -1,0 +1,9 @@
+Voucher Vault helps you keep track of all your vouchers, gift cards and
+loyalty cards.
+
+Features include:
+
+* Supports several types of barcodes, including plain text
+* Keep track of expiry dates
+* Keep track of gift card balances
+* Assign each voucher a different color
