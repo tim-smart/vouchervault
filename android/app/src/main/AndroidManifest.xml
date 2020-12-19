@@ -2,7 +2,6 @@
   package="co.timsmart.vouchervault">
 
   <uses-permission android:name="android.permission.CAMERA" />
-  <uses-permission android:name="android.permission.INTERNET" />
 
   <application android:name="io.flutter.app.FlutterApplication"
     android:label="Voucher Vault"

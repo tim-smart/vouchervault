@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:vouchervault/app/app.dart';
 
 class AppTheme {
@@ -16,36 +15,37 @@ class AppTheme {
   static double get space7 => rem(4);
 
   static ThemeData build() {
-    var textTheme = GoogleFonts.alegreyaSansTextTheme();
+    var textTheme = ThemeData(fontFamily: 'Alegreya Sans').textTheme;
     textTheme = textTheme.copyWith(
-      headline2: GoogleFonts.alegreyaSans(
+      headline2: textTheme.headline2.copyWith(
         color: Colors.black,
         fontSize: px(34),
         fontStyle: FontStyle.italic,
         fontWeight: FontWeight.w900,
       ),
-      headline3: GoogleFonts.alegreyaSans(
+      headline3: textTheme.headline3.copyWith(
         color: Colors.black,
         fontSize: px(20),
         fontWeight: FontWeight.w700,
       ),
-      bodyText1: GoogleFonts.alegreyaSans(
+      bodyText1: textTheme.bodyText1.copyWith(
         color: Colors.black,
         fontSize: rem(1),
         fontWeight: FontWeight.w400,
       ),
-      bodyText2: GoogleFonts.alegreyaSans(
+      bodyText2: textTheme.bodyText2.copyWith(
         color: Colors.black,
         fontSize: rem(1),
         fontWeight: FontWeight.w800,
       ),
-      button: GoogleFonts.alegreyaSans(
+      button: textTheme.button.copyWith(
         fontSize: px(20),
         fontWeight: FontWeight.w900,
       ),
     );
 
     return ThemeData(
+      fontFamily: 'Alegreya Sans',
       textTheme: textTheme,
       primaryColor: Colors.red,
       accentColor: Colors.red[800],
