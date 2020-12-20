@@ -56,6 +56,10 @@ android {
     flavorDimensions "app"
 
     productFlavors {
+        local {
+            dimension "app"
+        }
+
         fdroid {
             dimension "app"
             signingConfig null
