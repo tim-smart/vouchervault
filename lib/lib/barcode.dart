@@ -15,6 +15,8 @@ Option<Barcode> fromCodeType(VoucherCodeType type) =>
 Option<Barcode> fromCodeTypeJson(String s) => fromCodeType(codeTypeFromJson(s));
 
 final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
+  BarcodeFormat.code128: VoucherCodeType.CODE128,
+  BarcodeFormat.code39: VoucherCodeType.CODE39,
   BarcodeFormat.ean13: VoucherCodeType.EAN13,
   BarcodeFormat.qr: VoucherCodeType.QR,
 };
