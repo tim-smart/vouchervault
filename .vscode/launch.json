@@ -16,6 +16,11 @@
       "type": "dart",
       "flutterMode": "profile",
       "args": ["--flavor", "local"]
+    },
+    {
+      "name": "vouchervault ios",
+      "request": "launch",
+      "type": "dart"
     }
   ]
 }

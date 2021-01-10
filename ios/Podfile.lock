@@ -61,7 +61,7 @@ PODS:
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
-  - SwiftProtobuf (1.13.0)
+  - SwiftProtobuf (1.14.0)
   - SwiftyGif (5.3.0)
   - Toast (4.0.0)
 
@@ -130,10 +130,10 @@ SPEC CHECKSUMS:
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
-  SwiftProtobuf: fd4693388a96c8c2df35d3b063272b0e7c499d00
+  SwiftProtobuf: ed465ed18402f998fd117f631da27e0168e6b59c
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: a75497545d4391e2d394c3668e20cfb1c2bbd4aa
+PODFILE CHECKSUM: 398637a5ffb398a3ea8945436e8fbcfc11697b26
 
 COCOAPODS: 1.10.0
