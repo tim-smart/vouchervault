@@ -13,15 +13,25 @@ Future<File> write(String filename, List<int> bytes) =>
 Future<File> writeString(String filename, String data) =>
     create(filename).then((file) => file.writeAsString(data));
 
-Future<Option<Tuple2<PlatformFile, List<int>>>> pick(List<String> extensions) =>
-    FilePicker.platform
+Future<Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
+  PlatformFile f,
+) =>
+    f.readStream
+        .reduce((bytes, chunk) => bytes + chunk)
+        .then((bytes) => tuple2(f, bytes));
+
+Future<Option<Tuple2<PlatformFile, List<int>>>> pick(
+    List<String> extensions) async {
+  try {
+    return FilePicker.platform
         .pickFiles(
           type: FileType.custom,
           allowedExtensions: extensions,
           withReadStream: true,
         )
-        .then(optionOf)
-        .then((r) => r.bind((r) => optionOf(r.files.first)))
-        .then((f) => f.traverseFuture((f) => f.readStream
-            .reduce((bytes, chunk) => bytes + chunk)
-            .then((bytes) => tuple2(f, bytes))));
+        .then((r) => optionOf(r.files.first), onError: (_) => none())
+        .then((f) => f.traverseFuture(_readPlatformFileStream));
+  } catch (_) {}
+
+  return none();
+}
