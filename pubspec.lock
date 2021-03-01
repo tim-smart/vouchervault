@@ -341,7 +341,7 @@ packages:
       name: flutter_keyboard_visibility
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.4"
+    version: "4.0.6"
   flutter_keyboard_visibility_platform_interface:
     dependency: transitive
     description:
@@ -491,7 +491,7 @@ packages:
       name: io
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4"
+    version: "0.3.5"
   js:
     dependency: transitive
     description:
@@ -680,7 +680,7 @@ packages:
       name: protobuf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.3"
   provider:
     dependency: "direct main"
     description:
@@ -813,7 +813,7 @@ packages:
       name: signature
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -895,7 +895,7 @@ packages:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.29"
+    version: "2.0.30"
   timing:
     dependency: transitive
     description:

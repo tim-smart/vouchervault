@@ -17,7 +17,7 @@ dependencies:
   dartz: ^0.9.1
   equatable: ^1.2.5
   eyro_toast: ^0.1.0
-  file_picker: ^2.1.1
+  file_picker: ^2.1.6
   flutter_bloc_stream: ^4.4.0
   flutter_form_builder: ^3.14.0
   flutter_hooks: ^0.14.1

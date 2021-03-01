@@ -23,13 +23,14 @@ Future<Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
 Future<Option<Tuple2<PlatformFile, List<int>>>> pick(
     List<String> extensions) async {
   try {
-    return FilePicker.platform
+    return await FilePicker.platform
         .pickFiles(
           type: FileType.custom,
           allowedExtensions: extensions,
           withReadStream: true,
         )
-        .then((r) => optionOf(r.files.first), onError: (_) => none())
+        .then((r) => optionOf(r))
+        .then((r) => r.bind((r) => optionOf(r.files.first)))
         .then((f) => f.traverseFuture(_readPlatformFileStream));
   } catch (_) {}
 
