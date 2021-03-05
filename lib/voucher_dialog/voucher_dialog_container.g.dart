@@ -7,7 +7,7 @@ part of 'voucher_dialog_container.dart';
 // **************************************************************************
 
 class VoucherDialogContainer extends HookWidget {
-  const VoucherDialogContainer({Key key, @required this.voucher})
+  const VoucherDialogContainer({Key? key, required this.voucher})
       : super(key: key);
 
   final Voucher voucher;

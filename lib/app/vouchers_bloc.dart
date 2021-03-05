@@ -6,7 +6,7 @@ import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
 import 'package:share/share.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/lib/files.dart' as files;
-import 'package:vouchervault/models/models.dart';
+import 'package:vouchervault/models/voucher.dart';
 
 class VouchersState extends Equatable {
   VouchersState(this.vouchers) {
@@ -33,7 +33,7 @@ class VouchersState extends Equatable {
         (json as List<dynamic>).map((j) => Voucher.fromJson(j)).toList(),
       );
 
-  VouchersState copyWith({List<Voucher> vouchers}) =>
+  VouchersState copyWith({List<Voucher>? vouchers}) =>
       VouchersState(vouchers ?? this.vouchers);
 }
 

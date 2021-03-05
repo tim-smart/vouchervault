@@ -7,7 +7,7 @@ part of 'vouchers_screen.dart';
 // **************************************************************************
 
 class VouchersScreen extends StatelessWidget {
-  const VouchersScreen({Key key}) : super(key: key);
+  const VouchersScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => vouchersScreen(_context);

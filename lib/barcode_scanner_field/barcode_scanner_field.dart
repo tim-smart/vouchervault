@@ -12,11 +12,11 @@ part 'barcode_scanner_field.g.dart';
 
 class BarcodeScannerField extends FormBuilderField<String> {
   BarcodeScannerField({
-    @required String name,
+    required String name,
     String labelText = 'Code',
-    @required Option<Barcode> Function(BuildContext) barcodeBuilder,
+    required Option<Barcode> Function(BuildContext) barcodeBuilder,
     Option<void Function(BarcodeFormat)> onScan = const None(),
-    dynamic Function(String) valueTransformer,
+    required dynamic Function(String) valueTransformer,
   }) : super(
           name: name,
           valueTransformer: valueTransformer,

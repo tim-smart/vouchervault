@@ -10,8 +10,8 @@ part 'voucher_item.g.dart';
 @swidget
 Widget voucherItem(
   BuildContext context, {
-  @required V.Voucher voucher,
-  @required VoidCallback onPressed,
+  required V.Voucher voucher,
+  required VoidCallback onPressed,
 }) {
   final color = V.color(voucher.color);
   final textColor =
@@ -24,7 +24,7 @@ Widget voucherItem(
       elevation: 10,
       shape: RoundedRectangleBorder(),
       primary: color,
-      onSurface: textColor,
+      onPrimary: textColor,
     ),
     onPressed: onPressed,
     child: SizedBox(
@@ -39,7 +39,7 @@ Widget voucherItem(
           children: [
             Text(
               voucher.description,
-              style: theme.textTheme.headline3.copyWith(
+              style: theme.textTheme.headline3!.copyWith(
                 color: textColor,
               ),
             ),

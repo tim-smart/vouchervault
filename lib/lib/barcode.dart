@@ -23,5 +23,5 @@ final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
 VoucherCodeType codeTypeFromFormat(BarcodeFormat f) =>
     optionOf(_barcodeFormatMap[f]).getOrElse(() => VoucherCodeType.CODE128);
 
-String codeTypeValueFromFormat(BarcodeFormat f) =>
+String? codeTypeValueFromFormat(BarcodeFormat f) =>
     codeTypeToJson(codeTypeFromFormat(f));

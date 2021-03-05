@@ -8,16 +8,16 @@ part of 'voucher.dart';
 
 Voucher _$VoucherFromJson(Map<String, dynamic> json) {
   return Voucher(
-    uuid: json['uuid'] as String,
+    uuid: json['uuid'] as String?,
     description: json['description'] as String,
-    code: json['code'] as String,
-    codeType: _$enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']),
+    code: json['code'] as String?,
+    codeType: _$enumDecode(_$VoucherCodeTypeEnumMap, json['codeType']),
     expires: json['expires'] == null
         ? null
         : DateTime.parse(json['expires'] as String),
-    removeOnceExpired: json['removeOnceExpired'] as bool ?? true,
-    balance: (json['balance'] as num)?.toDouble(),
-    color: _$enumDecodeNullable(_$VoucherColorEnumMap, json['color']),
+    removeOnceExpired: json['removeOnceExpired'] as bool? ?? true,
+    balance: (json['balance'] as num?)?.toDouble(),
+    color: _$enumDecode(_$VoucherColorEnumMap, json['color']),
   );
 }
 
@@ -32,36 +32,30 @@ Map<String, dynamic> _$VoucherToJson(Voucher instance) => <String, dynamic>{
       'color': _$VoucherColorEnumMap[instance.color],
     };
 
-T _$enumDecode<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
+K _$enumDecode<K, V>(
+  Map<K, V> enumValues,
+  Object? source, {
+  K? unknownValue,
 }) {
   if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
+    throw ArgumentError(
+      'A value must be provided. Supported values: '
+      '${enumValues.values.join(', ')}',
+    );
   }
 
-  final value = enumValues.entries
-      .singleWhere((e) => e.value == source, orElse: () => null)
-      ?.key;
-
-  if (value == null && unknownValue == null) {
-    throw ArgumentError('`$source` is not one of the supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return value ?? unknownValue;
-}
-
-T _$enumDecodeNullable<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+  return enumValues.entries.singleWhere(
+    (e) => e.value == source,
+    orElse: () {
+      if (unknownValue == null) {
+        throw ArgumentError(
+          '`$source` is not one of the supported values: '
+          '${enumValues.values.join(', ')}',
+        );
+      }
+      return MapEntry(unknownValue, enumValues.values.first);
+    },
+  ).key;
 }
 
 const _$VoucherCodeTypeEnumMap = {

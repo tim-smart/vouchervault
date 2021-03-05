@@ -8,13 +8,13 @@ part of 'voucher_dialog.dart';
 
 class VoucherDialog extends HookWidget {
   const VoucherDialog(
-      {Key key,
-      @required this.voucher,
-      @required this.onTapBarcode,
-      @required this.onEdit,
-      @required this.onClose,
-      @required this.onRemove,
-      @required this.onSpend})
+      {Key? key,
+      required this.voucher,
+      required this.onTapBarcode,
+      required this.onEdit,
+      required this.onClose,
+      required this.onRemove,
+      required this.onSpend})
       : super(key: key);
 
   final Voucher voucher;
@@ -40,7 +40,7 @@ class VoucherDialog extends HookWidget {
 }
 
 class _DialogWrap extends StatelessWidget {
-  const _DialogWrap({Key key, @required this.theme, @required this.child})
+  const _DialogWrap({Key? key, required this.theme, required this.child})
       : super(key: key);
 
   final ThemeData theme;
@@ -54,7 +54,7 @@ class _DialogWrap extends StatelessWidget {
 
 class _Barcode extends StatelessWidget {
   const _Barcode(
-      {Key key, @required this.type, @required this.data, @required this.onTap})
+      {Key? key, required this.type, required this.data, required this.onTap})
       : super(key: key);
 
   final VoucherCodeType type;

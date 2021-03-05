@@ -4,7 +4,7 @@ import 'package:flutter_bloc_stream/flutter_bloc_stream.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/app_scaffold/app_scaffold.dart';
-import 'package:vouchervault/models/models.dart';
+import 'package:vouchervault/models/voucher.dart';
 import 'package:vouchervault/voucher_dialog/voucher_dialog_container.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';

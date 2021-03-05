@@ -9,8 +9,8 @@ part 'voucher_list.g.dart';
 
 @swidget
 Widget voucherList({
-  @required List<Voucher> vouchers,
-  @required void Function(Voucher) onPressed,
+  required List<Voucher> vouchers,
+  required void Function(Voucher) onPressed,
 }) =>
     SliverList(
       delegate: SliverChildBuilderDelegate(

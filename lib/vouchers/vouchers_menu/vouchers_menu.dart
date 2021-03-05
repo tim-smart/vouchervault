@@ -15,7 +15,7 @@ String _actionLabel(VouchersMenuAction a) =>
 
 @swidget
 Widget vouchersMenu({
-  @required void Function(VouchersMenuAction) onSelected,
+  required void Function(VouchersMenuAction) onSelected,
 }) =>
     PopupMenuButton<VouchersMenuAction>(
       onSelected: onSelected,

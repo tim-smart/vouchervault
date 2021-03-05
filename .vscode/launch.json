@@ -8,19 +8,20 @@
       "name": "vouchervault",
       "request": "launch",
       "type": "dart",
-      "args": ["--flavor", "local"]
+      "args": ["--flavor", "local", "--no-sound-null-safety"]
     },
     {
       "name": "vouchervault profile",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
-      "args": ["--flavor", "local"]
+      "args": ["--flavor", "local", "--no-sound-null-safety"]
     },
     {
       "name": "vouchervault ios",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "args": ["--no-sound-null-safety"]
     }
   ]
 }

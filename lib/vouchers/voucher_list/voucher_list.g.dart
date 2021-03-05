@@ -7,8 +7,7 @@ part of 'voucher_list.dart';
 // **************************************************************************
 
 class VoucherList extends StatelessWidget {
-  const VoucherList(
-      {Key key, @required this.vouchers, @required this.onPressed})
+  const VoucherList({Key? key, required this.vouchers, required this.onPressed})
       : super(key: key);
 
   final List<Voucher> vouchers;

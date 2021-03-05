@@ -17,28 +17,28 @@ class AppTheme {
   static ThemeData build() {
     var textTheme = ThemeData(fontFamily: 'Alegreya Sans').textTheme;
     textTheme = textTheme.copyWith(
-      headline2: textTheme.headline2.copyWith(
+      headline2: textTheme.headline2!.copyWith(
         color: Colors.black,
         fontSize: px(34),
         fontStyle: FontStyle.italic,
         fontWeight: FontWeight.w900,
       ),
-      headline3: textTheme.headline3.copyWith(
+      headline3: textTheme.headline3!.copyWith(
         color: Colors.black,
         fontSize: px(20),
         fontWeight: FontWeight.w700,
       ),
-      bodyText1: textTheme.bodyText1.copyWith(
+      bodyText1: textTheme.bodyText1!.copyWith(
         color: Colors.black,
         fontSize: rem(1),
         fontWeight: FontWeight.w400,
       ),
-      bodyText2: textTheme.bodyText2.copyWith(
+      bodyText2: textTheme.bodyText2!.copyWith(
         color: Colors.black,
         fontSize: rem(1),
         fontWeight: FontWeight.w800,
       ),
-      button: textTheme.button.copyWith(
+      button: textTheme.button!.copyWith(
         fontSize: px(20),
         fontWeight: FontWeight.w900,
       ),
@@ -68,7 +68,7 @@ class AppTheme {
         color: AppColors.background,
         textTheme: textTheme,
         iconTheme: IconThemeData(
-          color: textTheme.bodyText1.color,
+          color: textTheme.bodyText1!.color,
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(

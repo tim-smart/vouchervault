@@ -7,7 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/vouchers_bloc.dart';
 import 'package:vouchervault/lib/option_of_string.dart';
-import 'package:vouchervault/models/models.dart';
+import 'package:vouchervault/models/voucher.dart';
 import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
 
@@ -16,7 +16,7 @@ part 'voucher_dialog_container.g.dart';
 @hwidget
 Widget voucherDialogContainer(
   BuildContext context, {
-  @required Voucher voucher,
+  required Voucher voucher,
 }) {
   final bloc = useBlocStream<VouchersBloc>();
   final vouchersState = useBlocStreamState<VouchersBloc, VouchersState>();
@@ -69,7 +69,7 @@ Widget voucherDialogContainer(
           ],
         ),
       ).then((removed) {
-        if (!removed) return;
+        if (!removed!) return;
         Navigator.pop(context);
       });
 

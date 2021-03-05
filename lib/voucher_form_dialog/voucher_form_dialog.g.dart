@@ -7,7 +7,7 @@ part of 'voucher_form_dialog.dart';
 // **************************************************************************
 
 class VoucherFormDialog extends HookWidget {
-  const VoucherFormDialog({Key key, this.initialValue = const None()})
+  const VoucherFormDialog({Key? key, this.initialValue = const None()})
       : super(key: key);
 
   final Option<Voucher> initialValue;

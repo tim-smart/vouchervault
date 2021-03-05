@@ -7,7 +7,7 @@ part of 'barcode_scanner_field.dart';
 // **************************************************************************
 
 class _ScanButton extends StatelessWidget {
-  const _ScanButton(this.barcodeType, this.data, this.onScan, {Key key})
+  const _ScanButton(this.barcodeType, this.data, this.onScan, {Key? key})
       : super(key: key);
 
   final Option<Barcode> barcodeType;

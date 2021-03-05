@@ -7,7 +7,7 @@ part of 'vouchers_menu_container.dart';
 // **************************************************************************
 
 class VouchersMenuContainer extends HookWidget {
-  const VouchersMenuContainer({Key key}) : super(key: key);
+  const VouchersMenuContainer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => vouchersMenuContainer();

@@ -45,9 +45,9 @@ Widget voucherFormDialog(
           child: ElevatedButton(
             child: Text(action),
             onPressed: () {
-              if (formKey.currentState.saveAndValidate()) {
+              if (formKey.currentState!.saveAndValidate()) {
                 final voucher =
-                    Voucher.fromFormValue(formKey.currentState.value);
+                    Voucher.fromFormValue(formKey.currentState!.value);
 
                 Navigator.pop(
                   context,

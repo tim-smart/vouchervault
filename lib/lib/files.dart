@@ -16,7 +16,7 @@ Future<File> writeString(String filename, String data) =>
 Future<Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
   PlatformFile f,
 ) =>
-    f.readStream
+    f.readStream!
         .reduce((bytes, chunk) => bytes + chunk)
         .then((bytes) => tuple2(f, bytes));
 

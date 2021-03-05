@@ -9,8 +9,8 @@ part 'app_scaffold.g.dart';
 @swidget
 Widget appScaffold(
   BuildContext context, {
-  @required String title,
-  @required List<Widget> slivers,
+  required String title,
+  required List<Widget> slivers,
   List<Widget> actions = const [],
   Option<Widget> floatingActionButton = const None(),
   bool leading = false,
@@ -38,7 +38,7 @@ Widget appScaffold(
             ),
             title: Text(
               title,
-              style: theme.textTheme.headline2
+              style: theme.textTheme.headline2!
                   .copyWith(fontSize: AppTheme.rem(1.2)),
             ),
           ),

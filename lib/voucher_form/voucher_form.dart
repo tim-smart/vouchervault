@@ -15,8 +15,8 @@ part 'voucher_form.g.dart';
 @swidget
 Widget voucherForm(
   BuildContext context, {
-  @required GlobalKey<FormBuilderState> formKey,
-  @required Voucher initialValue,
+  required GlobalKey<FormBuilderState> formKey,
+  required Voucher initialValue,
 }) {
   final theme = Theme.of(context);
   final initialFormValue = initialValue.toFormValue();
@@ -44,11 +44,11 @@ Widget voucherForm(
           valueTransformer: (s) =>
               optionOf(s).bind((s) => s.isEmpty ? none() : some(s)) | null,
           barcodeBuilder: (context) =>
-              optionOf(formKey.currentState.fields['codeType'])
-                  .map((f) => f.value as String)
+              optionOf(formKey.currentState!.fields['codeType'])
+                  .map<String>((f) => f.value)
                   .orElse(() => optionOf(initialFormValue['codeType']))
                   .bind(barcode.fromCodeTypeJson),
-          onScan: some((f) => optionOf(formKey.currentState.fields['codeType'])
+          onScan: some((f) => optionOf(formKey.currentState!.fields['codeType'])
               .map((f) => f.didChange)
               .map((didChange) =>
                   didChange(barcode.codeTypeValueFromFormat(f)))),
@@ -63,10 +63,12 @@ Widget voucherForm(
           options: VoucherCodeType.values
               .map((t) => FormBuilderFieldOption(
                     value: V.codeTypeToJson(t),
-                    child: Text(V.codeTypeLabel(t),
-                        style: theme.textTheme.bodyText2.copyWith(
-                          fontSize: AppTheme.rem(0.8),
-                        )),
+                    child: Text(
+                      V.codeTypeLabel(t),
+                      style: theme.textTheme.bodyText2!.copyWith(
+                        fontSize: AppTheme.rem(0.8),
+                      ),
+                    ),
                   ))
               .toList(),
           validator: FormBuilderValidators.required(context),
@@ -80,7 +82,8 @@ Widget voucherForm(
             labelText: 'Expires',
           ),
           format: DateFormat('d/M/y'),
-          valueTransformer: (d) => optionOf(d).map((d) => d.toString()) | null,
+          valueTransformer: (d) =>
+              optionOf(d).map((d) => d.toString()).toNullable(),
         ),
         FormBuilderSwitch(
           name: 'removeOnceExpired',

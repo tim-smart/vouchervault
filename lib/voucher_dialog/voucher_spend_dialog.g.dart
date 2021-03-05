@@ -7,7 +7,7 @@ part of 'voucher_spend_dialog.dart';
 // **************************************************************************
 
 class VoucherSpendDialog extends HookWidget {
-  const VoucherSpendDialog({Key key}) : super(key: key);
+  const VoucherSpendDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => voucherSpendDialog(_context);

@@ -8,9 +8,9 @@ part of 'app_scaffold.dart';
 
 class AppScaffold extends StatelessWidget {
   const AppScaffold(
-      {Key key,
-      @required this.title,
-      @required this.slivers,
+      {Key? key,
+      required this.title,
+      required this.slivers,
       this.actions = const [],
       this.floatingActionButton = const None(),
       this.leading = false})

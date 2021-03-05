@@ -411,9 +411,11 @@ packages:
   functional_widget:
     dependency: "direct dev"
     description:
-      name: functional_widget
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: functional_widget
+      ref: null-safety
+      resolved-ref: a52765dcc6d7ccdc6bf999fb4cf56a31b1c6a3af
+      url: "https://github.com/tim-smart/functional_widget"
+    source: git
     version: "0.8.1"
   functional_widget_annotation:
     dependency: "direct main"
@@ -498,14 +500,14 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "4.0.0"
   json_serializable:
     dependency: "direct dev"
     description:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.5.1"
+    version: "4.0.2"
   logging:
     dependency: transitive
     description:

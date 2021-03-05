@@ -4,7 +4,7 @@ import 'package:time/time.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/lib.dart';
-import 'package:vouchervault/models/models.dart';
+import 'package:vouchervault/models/voucher.dart';
 
 DateTime endOfDay(DateTime dt) => dt.copyWith(
       hour: 24,
@@ -67,7 +67,7 @@ Widget buildVoucherDetailRow(
     SizedBox(width: AppTheme.space2),
     Text(
       text,
-      style: theme.textTheme.bodyText1.copyWith(
+      style: theme.textTheme.bodyText1!.copyWith(
         color: textColor,
       ),
     ),

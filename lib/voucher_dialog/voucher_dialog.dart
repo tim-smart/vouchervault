@@ -19,12 +19,12 @@ part 'voucher_dialog.g.dart';
 @hwidget
 Widget voucherDialog(
   BuildContext context, {
-  @required Voucher voucher,
-  @required VoidCallback onTapBarcode,
-  @required void Function(Voucher) onEdit,
-  @required VoidCallback onClose,
-  @required void Function(Voucher) onRemove,
-  @required void Function(Voucher) onSpend,
+  required Voucher voucher,
+  required VoidCallback onTapBarcode,
+  required void Function(Voucher) onEdit,
+  required VoidCallback onClose,
+  required void Function(Voucher) onRemove,
+  required void Function(Voucher) onSpend,
 }) {
   // Full brightness unless text barcode
   useFullBrightness(enabled: voucher.codeType != V.VoucherCodeType.TEXT);
@@ -116,8 +116,8 @@ Widget voucherDialog(
 @swidget
 Widget _dialogWrap(
   BuildContext context, {
-  @required ThemeData theme,
-  @required Widget child,
+  required ThemeData theme,
+  required Widget child,
 }) =>
     Theme(
       data: theme,
@@ -140,9 +140,9 @@ Widget _dialogWrap(
 @swidget
 Widget _barcode(
   BuildContext context, {
-  @required V.VoucherCodeType type,
-  @required String data,
-  @required VoidCallback onTap,
+  required V.VoucherCodeType type,
+  required String data,
+  required VoidCallback onTap,
 }) {
   final theme = Theme.of(context);
   final barcode = B.fromCodeType(type);
@@ -170,7 +170,7 @@ Widget _barcode(
             (type) => BarcodeWidget(
               backgroundColor: Colors.transparent,
               data: data,
-              style: theme.textTheme.bodyText2.copyWith(
+              style: theme.textTheme.bodyText2!.copyWith(
                 color: Colors.black,
               ),
               barcode: type,

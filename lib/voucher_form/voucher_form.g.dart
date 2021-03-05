@@ -8,7 +8,7 @@ part of 'voucher_form.dart';
 
 class VoucherForm extends StatelessWidget {
   const VoucherForm(
-      {Key key, @required this.formKey, @required this.initialValue})
+      {Key? key, required this.formKey, required this.initialValue})
       : super(key: key);
 
   final GlobalKey<FormBuilderState> formKey;
