@@ -46,6 +46,6 @@ Widget appScaffold(
         ...slivers,
       ],
     ),
-    floatingActionButton: floatingActionButton | null,
+    floatingActionButton: floatingActionButton.toNullable(),
   );
 }

@@ -89,14 +89,19 @@ Widget voucherDialog(
                 onPressed: () => onRemove(voucher),
               ),
               SizedBox(width: AppTheme.space3),
-              RaisedButton(
-                color: theme.accentColor,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: theme.accentColor,
+                ),
                 onPressed: () => onEdit(voucher),
                 child: Text('Edit'),
               ),
               SizedBox(width: AppTheme.space3),
-              RaisedButton(
-                color: Colors.white,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  onPrimary: Colors.black,
+                ),
                 onPressed: onClose,
                 child: Text('Close'),
               ),

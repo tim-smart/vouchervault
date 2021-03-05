@@ -18,14 +18,14 @@ Widget voucherItem(
       color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
   final theme = Theme.of(context);
 
-  return RaisedButton(
-    padding: EdgeInsets.zero,
-    elevation: 10,
-    focusElevation: 12,
-    highlightElevation: 12,
-    shape: RoundedRectangleBorder(),
-    color: color,
-    textColor: textColor,
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      padding: EdgeInsets.zero,
+      elevation: 10,
+      shape: RoundedRectangleBorder(),
+      primary: color,
+      onSurface: textColor,
+    ),
     onPressed: onPressed,
     child: SizedBox(
       width: double.infinity,

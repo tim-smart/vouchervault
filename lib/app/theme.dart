@@ -55,9 +55,12 @@ class AppTheme {
         accentColor: Colors.red[800],
         backgroundColor: AppColors.background,
       ),
-      buttonTheme: ButtonThemeData(
-        height: rem(2.5),
-        textTheme: ButtonTextTheme.primary,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(0, rem(2.5)),
+          primary: Colors.red,
+          onPrimary: Colors.white,
+        ),
       ),
       appBarTheme: AppBarTheme(
         brightness: Brightness.light,

@@ -55,11 +55,11 @@ Widget voucherDialogContainer(
           title: Text('Are you sure?'),
           content: Text('That you want to remove this voucher?'),
           actions: [
-            FlatButton(
+            TextButton(
               onPressed: () => Navigator.pop(context, false),
               child: Text('Cancel'),
             ),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 bloc.add(VoucherActions.remove(v));
                 Navigator.pop(context, true);

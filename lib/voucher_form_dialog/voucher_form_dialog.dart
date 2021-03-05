@@ -42,7 +42,7 @@ Widget voucherFormDialog(
           top: AppTheme.space3,
         ),
         sliver: SliverToBoxAdapter(
-          child: RaisedButton(
+          child: ElevatedButton(
             child: Text(action),
             onPressed: () {
               if (formKey.currentState.saveAndValidate()) {

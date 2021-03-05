@@ -22,11 +22,11 @@ Widget voucherSpendDialog(BuildContext context) {
       onSubmitted: (s) => submit(),
     ),
     actions: [
-      FlatButton(
+      TextButton(
         onPressed: () => Navigator.pop(context, null),
         child: Text('Cancel'),
       ),
-      FlatButton(
+      TextButton(
         onPressed: submit,
         child: Text('OK'),
       ),

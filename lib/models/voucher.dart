@@ -68,9 +68,7 @@ class Voucher extends Equatable {
     this.color = VoucherColor.GREY,
   }) : this.uuid = uuid ?? uuidgen.v4();
 
-  @JsonKey(nullable: false)
   final String uuid;
-
   final String description;
   final String code;
   final VoucherCodeType codeType;

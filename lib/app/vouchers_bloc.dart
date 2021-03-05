@@ -42,8 +42,8 @@ typedef VoucherAction = Future<void> Function(
 
 class VoucherActions {
   static final VoucherAction init = (b, add) async => add(b.value.copyWith(
-        vouchers: b.value.vouchers.fold(
-          <Voucher>[],
+        vouchers: b.value.vouchers.fold<List<Voucher>>(
+          [],
           (acc, v) => (v.removeOnceExpired &&
                   v.expiresOption
                       .map(endOfDay)

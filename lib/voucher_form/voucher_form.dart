@@ -29,36 +29,32 @@ Widget voucherForm(
         SizedBox(height: AppTheme.space1),
         FormBuilderTextField(
           autofocus: true,
-          attribute: 'description',
+          name: 'description',
           textCapitalization: TextCapitalization.words,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: 'Description',
           ),
-          validators: [FormBuilderValidators.required()],
+          validator: FormBuilderValidators.required(context),
         ),
         SizedBox(height: AppTheme.space3),
-        FormBuilderCustomField(
-          attribute: 'code',
-          formField: BarcodeScannerField(
-            labelText: 'Code',
-            barcodeBuilder: (context) =>
-                optionOf(formKey.currentState.fields['codeType'])
-                    .map((f) => f.currentState.value as String)
-                    .orElse(() => optionOf(initialFormValue['codeType']))
-                    .bind(barcode.fromCodeTypeJson),
-            onScan: some((f) =>
-                optionOf(formKey.currentState.fields['codeType'])
-                    .map((f) => f.currentState.didChange)
-                    .map((didChange) =>
-                        didChange(barcode.codeTypeValueFromFormat(f)))),
-          ),
+        BarcodeScannerField(
+          name: 'code',
+          labelText: 'Code',
           valueTransformer: (s) =>
-              optionOf(s as String).bind((s) => s.isEmpty ? none() : some(s)) |
-              null,
+              optionOf(s).bind((s) => s.isEmpty ? none() : some(s)) | null,
+          barcodeBuilder: (context) =>
+              optionOf(formKey.currentState.fields['codeType'])
+                  .map((f) => f.value as String)
+                  .orElse(() => optionOf(initialFormValue['codeType']))
+                  .bind(barcode.fromCodeTypeJson),
+          onScan: some((f) => optionOf(formKey.currentState.fields['codeType'])
+              .map((f) => f.didChange)
+              .map((didChange) =>
+                  didChange(barcode.codeTypeValueFromFormat(f)))),
         ),
         FormBuilderChoiceChip(
-          attribute: 'codeType',
+          name: 'codeType',
           alignment: WrapAlignment.spaceAround,
           decoration: InputDecoration(
             border: InputBorder.none,
@@ -73,11 +69,11 @@ Widget voucherForm(
                         )),
                   ))
               .toList(),
-          validators: [FormBuilderValidators.required()],
+          validator: FormBuilderValidators.required(context),
         ),
         SizedBox(height: AppTheme.space3),
         FormBuilderDateTimePicker(
-          attribute: 'expires',
+          name: 'expires',
           inputType: InputType.date,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
@@ -87,8 +83,8 @@ Widget voucherForm(
           valueTransformer: (d) => optionOf(d).map((d) => d.toString()) | null,
         ),
         FormBuilderSwitch(
-          attribute: 'removeOnceExpired',
-          label: Text(
+          name: 'removeOnceExpired',
+          title: Text(
             'Remove once expired',
             style: theme.textTheme.bodyText1,
           ),
@@ -98,24 +94,22 @@ Widget voucherForm(
           ),
         ),
         SizedBox(height: AppTheme.space3),
-        FormBuilderCustomField<double>(
-          attribute: 'balance',
-          formField: FormField<double>(
-            builder: (field) => TextFormField(
-              initialValue: optionOf(field.value).map((d) => d.toString()) | '',
-              onChanged: (s) =>
-                  field.didChange(s.isEmpty ? null : double.parse(s)),
-              keyboardType: TextInputType.numberWithOptions(signed: true),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Balance',
-              ),
+        FormBuilderField<double>(
+          name: 'balance',
+          builder: (field) => TextFormField(
+            initialValue: optionOf(field.value).map((d) => d.toString()) | '',
+            onChanged: (s) =>
+                field.didChange(s.isEmpty ? null : double.parse(s)),
+            keyboardType: TextInputType.numberWithOptions(signed: true),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Balance',
             ),
           ),
         ),
         SizedBox(height: AppTheme.space3),
         FormBuilderChoiceChip(
-          attribute: 'color',
+          name: 'color',
           decoration: InputDecoration(
             border: InputBorder.none,
           ),
