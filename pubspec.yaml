@@ -32,13 +32,24 @@ dependencies:
   time: ^1.5.0-nullsafety.1
   timeago: ^3.0.1
   uuid: ^3.0.1
-  
+
 dependency_overrides:
+  convert: ^3.0.0
   crypto: ^3.0.0-nullsafety.0
   date_range_picker:
     git:
       url: https://github.com/LempereurBenjamin/date_range_picker
   flutter_keyboard_visibility: ^5.0.0
+  functional_widget:
+    git:
+      url: https://github.com/tim-smart/functional_widget
+      ref: null-safety
+      path: functional_widget
+  functional_widget_annotation:
+    git:
+      url: https://github.com/tim-smart/functional_widget
+      ref: null-safety
+      path: functional_widget_annotation
   image: ^3.0.1
   intl: ^0.17.0
   json_annotation: ^4.0.0
@@ -48,11 +59,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.9.0
   flutter_test:
     sdk: flutter
-  functional_widget:
-    git:
-      url: https://github.com/tim-smart/functional_widget
-      ref: null-safety
-      path: functional_widget
+  functional_widget: ^0.8.0
   json_serializable: ^4.0.0
 
 flutter:

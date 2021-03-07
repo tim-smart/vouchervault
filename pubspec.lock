@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "14.0.0"
+    version: "17.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.41.2"
+    version: "1.1.0"
   archive:
     dependency: transitive
     description:
@@ -91,7 +91,7 @@ packages:
       name: build
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.2"
+    version: "1.6.3"
   build_config:
     dependency: transitive
     description:
@@ -112,7 +112,7 @@ packages:
       name: build_resolvers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.3"
+    version: "1.5.4"
   build_runner:
     dependency: "direct dev"
     description:
@@ -191,12 +191,12 @@ packages:
     source: hosted
     version: "1.15.0"
   convert:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: convert
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "3.0.0"
   crypto:
     dependency: "direct overridden"
     description:
@@ -217,7 +217,7 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.12"
+    version: "1.3.14"
   dartz:
     dependency: "direct main"
     description:
@@ -413,16 +413,18 @@ packages:
     description:
       path: functional_widget
       ref: null-safety
-      resolved-ref: a52765dcc6d7ccdc6bf999fb4cf56a31b1c6a3af
+      resolved-ref: "4b563a5acd23d1306c7bcd5762445e45d7c8036f"
       url: "https://github.com/tim-smart/functional_widget"
     source: git
     version: "0.8.1"
   functional_widget_annotation:
     dependency: "direct main"
     description:
-      name: functional_widget_annotation
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: functional_widget_annotation
+      ref: null-safety
+      resolved-ref: "4b563a5acd23d1306c7bcd5762445e45d7c8036f"
+      url: "https://github.com/tim-smart/functional_widget"
+    source: git
     version: "0.8.0"
   glob:
     dependency: transitive
@@ -549,7 +551,7 @@ packages:
       name: package_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.3"
+    version: "2.0.0"
   path:
     dependency: transitive
     description:
@@ -584,7 +586,7 @@ packages:
       name: path_provider_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   path_provider_windows:
     dependency: transitive
     description:
@@ -696,7 +698,7 @@ packages:
       name: random_string
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0-nullsafety"
+    version: "2.1.0"
   rating_bar:
     dependency: transitive
     description:
