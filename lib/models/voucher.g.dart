@@ -6,22 +6,26 @@ part of 'voucher.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Voucher _$VoucherFromJson(Map<String, dynamic> json) {
-  return Voucher(
+_$_Voucher _$_$_VoucherFromJson(Map<String, dynamic> json) {
+  return _$_Voucher(
     uuid: json['uuid'] as String?,
-    description: json['description'] as String,
+    description: json['description'] as String? ?? '',
     code: json['code'] as String?,
-    codeType: _$enumDecode(_$VoucherCodeTypeEnumMap, json['codeType']),
+    codeType:
+        _$enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']) ??
+            VoucherCodeType.CODE128,
     expires: json['expires'] == null
         ? null
         : DateTime.parse(json['expires'] as String),
     removeOnceExpired: json['removeOnceExpired'] as bool? ?? true,
     balance: (json['balance'] as num?)?.toDouble(),
-    color: _$enumDecode(_$VoucherColorEnumMap, json['color']),
+    color: _$enumDecodeNullable(_$VoucherColorEnumMap, json['color']) ??
+        VoucherColor.GREY,
   );
 }
 
-Map<String, dynamic> _$VoucherToJson(Voucher instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_VoucherToJson(_$_Voucher instance) =>
+    <String, dynamic>{
       'uuid': instance.uuid,
       'description': instance.description,
       'code': instance.code,
@@ -56,6 +60,17 @@ K _$enumDecode<K, V>(
       return MapEntry(unknownValue, enumValues.values.first);
     },
   ).key;
+}
+
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
+  dynamic source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$VoucherCodeTypeEnumMap = {

@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
+part 'voucher.freezed.dart';
 part 'voucher.g.dart';
 
 final uuidgen = Uuid();
@@ -55,74 +56,32 @@ VoucherCodeType codeTypeFromJson(String s) =>
     optionOf(_$enumDecode(_$VoucherCodeTypeEnumMap, s))
         .getOrElse(() => VoucherCodeType.CODE128);
 
-@JsonSerializable()
-class Voucher extends Equatable {
-  Voucher({
+@freezed
+class Voucher with _$Voucher {
+  Voucher._();
+  factory Voucher({
     String? uuid,
-    this.description = '',
-    this.code,
-    this.codeType = VoucherCodeType.CODE128,
-    this.expires,
-    this.removeOnceExpired = true,
-    this.balance,
-    this.color = VoucherColor.GREY,
-  }) : this.uuid = uuid ?? uuidgen.v4();
+    @Default('') String description,
+    String? code,
+    @Default(VoucherCodeType.CODE128) VoucherCodeType codeType,
+    DateTime? expires,
+    @Default(true) bool removeOnceExpired,
+    double? balance,
+    @Default(VoucherColor.GREY) VoucherColor color,
+  }) = _Voucher;
+  factory Voucher.fromJson(dynamic json) => _$VoucherFromJson(json);
 
-  late final String uuid;
-  final String description;
-  final String? code;
-  final VoucherCodeType codeType;
-  Option<String> get codeOption => optionOf(code);
-  final DateTime? expires;
-  Option<DateTime> get expiresOption => optionOf(expires);
-  @JsonKey(defaultValue: true)
-  final bool removeOnceExpired;
-  final double? balance;
-  Option<double> get balanceOption => optionOf(balance);
-  final VoucherColor color;
+  late final Option<String> codeOption = optionOf(code);
+  late final Option<DateTime> expiresOption = optionOf(expires);
+  late final Option<double> balanceOption = optionOf(balance);
+  late final bool hasDetails = expiresOption.isSome() || balanceOption.isSome();
 
-  bool get hasDetails => expiresOption.isSome() || balanceOption.isSome();
-
-  @override
-  List<Object?> get props => [
-        description,
-        code,
-        codeType,
-        expires,
-        removeOnceExpired,
-        balance,
-        color,
-      ];
-
-  dynamic toJson() => _$VoucherToJson(this);
-  static Voucher fromJson(dynamic json) => _$VoucherFromJson(json);
-
-  static Voucher fromFormValue(Map<String, dynamic> json) => fromJson(json);
+  static Voucher fromFormValue(Map<String, dynamic> json) =>
+      Voucher.fromJson(json);
   dynamic toFormValue() => <String, dynamic>{
         ...toJson(),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
         'expires': expires,
-        'color': _$VoucherColorEnumMap[color],
+        'color': _$VoucherColorEnumMap[this.color],
       };
-
-  Voucher copyWith({
-    String? uuid,
-    String? description,
-    String? code,
-    VoucherCodeType? codeType,
-    Option<DateTime>? expires,
-    bool? removeOnceExpired,
-    Option<double>? balance,
-    VoucherColor? color,
-  }) =>
-      Voucher(
-        uuid: uuid ?? this.uuid,
-        description: description ?? this.description,
-        code: code ?? this.code,
-        codeType: codeType ?? this.codeType,
-        expires: (expires ?? expiresOption).toNullable(),
-        removeOnceExpired: removeOnceExpired ?? this.removeOnceExpired,
-        balance: (balance ?? balanceOption).toNullable(),
-        color: color ?? this.color,
-      );
 }

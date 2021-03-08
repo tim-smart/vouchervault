@@ -1,40 +1,37 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
 import 'package:share/share.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/lib/files.dart' as files;
 import 'package:vouchervault/models/voucher.dart';
 
-class VouchersState extends Equatable {
-  VouchersState(this.vouchers) {
-    vouchers.sort((a, b) {
-      final compare = a.description.compareTo(b.description);
-      final expiresCompare = a.expiresOption
-          .map((d) => d.millisecondsSinceEpoch)
-          .getOrElse(() => 0)
-          .compareTo(b.expiresOption
-              .map((d) => d.millisecondsSinceEpoch)
-              .getOrElse(() => 0));
+part 'vouchers_bloc.freezed.dart';
 
-      return compare != 0 ? compare : expiresCompare;
-    });
-  }
+@freezed
+class VouchersState with _$VouchersState {
+  VouchersState._();
+  factory VouchersState(List<Voucher> vouchers) = _VouchersState;
 
-  final List<Voucher> vouchers;
+  late final List<Voucher> sortedVouchers = vouchers.sorted((a, b) {
+    final compare = a.description.compareTo(b.description);
+    final expiresCompare = a.expiresOption
+        .map((d) => d.millisecondsSinceEpoch)
+        .getOrElse(() => 0)
+        .compareTo(b.expiresOption
+            .map((d) => d.millisecondsSinceEpoch)
+            .getOrElse(() => 0));
 
-  @override
-  List<Object> get props => vouchers;
+    return compare != 0 ? compare : expiresCompare;
+  });
 
   dynamic toJson() => vouchers.map((v) => v.toJson()).toList();
   static VouchersState fromJson(dynamic json) => VouchersState(
         (json as List<dynamic>).map((j) => Voucher.fromJson(j)).toList(),
       );
-
-  VouchersState copyWith({List<Voucher>? vouchers}) =>
-      VouchersState(vouchers ?? this.vouchers);
 }
 
 typedef VoucherAction = Future<void> Function(
@@ -73,7 +70,7 @@ class VoucherActions {
       (s) => (b, add) => s
           .bind((s) => catching(() => double.parse(s)).toOption())
           .bind((amount) => v.balanceOption.map((balance) => balance - amount))
-          .map((balance) => update(v.copyWith(balance: some(balance))))
+          .map((balance) => update(v.copyWith(balance: balance)))
           .fold(() => Future.value(), (action) => action(b, add));
 
   static VoucherAction remove(Voucher voucher) => (b, add) async {
@@ -87,7 +84,7 @@ class VoucherActions {
       .map((r) => String.fromCharCodes(r.value2))
       .bind((json) => catching(() => jsonDecode(json)).toOption())
       .bind(optionOf)
-      .map(VouchersState.fromJson)
+      .map((json) => VouchersState.fromJson(json))
       .map(add));
 
   static VoucherAction export = (b, add) async => files

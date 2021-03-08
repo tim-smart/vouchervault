@@ -225,22 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.0-nullsafety.1"
-  date_range_picker:
-    dependency: "direct overridden"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "87993aa58bbfff82d0f40d7b14edabfdc6d73eef"
-      url: "https://github.com/LempereurBenjamin/date_range_picker"
-    source: git
-    version: "1.0.6"
   datetime_picker_formfield:
     dependency: transitive
     description:
       name: datetime_picker_formfield
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "2.0.0"
   dropdown_search:
     dependency: transitive
     description:
@@ -248,13 +239,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.9"
-  equatable:
-    dependency: "direct main"
-    description:
-      name: equatable
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   eyro_toast:
     dependency: "direct main"
     description:
@@ -336,7 +320,7 @@ packages:
       name: flutter_form_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.0"
+    version: "5.0.0-alpha.1"
   flutter_hooks:
     dependency: "direct main"
     description:
@@ -395,19 +379,33 @@ packages:
       name: flutter_touch_spin
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "2.0.0-nullsafety.0"
   flutter_typeahead:
     dependency: transitive
     description:
       name: flutter_typeahead
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.3"
+    version: "2.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed:
+    dependency: "direct dev"
+    description:
+      name: freezed
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.0+1"
+  freezed_annotation:
+    dependency: "direct main"
+    description:
+      name: freezed_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.0"
   functional_widget:
     dependency: "direct dev"
     description:
@@ -958,4 +956,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=1.22.0"
+  flutter: ">=2.0.0"
