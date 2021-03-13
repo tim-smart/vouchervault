@@ -411,7 +411,7 @@ packages:
     description:
       path: functional_widget
       ref: null-safety
-      resolved-ref: fde8c78dc5d7957dac52bfc9bc8a12c321253b81
+      resolved-ref: "1ff4fccbe6f787a6e83ca5ecc3ac17d1b46d271d"
       url: "https://github.com/tim-smart/functional_widget"
     source: git
     version: "0.8.1"
@@ -420,7 +420,7 @@ packages:
     description:
       path: functional_widget_annotation
       ref: null-safety
-      resolved-ref: fde8c78dc5d7957dac52bfc9bc8a12c321253b81
+      resolved-ref: "1ff4fccbe6f787a6e83ca5ecc3ac17d1b46d271d"
       url: "https://github.com/tim-smart/functional_widget"
     source: git
     version: "0.8.0"
