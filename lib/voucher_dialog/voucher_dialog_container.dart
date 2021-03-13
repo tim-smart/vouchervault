@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:eyro_toast/eyro_toast.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,8 @@ Widget voucherDialogContainer(
 }) {
   final bloc = useBlocStream<VouchersBloc>();
   final vouchersState = useBlocStreamState<VouchersBloc, VouchersState>();
-  final v = catching(() =>
-          vouchersState.vouchers.firstWhere((v) => v.uuid == voucher.uuid))
+  final v = optionOf(vouchersState.vouchers
+          .firstWhereOrNull((v) => v.uuid == voucher.uuid))
       .getOrElse(() => voucher);
 
   void onTapBarcode() => v.codeOption.map((code) {

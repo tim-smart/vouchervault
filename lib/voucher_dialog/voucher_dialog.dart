@@ -3,11 +3,10 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/hooks/hooks.dart';
-import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/lib/barcode.dart' as B;
+import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/models/voucher.dart' as V;
 import 'package:vouchervault/models/voucher.dart' show Voucher, VoucherCodeType;
 
