@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
@@ -34,11 +35,11 @@ class VouchersState with _$VouchersState {
       );
 }
 
-typedef VoucherAction = Future<void> Function(
+typedef VoucherAction = FutureOr<void> Function(
     VouchersBloc, void Function(VouchersState));
 
 class VoucherActions {
-  static final VoucherAction init = (b, add) async => add(b.value.copyWith(
+  static final VoucherAction init = (b, add) => add(b.value.copyWith(
         vouchers: b.value.vouchers.fold<List<Voucher>>(
           [],
           (acc, v) => (v.removeOnceExpired &&
@@ -51,34 +52,31 @@ class VoucherActions {
         ),
       ));
 
-  static VoucherAction add(Voucher voucher) => (b, add) async {
-        add(b.value.copyWith(vouchers: [
-          ...b.value.vouchers,
-          voucher,
-        ]));
-      };
+  static VoucherAction add(Voucher voucher) =>
+      (b, add) => add(b.value.copyWith(vouchers: [
+            ...b.value.vouchers,
+            voucher,
+          ]));
 
-  static VoucherAction update(Voucher voucher) => (b, add) async {
-        add(b.value.copyWith(
-          vouchers: b.value.vouchers
-              .map((v) => v.uuid == voucher.uuid ? voucher : v)
-              .toList(),
-        ));
-      };
+  static VoucherAction update(Voucher voucher) =>
+      (b, add) => add(b.value.copyWith(
+            vouchers: b.value.vouchers
+                .map((v) => v.uuid == voucher.uuid ? voucher : v)
+                .toList(),
+          ));
 
   static VoucherAction Function(Option<String>) maybeUpdateBalance(Voucher v) =>
       (s) => (b, add) => s
           .bind((s) => catching(() => double.parse(s)).toOption())
           .bind((amount) => v.balanceOption.map((balance) => balance - amount))
           .map((balance) => update(v.copyWith(balance: balance)))
-          .fold(() => Future.value(), (action) => action(b, add));
+          .map((action) => action(b, add));
 
-  static VoucherAction remove(Voucher voucher) => (b, add) async {
-        add(b.value.copyWith(
-          vouchers:
-              b.value.vouchers.where((v) => v.uuid != voucher.uuid).toList(),
-        ));
-      };
+  static VoucherAction remove(Voucher voucher) =>
+      (b, add) => add(b.value.copyWith(
+            vouchers:
+                b.value.vouchers.where((v) => v.uuid != voucher.uuid).toList(),
+          ));
 
   static VoucherAction import = (b, add) => files.pick(['json']).then((r) => r
       .map((r) => String.fromCharCodes(r.value2))
@@ -87,7 +85,7 @@ class VoucherActions {
       .map((json) => VouchersState.fromJson(json))
       .map(add));
 
-  static VoucherAction export = (b, add) async => files
+  static VoucherAction export = (b, add) => files
       .writeString('vouchervault.json', jsonEncode(b.value.toJson()))
       .then((file) => Share.shareFiles(
             [file.path],
