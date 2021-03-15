@@ -398,32 +398,28 @@ packages:
       name: freezed
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0+1"
+    version: "0.14.1"
   freezed_annotation:
     dependency: "direct main"
     description:
       name: freezed_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0"
+    version: "0.14.1"
   functional_widget:
     dependency: "direct dev"
     description:
-      path: functional_widget
-      ref: null-safety
-      resolved-ref: "1ff4fccbe6f787a6e83ca5ecc3ac17d1b46d271d"
-      url: "https://github.com/tim-smart/functional_widget"
-    source: git
-    version: "0.8.1"
+      name: functional_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.0"
   functional_widget_annotation:
     dependency: "direct main"
     description:
-      path: functional_widget_annotation
-      ref: null-safety
-      resolved-ref: "1ff4fccbe6f787a6e83ca5ecc3ac17d1b46d271d"
-      url: "https://github.com/tim-smart/functional_widget"
-    source: git
-    version: "0.8.0"
+      name: functional_widget_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.0"
   glob:
     dependency: transitive
     description:
@@ -932,7 +928,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   xdg_directories:
     dependency: transitive
     description:
