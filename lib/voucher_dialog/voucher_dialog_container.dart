@@ -3,10 +3,11 @@ import 'package:dartz/dartz.dart';
 import 'package:eyro_toast/eyro_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc_stream/flutter_bloc_stream.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/vouchers_bloc.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
+import 'package:vouchervault/vouchers/vouchers_bloc.dart';
 import 'package:vouchervault/lib/option_of_string.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';
@@ -19,8 +20,8 @@ Widget voucherDialogContainer(
   BuildContext context, {
   required Voucher voucher,
 }) {
-  final bloc = useBlocStream<VouchersBloc>();
-  final vouchersState = useBlocStreamState<VouchersBloc, VouchersState>();
+  final bloc = useProvider(vouchersProvider);
+  final vouchersState = useProvider(vouchersProvider.value);
   final v = optionOf(vouchersState.vouchers
           .firstWhereOrNull((v) => v.uuid == voucher.uuid))
       .getOrElse(() => voucher);

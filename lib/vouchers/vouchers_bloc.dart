@@ -5,12 +5,16 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
+import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
 import 'package:share/share.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/lib/files.dart' as files;
 import 'package:vouchervault/models/voucher.dart';
 
 part 'vouchers_bloc.freezed.dart';
+
+final vouchersProvider =
+    BlocStreamProvider((ref) => VouchersBloc()..add(VoucherActions.init));
 
 @freezed
 class VouchersState with _$VouchersState {

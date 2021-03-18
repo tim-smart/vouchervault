@@ -286,13 +286,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_bloc_stream:
-    dependency: "direct main"
-    description:
-      name: flutter_bloc_stream
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.1"
   flutter_chips_input:
     dependency: transitive
     description:
@@ -368,6 +361,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_riverpod:
+    dependency: "direct main"
+    description:
+      name: flutter_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -441,6 +441,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  hooks_riverpod:
+    dependency: "direct main"
+    description:
+      name: hooks_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.1"
   http:
     dependency: transitive
     description:
@@ -700,6 +707,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  riverpod:
+    dependency: "direct main"
+    description:
+      name: riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.1"
+  riverpod_bloc_stream:
+    dependency: "direct main"
+    description:
+      name: riverpod_bloc_stream
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.0"
   rxdart:
     dependency: transitive
     description:
@@ -810,6 +831,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.0"
   stream_channel:
     dependency: transitive
     description:
