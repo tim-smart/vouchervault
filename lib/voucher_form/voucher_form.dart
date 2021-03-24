@@ -1,24 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:intl/intl.dart';
-import 'package:riverpod/riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/barcode_scanner_field/barcode_scanner_field.dart';
+import 'package:vouchervault/lib/barcode.dart' as barcode;
 import 'package:vouchervault/models/voucher.dart'
     show Voucher, VoucherCodeType, VoucherColor;
 import 'package:vouchervault/models/voucher.dart' as V;
-import 'package:vouchervault/lib/barcode.dart' as barcode;
 
 part 'voucher_form.g.dart';
-
-final textEditingProvider = Provider.autoDispose.family((ref, Voucher v) {
-  final c = TextEditingController(text: v.codeOption | '');
-  ref.onDispose(c.dispose);
-  return c;
-});
 
 @swidget
 Widget voucherForm(

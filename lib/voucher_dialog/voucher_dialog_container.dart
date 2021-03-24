@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:eyro_toast/eyro_toast.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
-import 'package:vouchervault/vouchers/vouchers_bloc.dart';
 import 'package:vouchervault/lib/option_of_string.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
+import 'package:vouchervault/vouchers/vouchers_bloc.dart';
 
 part 'voucher_dialog_container.g.dart';
 
@@ -21,10 +19,8 @@ Widget voucherDialogContainer(
   required Voucher voucher,
 }) {
   final bloc = useProvider(vouchersProvider);
-  final vouchersState = useProvider(vouchersProvider.value);
-  final v = optionOf(vouchersState.vouchers
-          .firstWhereOrNull((v) => v.uuid == voucher.uuid))
-      .getOrElse(() => voucher);
+  final v =
+      useProvider(voucherProvider(voucher.uuid ?? '')).getOrElse(() => voucher);
 
   void onTapBarcode() => v.codeOption.map((code) {
         Clipboard.setData(ClipboardData(text: code));

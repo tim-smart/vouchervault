@@ -14,10 +14,10 @@ Widget vouchersMenuContainer() {
   return VouchersMenu(onSelected: (action) {
     switch (action) {
       case VouchersMenuAction.EXPORT:
-        bloc.add(VoucherActions.export);
+        bloc.add(VoucherActions.export());
         break;
       case VouchersMenuAction.IMPORT:
-        bloc.add(VoucherActions.import);
+        bloc.add(VoucherActions.import());
         break;
     }
   });

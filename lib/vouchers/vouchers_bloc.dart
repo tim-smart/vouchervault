@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
 import 'package:share/share.dart';
 import 'package:vouchervault/lib/lib.dart';
@@ -13,8 +14,14 @@ import 'package:vouchervault/models/voucher.dart';
 
 part 'vouchers_bloc.freezed.dart';
 
-final vouchersProvider =
-    BlocStreamProvider((ref) => VouchersBloc()..add(VoucherActions.init));
+final vouchersProvider = BlocStreamProvider(
+  (ref) => VouchersBloc()..add(VoucherActions.removeExpired()),
+);
+
+final voucherProvider = Provider.autoDispose.family((ref, String uuid) {
+  final state = ref.watch(vouchersProvider.value);
+  return optionOf(state.vouchers.firstWhereOrNull((v) => v.uuid == uuid));
+});
 
 @freezed
 class VouchersState with _$VouchersState {
@@ -43,7 +50,7 @@ typedef VoucherAction = FutureOr<void> Function(
     VouchersBloc, void Function(VouchersState));
 
 class VoucherActions {
-  static final VoucherAction init = (b, add) => add(b.value.copyWith(
+  static VoucherAction removeExpired() => (b, add) => add(b.value.copyWith(
         vouchers: b.value.vouchers.fold<List<Voucher>>(
           [],
           (acc, v) => (v.removeOnceExpired &&
@@ -82,14 +89,15 @@ class VoucherActions {
                 b.value.vouchers.where((v) => v.uuid != voucher.uuid).toList(),
           ));
 
-  static VoucherAction import = (b, add) => files.pick(['json']).then((r) => r
-      .map((r) => String.fromCharCodes(r.value2))
-      .bind((json) => catching(() => jsonDecode(json)).toOption())
-      .bind(optionOf)
-      .map((json) => VouchersState.fromJson(json))
-      .map(add));
+  static VoucherAction import() =>
+      (b, add) => files.pick(['json']).then((r) => r
+          .map((r) => String.fromCharCodes(r.value2))
+          .bind((json) => catching(() => jsonDecode(json)).toOption())
+          .bind(optionOf)
+          .map((json) => VouchersState.fromJson(json))
+          .map(add));
 
-  static VoucherAction export = (b, add) => files
+  static VoucherAction export() => (b, add) => files
       .writeString('vouchervault.json', jsonEncode(b.value.toJson()))
       .then((file) => Share.shareFiles(
             [file.path],
