@@ -1,11 +1,12 @@
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart' hide Barcode;
 import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/barcode_scanner_field/barcode_scanner_dialog.dart';
 import 'package:vouchervault/lib/option_of_string.dart';
 
 part 'barcode_scanner_field.g.dart';
@@ -33,14 +34,14 @@ class BarcodeScannerField extends FormBuilderField<String> {
                     builder: (context, controller, child) => _ScanButton(
                       barcodeType,
                       field.value ?? '',
-                      (r) {
+                      (format, data) {
                         controller.value = TextEditingValue(
-                          text: r.rawContent,
+                          text: data,
                           selection: TextSelection.fromPosition(
-                              TextPosition(offset: r.rawContent.length)),
+                              TextPosition(offset: data.length)),
                         );
-                        field.didChange(r.rawContent);
-                        onScan.map((f) => f(r.format));
+                        field.didChange(data);
+                        onScan.map((f) => f(format));
                       },
                     ),
                   ),
@@ -81,7 +82,7 @@ Widget _scanButton(
   BuildContext context,
   Option<Barcode> barcodeType,
   String data,
-  void onScan(ScanResult r),
+  void onScan(BarcodeFormat, String),
 ) =>
     TextButton(
       style: TextButton.styleFrom(
@@ -89,10 +90,17 @@ Widget _scanButton(
         primary: Colors.black,
         minimumSize: Size.fromHeight(AppTheme.rem(7)),
       ),
-      onPressed: () => BarcodeScanner.scan().then((r) {
-        if (r.type != ResultType.Barcode) return;
-        onScan(r);
-      }),
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => BarcodeScannerDialog(
+            onScan: (format, data) {
+              onScan(format, data);
+              Navigator.of(context).pop();
+            },
+          ),
+          fullscreenDialog: true,
+        ));
+      },
       child: Center(
         child: Option.map2(
           barcodeType,

@@ -14,7 +14,7 @@ class _ScanButton extends StatelessWidget {
 
   final String data;
 
-  final void Function(ScanResult) onScan;
+  final void Function(dynamic, dynamic) onScan;
 
   @override
   Widget build(BuildContext _context) =>
