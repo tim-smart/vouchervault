@@ -14,8 +14,11 @@ ValueNotifier<Option<QRViewController>> _useController(bool isIos) {
   final controller = useState<Option<QRViewController>>(none());
 
   useEffect(() {
-    return () => controller.value.map((c) => c.dispose());
-  });
+    return controller.value.fold(
+      () => () {},
+      (c) => () => c.dispose(),
+    );
+  }, [controller.value]);
 
   return controller;
 }
@@ -31,10 +34,11 @@ Widget barcodeScannerDialog(
   useEffect(() {
     return controller.value.fold(() => () {}, (c) {
       final sub = c.scannedDataStream
-          .where((d) => d.code != null)
-          .first
-          .asStream()
-          .listen((data) => onScan(data.format, data.code!));
+          .where((b) => b.code != null)
+          .take(1)
+          .listen((data) {
+        onScan(data.format, data.code!);
+      });
       return () => sub.cancel();
     });
   }, [controller.value]);
