@@ -2,6 +2,10 @@
 build_runner:
 	flutter pub run build_runner build
 
+.PHONY: build_runner_watch
+build_runner_watch:
+	flutter pub run build_runner watch
+
 .PHONY: build_runner_full
 build_runner_full:
 	flutter pub run build_runner build --delete-conflicting-outputs
