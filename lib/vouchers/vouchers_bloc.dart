@@ -8,11 +8,14 @@ import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
 import 'package:share/share.dart';
+import 'package:uuid/uuid.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/lib/files.dart' as files;
 import 'package:vouchervault/models/voucher.dart';
 
 part 'vouchers_bloc.freezed.dart';
+
+final _uuidgen = Uuid();
 
 final vouchersProvider = BlocStreamProvider(
   (ref) => VouchersBloc()..add(VoucherActions.removeExpired()),
@@ -66,7 +69,7 @@ class VoucherActions {
   static VoucherAction add(Voucher voucher) =>
       (b, add) => add(b.value.copyWith(vouchers: [
             ...b.value.vouchers,
-            voucher,
+            voucher.copyWith(uuid: _uuidgen.v4()),
           ]));
 
   static VoucherAction update(Voucher voucher) =>

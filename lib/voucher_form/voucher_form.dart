@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
@@ -74,14 +75,25 @@ Widget voucherForm(
           validator: FormBuilderValidators.required(context),
         ),
         SizedBox(height: AppTheme.space3),
-        FormBuilderDateTimePicker(
+        FormBuilderField<DateTime>(
           name: 'expires',
-          inputType: InputType.date,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Expires',
+          builder: (field) => DateTimeField(
+            initialValue: field.value,
+            format: DateFormat('d/M/y'),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Expires',
+            ),
+            onChanged: (d) {
+              field.didChange(d);
+            },
+            onShowPicker: (context, d) => showDatePicker(
+              context: context,
+              initialDate: d ?? DateTime.now(),
+              firstDate: DateTime.now(),
+              lastDate: DateTime.now().add(Duration(days: 365 * 100)),
+            ),
           ),
-          format: DateFormat('d/M/y'),
           valueTransformer: (d) =>
               optionOf(d).map((d) => d.toString()).toNullable(),
         ),

@@ -2,12 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:uuid/uuid.dart';
 
 part 'voucher.freezed.dart';
 part 'voucher.g.dart';
-
-final uuidgen = Uuid();
 
 enum VoucherCodeType {
   CODE128,
@@ -59,6 +56,7 @@ VoucherCodeType codeTypeFromJson(String? s) => optionOf(s)
 @freezed
 class Voucher with _$Voucher {
   Voucher._();
+
   factory Voucher({
     String? uuid,
     @Default('') String description,
@@ -69,6 +67,7 @@ class Voucher with _$Voucher {
     double? balance,
     @Default(VoucherColor.GREY) VoucherColor color,
   }) = _Voucher;
+
   factory Voucher.fromJson(dynamic json) => _$VoucherFromJson(json);
 
   late final Option<String> codeOption = optionOf(code);
