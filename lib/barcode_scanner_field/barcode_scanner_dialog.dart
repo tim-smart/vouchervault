@@ -14,18 +14,7 @@ ValueNotifier<Option<QRViewController>> _useController(bool isIos) {
   final controller = useState<Option<QRViewController>>(none());
 
   useEffect(() {
-    return controller.value.fold(
-      () => () {},
-      (c) => () => c.dispose(),
-    );
-  }, [controller.value]);
-
-  useReassemble(() {
-    if (isIos) {
-      controller.value.map((c) => c.resumeCamera());
-    } else {
-      controller.value.map((c) => c.pauseCamera());
-    }
+    return () => controller.value.map((c) => c.dispose());
   });
 
   return controller;
@@ -54,38 +43,44 @@ Widget barcodeScannerDialog(
     value: SystemUiOverlayStyle.light,
     child: Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
+          Positioned.fill(
             child: QRView(
               key: _key,
               onQRViewCreated: (c) => controller.value = some(c),
               // formatsAllowed: BarcodeFormat.values,
             ),
           ),
-          Material(
-            color: Colors.grey.shade800,
-            child: Padding(
-              padding: EdgeInsets.all(AppTheme.space3),
-              child: Row(
-                children: [
-                  Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                      controller.value.map((c) => c.toggleFlash());
-                    },
-                    child: Text('Toggle flash'),
-                  ),
-                  SizedBox(width: AppTheme.space3),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: theme.canvasColor,
-                      onPrimary: Colors.black,
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              top: false,
+              bottom: true,
+              child: Padding(
+                padding: EdgeInsets.all(AppTheme.space3),
+                child: Row(
+                  children: [
+                    Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        controller.value.map((c) => c.toggleFlash());
+                      },
+                      child: Text('Toggle flash'),
                     ),
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text('Cancel'),
-                  ),
-                ],
+                    SizedBox(width: AppTheme.space3),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: theme.canvasColor,
+                        onPrimary: Colors.black,
+                      ),
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('Cancel'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
