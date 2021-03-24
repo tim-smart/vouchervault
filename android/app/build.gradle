@@ -31,9 +31,8 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-
+    
     lintOptions {
-        disable 'InvalidPackage'
         checkReleaseBuilds false
     }
 
@@ -48,6 +47,12 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.debug
+            
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
+            
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro' 
         }
     }
 
