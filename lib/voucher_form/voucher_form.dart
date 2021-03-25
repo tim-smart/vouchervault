@@ -39,20 +39,26 @@ Widget voucherForm(
           validator: FormBuilderValidators.required(context),
         ),
         SizedBox(height: AppTheme.space3),
-        BarcodeScannerField(
+        FormBuilderField<String>(
           name: 'code',
-          labelText: 'Code',
           valueTransformer: (s) =>
               optionOf(s).bind((s) => s.isEmpty ? none() : some(s)) | null,
-          barcodeBuilder: (context) =>
-              optionOf(formKey.currentState!.fields['codeType'])
-                  .map<String>((f) => f.value)
-                  .orElse(() => optionOf(initialFormValue['codeType']))
-                  .bind(barcode.fromCodeTypeJson),
-          onScan: some((f) => optionOf(formKey.currentState!.fields['codeType'])
-              .map((f) => f.didChange)
-              .map((didChange) =>
-                  didChange(barcode.codeTypeValueFromFormat(f)))),
+          validator: FormBuilderValidators.required(context),
+          builder: (field) => BarcodeScannerField(
+            labelText: 'Code',
+            onChange: field.didChange,
+            errorText: optionOf(field.errorText),
+            initialValue: field.value ?? '',
+            barcodeType: optionOf(formKey.currentState!.fields['codeType'])
+                .map<String>((f) => f.value)
+                .orElse(() => optionOf(initialFormValue['codeType']))
+                .bind(barcode.fromCodeTypeJson),
+            onScan: some((f) =>
+                optionOf(formKey.currentState!.fields['codeType'])
+                    .map((f) => f.didChange)
+                    .map((didChange) =>
+                        didChange(barcode.codeTypeValueFromFormat(f)))),
+          ),
         ),
         FormBuilderChoiceChip(
           name: 'codeType',
