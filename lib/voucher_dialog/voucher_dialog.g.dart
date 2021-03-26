@@ -6,7 +6,7 @@ part of 'voucher_dialog.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class VoucherDialog extends HookWidget {
+class VoucherDialog extends StatelessWidget {
   const VoucherDialog(
       {Key? key,
       required this.voucher,

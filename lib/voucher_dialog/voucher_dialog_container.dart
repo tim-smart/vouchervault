@@ -5,8 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vouchervault/app/voucher_vault_app.dart';
+import 'package:vouchervault/hooks/hooks.dart';
 import 'package:vouchervault/lib/option_of_string.dart';
-import 'package:vouchervault/models/voucher.dart';
+import 'package:vouchervault/models/voucher.dart' as V;
+import 'package:vouchervault/models/voucher.dart' show Voucher;
 import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
 import 'package:vouchervault/vouchers/vouchers_bloc.dart';
@@ -18,6 +21,13 @@ Widget voucherDialogContainer(
   BuildContext context, {
   required Voucher voucher,
 }) {
+  // Full brightness unless text barcode
+  useFullBrightness(
+    routeObserver,
+    enabled: voucher.codeType != V.VoucherCodeType.TEXT,
+  );
+
+  // bloc & state
   final bloc = useProvider(vouchersProvider);
   final v =
       useProvider(voucherProvider(voucher.uuid ?? '')).getOrElse(() => voucher);

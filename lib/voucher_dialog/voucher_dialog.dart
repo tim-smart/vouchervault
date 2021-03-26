@@ -1,10 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/hooks/hooks.dart';
 import 'package:vouchervault/lib/barcode.dart' as B;
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/models/voucher.dart' as V;
@@ -15,7 +13,7 @@ export 'voucher_spend_dialog.dart';
 
 part 'voucher_dialog.g.dart';
 
-@hwidget
+@swidget
 Widget voucherDialog(
   BuildContext context, {
   required Voucher voucher,
@@ -25,9 +23,6 @@ Widget voucherDialog(
   required void Function(Voucher) onRemove,
   required void Function(Voucher) onSpend,
 }) {
-  // Full brightness unless text barcode
-  useFullBrightness(enabled: voucher.codeType != V.VoucherCodeType.TEXT);
-
   // colors
   final color = V.color(voucher.color);
   final textColor =

@@ -6,10 +6,13 @@ import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'voucher_vault_app.g.dart';
 
+final routeObserver = RouteObserver<ModalRoute>();
+
 @swidget
 Widget voucherVaultApp() => ProviderScope(
       child: MaterialApp(
         theme: AppTheme.build(),
         home: VouchersScreen(),
+        navigatorObservers: [routeObserver],
       ),
     );
