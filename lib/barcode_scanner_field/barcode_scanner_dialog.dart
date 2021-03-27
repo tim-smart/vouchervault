@@ -44,6 +44,12 @@ Widget barcodeScannerDialog(
           Positioned.fill(
             child: QRView(
               key: _key,
+              overlay: QrScannerOverlayShape(
+                borderLength: 50,
+                borderRadius: 10,
+                borderWidth: 15,
+                cutOutSize: 300,
+              ),
               onQRViewCreated: (c) => controller.value = some(c),
               // formatsAllowed: BarcodeFormat.values,
             ),
@@ -69,7 +75,7 @@ Widget barcodeScannerDialog(
                     SizedBox(width: AppTheme.space3),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: theme.canvasColor,
+                        primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
                       onPressed: () => Navigator.of(context).pop(),

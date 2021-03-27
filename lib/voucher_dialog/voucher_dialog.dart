@@ -84,9 +84,6 @@ Widget voucherDialog(
               ),
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: theme.accentColor,
-                ),
                 onPressed: () => onEdit(voucher),
                 child: Text('Edit'),
               ),
@@ -143,6 +140,7 @@ Widget _barcode(
   return SizedBox(
     height: AppTheme.rem(barcode.fold(() => 6, (_) => 10)),
     child: Material(
+      color: Colors.white,
       elevation: 1,
       borderRadius: BorderRadius.circular(AppTheme.rem(0.5)),
       child: InkWell(

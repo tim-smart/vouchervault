@@ -14,27 +14,35 @@ class AppTheme {
   static double get space6 => rem(2.5);
   static double get space7 => rem(4);
 
-  static ThemeData build() {
-    var textTheme = ThemeData(fontFamily: 'Alegreya Sans').textTheme;
+  static ThemeData _build({
+    required Brightness brightness,
+    required Color backgroundColor,
+    required Color textColor,
+    required Color accentColor,
+  }) {
+    var textTheme = ThemeData(
+      brightness: brightness,
+      fontFamily: 'Alegreya Sans',
+    ).textTheme;
     textTheme = textTheme.copyWith(
       headline2: textTheme.headline2!.copyWith(
-        color: Colors.black,
+        color: textColor,
         fontSize: px(34),
         fontStyle: FontStyle.italic,
         fontWeight: FontWeight.w900,
       ),
       headline3: textTheme.headline3!.copyWith(
-        color: Colors.black,
+        color: textColor,
         fontSize: px(20),
         fontWeight: FontWeight.w700,
       ),
       bodyText1: textTheme.bodyText1!.copyWith(
-        color: Colors.black,
+        color: textColor,
         fontSize: rem(1),
         fontWeight: FontWeight.w400,
       ),
       bodyText2: textTheme.bodyText2!.copyWith(
-        color: Colors.black,
+        color: textColor,
         fontSize: rem(1),
         fontWeight: FontWeight.w800,
       ),
@@ -44,16 +52,24 @@ class AppTheme {
       ),
     );
 
-    return ThemeData(
-      fontFamily: 'Alegreya Sans',
+    return ThemeData.from(
       textTheme: textTheme,
-      primaryColor: Colors.red,
-      accentColor: Colors.red[800],
-      scaffoldBackgroundColor: AppColors.background,
       colorScheme: ColorScheme.fromSwatch(
+        brightness: brightness,
         primarySwatch: Colors.red,
-        accentColor: Colors.red[800],
-        backgroundColor: AppColors.background,
+        primaryColorDark: Colors.red.shade800,
+        accentColor: Colors.red,
+        backgroundColor: backgroundColor,
+        errorColor: Colors.orange.shade700,
+      ),
+    ).copyWith(
+      toggleableActiveColor: Colors.red,
+      chipTheme: ChipThemeData.fromDefaults(
+        brightness: brightness,
+        secondaryColor: Colors.red,
+        labelStyle: textTheme.bodyText2!.copyWith(fontSize: rem(0.8)),
+      ).copyWith(
+        secondaryLabelStyle: TextStyle(color: Colors.white),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -63,10 +79,9 @@ class AppTheme {
         ),
       ),
       appBarTheme: AppBarTheme(
-        brightness: Brightness.light,
+        brightness: brightness,
         centerTitle: false,
-        color: AppColors.background,
-        textTheme: textTheme,
+        color: backgroundColor,
         iconTheme: IconThemeData(
           color: textTheme.bodyText1!.color,
         ),
@@ -77,4 +92,18 @@ class AppTheme {
       ),
     );
   }
+
+  static ThemeData light() => _build(
+        brightness: Brightness.light,
+        backgroundColor: AppColors.background,
+        accentColor: Colors.red.shade800,
+        textColor: Colors.black,
+      );
+
+  static ThemeData dark() => _build(
+        brightness: Brightness.dark,
+        backgroundColor: Colors.grey.shade900,
+        accentColor: Colors.red,
+        textColor: Colors.white,
+      );
 }

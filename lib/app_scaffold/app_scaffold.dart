@@ -16,11 +16,17 @@ Widget appScaffold(
   bool leading = false,
 }) {
   final theme = Theme.of(context);
-  final style = SystemUiOverlayStyle.light.copyWith(
-    statusBarColor: Colors.transparent,
-    systemNavigationBarColor: AppColors.background,
-    systemNavigationBarIconBrightness: Brightness.dark,
-  );
+  final style = theme.brightness == Brightness.light
+      ? SystemUiOverlayStyle.light.copyWith(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: theme.backgroundColor,
+          systemNavigationBarIconBrightness: Brightness.dark,
+        )
+      : SystemUiOverlayStyle.dark.copyWith(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: theme.backgroundColor,
+          systemNavigationBarIconBrightness: Brightness.light,
+        );
   SystemChrome.setSystemUIOverlayStyle(style);
 
   return Scaffold(

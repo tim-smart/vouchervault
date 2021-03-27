@@ -27,7 +27,7 @@ Widget voucherForm(
     initialValue: initialFormValue,
     child: Column(
       children: [
-        SizedBox(height: AppTheme.space1),
+        SizedBox(height: 3),
         FormBuilderTextField(
           autofocus: true,
           name: 'description',
@@ -67,15 +67,11 @@ Widget voucherForm(
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
           ),
+          selectedColor: theme.accentColor,
           options: VoucherCodeType.values
               .map((t) => FormBuilderFieldOption(
                     value: V.codeTypeToJson(t),
-                    child: Text(
-                      V.codeTypeLabel(t),
-                      style: theme.textTheme.bodyText2!.copyWith(
-                        fontSize: AppTheme.rem(0.8),
-                      ),
-                    ),
+                    child: Text(V.codeTypeLabel(t)),
                   ))
               .toList(),
           validator: FormBuilderValidators.required(context),

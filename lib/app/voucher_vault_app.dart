@@ -9,9 +9,10 @@ part 'voucher_vault_app.g.dart';
 final routeObserver = RouteObserver<ModalRoute>();
 
 @swidget
-Widget voucherVaultApp() => ProviderScope(
+Widget voucherVaultApp(BuildContext context) => ProviderScope(
       child: MaterialApp(
-        theme: AppTheme.build(),
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
         home: VouchersScreen(),
         navigatorObservers: [routeObserver],
       ),

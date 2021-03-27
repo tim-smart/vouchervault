@@ -10,5 +10,5 @@ class VoucherVaultApp extends StatelessWidget {
   const VoucherVaultApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context) => voucherVaultApp();
+  Widget build(BuildContext _context) => voucherVaultApp(_context);
 }
