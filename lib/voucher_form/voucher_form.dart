@@ -67,7 +67,6 @@ Widget voucherForm(
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
           ),
-          selectedColor: theme.accentColor,
           options: VoucherCodeType.values
               .map((t) => FormBuilderFieldOption(
                     value: V.codeTypeToJson(t),

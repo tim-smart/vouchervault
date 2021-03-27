@@ -68,8 +68,6 @@ class AppTheme {
         brightness: brightness,
         secondaryColor: Colors.red,
         labelStyle: textTheme.bodyText2!.copyWith(fontSize: rem(0.8)),
-      ).copyWith(
-        secondaryLabelStyle: TextStyle(color: Colors.white),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
