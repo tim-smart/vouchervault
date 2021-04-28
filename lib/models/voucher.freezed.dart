@@ -209,9 +209,8 @@ class __$VoucherCopyWithImpl<$Res> extends _$VoucherCopyWithImpl<$Res>
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_Voucher extends _Voucher {
   _$_Voucher(
       {this.uuid,

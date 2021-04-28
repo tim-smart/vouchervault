@@ -7,6 +7,7 @@ final Map<VoucherCodeType, Barcode> _codeTypeMap = {
   VoucherCodeType.CODE128: Barcode.code128(),
   VoucherCodeType.CODE39: Barcode.code39(),
   VoucherCodeType.EAN13: Barcode.ean13(),
+  VoucherCodeType.PDF417: Barcode.pdf417(),
   VoucherCodeType.QR: Barcode.qrCode(),
 };
 Option<Barcode> fromCodeType(VoucherCodeType type) =>
@@ -18,6 +19,7 @@ final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
   BarcodeFormat.code128: VoucherCodeType.CODE128,
   BarcodeFormat.code39: VoucherCodeType.CODE39,
   BarcodeFormat.ean13: VoucherCodeType.EAN13,
+  BarcodeFormat.pdf417: VoucherCodeType.PDF417,
   BarcodeFormat.qrcode: VoucherCodeType.QR,
 };
 VoucherCodeType codeTypeFromFormat(BarcodeFormat f) =>

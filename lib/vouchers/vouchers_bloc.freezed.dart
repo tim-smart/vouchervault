@@ -100,6 +100,7 @@ class __$VouchersStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_VouchersState extends _VouchersState with DiagnosticableTreeMixin {
   _$_VouchersState(this.vouchers) : super._();
 

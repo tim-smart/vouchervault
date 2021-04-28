@@ -67,6 +67,7 @@ Widget voucherForm(
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
           ),
+          visualDensity: VisualDensity.compact,
           options: VoucherCodeType.values
               .map((t) => FormBuilderFieldOption(
                     value: V.codeTypeToJson(t),

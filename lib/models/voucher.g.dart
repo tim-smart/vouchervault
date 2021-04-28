@@ -77,6 +77,7 @@ const _$VoucherCodeTypeEnumMap = {
   VoucherCodeType.CODE128: 'CODE128',
   VoucherCodeType.CODE39: 'CODE39',
   VoucherCodeType.EAN13: 'EAN13',
+  VoucherCodeType.PDF417: 'PDF417',
   VoucherCodeType.QR: 'QR',
   VoucherCodeType.TEXT: 'TEXT',
 };
