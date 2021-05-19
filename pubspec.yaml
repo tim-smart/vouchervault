@@ -12,13 +12,14 @@ dependencies:
   auto_size_text: ^3.0.0-nullsafety.0
   barcode_widget: ^2.0.0
   bloc_stream: ^5.0.1
+  brightness_volume: ^1.0.3
   cupertino_icons: ^1.0.2
   dartz: ^0.10.0-nullsafety.1
   datetime_picker_formfield: ^2.0.0
-  eyro_toast: ^0.1.0
   file_picker: ^3.0.0
-  flutter_form_builder: ^6.0.0-nullsafety.1
-  flutter_hooks: ^0.16.0
+  flutter_form_builder: ^6.0.1
+  flutter_hooks: ^0.17.0
+  fluttertoast: ^8.0.7
   freezed_annotation: ^0.14.0
   functional_widget_annotation: ^0.9.0
   intl: ^0.17.0
@@ -26,13 +27,12 @@ dependencies:
   path_provider: ^2.0.1
   persisted_bloc_stream: ^5.0.2
   qr_code_scanner: ^0.4.0-nullsafety.0
-  riverpod: ^0.13.1
-  flutter_riverpod: ^0.13.1
-  hooks_riverpod: ^0.13.1
-  riverpod_bloc_stream: ^5.0.0
-  screen: ^0.0.5
+  riverpod: ^0.14.0
+  flutter_riverpod: ^0.14.0
+  hooks_riverpod: ^0.14.0
+  riverpod_bloc_stream: ^6.0.0
   share: ^2.0.0
-  time: ^1.5.0-nullsafety.1
+  time: ^2.0.0
   timeago: ^3.0.1
   uuid: ^3.0.1
 

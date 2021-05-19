@@ -17,12 +17,12 @@ part 'vouchers_bloc.freezed.dart';
 
 final _uuidgen = Uuid();
 
-final vouchersProvider = BlocStreamProvider(
+final vouchersProvider = BlocStreamProvider<VouchersBloc, VouchersState>(
   (ref) => VouchersBloc()..add(VoucherActions.removeExpired()),
 );
 
 final voucherProvider = Provider.autoDispose.family((ref, String uuid) {
-  final state = ref.watch(vouchersProvider.value);
+  final state = ref.watch(vouchersProvider);
   return optionOf(state.vouchers.firstWhereOrNull((v) => v.uuid == uuid));
 });
 

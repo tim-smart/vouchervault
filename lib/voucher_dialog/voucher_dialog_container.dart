@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:eyro_toast/eyro_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/voucher_vault_app.dart';
@@ -28,13 +28,13 @@ Widget voucherDialogContainer(
   );
 
   // bloc & state
-  final bloc = useProvider(vouchersProvider);
+  final bloc = useProvider(vouchersProvider.bloc);
   final v =
       useProvider(voucherProvider(voucher.uuid ?? '')).getOrElse(() => voucher);
 
   void onTapBarcode() => v.codeOption.map((code) {
         Clipboard.setData(ClipboardData(text: code));
-        EyroToast.showToast(text: 'Copied to clipboard');
+        Fluttertoast.showToast(msg: 'Copied to clipboard');
       });
 
   void onSpend(Voucher v) => showDialog<String>(

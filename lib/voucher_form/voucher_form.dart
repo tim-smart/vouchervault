@@ -41,8 +41,9 @@ Widget voucherForm(
         SizedBox(height: AppTheme.space3),
         FormBuilderField<String>(
           name: 'code',
-          valueTransformer: (s) =>
-              optionOf(s).bind((s) => s.isEmpty ? none() : some(s)) | null,
+          valueTransformer: (String? s) => optionOf(s)
+              .bind((s) => s.isEmpty ? none() : some(s))
+              .toNullable(),
           validator: FormBuilderValidators.required(context),
           builder: (field) => BarcodeScannerField(
             labelText: 'Code',
@@ -96,7 +97,7 @@ Widget voucherForm(
               lastDate: DateTime.now().add(Duration(days: 365 * 100)),
             ),
           ),
-          valueTransformer: (d) =>
+          valueTransformer: (DateTime? d) =>
               optionOf(d).map((d) => d.toString()).toNullable(),
         ),
         FormBuilderSwitch(

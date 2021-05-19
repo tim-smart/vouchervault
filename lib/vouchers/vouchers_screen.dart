@@ -37,7 +37,7 @@ Widget vouchersScreen(BuildContext context) {
         ),
       ).then((v) => optionOf(v)
           .map(VoucherActions.add)
-          .map(context.read(vouchersProvider).add)),
+          .map(context.read(vouchersProvider.bloc).add)),
       child: Icon(Icons.add),
     )),
   );

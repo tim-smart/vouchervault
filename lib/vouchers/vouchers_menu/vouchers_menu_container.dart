@@ -9,7 +9,7 @@ part 'vouchers_menu_container.g.dart';
 
 @hwidget
 Widget vouchersMenuContainer() {
-  final bloc = useProvider(vouchersProvider);
+  final bloc = useProvider(vouchersProvider.bloc);
 
   return VouchersMenu(onSelected: (action) {
     switch (action) {

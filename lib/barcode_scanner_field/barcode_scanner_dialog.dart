@@ -25,11 +25,8 @@ Widget barcodeScannerDialog(
 
   useEffect(() {
     return controller.value.fold(() => () {}, (c) {
-      final sub = c.scannedDataStream
-          .where((b) => b.code != null)
-          .take(1)
-          .listen((data) {
-        onScan(data.format, data.code!);
+      final sub = c.scannedDataStream.take(1).listen((data) {
+        onScan(data.format, data.code);
       });
       return sub.cancel;
     });
