@@ -7,8 +7,11 @@ part of 'voucher_vault_app.dart';
 // **************************************************************************
 
 class VoucherVaultApp extends StatelessWidget {
-  const VoucherVaultApp({Key? key}) : super(key: key);
+  const VoucherVaultApp({Key? key, this.vouchers}) : super(key: key);
+
+  final List<Voucher>? vouchers;
 
   @override
-  Widget build(BuildContext _context) => voucherVaultApp(_context);
+  Widget build(BuildContext _context) =>
+      voucherVaultApp(_context, vouchers: vouchers);
 }

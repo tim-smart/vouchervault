@@ -109,7 +109,8 @@ class VoucherActions {
 }
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
-  VouchersBloc() : super(VouchersState([]));
+  VouchersBloc([VouchersState? initialState])
+      : super(initialState ?? VouchersState([]));
 
   @override
   dynamic toJson(VouchersState value) => value.toJson();
