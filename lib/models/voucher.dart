@@ -74,13 +74,20 @@ class Voucher with _$Voucher {
   factory Voucher.fromJson(dynamic json) => _$VoucherFromJson(json);
 
   late final Option<String> codeOption = optionOf(code);
+
   late final Option<DateTime> expiresOption = optionOf(expires);
+
   late final Option<int> balanceOption = optionOf(balanceMilliunits)
       .orElse(() => optionOf(balance).map((b) => (b * 1000).round()));
+
+  late final Option<double> balanceDoubleOption =
+      balanceOption.map((b) => b / 1000.0);
+
   late final bool hasDetails = expiresOption.isSome() || balanceOption.isSome();
 
   static Voucher fromFormValue(Map<String, dynamic> json) =>
       Voucher.fromJson(json);
+
   dynamic toFormValue() => <String, dynamic>{
         ...toJson(),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],

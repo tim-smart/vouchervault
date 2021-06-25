@@ -40,15 +40,15 @@ List<Widget> buildVoucherDetails(
           )
         ],
       ),
-      ...voucher.balanceOption.fold(
+      ...voucher.balanceDoubleOption.fold(
         () => [],
         (b) => [
           buildVoucherDetailRow(
             context,
             textColor,
             Icons.account_balance,
-            '\$${b / 1000.0}',
-          )
+            '\$$b',
+          ),
         ],
       ),
     ]).toList();
