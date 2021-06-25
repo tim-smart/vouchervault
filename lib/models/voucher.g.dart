@@ -19,6 +19,7 @@ _$_Voucher _$_$_VoucherFromJson(Map<String, dynamic> json) {
         : DateTime.parse(json['expires'] as String),
     removeOnceExpired: json['removeOnceExpired'] as bool? ?? true,
     balance: (json['balance'] as num?)?.toDouble(),
+    balanceMilliunits: json['balanceMilliunits'] as int?,
     color: _$enumDecodeNullable(_$VoucherColorEnumMap, json['color']) ??
         VoucherColor.GREY,
   );
@@ -33,6 +34,7 @@ Map<String, dynamic> _$_$_VoucherToJson(_$_Voucher instance) =>
       'expires': instance.expires?.toIso8601String(),
       'removeOnceExpired': instance.removeOnceExpired,
       'balance': instance.balance,
+      'balanceMilliunits': instance.balanceMilliunits,
       'color': _$VoucherColorEnumMap[instance.color],
     };
 

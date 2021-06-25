@@ -112,13 +112,19 @@ Widget voucherForm(
           ),
         ),
         SizedBox(height: AppTheme.space3),
-        FormBuilderField<double>(
-          name: 'balance',
+        FormBuilderField<int>(
+          name: 'balanceMilliunits',
           builder: (field) => TextFormField(
-            initialValue: optionOf(field.value).map((d) => d.toString()) | '',
-            onChanged: (s) =>
-                field.didChange(s.isEmpty ? null : double.parse(s)),
-            keyboardType: TextInputType.numberWithOptions(signed: true),
+            initialValue: optionOf(field.value)
+                .map((d) => d / 1000.0)
+                .map((d) => d.toString())
+                .getOrElse(() => ''),
+            onChanged: (s) => field
+                .didChange(s.isEmpty ? null : (double.parse(s) * 1000).round()),
+            keyboardType: TextInputType.numberWithOptions(
+              signed: true,
+              decimal: true,
+            ),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Balance',

@@ -67,6 +67,7 @@ class Voucher with _$Voucher {
     DateTime? expires,
     @Default(true) bool removeOnceExpired,
     double? balance,
+    int? balanceMilliunits,
     @Default(VoucherColor.GREY) VoucherColor color,
   }) = _Voucher;
 
@@ -74,7 +75,8 @@ class Voucher with _$Voucher {
 
   late final Option<String> codeOption = optionOf(code);
   late final Option<DateTime> expiresOption = optionOf(expires);
-  late final Option<double> balanceOption = optionOf(balance);
+  late final Option<int> balanceOption = optionOf(balanceMilliunits)
+      .orElse(() => optionOf(balance).map((b) => (b * 1000).round()));
   late final bool hasDetails = expiresOption.isSome() || balanceOption.isSome();
 
   static Voucher fromFormValue(Map<String, dynamic> json) =>

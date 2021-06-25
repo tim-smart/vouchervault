@@ -15,7 +15,7 @@ void main() async {
       code: "12345",
       codeType: VoucherCodeType.QR,
       color: VoucherColor.BLUE,
-      balance: 77,
+      balanceMilliunits: 77 * 1000,
       expires: DateTime.now().add(Duration(days: 120)),
     ),
     Voucher(
@@ -24,7 +24,7 @@ void main() async {
       code: "12345",
       codeType: VoucherCodeType.CODE128,
       color: VoucherColor.GREEN,
-      balance: 50,
+      balanceMilliunits: 50 * 1000,
     ),
     Voucher(
       uuid: Uuid().v4(),
@@ -39,7 +39,7 @@ void main() async {
       code: "12345",
       codeType: VoucherCodeType.QR,
       color: VoucherColor.GREY,
-      balance: 100,
+      balanceMilliunits: 100 * 1000,
     ),
   ]);
 }

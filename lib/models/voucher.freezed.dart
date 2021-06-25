@@ -28,6 +28,7 @@ class _$VoucherTearOff {
       DateTime? expires,
       bool removeOnceExpired = true,
       double? balance,
+      int? balanceMilliunits,
       VoucherColor color = VoucherColor.GREY}) {
     return _Voucher(
       uuid: uuid,
@@ -37,6 +38,7 @@ class _$VoucherTearOff {
       expires: expires,
       removeOnceExpired: removeOnceExpired,
       balance: balance,
+      balanceMilliunits: balanceMilliunits,
       color: color,
     );
   }
@@ -58,6 +60,7 @@ mixin _$Voucher {
   DateTime? get expires => throw _privateConstructorUsedError;
   bool get removeOnceExpired => throw _privateConstructorUsedError;
   double? get balance => throw _privateConstructorUsedError;
+  int? get balanceMilliunits => throw _privateConstructorUsedError;
   VoucherColor get color => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -77,6 +80,7 @@ abstract class $VoucherCopyWith<$Res> {
       DateTime? expires,
       bool removeOnceExpired,
       double? balance,
+      int? balanceMilliunits,
       VoucherColor color});
 }
 
@@ -97,6 +101,7 @@ class _$VoucherCopyWithImpl<$Res> implements $VoucherCopyWith<$Res> {
     Object? expires = freezed,
     Object? removeOnceExpired = freezed,
     Object? balance = freezed,
+    Object? balanceMilliunits = freezed,
     Object? color = freezed,
   }) {
     return _then(_value.copyWith(
@@ -128,6 +133,10 @@ class _$VoucherCopyWithImpl<$Res> implements $VoucherCopyWith<$Res> {
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as double?,
+      balanceMilliunits: balanceMilliunits == freezed
+          ? _value.balanceMilliunits
+          : balanceMilliunits // ignore: cast_nullable_to_non_nullable
+              as int?,
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -149,6 +158,7 @@ abstract class _$VoucherCopyWith<$Res> implements $VoucherCopyWith<$Res> {
       DateTime? expires,
       bool removeOnceExpired,
       double? balance,
+      int? balanceMilliunits,
       VoucherColor color});
 }
 
@@ -170,6 +180,7 @@ class __$VoucherCopyWithImpl<$Res> extends _$VoucherCopyWithImpl<$Res>
     Object? expires = freezed,
     Object? removeOnceExpired = freezed,
     Object? balance = freezed,
+    Object? balanceMilliunits = freezed,
     Object? color = freezed,
   }) {
     return _then(_Voucher(
@@ -201,6 +212,10 @@ class __$VoucherCopyWithImpl<$Res> extends _$VoucherCopyWithImpl<$Res>
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as double?,
+      balanceMilliunits: balanceMilliunits == freezed
+          ? _value.balanceMilliunits
+          : balanceMilliunits // ignore: cast_nullable_to_non_nullable
+              as int?,
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -220,6 +235,7 @@ class _$_Voucher extends _Voucher {
       this.expires,
       this.removeOnceExpired = true,
       this.balance,
+      this.balanceMilliunits,
       this.color = VoucherColor.GREY})
       : super._();
 
@@ -243,13 +259,15 @@ class _$_Voucher extends _Voucher {
   final bool removeOnceExpired;
   @override
   final double? balance;
+  @override
+  final int? balanceMilliunits;
   @JsonKey(defaultValue: VoucherColor.GREY)
   @override
   final VoucherColor color;
 
   @override
   String toString() {
-    return 'Voucher(uuid: $uuid, description: $description, code: $code, codeType: $codeType, expires: $expires, removeOnceExpired: $removeOnceExpired, balance: $balance, color: $color)';
+    return 'Voucher(uuid: $uuid, description: $description, code: $code, codeType: $codeType, expires: $expires, removeOnceExpired: $removeOnceExpired, balance: $balance, balanceMilliunits: $balanceMilliunits, color: $color)';
   }
 
   @override
@@ -275,6 +293,9 @@ class _$_Voucher extends _Voucher {
             (identical(other.balance, balance) ||
                 const DeepCollectionEquality()
                     .equals(other.balance, balance)) &&
+            (identical(other.balanceMilliunits, balanceMilliunits) ||
+                const DeepCollectionEquality()
+                    .equals(other.balanceMilliunits, balanceMilliunits)) &&
             (identical(other.color, color) ||
                 const DeepCollectionEquality().equals(other.color, color)));
   }
@@ -289,6 +310,7 @@ class _$_Voucher extends _Voucher {
       const DeepCollectionEquality().hash(expires) ^
       const DeepCollectionEquality().hash(removeOnceExpired) ^
       const DeepCollectionEquality().hash(balance) ^
+      const DeepCollectionEquality().hash(balanceMilliunits) ^
       const DeepCollectionEquality().hash(color);
 
   @JsonKey(ignore: true)
@@ -311,6 +333,7 @@ abstract class _Voucher extends Voucher {
       DateTime? expires,
       bool removeOnceExpired,
       double? balance,
+      int? balanceMilliunits,
       VoucherColor color}) = _$_Voucher;
   _Voucher._() : super._();
 
@@ -330,6 +353,8 @@ abstract class _Voucher extends Voucher {
   bool get removeOnceExpired => throw _privateConstructorUsedError;
   @override
   double? get balance => throw _privateConstructorUsedError;
+  @override
+  int? get balanceMilliunits => throw _privateConstructorUsedError;
   @override
   VoucherColor get color => throw _privateConstructorUsedError;
   @override

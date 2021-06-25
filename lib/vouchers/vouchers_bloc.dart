@@ -82,8 +82,9 @@ class VoucherActions {
   static VoucherAction Function(Option<String>) maybeUpdateBalance(Voucher v) =>
       (s) => (b, add) => s
           .bind((s) => catching(() => double.parse(s)).toOption())
+          .map((amount) => (amount * 1000).round())
           .bind((amount) => v.balanceOption.map((balance) => balance - amount))
-          .map((balance) => update(v.copyWith(balance: balance)))
+          .map((balance) => update(v.copyWith(balanceMilliunits: balance)))
           .map((action) => action(b, add));
 
   static VoucherAction remove(Voucher voucher) =>

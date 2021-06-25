@@ -47,7 +47,7 @@ List<Widget> buildVoucherDetails(
             context,
             textColor,
             Icons.account_balance,
-            '\$$b',
+            '\$${b / 1000.0}',
           )
         ],
       ),
