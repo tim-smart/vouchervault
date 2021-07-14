@@ -1,6 +1,6 @@
-import 'dart:async';
 import 'dart:convert';
 
+import 'package:bloc_stream/bloc_stream.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -49,8 +49,7 @@ class VouchersState with _$VouchersState {
       );
 }
 
-typedef VoucherAction = FutureOr<void> Function(
-    VouchersBloc, void Function(VouchersState));
+typedef VoucherAction = Action<VouchersBloc, VouchersState>;
 
 class VoucherActions {
   static VoucherAction removeExpired() => (b, add) => add(b.value.copyWith(
