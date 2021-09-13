@@ -6,26 +6,24 @@ part of 'voucher.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Voucher _$_$_VoucherFromJson(Map<String, dynamic> json) {
-  return _$_Voucher(
-    uuid: json['uuid'] as String?,
-    description: json['description'] as String? ?? '',
-    code: json['code'] as String?,
-    codeType:
-        _$enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']) ??
-            VoucherCodeType.CODE128,
-    expires: json['expires'] == null
-        ? null
-        : DateTime.parse(json['expires'] as String),
-    removeOnceExpired: json['removeOnceExpired'] as bool? ?? true,
-    balance: (json['balance'] as num?)?.toDouble(),
-    balanceMilliunits: json['balanceMilliunits'] as int?,
-    color: _$enumDecodeNullable(_$VoucherColorEnumMap, json['color']) ??
-        VoucherColor.GREY,
-  );
-}
+_$_Voucher _$$_VoucherFromJson(Map<String, dynamic> json) => _$_Voucher(
+      uuid: json['uuid'] as String?,
+      description: json['description'] as String? ?? '',
+      code: json['code'] as String?,
+      codeType:
+          _$enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']) ??
+              VoucherCodeType.CODE128,
+      expires: json['expires'] == null
+          ? null
+          : DateTime.parse(json['expires'] as String),
+      removeOnceExpired: json['removeOnceExpired'] as bool? ?? true,
+      balance: (json['balance'] as num?)?.toDouble(),
+      balanceMilliunits: json['balanceMilliunits'] as int?,
+      color: _$enumDecodeNullable(_$VoucherColorEnumMap, json['color']) ??
+          VoucherColor.GREY,
+    );
 
-Map<String, dynamic> _$_$_VoucherToJson(_$_Voucher instance) =>
+Map<String, dynamic> _$$_VoucherToJson(_$_Voucher instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'description': instance.description,

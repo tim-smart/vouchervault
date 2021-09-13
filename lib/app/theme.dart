@@ -77,7 +77,6 @@ class AppTheme {
         ),
       ),
       appBarTheme: AppBarTheme(
-        brightness: brightness,
         centerTitle: false,
         color: backgroundColor,
         iconTheme: IconThemeData(
