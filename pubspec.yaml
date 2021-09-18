@@ -14,7 +14,7 @@ dependencies:
   bloc_stream: ^5.0.1
   brightness_volume: ^1.0.3
   cupertino_icons: ^1.0.2
-  dartz: ^0.10.0-nullsafety.2
+  dartz: ^0.10.0
   datetime_picker_formfield: ^2.0.0
   file_picker: ^4.0.0
   flutter_form_builder: ^6.0.1
@@ -38,11 +38,6 @@ dependencies:
 
 dependency_overrides:
   flutter_hooks: ^0.18.0
-  functional_widget:
-    git:
-      url: https://github.com/tim-smart/functional_widget.git
-      ref: dep-updates
-      path: packages/functional_widget
 
 dev_dependencies:
   build_runner: ^2.0.1
