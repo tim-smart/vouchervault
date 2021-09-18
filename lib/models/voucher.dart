@@ -34,7 +34,7 @@ final _colors = <VoucherColor, Color>{
   VoucherColor.ORANGE: Colors.orange[800]!,
   VoucherColor.PURPLE: Colors.purple[500]!,
 };
-Color color(VoucherColor /*!*/ c) =>
+Color color(VoucherColor c) =>
     optionOf(_colors[c]).getOrElse(() => Colors.grey[700]!);
 String colorToJson(VoucherColor c) => _$VoucherColorEnumMap[c]!;
 
