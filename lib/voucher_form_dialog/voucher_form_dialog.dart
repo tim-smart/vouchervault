@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart' hide State;
+import 'package:fpdart/fpdart.dart' hide State;
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
@@ -16,8 +16,14 @@ Widget voucherFormDialog(
   Option<Voucher> initialValue = const None(),
 }) {
   final formKey = useMemoized(() => GlobalKey<FormBuilderState>());
-  final title = initialValue.fold(() => 'Add voucher', (_) => 'Edit voucher');
-  final action = initialValue.fold(() => 'Create', (_) => 'Update');
+  final title = initialValue.match(
+    (_) => 'Edit voucher',
+    () => 'Add voucher',
+  );
+  final action = initialValue.match(
+    (_) => 'Update',
+    () => 'Create',
+  );
 
   return AppScaffold(
     leading: true,
@@ -30,7 +36,7 @@ Widget voucherFormDialog(
         sliver: SliverToBoxAdapter(
           child: VoucherForm(
             formKey: formKey,
-            initialValue: initialValue | Voucher(),
+            initialValue: initialValue.getOrElse(() => Voucher()),
           ),
         ),
       ),
@@ -51,9 +57,9 @@ Widget voucherFormDialog(
 
                 Navigator.pop(
                   context,
-                  initialValue.fold(
-                    () => voucher,
+                  initialValue.match(
                     (iv) => voucher.copyWith(uuid: iv.uuid),
+                    () => voucher,
                   ),
                 );
               }

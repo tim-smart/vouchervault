@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -42,7 +42,7 @@ Widget voucherForm(
         FormBuilderField<String>(
           name: 'code',
           valueTransformer: (String? s) => optionOf(s)
-              .bind((s) => s.isEmpty ? none() : some(s))
+              .flatMap((s) => s.isEmpty ? none() : some(s))
               .toNullable(),
           validator: FormBuilderValidators.required(context),
           builder: (field) => BarcodeScannerField(
@@ -52,8 +52,8 @@ Widget voucherForm(
             initialValue: field.value ?? '',
             barcodeType: optionOf(formKey.currentState!.fields['codeType'])
                 .map<String>((f) => f.value)
-                .orElse(() => optionOf(initialFormValue['codeType']))
-                .bind(barcode.fromCodeTypeJson),
+                .alt(() => optionOf(initialFormValue['codeType']))
+                .flatMap(barcode.fromCodeTypeJson),
             onScan: some((f) =>
                 optionOf(formKey.currentState!.fields['codeType'])
                     .map((f) => f.didChange)

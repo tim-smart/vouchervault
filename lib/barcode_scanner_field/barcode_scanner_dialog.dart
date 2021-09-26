@@ -6,9 +6,9 @@ ValueNotifier<Option<QRViewController>> _useController(bool isIos) {
   final controller = useState<Option<QRViewController>>(none());
 
   useEffect(() {
-    return controller.value.fold(
-      () => () {},
+    return controller.value.match(
       (c) => c.dispose,
+      () => () {},
     );
   }, [controller.value]);
 
@@ -24,12 +24,15 @@ Widget barcodeScannerDialog(
   final controller = _useController(theme.platform == TargetPlatform.iOS);
 
   useEffect(() {
-    return controller.value.fold(() => () {}, (c) {
-      final sub = c.scannedDataStream.take(1).listen((data) {
-        onScan(data.format, data.code);
-      });
-      return sub.cancel;
-    });
+    return controller.value.match(
+      (c) {
+        final sub = c.scannedDataStream.take(1).listen((data) {
+          onScan(data.format, data.code);
+        });
+        return sub.cancel;
+      },
+      () => () {},
+    );
   }, [controller.value]);
 
   return AnnotatedRegion(

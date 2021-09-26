@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,8 +12,8 @@ import 'package:vouchervault/vouchers/vouchers_menu/vouchers_menu_container.dart
 
 part 'vouchers_screen.g.dart';
 
-@swidget
-Widget vouchersScreen(BuildContext context) {
+@cwidget
+Widget vouchersScreen(BuildContext context, WidgetRef ref) {
   return AppScaffold(
     title: 'Vouchers',
     actions: [
@@ -37,7 +37,7 @@ Widget vouchersScreen(BuildContext context) {
         ),
       ).then((v) => optionOf(v)
           .map(VoucherActions.add)
-          .map(context.read(vouchersProvider.bloc).add)),
+          .map(ref.read(vouchersProvider.bloc).add)),
       child: Icon(Icons.add),
     )),
   );

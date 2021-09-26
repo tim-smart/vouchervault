@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc_stream/bloc_stream.dart';
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
@@ -80,9 +80,10 @@ class VoucherActions {
 
   static VoucherAction Function(Option<String>) maybeUpdateBalance(Voucher v) =>
       (s) => (b, add) => s
-          .bind((s) => catching(() => double.parse(s)).toOption())
+          .flatMap((s) => Option.tryCatch(() => double.parse(s)))
           .map((amount) => (amount * 1000).round())
-          .bind((amount) => v.balanceOption.map((balance) => balance - amount))
+          .flatMap(
+              (amount) => v.balanceOption.map((balance) => balance - amount))
           .map((balance) => update(v.copyWith(balanceMilliunits: balance)))
           .map((action) => action(b, add));
 
@@ -92,13 +93,21 @@ class VoucherActions {
                 b.value.vouchers.where((v) => v.uuid != voucher.uuid).toList(),
           ));
 
-  static VoucherAction import() =>
-      (b, add) => files.pick(['json']).then((r) => r
-          .map((r) => String.fromCharCodes(r.value2))
-          .bind((json) => catching(() => jsonDecode(json)).toOption())
-          .bind(optionOf)
-          .map((json) => VouchersState.fromJson(json))
-          .map(add));
+  static VoucherAction import() => (b, add) => files
+      .pick(['json'])
+      .map((r) => String.fromCharCodes(r.second))
+      .flatMap(TaskEither.tryCatchK(
+        (json) async => jsonDecode(json),
+        (error, _stackTrace) => 'Could not parse import JSON: $error',
+      ))
+      .flatMap((r) => TaskEither.fromOption(
+            optionOf(r),
+            () => 'Import was null',
+          ))
+      .map((json) => VouchersState.fromJson(json))
+      .map(add)
+      .getOrElse((msg) => print("vouchers_bloc.dart: $msg"))
+      .run();
 
   static VoucherAction export() => (b, add) => files
       .writeString('vouchervault.json', jsonEncode(b.value.toJson()))

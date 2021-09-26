@@ -25,21 +25,22 @@ Widget _scanButton(
         ));
       },
       child: Center(
-        child: Option.map2(
-          barcodeType,
-          optionOfString(data),
-          // ignore: unnecessary_cast
-          (Barcode type, String code) => Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppTheme.rem(0.5)),
-            child: SizedBox(
-              height: AppTheme.rem(5),
-              child: BarcodeWidget(
-                data: code,
-                barcode: type,
-                errorBuilder: (context, err) => Text('Code not valid'),
-              ),
-            ),
-          ) as Widget,
-        ).getOrElse(() => Text('Scan barcode')),
+        child: barcodeType
+            .map2(
+              optionOfString(data),
+              // ignore: unnecessary_cast
+              (Barcode type, String code) => Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppTheme.rem(0.5)),
+                child: SizedBox(
+                  height: AppTheme.rem(5),
+                  child: BarcodeWidget(
+                    data: code,
+                    barcode: type,
+                    errorBuilder: (context, err) => Text('Code not valid'),
+                  ),
+                ),
+              ) as Widget,
+            )
+            .getOrElse(() => Text('Scan barcode')),
       ),
     );

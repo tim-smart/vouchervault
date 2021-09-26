@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc_stream/bloc_stream.dart';
 import 'package:brightness_volume/brightness_volume.dart';
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:vouchervault/hooks/use_route_observer.dart';

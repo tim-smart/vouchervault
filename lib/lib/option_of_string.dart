@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 
 Option<String> optionOfString(String? s) =>
-    optionOf(s).bind((s) => s.isEmpty ? none() : some(s));
+    optionOf(s).filter((s) => s.isNotEmpty);

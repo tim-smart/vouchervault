@@ -48,8 +48,7 @@ Widget voucherDialog(
             voucher.description,
             style: theme.textTheme.headline3,
           ),
-          ...voucher.codeOption.fold(
-            () => [],
+          ...voucher.codeOption.match(
             (data) => [
               SizedBox(height: AppTheme.space3),
               _Barcode(
@@ -58,6 +57,7 @@ Widget voucherDialog(
                 onTap: onTapBarcode,
               ),
             ],
+            () => [],
           ),
           if (voucher.hasDetails) ...[
             SizedBox(height: AppTheme.space4),
@@ -138,7 +138,10 @@ Widget _barcode(
   final theme = Theme.of(context);
   final barcode = B.fromCodeType(type);
   return SizedBox(
-    height: AppTheme.rem(barcode.fold(() => 6, (_) => 10)),
+    height: AppTheme.rem(barcode.match(
+      (_) => 10,
+      () => 6,
+    )),
     child: Material(
       color: Colors.white,
       elevation: 1,
@@ -148,7 +151,15 @@ Widget _barcode(
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.all(AppTheme.space4),
-          child: barcode.fold(
+          child: barcode.match(
+            (type) => BarcodeWidget(
+              backgroundColor: Colors.transparent,
+              data: data,
+              style: theme.textTheme.bodyText2!.copyWith(
+                color: Colors.black,
+              ),
+              barcode: type,
+            ),
             () => Center(
               child: AutoSizeText(
                 data,
@@ -158,14 +169,6 @@ Widget _barcode(
                 ),
                 maxLines: 1,
               ),
-            ),
-            (type) => BarcodeWidget(
-              backgroundColor: Colors.transparent,
-              data: data,
-              style: theme.textTheme.bodyText2!.copyWith(
-                color: Colors.black,
-              ),
-              barcode: type,
             ),
           ),
         ),

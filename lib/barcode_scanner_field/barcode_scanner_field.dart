@@ -1,5 +1,5 @@
 import 'package:barcode_widget/barcode_widget.dart';
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -50,8 +50,7 @@ Widget barcodeScannerField(
         ),
         onChanged: onChange,
       ),
-      ...errorText.fold(
-        () => [],
+      ...errorText.match(
         (error) => [
           SizedBox(height: AppTheme.space2),
           Text(
@@ -59,6 +58,7 @@ Widget barcodeScannerField(
             style: TextStyle(color: theme.errorColor),
           ),
         ],
+        () => [],
       ),
     ],
   );

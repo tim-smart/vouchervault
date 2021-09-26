@@ -14,12 +14,12 @@ dependencies:
   bloc_stream: ^5.0.1
   brightness_volume: ^1.0.3
   cupertino_icons: ^1.0.2
-  dartz: ^0.10.0
   datetime_picker_formfield: ^2.0.0
   file_picker: ^4.0.0
   flutter_form_builder: ^6.0.1
   flutter_hooks: ^0.18.0
   fluttertoast: ^8.0.7
+  fpdart: ^0.0.11
   freezed_annotation: ^0.14.0
   functional_widget_annotation: ^0.9.0
   intl: ^0.17.0
@@ -27,17 +27,24 @@ dependencies:
   path_provider: ^2.0.1
   persisted_bloc_stream: ^5.0.2
   qr_code_scanner: ^0.5.1
-  riverpod: ^0.14.0
-  flutter_riverpod: ^0.14.0
-  hooks_riverpod: ^0.14.0
-  riverpod_bloc_stream: ^6.1.0
+  hooks_riverpod: ^1.0.0-dev.7
+  riverpod_bloc_stream: ^7.0.0-dev.1
   share: ^2.0.0
   time: ^2.0.0
   timeago: ^3.0.1
   uuid: ^3.0.1
 
 dependency_overrides:
-  flutter_hooks: ^0.18.0
+  functional_widget:
+    git:
+      url: https://github.com/tim-smart/functional_widget.git
+      ref: chwidget
+      path: packages/functional_widget
+  functional_widget_annotation:
+    git:
+      url: https://github.com/tim-smart/functional_widget.git
+      ref: chwidget
+      path: packages/functional_widget_annotation
 
 dev_dependencies:
   build_runner: ^2.0.1
@@ -50,7 +57,7 @@ dev_dependencies:
   freezed: ^0.14.0
   functional_widget: ^0.9.0
   json_serializable: ^5.0.0
-  test: ^1.16.0
+  test: ^1.17.0
 
 flutter:
   uses-material-design: true

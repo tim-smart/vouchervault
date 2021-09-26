@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart';
 import 'package:time/time.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -28,9 +28,9 @@ List<Widget> buildVoucherDetails(
   Color textColor = Colors.white,
   Option<double> space = const None(),
 }) =>
-    intersperse<Widget>(SizedBox(height: space | AppTheme.space1), [
-      ...voucher.expiresOption.fold(
-        () => [],
+    intersperse<Widget>(
+        SizedBox(height: space.getOrElse(() => AppTheme.space1)), [
+      ...voucher.expiresOption.match(
         (dt) => [
           buildVoucherDetailRow(
             context,
@@ -39,9 +39,9 @@ List<Widget> buildVoucherDetails(
             formatExpires(dt),
           )
         ],
-      ),
-      ...voucher.balanceDoubleOption.fold(
         () => [],
+      ),
+      ...voucher.balanceDoubleOption.match(
         (b) => [
           buildVoucherDetailRow(
             context,
@@ -50,6 +50,7 @@ List<Widget> buildVoucherDetails(
             '\$$b',
           ),
         ],
+        () => [],
       ),
     ]).toList();
 

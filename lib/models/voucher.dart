@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -78,7 +78,7 @@ class Voucher with _$Voucher {
   late final Option<DateTime> expiresOption = optionOf(expires);
 
   late final Option<int> balanceOption = optionOf(balanceMilliunits)
-      .orElse(() => optionOf(balance).map((b) => (b * 1000).round()));
+      .alt(() => optionOf(balance).map((b) => (b * 1000).round()));
 
   late final Option<double> balanceDoubleOption =
       balanceOption.map((b) => b / 1000.0);

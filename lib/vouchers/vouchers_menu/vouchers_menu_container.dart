@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/vouchers/vouchers_bloc.dart';
@@ -7,9 +6,9 @@ import 'package:vouchervault/vouchers/vouchers_menu/vouchers_menu.dart';
 
 part 'vouchers_menu_container.g.dart';
 
-@hwidget
-Widget vouchersMenuContainer() {
-  final bloc = useProvider(vouchersProvider.bloc);
+@cwidget
+Widget vouchersMenuContainer(WidgetRef ref) {
+  final bloc = ref.watch(vouchersProvider.bloc);
 
   return VouchersMenu(onSelected: (action) {
     switch (action) {
