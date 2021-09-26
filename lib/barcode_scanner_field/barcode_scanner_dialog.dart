@@ -2,7 +2,7 @@ part of 'barcode_scanner_field.dart';
 
 final _key = GlobalKey(debugLabel: "QR");
 
-ValueNotifier<Option<QRViewController>> _useController(bool isIos) {
+ValueNotifier<Option<QRViewController>> _useController() {
   final controller = useState<Option<QRViewController>>(none());
 
   useEffect(() {
@@ -20,8 +20,7 @@ Widget barcodeScannerDialog(
   BuildContext context, {
   required void Function(BarcodeFormat, String) onScan,
 }) {
-  final theme = Theme.of(context);
-  final controller = _useController(theme.platform == TargetPlatform.iOS);
+  final controller = _useController();
 
   useEffect(() {
     return controller.value.match(
@@ -33,7 +32,7 @@ Widget barcodeScannerDialog(
       },
       () => () {},
     );
-  }, [controller.value]);
+  }, [controller.value, onScan]);
 
   return AnnotatedRegion(
     value: SystemUiOverlayStyle.light,
