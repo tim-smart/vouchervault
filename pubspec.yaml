@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   auto_size_text: ^3.0.0-nullsafety.0
   barcode_widget: ^2.0.0
-  bloc_stream: ^5.0.1
+  bloc_stream: ^6.0.1
   brightness_volume: ^1.0.3
   cupertino_icons: ^1.0.2
   datetime_picker_formfield: ^2.0.0
@@ -25,10 +25,10 @@ dependencies:
   intl: ^0.17.0
   json_annotation: ^4.1.0
   path_provider: ^2.0.1
-  persisted_bloc_stream: ^5.0.2
+  persisted_bloc_stream: ^6.0.0
   qr_code_scanner: ^0.5.1
   hooks_riverpod: ^1.0.0-dev.7
-  riverpod_bloc_stream: ^7.0.0-dev.1
+  riverpod_bloc_stream: ^7.0.0-dev.3
   share: ^2.0.0
   time: ^2.0.0
   timeago: ^3.0.1

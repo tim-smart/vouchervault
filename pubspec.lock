@@ -63,7 +63,7 @@ packages:
       name: bloc_stream
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.0"
+    version: "6.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -573,7 +573,7 @@ packages:
       name: persisted_bloc_stream
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.4"
+    version: "6.0.0"
   petitparser:
     dependency: transitive
     description:
@@ -650,7 +650,7 @@ packages:
       name: riverpod_bloc_stream
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.0.0-dev.1"
+    version: "7.0.0-dev.3"
   rxdart:
     dependency: transitive
     description:

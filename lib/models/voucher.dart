@@ -90,6 +90,7 @@ class Voucher with _$Voucher {
 
   dynamic toFormValue() => <String, dynamic>{
         ...toJson(),
+        'balanceMilliunits': balanceOption.toNullable(),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
         'expires': expires,
         'color': _$VoucherColorEnumMap[this.color],
