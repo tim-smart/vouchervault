@@ -21,13 +21,13 @@ class VoucherDialog extends StatelessWidget {
 
   final void Function() onTapBarcode;
 
-  final void Function(Voucher) onEdit;
+  final void Function() onEdit;
 
   final void Function() onClose;
 
-  final void Function(Voucher) onRemove;
+  final void Function() onRemove;
 
-  final void Function(Voucher) onSpend;
+  final void Function() onSpend;
 
   @override
   Widget build(BuildContext _context) => voucherDialog(_context,

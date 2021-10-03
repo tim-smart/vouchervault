@@ -1,3 +1,4 @@
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,20 +33,26 @@ Widget voucherDialogContainer(
   final v =
       ref.watch(voucherProvider(voucher.uuid ?? '')).getOrElse(() => voucher);
 
-  void onTapBarcode() => v.codeOption.map((code) {
-        Clipboard.setData(ClipboardData(text: code));
-        Fluttertoast.showToast(msg: 'Copied to clipboard');
-      });
+  final onTapBarcode = useCallback(
+    () => v.codeOption.map((code) {
+      Clipboard.setData(ClipboardData(text: code));
+      Fluttertoast.showToast(msg: 'Copied to clipboard');
+    }),
+    [v.codeOption],
+  );
 
-  void onSpend(Voucher v) => showDialog<String>(
-        context: context,
-        builder: (context) => VoucherSpendDialog(),
-      )
-          .then(optionOfString)
-          .then(VoucherActions.maybeUpdateBalance(v))
-          .then(bloc.add);
+  final onSpend = useCallback(
+    () => showDialog<String>(
+      context: context,
+      builder: (context) => VoucherSpendDialog(),
+    )
+        .then(optionOfString)
+        .then(VoucherActions.maybeUpdateBalance(v))
+        .then(bloc.add),
+    [bloc, v],
+  );
 
-  Future<void> onEdit(Voucher v) async {
+  final onEdit = useCallback(() async {
     final voucher = await Navigator.push<Voucher>(
       context,
       MaterialPageRoute(
@@ -55,31 +62,34 @@ Widget voucherDialogContainer(
     );
 
     optionOf(voucher).map(VoucherActions.update).map(bloc.add);
-  }
+  }, [bloc, v]);
 
-  void onRemove(v) => showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Are you sure?'),
-          content: Text('That you want to remove this voucher?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                bloc.add(VoucherActions.remove(v));
-                Navigator.pop(context, true);
-              },
-              child: Text('Remove'),
-            ),
-          ],
-        ),
-      ).then((removed) {
-        if (!removed!) return;
-        Navigator.pop(context);
-      });
+  final onRemove = useCallback(
+    () => showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Are you sure?'),
+        content: Text('That you want to remove this voucher?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              bloc.add(VoucherActions.remove(v));
+              Navigator.pop(context, true);
+            },
+            child: Text('Remove'),
+          ),
+        ],
+      ),
+    ).then((removed) {
+      if (removed != true) return;
+      Navigator.pop(context);
+    }),
+    [bloc, v],
+  );
 
   return VoucherDialog(
     voucher: v,

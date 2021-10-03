@@ -32,6 +32,7 @@ void useFullBrightness(
   bool enabled = true,
 }) {
   final bloc = useMemoized(() => _BrightnessBloc(enabled: enabled));
+  useEffect(() => bloc.close, [bloc]);
 
   useEffect(() {
     bloc.add(_goBright());

@@ -63,7 +63,7 @@ packages:
       name: bloc_stream
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.3"
+    version: "6.0.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -239,6 +239,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.16"
+  enum_utils:
+    dependency: "direct main"
+    description:
+      name: enum_utils
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -440,7 +447,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.7"
+    version: "3.0.8"
   intl:
     dependency: "direct main"
     description:

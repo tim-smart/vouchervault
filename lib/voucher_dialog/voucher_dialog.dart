@@ -18,10 +18,10 @@ Widget voucherDialog(
   BuildContext context, {
   required Voucher voucher,
   required VoidCallback onTapBarcode,
-  required void Function(Voucher) onEdit,
+  required void Function() onEdit,
   required VoidCallback onClose,
-  required void Function(Voucher) onRemove,
-  required void Function(Voucher) onSpend,
+  required void Function() onRemove,
+  required void Function() onSpend,
 }) {
   // colors
   final color = V.color(voucher.color);
@@ -75,16 +75,16 @@ Widget voucherDialog(
                 IconButton(
                   color: textColor,
                   icon: Icon(Icons.shopping_cart),
-                  onPressed: () => onSpend(voucher),
+                  onPressed: onSpend,
                 ),
               IconButton(
                 color: textColor,
                 icon: Icon(Icons.delete),
-                onPressed: () => onRemove(voucher),
+                onPressed: onRemove,
               ),
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
-                onPressed: () => onEdit(voucher),
+                onPressed: onEdit,
                 child: Text('Edit'),
               ),
               SizedBox(width: AppTheme.space3),
