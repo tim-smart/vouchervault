@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart';
@@ -29,9 +30,9 @@ Widget barcodeScannerField(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       _ScanButton(
-        barcodeType,
-        initialValue,
-        (format, data) {
+        barcodeType: barcodeType,
+        data: initialValue,
+        onScan: (format, data) {
           controller.value = TextEditingValue(
             text: data,
             selection:

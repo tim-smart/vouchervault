@@ -1,6 +1,9 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
@@ -13,7 +16,7 @@ final routeObserver = RouteObserver<ModalRoute>();
 @swidget
 Widget voucherVaultApp(
   BuildContext context, {
-  List<Voucher>? vouchers,
+  IList<Voucher>? vouchers,
 }) =>
     ProviderScope(
       overrides: [
@@ -21,10 +24,21 @@ Widget voucherVaultApp(
           vouchersProvider
               .overrideWithValue(VouchersBloc(VouchersState(vouchers)))
       ],
-      child: MaterialApp(
-        theme: AppTheme.light(),
-        darkTheme: AppTheme.dark(),
-        home: VouchersScreen(),
-        navigatorObservers: [routeObserver],
-      ),
+      child: _App(),
     );
+
+@hcwidget
+Widget _app(WidgetRef ref) {
+  // Remove expired vouchers
+  final bloc = ref.watch(vouchersProvider.bloc);
+  useEffect(() {
+    bloc.add(VoucherActions.removeExpired());
+  }, [bloc]);
+
+  return MaterialApp(
+    theme: AppTheme.light(),
+    darkTheme: AppTheme.dark(),
+    home: VouchersScreen(),
+    navigatorObservers: [routeObserver],
+  );
+}

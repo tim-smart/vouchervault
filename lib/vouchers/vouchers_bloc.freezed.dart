@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$VouchersStateTearOff {
   const _$VouchersStateTearOff();
 
-  _VouchersState call(List<Voucher> vouchers) {
+  _VouchersState call(IList<Voucher> vouchers) {
     return _VouchersState(
       vouchers,
     );
@@ -29,7 +29,7 @@ const $VouchersState = _$VouchersStateTearOff();
 
 /// @nodoc
 mixin _$VouchersState {
-  List<Voucher> get vouchers => throw _privateConstructorUsedError;
+  IList<Voucher> get vouchers => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VouchersStateCopyWith<VouchersState> get copyWith =>
@@ -41,7 +41,7 @@ abstract class $VouchersStateCopyWith<$Res> {
   factory $VouchersStateCopyWith(
           VouchersState value, $Res Function(VouchersState) then) =
       _$VouchersStateCopyWithImpl<$Res>;
-  $Res call({List<Voucher> vouchers});
+  $Res call({IList<Voucher> vouchers});
 }
 
 /// @nodoc
@@ -61,7 +61,7 @@ class _$VouchersStateCopyWithImpl<$Res>
       vouchers: vouchers == freezed
           ? _value.vouchers
           : vouchers // ignore: cast_nullable_to_non_nullable
-              as List<Voucher>,
+              as IList<Voucher>,
     ));
   }
 }
@@ -73,7 +73,7 @@ abstract class _$VouchersStateCopyWith<$Res>
           _VouchersState value, $Res Function(_VouchersState) then) =
       __$VouchersStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Voucher> vouchers});
+  $Res call({IList<Voucher> vouchers});
 }
 
 /// @nodoc
@@ -95,7 +95,7 @@ class __$VouchersStateCopyWithImpl<$Res>
       vouchers == freezed
           ? _value.vouchers
           : vouchers // ignore: cast_nullable_to_non_nullable
-              as List<Voucher>,
+              as IList<Voucher>,
     ));
   }
 }
@@ -106,7 +106,7 @@ class _$_VouchersState extends _VouchersState with DiagnosticableTreeMixin {
   _$_VouchersState(this.vouchers) : super._();
 
   @override
-  final List<Voucher> vouchers;
+  final IList<Voucher> vouchers;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -141,11 +141,11 @@ class _$_VouchersState extends _VouchersState with DiagnosticableTreeMixin {
 }
 
 abstract class _VouchersState extends VouchersState {
-  factory _VouchersState(List<Voucher> vouchers) = _$_VouchersState;
+  factory _VouchersState(IList<Voucher> vouchers) = _$_VouchersState;
   _VouchersState._() : super._();
 
   @override
-  List<Voucher> get vouchers => throw _privateConstructorUsedError;
+  IList<Voucher> get vouchers => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$VouchersStateCopyWith<_VouchersState> get copyWith =>

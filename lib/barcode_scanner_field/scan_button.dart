@@ -2,11 +2,11 @@ part of 'barcode_scanner_field.dart';
 
 @swidget
 Widget _scanButton(
-  BuildContext context,
-  Option<Barcode> barcodeType,
-  String data,
-  void onScan(BarcodeFormat, String),
-) =>
+  BuildContext context, {
+  required Option<Barcode> barcodeType,
+  required String data,
+  required void Function(BarcodeFormat, String) onScan,
+}) =>
     TextButton(
       style: TextButton.styleFrom(
         backgroundColor: AppColors.lightGrey,
@@ -41,6 +41,11 @@ Widget _scanButton(
                 ),
               ) as Widget,
             )
+            .alt(() => optionOfString(data).map((text) => AutoSizeText(
+                  text,
+                  style: TextStyle(fontSize: 40),
+                  maxLines: 1,
+                )))
             .getOrElse(() => Text('Scan barcode')),
       ),
     );

@@ -10,7 +10,7 @@ class VoucherList extends StatelessWidget {
   const VoucherList({Key? key, required this.vouchers, required this.onPressed})
       : super(key: key);
 
-  final List<Voucher> vouchers;
+  final IList<Voucher> vouchers;
 
   final void Function(Voucher) onPressed;
 

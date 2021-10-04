@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc_stream/bloc_stream.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -17,9 +18,8 @@ part 'vouchers_bloc.freezed.dart';
 
 final _uuidgen = Uuid();
 
-final vouchersProvider = BlocStreamProvider<VouchersBloc, VouchersState>(
-  (ref) => VouchersBloc()..add(VoucherActions.removeExpired()),
-);
+final vouchersProvider =
+    BlocStreamProvider<VouchersBloc, VouchersState>((ref) => VouchersBloc());
 
 final voucherProvider = Provider.autoDispose.family((ref, String uuid) {
   final state = ref.watch(vouchersProvider);
@@ -29,9 +29,9 @@ final voucherProvider = Provider.autoDispose.family((ref, String uuid) {
 @freezed
 class VouchersState with _$VouchersState {
   VouchersState._();
-  factory VouchersState(List<Voucher> vouchers) = _VouchersState;
+  factory VouchersState(IList<Voucher> vouchers) = _VouchersState;
 
-  late final List<Voucher> sortedVouchers = vouchers.sorted((a, b) {
+  late final IList<Voucher> sortedVouchers = vouchers.sort((a, b) {
     final compare = a.description.compareTo(b.description);
     final expiresCompare = a.expiresOption
         .map((d) => d.millisecondsSinceEpoch)
@@ -43,9 +43,9 @@ class VouchersState with _$VouchersState {
     return compare != 0 ? compare : expiresCompare;
   });
 
-  dynamic toJson() => vouchers.map((v) => v.toJson()).toList();
+  dynamic toJson() => vouchers.toJson((v) => v.toJson());
   static VouchersState fromJson(dynamic json) => VouchersState(
-        (json as List<dynamic>).map((j) => Voucher.fromJson(j)).toList(),
+        (json as List).map((j) => Voucher.fromJson(j)).toIList(),
       );
 }
 
@@ -53,29 +53,26 @@ typedef VoucherAction = Action<VouchersBloc, VouchersState>;
 
 class VoucherActions {
   static VoucherAction removeExpired() => (b, add) => add(b.value.copyWith(
-        vouchers: b.value.vouchers.fold<List<Voucher>>(
-          [],
-          (acc, v) => (v.removeOnceExpired &&
-                  v.expiresOption
-                      .map(endOfDay)
-                      .map((expires) => expires.isBefore(DateTime.now()))
-                      .getOrElse(() => false))
-              ? acc
-              : [...acc, v],
+        vouchers: b.value.vouchers.fold(
+          b.value.vouchers,
+          (acc, v) => v.expiresOption
+              .filter((_) => v.removeOnceExpired)
+              .map(endOfDay)
+              .filter((expires) => expires.isBefore(DateTime.now()))
+              .match(
+                (_) => acc.remove(v),
+                () => acc,
+              ),
         ),
       ));
 
-  static VoucherAction add(Voucher voucher) =>
-      (b, add) => add(b.value.copyWith(vouchers: [
-            ...b.value.vouchers,
-            voucher.copyWith(uuid: _uuidgen.v4()),
-          ]));
+  static VoucherAction add(Voucher voucher) => (b, add) => add(b.value.copyWith(
+        vouchers: b.value.vouchers.add(voucher.copyWith(uuid: _uuidgen.v4())),
+      ));
 
   static VoucherAction update(Voucher voucher) =>
       (b, add) => add(b.value.copyWith(
-            vouchers: b.value.vouchers
-                .map((v) => v.uuid == voucher.uuid ? voucher : v)
-                .toList(),
+            vouchers: b.value.vouchers.updateById([voucher], (v) => v.uuid),
           ));
 
   static VoucherAction Function(Option<String>) maybeUpdateBalance(Voucher v) =>
@@ -87,11 +84,10 @@ class VoucherActions {
           .map((balance) => update(v.copyWith(balanceMilliunits: balance)))
           .map((action) => action(b, add));
 
-  static VoucherAction remove(Voucher voucher) =>
-      (b, add) => add(b.value.copyWith(
-            vouchers:
-                b.value.vouchers.where((v) => v.uuid != voucher.uuid).toList(),
-          ));
+  static VoucherAction remove(Voucher voucher) => (b, add) =>
+      add(b.value.copyWith(
+        vouchers: b.value.vouchers.removeWhere((v) => v.uuid == voucher.uuid),
+      ));
 
   static VoucherAction import() => (b, add) => files
       .pick(['json'])
@@ -119,7 +115,7 @@ class VoucherActions {
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
   VouchersBloc([VouchersState? initialState])
-      : super(initialState ?? VouchersState([]));
+      : super(initialState ?? VouchersState(IList()));
 
   @override
   dynamic toJson(VouchersState value) => value.toJson();
