@@ -25,6 +25,8 @@ dependencies:
   freezed_annotation: ^0.14.0
   functional_widget_annotation: ^0.9.0
   intl: ^0.17.0
+  local_auth: ^1.1.8
+  logging: ^1.0.2
   json_annotation: ^4.1.0
   path_provider: ^2.0.1
   persisted_bloc_stream: ^6.0.0

@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/auth/auth_bloc.dart';
+import 'package:vouchervault/auth/auth_screen.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
 import 'package:vouchervault/vouchers/vouchers_bloc.dart';
@@ -35,10 +37,16 @@ Widget _app(WidgetRef ref) {
     bloc.add(VoucherActions.removeExpired());
   }, [bloc]);
 
+  // Auth state
+  final authState = ref.watch(authBlocProvider);
+
   return MaterialApp(
     theme: AppTheme.light(),
     darkTheme: AppTheme.dark(),
-    home: VouchersScreen(),
+    home: authState.when(
+      unauthenticated: () => AuthScreen(),
+      authenticated: (_) => VouchersScreen(),
+    ),
     navigatorObservers: [routeObserver],
   );
 }

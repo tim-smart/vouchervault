@@ -39,6 +39,8 @@ PODS:
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
+  - local_auth (0.0.1):
+    - Flutter
   - MTBBarcodeScanner (5.0.11)
   - path_provider (0.0.1):
     - Flutter
@@ -60,6 +62,7 @@ DEPENDENCIES:
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - local_auth (from `.symlinks/plugins/local_auth/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - share (from `.symlinks/plugins/share/ios`)
@@ -83,6 +86,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  local_auth:
+    :path: ".symlinks/plugins/local_auth/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   qr_code_scanner:
@@ -99,6 +104,7 @@ SPEC CHECKSUMS:
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
+  local_auth: ef62030a2731330b95df7ef1331bd15f6a64b8a6
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   path_provider: d1e9807085df1f9cc9318206cd649dc0b76be3de
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
