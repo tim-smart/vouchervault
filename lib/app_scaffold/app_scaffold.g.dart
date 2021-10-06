@@ -6,7 +6,7 @@ part of 'app_scaffold.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class AppScaffold extends StatelessWidget {
+class AppScaffold extends HookWidget {
   const AppScaffold(
       {Key? key,
       required this.title,
