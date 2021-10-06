@@ -20,12 +20,14 @@ final _actionHasCheckbox = enums.valueMap({
 Widget vouchersMenu({
   required void Function(VouchersMenuAction) onSelected,
   required Map<VouchersMenuAction, bool> values,
+  required Set<VouchersMenuAction> disabled,
 }) =>
     PopupMenuButton<VouchersMenuAction>(
       onSelected: onSelected,
       itemBuilder: (context) => VouchersMenuAction.values
           .map<PopupMenuEntry<VouchersMenuAction>>((a) => PopupMenuItem(
                 value: a,
+                enabled: !disabled.contains(a),
                 child: Row(
                   children: [
                     Text(_actionLabel(a)),
@@ -33,10 +35,12 @@ Widget vouchersMenu({
                       Spacer(),
                       Checkbox(
                         value: values[a] ?? false,
-                        onChanged: (_) {
-                          onSelected(a);
-                          Navigator.of(context).pop();
-                        },
+                        onChanged: disabled.contains(a)
+                            ? null
+                            : (_) {
+                                onSelected(a);
+                                Navigator.of(context).pop();
+                              },
                       ),
                     ]
                   ],

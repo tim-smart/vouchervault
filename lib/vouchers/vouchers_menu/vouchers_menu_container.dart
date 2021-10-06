@@ -23,6 +23,7 @@ Widget vouchersMenuContainer(WidgetRef ref) {
 
   final authBloc = ref.watch(authBlocProvider.bloc);
   final authEnabled = ref.watch(authEnabledProvider);
+  final authAvailable = ref.watch(authAvailableProvider);
 
   return VouchersMenu(
     onSelected: (action) {
@@ -32,5 +33,8 @@ Widget vouchersMenuContainer(WidgetRef ref) {
     values: {
       VouchersMenuAction.AUTHENTICATION: authEnabled,
     },
+    disabled: Set.from([
+      if (!authAvailable) VouchersMenuAction.AUTHENTICATION,
+    ]),
   );
 }

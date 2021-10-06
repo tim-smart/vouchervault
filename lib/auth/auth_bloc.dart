@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
@@ -16,6 +17,8 @@ final authBlocProvider = BlocStreamProvider<AuthBloc, AuthState>(
     (ref) => AuthBloc(ref.watch(localAuthProvider))..add(AuthActions.init()));
 final authEnabledProvider =
     Provider((ref) => ref.watch(authBlocProvider).enabled);
+final authAvailableProvider =
+    Provider((ref) => ref.watch(authBlocProvider).available);
 
 final _log = Logger('auth_bloc.dart');
 
@@ -87,6 +90,11 @@ class AuthActions {
 
   static AuthAction authenticate() => (b, add) => TaskEither.tryCatch(
         () => b.localAuth.authenticate(
+          androidAuthStrings: AndroidAuthMessages(
+            signInTitle: 'Voucher Vault',
+            biometricHint: '',
+          ),
+          iOSAuthStrings: IOSAuthMessages(),
           localizedReason: 'Please authenticate to view your vouchers',
           stickyAuth: true,
         ),
