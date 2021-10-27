@@ -52,7 +52,7 @@ final Map<VoucherCodeType, String> _codeTypeLabelMap = {
 String codeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type]!;
 
 VoucherCodeType codeTypeFromJson(String? s) => optionOf(s)
-    .map((s) => _$enumDecode(_$VoucherCodeTypeEnumMap, s))
+    .map((s) => $enumDecode(_$VoucherCodeTypeEnumMap, s))
     .getOrElse(() => VoucherCodeType.CODE128);
 
 @freezed

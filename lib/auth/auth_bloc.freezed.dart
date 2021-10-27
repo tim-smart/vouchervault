@@ -40,7 +40,7 @@ class _$AuthStateTearOff {
     );
   }
 
-  AuthState fromJson(Map<String, Object> json) {
+  AuthState fromJson(Map<String, Object?> json) {
     return AuthState.fromJson(json);
   }
 }
@@ -145,7 +145,8 @@ class _$Unauthenticated extends Unauthenticated with DiagnosticableTreeMixin {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Unauthenticated);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is Unauthenticated);
   }
 
   @override
@@ -285,14 +286,13 @@ class _$Authenticated extends Authenticated with DiagnosticableTreeMixin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is Authenticated &&
-            (identical(other.reason, reason) ||
-                const DeepCollectionEquality().equals(other.reason, reason)));
+        (other.runtimeType == runtimeType &&
+            other is Authenticated &&
+            (identical(other.reason, reason) || other.reason == reason));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(reason);
+  int get hashCode => Object.hash(runtimeType, reason);
 
   @JsonKey(ignore: true)
   @override
@@ -374,7 +374,7 @@ abstract class Authenticated extends AuthState {
   factory Authenticated.fromJson(Map<String, dynamic> json) =
       _$Authenticated.fromJson;
 
-  AuthenticatedReason get reason => throw _privateConstructorUsedError;
+  AuthenticatedReason get reason;
   @JsonKey(ignore: true)
   $AuthenticatedCopyWith<Authenticated> get copyWith =>
       throw _privateConstructorUsedError;

@@ -44,7 +44,7 @@ class _$VoucherTearOff {
     );
   }
 
-  Voucher fromJson(Map<String, Object> json) {
+  Voucher fromJson(Map<String, Object?> json) {
     return Voucher.fromJson(json);
   }
 }
@@ -274,45 +274,26 @@ class _$_Voucher extends _Voucher {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Voucher &&
-            (identical(other.uuid, uuid) ||
-                const DeepCollectionEquality().equals(other.uuid, uuid)) &&
+        (other.runtimeType == runtimeType &&
+            other is _Voucher &&
+            (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
+                other.description == description) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.codeType, codeType) ||
-                const DeepCollectionEquality()
-                    .equals(other.codeType, codeType)) &&
-            (identical(other.expires, expires) ||
-                const DeepCollectionEquality()
-                    .equals(other.expires, expires)) &&
+                other.codeType == codeType) &&
+            (identical(other.expires, expires) || other.expires == expires) &&
             (identical(other.removeOnceExpired, removeOnceExpired) ||
-                const DeepCollectionEquality()
-                    .equals(other.removeOnceExpired, removeOnceExpired)) &&
-            (identical(other.balance, balance) ||
-                const DeepCollectionEquality()
-                    .equals(other.balance, balance)) &&
+                other.removeOnceExpired == removeOnceExpired) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.balanceMilliunits, balanceMilliunits) ||
-                const DeepCollectionEquality()
-                    .equals(other.balanceMilliunits, balanceMilliunits)) &&
-            (identical(other.color, color) ||
-                const DeepCollectionEquality().equals(other.color, color)));
+                other.balanceMilliunits == balanceMilliunits) &&
+            (identical(other.color, color) || other.color == color));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(uuid) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(codeType) ^
-      const DeepCollectionEquality().hash(expires) ^
-      const DeepCollectionEquality().hash(removeOnceExpired) ^
-      const DeepCollectionEquality().hash(balance) ^
-      const DeepCollectionEquality().hash(balanceMilliunits) ^
-      const DeepCollectionEquality().hash(color);
+  int get hashCode => Object.hash(runtimeType, uuid, description, code,
+      codeType, expires, removeOnceExpired, balance, balanceMilliunits, color);
 
   @JsonKey(ignore: true)
   @override
@@ -341,23 +322,23 @@ abstract class _Voucher extends Voucher {
   factory _Voucher.fromJson(Map<String, dynamic> json) = _$_Voucher.fromJson;
 
   @override
-  String? get uuid => throw _privateConstructorUsedError;
+  String? get uuid;
   @override
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
-  VoucherCodeType get codeType => throw _privateConstructorUsedError;
+  VoucherCodeType get codeType;
   @override
-  DateTime? get expires => throw _privateConstructorUsedError;
+  DateTime? get expires;
   @override
-  bool get removeOnceExpired => throw _privateConstructorUsedError;
+  bool get removeOnceExpired;
   @override
-  double? get balance => throw _privateConstructorUsedError;
+  double? get balance;
   @override
-  int? get balanceMilliunits => throw _privateConstructorUsedError;
+  int? get balanceMilliunits;
   @override
-  VoucherColor get color => throw _privateConstructorUsedError;
+  VoucherColor get color;
   @override
   @JsonKey(ignore: true)
   _$VoucherCopyWith<_Voucher> get copyWith =>

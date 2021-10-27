@@ -124,15 +124,14 @@ class _$_VouchersState extends _VouchersState with DiagnosticableTreeMixin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _VouchersState &&
+        (other.runtimeType == runtimeType &&
+            other is _VouchersState &&
             (identical(other.vouchers, vouchers) ||
-                const DeepCollectionEquality()
-                    .equals(other.vouchers, vouchers)));
+                other.vouchers == vouchers));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(vouchers);
+  int get hashCode => Object.hash(runtimeType, vouchers);
 
   @JsonKey(ignore: true)
   @override
@@ -145,7 +144,7 @@ abstract class _VouchersState extends VouchersState {
   _VouchersState._() : super._();
 
   @override
-  IList<Voucher> get vouchers => throw _privateConstructorUsedError;
+  IList<Voucher> get vouchers;
   @override
   @JsonKey(ignore: true)
   _$VouchersStateCopyWith<_VouchersState> get copyWith =>
