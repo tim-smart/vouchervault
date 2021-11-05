@@ -218,13 +218,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
-  dartz:
-    dependency: transitive
-    description:
-      name: dartz
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.0"
   datetime_picker_formfield:
     dependency: "direct main"
     description:
@@ -238,7 +231,7 @@ packages:
       name: emulators
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.1"
   enum_utils:
     dependency: "direct main"
     description:

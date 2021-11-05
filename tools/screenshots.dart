@@ -16,6 +16,7 @@ Future<void> main() async {
       'test_driver/main.dart',
       args: ['--flavor', 'local'],
     );
+    stderr.addStream(p.stderr);
     await stdout.addStream(p.stdout);
   });
 }
