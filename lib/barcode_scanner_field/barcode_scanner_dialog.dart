@@ -24,12 +24,12 @@ Widget barcodeScannerDialog(
 
   useEffect(() {
     return controller.value.match(
-      (c) {
-        final sub = c.scannedDataStream.take(1).listen((data) {
-          onScan(data.format, data.code);
-        });
-        return sub.cancel;
-      },
+      (c) => c.scannedDataStream
+          .where((d) => d.code != null)
+          .take(1)
+          .listen((data) {
+        onScan(data.format, data.code!);
+      }).cancel,
       () => () {},
     );
   }, [controller.value, onScan]);
