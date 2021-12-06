@@ -276,24 +276,32 @@ class _$_Voucher extends _Voucher {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Voucher &&
-            (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.code, code) || other.code == code) &&
-            (identical(other.codeType, codeType) ||
-                other.codeType == codeType) &&
-            (identical(other.expires, expires) || other.expires == expires) &&
-            (identical(other.removeOnceExpired, removeOnceExpired) ||
-                other.removeOnceExpired == removeOnceExpired) &&
-            (identical(other.balance, balance) || other.balance == balance) &&
-            (identical(other.balanceMilliunits, balanceMilliunits) ||
-                other.balanceMilliunits == balanceMilliunits) &&
-            (identical(other.color, color) || other.color == color));
+            const DeepCollectionEquality().equals(other.uuid, uuid) &&
+            const DeepCollectionEquality()
+                .equals(other.description, description) &&
+            const DeepCollectionEquality().equals(other.code, code) &&
+            const DeepCollectionEquality().equals(other.codeType, codeType) &&
+            const DeepCollectionEquality().equals(other.expires, expires) &&
+            const DeepCollectionEquality()
+                .equals(other.removeOnceExpired, removeOnceExpired) &&
+            const DeepCollectionEquality().equals(other.balance, balance) &&
+            const DeepCollectionEquality()
+                .equals(other.balanceMilliunits, balanceMilliunits) &&
+            const DeepCollectionEquality().equals(other.color, color));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, description, code,
-      codeType, expires, removeOnceExpired, balance, balanceMilliunits, color);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(uuid),
+      const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(code),
+      const DeepCollectionEquality().hash(codeType),
+      const DeepCollectionEquality().hash(expires),
+      const DeepCollectionEquality().hash(removeOnceExpired),
+      const DeepCollectionEquality().hash(balance),
+      const DeepCollectionEquality().hash(balanceMilliunits),
+      const DeepCollectionEquality().hash(color));
 
   @JsonKey(ignore: true)
   @override

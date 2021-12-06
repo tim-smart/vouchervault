@@ -14,7 +14,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 AuthState _$AuthStateFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType'] as String?) {
+  switch (json['runtimeType']) {
     case 'unauthenticated':
       return Unauthenticated.fromJson(json);
     case 'authenticated':
@@ -127,10 +127,15 @@ class _$UnauthenticatedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$Unauthenticated extends Unauthenticated with DiagnosticableTreeMixin {
-  const _$Unauthenticated() : super._();
+  const _$Unauthenticated({String? $type})
+      : $type = $type ?? 'unauthenticated',
+        super._();
 
   factory _$Unauthenticated.fromJson(Map<String, dynamic> json) =>
       _$$UnauthenticatedFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -216,7 +221,7 @@ class _$Unauthenticated extends Unauthenticated with DiagnosticableTreeMixin {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UnauthenticatedToJson(this)..['runtimeType'] = 'unauthenticated';
+    return _$$UnauthenticatedToJson(this);
   }
 }
 
@@ -262,13 +267,18 @@ class _$AuthenticatedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$Authenticated extends Authenticated with DiagnosticableTreeMixin {
-  const _$Authenticated(this.reason) : super._();
+  const _$Authenticated(this.reason, {String? $type})
+      : $type = $type ?? 'authenticated',
+        super._();
 
   factory _$Authenticated.fromJson(Map<String, dynamic> json) =>
       _$$AuthenticatedFromJson(json);
 
   @override
   final AuthenticatedReason reason;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -288,11 +298,12 @@ class _$Authenticated extends Authenticated with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Authenticated &&
-            (identical(other.reason, reason) || other.reason == reason));
+            const DeepCollectionEquality().equals(other.reason, reason));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, reason);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(reason));
 
   @JsonKey(ignore: true)
   @override
@@ -363,7 +374,7 @@ class _$Authenticated extends Authenticated with DiagnosticableTreeMixin {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AuthenticatedToJson(this)..['runtimeType'] = 'authenticated';
+    return _$$AuthenticatedToJson(this);
   }
 }
 

@@ -7,19 +7,25 @@ part of 'auth_bloc.dart';
 // **************************************************************************
 
 _$Unauthenticated _$$UnauthenticatedFromJson(Map<String, dynamic> json) =>
-    _$Unauthenticated();
+    _$Unauthenticated(
+      $type: json['runtimeType'] as String?,
+    );
 
 Map<String, dynamic> _$$UnauthenticatedToJson(_$Unauthenticated instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
 
 _$Authenticated _$$AuthenticatedFromJson(Map<String, dynamic> json) =>
     _$Authenticated(
       $enumDecode(_$AuthenticatedReasonEnumMap, json['reason']),
+      $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$AuthenticatedToJson(_$Authenticated instance) =>
     <String, dynamic>{
       'reason': _$AuthenticatedReasonEnumMap[instance.reason],
+      'runtimeType': instance.$type,
     };
 
 const _$AuthenticatedReasonEnumMap = {

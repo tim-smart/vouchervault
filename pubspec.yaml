@@ -23,8 +23,8 @@ dependencies:
   fluttertoast: ^8.0.7
   form_builder_validators: ^7.1.0
   fpdart: ^0.0.11
-  freezed_annotation: ^0.15.0
-  functional_widget_annotation: ^0.9.0
+  freezed_annotation: ^1.0.0
+  functional_widget_annotation: ^0.9.2
   intl: ^0.17.0
   local_auth: ^1.1.8
   logging: ^1.0.2
@@ -39,18 +39,6 @@ dependencies:
   timeago: ^3.0.1
   uuid: ^3.0.1
 
-dependency_overrides:
-  functional_widget:
-    git:
-      url: https://github.com/tim-smart/functional_widget.git
-      ref: chwidget
-      path: packages/functional_widget
-  functional_widget_annotation:
-    git:
-      url: https://github.com/tim-smart/functional_widget.git
-      ref: chwidget
-      path: packages/functional_widget_annotation
-
 dev_dependencies:
   build_runner: ^2.0.1
   emulators: ^0.2.0
@@ -59,8 +47,8 @@ dev_dependencies:
   flutter_launcher_icons: ^0.9.0
   flutter_test:
     sdk: flutter
-  freezed: ^0.15.0
-  functional_widget: ^0.9.0
+  freezed: ^1.0.0
+  functional_widget: ^0.9.2
   json_serializable: ^6.0.1
   test: any
 

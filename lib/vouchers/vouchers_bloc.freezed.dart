@@ -126,12 +126,12 @@ class _$_VouchersState extends _VouchersState with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _VouchersState &&
-            (identical(other.vouchers, vouchers) ||
-                other.vouchers == vouchers));
+            const DeepCollectionEquality().equals(other.vouchers, vouchers));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, vouchers);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(vouchers));
 
   @JsonKey(ignore: true)
   @override
