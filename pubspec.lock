@@ -49,14 +49,14 @@ packages:
       name: barcode
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   barcode_widget:
     dependency: "direct main"
     description:
       name: barcode_widget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   bloc_stream:
     dependency: "direct main"
     description:
@@ -528,6 +528,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  offset_iterator:
+    dependency: transitive
+    description:
+      name: offset_iterator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.49"
+  offset_iterator_persist:
+    dependency: "direct main"
+    description:
+      path: "../arise/offset_iterator/packages/offset_iterator_persist"
+      relative: true
+    source: path
+    version: "0.0.9"
+  offset_iterator_riverpod:
+    dependency: "direct main"
+    description:
+      name: offset_iterator_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.14"
   package_config:
     dependency: transitive
     description:
@@ -660,7 +681,7 @@ packages:
       name: qr
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "3.0.0"
   qr_code_scanner:
     dependency: "direct main"
     description:
@@ -827,6 +848,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
+  state_iterator:
+    dependency: transitive
+    description:
+      name: state_iterator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   state_notifier:
     dependency: transitive
     description:

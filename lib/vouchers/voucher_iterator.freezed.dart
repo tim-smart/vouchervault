@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'vouchers_bloc.dart';
+part of 'voucher_iterator.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -102,23 +102,15 @@ class __$VouchersStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VouchersState extends _VouchersState with DiagnosticableTreeMixin {
+class _$_VouchersState extends _VouchersState {
   _$_VouchersState(this.vouchers) : super._();
 
   @override
   final IList<Voucher> vouchers;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'VouchersState(vouchers: $vouchers)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'VouchersState'))
-      ..add(DiagnosticsProperty('vouchers', vouchers));
   }
 
   @override

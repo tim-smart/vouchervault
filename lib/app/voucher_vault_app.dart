@@ -8,8 +8,8 @@ import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/auth/auth_bloc.dart';
 import 'package:vouchervault/auth/auth_screen.dart';
 import 'package:vouchervault/models/voucher.dart';
+import 'package:vouchervault/vouchers/voucher_iterator.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
-import 'package:vouchervault/vouchers/vouchers_bloc.dart';
 
 part 'voucher_vault_app.g.dart';
 
@@ -19,12 +19,14 @@ final routeObserver = RouteObserver<ModalRoute>();
 Widget voucherVaultApp(
   BuildContext context, {
   IList<Voucher>? vouchers,
+  List<Override> overrides = const [],
 }) =>
     ProviderScope(
       overrides: [
-        if (vouchers != null)
-          vouchersProvider
-              .overrideWithValue(VouchersBloc(VouchersState(vouchers)))
+        ...overrides,
+        /* if (vouchers != null) */
+        /*   voucherIteratorProvider.overrideWithValue( */
+        /*       voucherIterator(initialValue: VouchersState(vouchers))), */
       ],
       child: _App(),
     );
@@ -32,10 +34,10 @@ Widget voucherVaultApp(
 @hcwidget
 Widget _app(WidgetRef ref) {
   // Remove expired vouchers
-  final bloc = ref.watch(vouchersProvider.bloc);
+  final iterator = ref.watch(voucherIteratorProvider);
   useEffect(() {
-    bloc.add(VoucherActions.removeExpired());
-  }, [bloc]);
+    iterator.add(removeExpiredVouchers());
+  }, [iterator]);
 
   // Auth state
   final authState = ref.watch(authBlocProvider);

@@ -71,7 +71,8 @@ class Voucher with _$Voucher {
     @Default(VoucherColor.GREY) VoucherColor color,
   }) = _Voucher;
 
-  factory Voucher.fromJson(dynamic json) => _$VoucherFromJson(json);
+  factory Voucher.fromJson(dynamic json) =>
+      _$VoucherFromJson(Map<String, dynamic>.from(json));
 
   late final Option<String> codeOption = optionOf(code);
 
@@ -85,8 +86,7 @@ class Voucher with _$Voucher {
 
   late final bool hasDetails = expiresOption.isSome() || balanceOption.isSome();
 
-  static Voucher fromFormValue(Map<String, dynamic> json) =>
-      Voucher.fromJson(json);
+  static Voucher fromFormValue(dynamic json) => Voucher.fromJson(json);
 
   dynamic toFormValue() => <String, dynamic>{
         ...toJson(),

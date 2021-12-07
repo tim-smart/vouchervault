@@ -12,7 +12,7 @@ import 'package:vouchervault/models/voucher.dart' as V;
 import 'package:vouchervault/models/voucher.dart' show Voucher;
 import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
-import 'package:vouchervault/vouchers/vouchers_bloc.dart';
+import 'package:vouchervault/vouchers/voucher_iterator.dart';
 
 part 'voucher_dialog_container.g.dart';
 
@@ -29,7 +29,7 @@ Widget voucherDialogContainer(
   );
 
   // bloc & state
-  final bloc = ref.watch(vouchersProvider.bloc);
+  final iterator = ref.watch(voucherIteratorProvider);
   final v =
       ref.watch(voucherProvider(voucher.uuid ?? '')).getOrElse(() => voucher);
 
@@ -47,9 +47,9 @@ Widget voucherDialogContainer(
       builder: (context) => VoucherSpendDialog(),
     )
         .then(optionOfString)
-        .then(VoucherActions.maybeUpdateBalance(v))
-        .then(bloc.add),
-    [bloc, v],
+        .then(maybeUpdateVoucherBalance(v))
+        .then(iterator.add),
+    [iterator, v],
   );
 
   final onEdit = useCallback(() async {
@@ -61,8 +61,8 @@ Widget voucherDialogContainer(
       ),
     );
 
-    optionOf(voucher).map(VoucherActions.update).map(bloc.add);
-  }, [bloc, v]);
+    optionOf(voucher).map(updateVoucher).map(iterator.add);
+  }, [iterator, v]);
 
   final onRemove = useCallback(
     () => showDialog<bool>(
@@ -77,7 +77,7 @@ Widget voucherDialogContainer(
           ),
           TextButton(
             onPressed: () {
-              bloc.add(VoucherActions.remove(v));
+              iterator.add(removeVoucher(v));
               Navigator.pop(context, true);
             },
             child: Text('Remove'),
@@ -88,7 +88,7 @@ Widget voucherDialogContainer(
       if (removed != true) return;
       Navigator.pop(context);
     }),
-    [bloc, v],
+    [iterator, v],
   );
 
   return VoucherDialog(

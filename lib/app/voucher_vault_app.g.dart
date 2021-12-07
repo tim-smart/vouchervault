@@ -7,13 +7,16 @@ part of 'voucher_vault_app.dart';
 // **************************************************************************
 
 class VoucherVaultApp extends StatelessWidget {
-  const VoucherVaultApp({Key? key, this.vouchers}) : super(key: key);
+  const VoucherVaultApp({Key? key, this.vouchers, this.overrides = const []})
+      : super(key: key);
 
   final IList<Voucher>? vouchers;
 
+  final List<Override> overrides;
+
   @override
   Widget build(BuildContext _context) =>
-      voucherVaultApp(_context, vouchers: vouchers);
+      voucherVaultApp(_context, vouchers: vouchers, overrides: overrides);
 }
 
 class _App extends HookConsumerWidget {
