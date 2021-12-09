@@ -1,52 +1,47 @@
-import 'dart:async';
-
-import 'package:bloc_stream/bloc_stream.dart';
 import 'package:brightness_volume/brightness_volume.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:offset_iterator_riverpod/offset_iterator_riverpod.dart';
 import 'package:vouchervault/hooks/use_route_observer.dart';
 
-class _BrightnessBloc extends BlocStream<bool> {
-  _BrightnessBloc({this.enabled = true}) : super(false);
-  final bool enabled;
-}
+StateIterator<bool> _brighnessIterator() => StateIterator(initialState: false);
 
-typedef _BrightnessAction = Action<_BrightnessBloc, bool>;
+typedef _BrightnessAction = StateIteratorAction<bool>;
 
-_BrightnessAction _goDark() => (b, add) => b.value
-    ? BVUtils.resetCustomBrightness().then((_) => add(false))
-    : Future.value();
+_BrightnessAction _goDark() => (value, add) =>
+    value ? BVUtils.resetCustomBrightness().then((_) => add(false)) : null;
 
-_BrightnessAction _goBright() => (b, add) async {
-      if (!b.enabled) return;
-      await BVUtils.setBrightness(1);
-      add(true);
+_BrightnessAction _goBright(bool enabled) => (value, add) {
+      if (!enabled) return null;
+      return BVUtils.setBrightness(1).then((_) => add(true));
     };
 
 void useFullBrightness(
   RouteObserver<ModalRoute> routeObserver, {
   bool enabled = true,
 }) {
-  final bloc = useMemoized(() => _BrightnessBloc(enabled: enabled), [enabled]);
+  final iter = useMemoized(() => _brighnessIterator(), []);
+  useEffect(() {
+    iter.iterator.run();
+  }, [iter]);
 
   useEffect(() {
-    bloc.add(_goBright());
+    iter.add(_goBright(enabled));
     return () {
-      bloc.add(_goDark());
-      bloc.close();
+      iter.add(_goDark());
+      iter.close();
     };
-  }, [bloc]);
+  }, [iter, enabled]);
 
   // If something gets pushed on top of the route, then go dark again.
   useRouteObserver(
     routeObserver,
     didPushNext: some(() {
-      bloc.add(_goDark());
+      iter.add(_goDark());
     }),
     didPopNext: some(() {
-      bloc.add(_goBright());
+      iter.add(_goBright(enabled));
     }),
-    keys: [bloc],
+    keys: [iter, enabled],
   );
 }

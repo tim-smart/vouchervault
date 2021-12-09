@@ -1,4 +1,3 @@
-import 'package:bloc_stream/bloc_stream.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -6,21 +5,30 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
-import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
-import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
+import 'package:offset_iterator_persist/offset_iterator_persist.dart';
+import 'package:offset_iterator_riverpod/offset_iterator_riverpod.dart';
+import 'package:vouchervault/app/providers.dart';
+import 'package:vouchervault/lib/and_then.dart';
 
 part 'auth_bloc.freezed.dart';
 part 'auth_bloc.g.dart';
 
-final localAuthProvider = Provider((ref) => LocalAuthentication());
-final authBlocProvider = BlocStreamProvider<AuthBloc, AuthState>(
-    (ref) => AuthBloc(ref.watch(localAuthProvider))..add(AuthActions.init()));
-final authEnabledProvider =
-    Provider((ref) => ref.watch(authBlocProvider).enabled);
-final authAvailableProvider =
-    Provider((ref) => ref.watch(authBlocProvider).available);
-
 final _log = Logger('auth_bloc.dart');
+
+final localAuthProvider = Provider((ref) => LocalAuthentication());
+
+final authIteratorProvider = Provider((ref) {
+  final i = authIterator(ref.watch(storageProvider));
+  ref.onDispose(i.close);
+  return i;
+});
+
+final authProvider = Provider((ref) =>
+    ref.watch(authIteratorProvider).andThen(stateIteratorValueProvider(ref)));
+
+final authEnabledProvider = Provider((ref) => ref.watch(authProvider).enabled);
+final authAvailableProvider =
+    Provider((ref) => ref.watch(authProvider).available);
 
 enum AuthenticatedReason {
   NOT_AVAILABLE,
@@ -56,17 +64,17 @@ class AuthState with _$AuthState {
       : AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE);
 }
 
-typedef AuthAction = Action<AuthBloc, AuthState>;
+typedef AuthAction = StateIteratorAction<AuthState>;
 
 class AuthActions {
-  static AuthAction init() => (b, add) {
-        if (b.value.enabled) {
+  static AuthAction init(Ref ref) => (value, add) {
+        if (value.enabled) {
           add(AuthState.unauthenticated());
           return Future.value();
         }
 
         return TaskEither.tryCatch(
-          () => b.localAuth.isDeviceSupported(),
+          () => ref.read(localAuthProvider).isDeviceSupported(),
           (error, stackTrace) => 'Could not check if auth is available',
         )
             .filterOrElse(
@@ -86,18 +94,19 @@ class AuthActions {
       };
 
   static AuthAction toggle() =>
-      (b, add) => add(b.value.enabled ? b.value.disable() : b.value.enable());
+      (value, add) => add(value.enabled ? value.disable() : value.enable());
 
-  static AuthAction authenticate() => (b, add) => TaskEither.tryCatch(
-        () => b.localAuth.authenticate(
-          androidAuthStrings: AndroidAuthMessages(
-            signInTitle: 'Voucher Vault',
-            biometricHint: '',
-          ),
-          iOSAuthStrings: IOSAuthMessages(),
-          localizedReason: 'Please authenticate to view your vouchers',
-          stickyAuth: true,
-        ),
+  static AuthAction authenticate(Ref ref) => (value, add) =>
+      TaskEither.tryCatch(
+        () => ref.read(localAuthProvider).authenticate(
+              androidAuthStrings: AndroidAuthMessages(
+                signInTitle: 'Voucher Vault',
+                biometricHint: '',
+              ),
+              iOSAuthStrings: IOSAuthMessages(),
+              localizedReason: 'Please authenticate to view your vouchers',
+              stickyAuth: true,
+            ),
         (err, _) => 'Error trying to authenticate: $err',
       )
           .filterOrElse((success) => success, (_) => 'Authentication failed')
@@ -106,14 +115,12 @@ class AuthActions {
           .run();
 }
 
-class AuthBloc extends PersistedBlocStream<AuthState> {
-  AuthBloc(this.localAuth)
-      : super(AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE));
-
-  final LocalAuthentication localAuth;
-
-  @override
-  dynamic toJson(AuthState value) => value.toJson();
-  @override
-  AuthState fromJson(json) => AuthState.fromJson(json);
-}
+StateIterator<AuthState> authIterator(Storage storage) => StateIterator(
+      initialState: AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE),
+      transform: (parent) => parent.persist(
+        storage: storage,
+        key: 'AuthBloc',
+        toJson: (v) => v.toJson(),
+        fromJson: (json) => AuthState.fromJson(json as Map<String, dynamic>),
+      ),
+    );

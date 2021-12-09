@@ -28,7 +28,7 @@ Widget voucherDialogContainer(
     enabled: voucher.codeType != V.VoucherCodeType.TEXT,
   );
 
-  // bloc & state
+  // state
   final iterator = ref.watch(voucherIteratorProvider);
   final v =
       ref.watch(voucherProvider(voucher.uuid ?? '')).getOrElse(() => voucher);

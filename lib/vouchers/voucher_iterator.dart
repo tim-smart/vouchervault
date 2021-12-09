@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:offset_iterator_persist/offset_iterator_persist.dart';
@@ -63,7 +63,7 @@ StateIterator<VouchersState> voucherIterator({
       initialState: initialState ?? VouchersState(IList()),
       transform: (parent) => parent.persist(
         storage: storage,
-        key: 'voucherIterator',
+        key: 'VouchersBloc',
         toJson: (s) => s.toJson(),
         fromJson: VouchersState.fromJson,
       ),

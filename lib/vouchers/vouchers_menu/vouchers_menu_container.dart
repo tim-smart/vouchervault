@@ -21,14 +21,14 @@ final _authActionMap = enums.optionValueMap({
 Widget vouchersMenuContainer(WidgetRef ref) {
   final iterator = ref.watch(voucherIteratorProvider);
 
-  final authBloc = ref.watch(authBlocProvider.bloc);
+  final authIter = ref.watch(authIteratorProvider);
   final authEnabled = ref.watch(authEnabledProvider);
   final authAvailable = ref.watch(authAvailableProvider);
 
   return VouchersMenu(
     onSelected: (action) {
       _actionMap(action).map((a) => iterator.add(a()));
-      _authActionMap(action).map((a) => authBloc.add(a()));
+      _authActionMap(action).map((a) => authIter.add(a()));
     },
     values: {
       VouchersMenuAction.AUTHENTICATION: authEnabled,

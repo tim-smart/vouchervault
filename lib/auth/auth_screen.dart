@@ -10,15 +10,15 @@ part 'auth_screen.g.dart';
 
 @hcwidget
 Widget authScreen(WidgetRef ref) {
-  final bloc = ref.watch(authBlocProvider.bloc);
+  final iter = ref.watch(authIteratorProvider);
   useEffect(() {
-    bloc.add(AuthActions.authenticate());
-  }, [bloc]);
+    iter.add(AuthActions.authenticate(ref as Ref));
+  }, [iter]);
 
   return AppScaffoldSimple(
     body: Center(
       child: ElevatedButton(
-        onPressed: () => bloc.add(AuthActions.authenticate()),
+        onPressed: () => iter.add(AuthActions.authenticate(ref as Ref)),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
