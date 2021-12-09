@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,6 +19,7 @@ final localAuthProvider = Provider((ref) => LocalAuthentication());
 final authIteratorProvider = Provider((ref) {
   final i = authIterator(ref.watch(storageProvider));
   ref.onDispose(i.close);
+  i.add(AuthActions.init(ref));
   return i;
 });
 
@@ -67,14 +67,15 @@ class AuthState with _$AuthState {
 typedef AuthAction = StateIteratorAction<AuthState>;
 
 class AuthActions {
-  static AuthAction init(Ref ref) => (value, add) {
+  static AuthAction init(ref) => (value, add) {
         if (value.enabled) {
           add(AuthState.unauthenticated());
           return Future.value();
         }
 
         return TaskEither.tryCatch(
-          () => ref.read(localAuthProvider).isDeviceSupported(),
+          () => (ref.read(localAuthProvider) as LocalAuthentication)
+              .isDeviceSupported(),
           (error, stackTrace) => 'Could not check if auth is available',
         )
             .filterOrElse(
@@ -96,17 +97,16 @@ class AuthActions {
   static AuthAction toggle() =>
       (value, add) => add(value.enabled ? value.disable() : value.enable());
 
-  static AuthAction authenticate(Ref ref) => (value, add) =>
-      TaskEither.tryCatch(
-        () => ref.read(localAuthProvider).authenticate(
-              androidAuthStrings: AndroidAuthMessages(
-                signInTitle: 'Voucher Vault',
-                biometricHint: '',
-              ),
-              iOSAuthStrings: IOSAuthMessages(),
-              localizedReason: 'Please authenticate to view your vouchers',
-              stickyAuth: true,
-            ),
+  static AuthAction authenticate(ref) => (value, add) => TaskEither.tryCatch(
+        () => (ref.read(localAuthProvider) as LocalAuthentication).authenticate(
+          androidAuthStrings: AndroidAuthMessages(
+            signInTitle: 'Voucher Vault',
+            biometricHint: '',
+          ),
+          iOSAuthStrings: IOSAuthMessages(),
+          localizedReason: 'Please authenticate to view your vouchers',
+          stickyAuth: true,
+        ),
         (err, _) => 'Error trying to authenticate: $err',
       )
           .filterOrElse((success) => success, (_) => 'Authentication failed')

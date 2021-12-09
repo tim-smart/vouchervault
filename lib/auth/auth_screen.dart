@@ -12,13 +12,13 @@ part 'auth_screen.g.dart';
 Widget authScreen(WidgetRef ref) {
   final iter = ref.watch(authIteratorProvider);
   useEffect(() {
-    iter.add(AuthActions.authenticate(ref as Ref));
+    iter.add(AuthActions.authenticate(ref));
   }, [iter]);
 
   return AppScaffoldSimple(
     body: Center(
       child: ElevatedButton(
-        onPressed: () => iter.add(AuthActions.authenticate(ref as Ref)),
+        onPressed: () => iter.add(AuthActions.authenticate(ref)),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

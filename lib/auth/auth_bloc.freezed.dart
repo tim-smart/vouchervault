@@ -126,7 +126,7 @@ class _$UnauthenticatedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$Unauthenticated extends Unauthenticated with DiagnosticableTreeMixin {
+class _$Unauthenticated extends Unauthenticated {
   const _$Unauthenticated({String? $type})
       : $type = $type ?? 'unauthenticated',
         super._();
@@ -138,14 +138,8 @@ class _$Unauthenticated extends Unauthenticated with DiagnosticableTreeMixin {
   final String $type;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthState.unauthenticated()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'AuthState.unauthenticated'));
   }
 
   @override
@@ -266,7 +260,7 @@ class _$AuthenticatedCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$Authenticated extends Authenticated with DiagnosticableTreeMixin {
+class _$Authenticated extends Authenticated {
   const _$Authenticated(this.reason, {String? $type})
       : $type = $type ?? 'authenticated',
         super._();
@@ -281,16 +275,8 @@ class _$Authenticated extends Authenticated with DiagnosticableTreeMixin {
   final String $type;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthState.authenticated(reason: $reason)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthState.authenticated'))
-      ..add(DiagnosticsProperty('reason', reason));
   }
 
   @override
