@@ -8,6 +8,7 @@ import 'package:offset_iterator_persist/offset_iterator_persist.dart';
 import 'package:offset_iterator_riverpod/offset_iterator_riverpod.dart';
 import 'package:vouchervault/app/providers.dart';
 import 'package:vouchervault/lib/and_then.dart';
+import 'package:vouchervault/lib/riverpod.dart';
 
 part 'auth_bloc.freezed.dart';
 part 'auth_bloc.g.dart';
@@ -19,7 +20,7 @@ final localAuthProvider = Provider((ref) => LocalAuthentication());
 final authIteratorProvider = Provider((ref) {
   final i = authIterator(ref.watch(storageProvider));
   ref.onDispose(i.close);
-  i.add(AuthActions.init(ref));
+  i.add(AuthActions.init(ref.read));
   return i;
 });
 
@@ -67,15 +68,14 @@ class AuthState with _$AuthState {
 typedef AuthAction = StateIteratorAction<AuthState>;
 
 class AuthActions {
-  static AuthAction init(ref) => (value, add) {
+  static AuthAction init(RefRead read) => (value, add) {
         if (value.enabled) {
           add(AuthState.unauthenticated());
           return Future.value();
         }
 
         return TaskEither.tryCatch(
-          () => (ref.read(localAuthProvider) as LocalAuthentication)
-              .isDeviceSupported(),
+          () => read(localAuthProvider).isDeviceSupported(),
           (error, stackTrace) => 'Could not check if auth is available',
         )
             .filterOrElse(
@@ -97,8 +97,9 @@ class AuthActions {
   static AuthAction toggle() =>
       (value, add) => add(value.enabled ? value.disable() : value.enable());
 
-  static AuthAction authenticate(ref) => (value, add) => TaskEither.tryCatch(
-        () => (ref.read(localAuthProvider) as LocalAuthentication).authenticate(
+  static AuthAction authenticate(RefRead read) => (value, add) =>
+      TaskEither.tryCatch(
+        () => read(localAuthProvider).authenticate(
           androidAuthStrings: AndroidAuthMessages(
             signInTitle: 'Voucher Vault',
             biometricHint: '',
