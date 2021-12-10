@@ -7,7 +7,7 @@ import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/auth/auth_bloc.dart';
 import 'package:vouchervault/auth/auth_screen.dart';
 import 'package:vouchervault/models/voucher.dart';
-import 'package:vouchervault/vouchers/voucher_iterator.dart';
+import 'package:vouchervault/vouchers/vouchers_bloc.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'voucher_vault_app.g.dart';
@@ -23,9 +23,9 @@ Widget voucherVaultApp(
     ProviderScope(
       overrides: [
         ...overrides,
-        /* if (vouchers != null) */
-        /*   voucherIteratorProvider.overrideWithValue( */
-        /*       voucherIterator(initialValue: VouchersState(vouchers))), */
+        if (vouchers != null)
+          vouchersProvider.overrideWithValue(
+              VouchersBloc(initialValue: VouchersState(vouchers))),
       ],
       child: _App(),
     );
@@ -33,10 +33,10 @@ Widget voucherVaultApp(
 @hcwidget
 Widget _app(WidgetRef ref) {
   // Remove expired vouchers
-  final iterator = ref.watch(voucherIteratorProvider);
+  final bloc = ref.watch(vouchersProvider.bloc);
   useEffect(() {
-    iterator.add(removeExpiredVouchers());
-  }, [iterator]);
+    bloc.add(removeExpiredVouchers());
+  }, [bloc]);
 
   // Auth state
   final authState = ref.watch(authProvider);

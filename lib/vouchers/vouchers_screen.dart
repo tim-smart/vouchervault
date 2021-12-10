@@ -6,7 +6,7 @@ import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/app_scaffold/app_scaffold.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
-import 'package:vouchervault/vouchers/voucher_iterator.dart';
+import 'package:vouchervault/vouchers/vouchers_bloc.dart';
 import 'package:vouchervault/vouchers/voucher_list/vouchers_list_container.dart';
 import 'package:vouchervault/vouchers/vouchers_menu/vouchers_menu_container.dart';
 
@@ -35,9 +35,8 @@ Widget vouchersScreen(BuildContext context, WidgetRef ref) {
           fullscreenDialog: true,
           builder: (context) => VoucherFormDialog(),
         ),
-      ).then((v) => optionOf(v)
-          .map(addVoucher)
-          .map(ref.read(voucherIteratorProvider).add)),
+      ).then((v) =>
+          optionOf(v).map(addVoucher).map(ref.read(vouchersProvider.bloc).add)),
       child: Icon(Icons.add),
     )),
   );

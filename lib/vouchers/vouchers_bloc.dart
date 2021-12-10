@@ -4,25 +4,18 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:offset_iterator_persist/offset_iterator_persist.dart';
-import 'package:offset_iterator_riverpod/offset_iterator_riverpod.dart';
+import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
+import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
 import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
-import 'package:vouchervault/app/providers.dart';
-import 'package:vouchervault/lib/and_then.dart';
 import 'package:vouchervault/lib/files.dart' as files;
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/models/voucher.dart';
 
-part 'voucher_iterator.freezed.dart';
+part 'vouchers_bloc.freezed.dart';
 
-final voucherIteratorProvider = Provider((ref) => voucherIterator(
-      storage: ref.watch(storageProvider),
-    ).andThen(stateIteratorProvider(ref)));
-
-final vouchersProvider = Provider((ref) => ref
-    .watch(voucherIteratorProvider)
-    .andThen(stateIteratorValueProvider(ref)));
+final vouchersProvider =
+    BlocStreamProvider<VouchersBloc, VouchersState>((ref) => VouchersBloc());
 
 final voucherProvider = Provider.autoDispose.family((ref, String uuid) {
   final state = ref.watch(vouchersProvider);
@@ -54,22 +47,7 @@ class VouchersState with _$VouchersState {
       );
 }
 
-StateIterator<VouchersState> voucherIterator({
-  required Storage storage,
-  VouchersState? initialState,
-}) =>
-    StateIterator(
-      name: 'voucherIterator',
-      initialState: initialState ?? VouchersState(IList()),
-      transform: (parent) => parent.persist(
-        storage: storage,
-        key: 'VouchersBloc',
-        toJson: (s) => s.toJson(),
-        fromJson: VouchersState.fromJson,
-      ),
-    );
-
-typedef VouchersAction = StateIteratorAction<VouchersState>;
+typedef VouchersAction = BlocStreamAction<VouchersState>;
 
 VouchersAction removeExpiredVouchers() => (value, add) => add(value.copyWith(
       vouchers: value.vouchers.fold(
@@ -130,3 +108,14 @@ VouchersAction exportVouchers() => (value, add) => files
           [file.path],
           subject: "VoucherVault export",
         ));
+
+class VouchersBloc extends PersistedBlocStream<VouchersState> {
+  VouchersBloc({VouchersState? initialValue})
+      : super(initialValue ?? VouchersState(IList()));
+
+  @override
+  dynamic toJson(value) => value.toJson();
+
+  @override
+  VouchersState fromJson(json) => VouchersState.fromJson(json);
+}

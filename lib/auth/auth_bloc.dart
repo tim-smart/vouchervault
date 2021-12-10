@@ -4,10 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
-import 'package:offset_iterator_persist/offset_iterator_persist.dart';
-import 'package:offset_iterator_riverpod/offset_iterator_riverpod.dart';
-import 'package:vouchervault/app/providers.dart';
-import 'package:vouchervault/lib/and_then.dart';
+import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
+import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
 import 'package:vouchervault/lib/riverpod.dart';
 
 part 'auth_bloc.freezed.dart';
@@ -17,15 +15,8 @@ final _log = Logger('auth_bloc.dart');
 
 final localAuthProvider = Provider((ref) => LocalAuthentication());
 
-final authIteratorProvider = Provider((ref) {
-  final i = authIterator(ref.watch(storageProvider));
-  ref.onDispose(i.close);
-  i.add(AuthActions.init(ref.read));
-  return i;
-});
-
-final authProvider = Provider((ref) =>
-    ref.watch(authIteratorProvider).andThen(stateIteratorValueProvider(ref)));
+final authProvider = BlocStreamProvider<AuthBloc, AuthState>(
+    (ref) => AuthBloc()..add(AuthActions.init(ref.read)));
 
 final authEnabledProvider = Provider((ref) => ref.watch(authProvider).enabled);
 final authAvailableProvider =
@@ -65,7 +56,7 @@ class AuthState with _$AuthState {
       : AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE);
 }
 
-typedef AuthAction = StateIteratorAction<AuthState>;
+typedef AuthAction = BlocStreamAction<AuthState>;
 
 class AuthActions {
   static AuthAction init(RefRead read) => (value, add) {
@@ -116,12 +107,13 @@ class AuthActions {
           .run();
 }
 
-StateIterator<AuthState> authIterator(Storage storage) => StateIterator(
-      initialState: AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE),
-      transform: (parent) => parent.persist(
-        storage: storage,
-        key: 'AuthBloc',
-        toJson: (v) => v.toJson(),
-        fromJson: (json) => AuthState.fromJson(json as Map<String, dynamic>),
-      ),
-    );
+class AuthBloc extends PersistedBlocStream<AuthState> {
+  AuthBloc()
+      : super(AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE));
+
+  @override
+  toJson(AuthState value) => value.toJson();
+
+  @override
+  AuthState fromJson(json) => AuthState.fromJson(json);
+}

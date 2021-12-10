@@ -1,10 +1,8 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:offset_iterator_persist/offset_iterator_persist.dart'
-    as persist;
+import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/app/providers.dart';
 import 'package:vouchervault/models/voucher.dart';
 
 void main({IList<Voucher>? vouchers}) async {
@@ -14,10 +12,7 @@ void main({IList<Voucher>? vouchers}) async {
   Logger.root.onRecord.listen((r) =>
       print('${r.loggerName}: ${r.level.name}: ${r.time}: ${r.message}'));
 
-  final storage = await persist.SharedPreferencesStorage.build(prefix: 'pbs');
+  PersistedBlocStream.storage = await SharedPreferencesStorage.build();
 
-  runApp(VoucherVaultApp(
-    vouchers: vouchers,
-    overrides: [storageProvider.overrideWithValue(storage)],
-  ));
+  runApp(VoucherVaultApp(vouchers: vouchers));
 }
