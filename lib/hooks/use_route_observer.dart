@@ -1,6 +1,8 @@
-import 'package:fpdart/fpdart.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart' show Option, None;
+import 'package:fpdt/option.dart' as O;
 
 class _RouteObserverHook extends Hook<void> {
   const _RouteObserverHook(
@@ -44,19 +46,19 @@ class _RouteObserverHookState extends HookState<void, _RouteObserverHook>
   }
 
   void didPopNext() {
-    hook.didPopNext.map((f) => f());
+    hook.didPopNext.chain(O.map((f) => f()));
   }
 
   void didPush() {
-    hook.didPush.map((f) => f());
+    hook.didPush.chain(O.map((f) => f()));
   }
 
   void didPop() {
-    hook.didPop.map((f) => f());
+    hook.didPop.chain(O.map((f) => f()));
   }
 
   void didPushNext() {
-    hook.didPushNext.map((f) => f());
+    hook.didPushNext.chain(O.map((f) => f()));
   }
 }
 

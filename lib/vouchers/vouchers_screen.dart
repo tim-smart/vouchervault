@@ -1,5 +1,6 @@
-import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
@@ -28,15 +29,17 @@ Widget vouchersScreen(BuildContext context, WidgetRef ref) {
         sliver: VouchersListContainer(),
       ),
     ],
-    floatingActionButton: some(FloatingActionButton(
+    floatingActionButton: O.some(FloatingActionButton(
       onPressed: () => Navigator.push<Voucher>(
         context,
         MaterialPageRoute(
           fullscreenDialog: true,
           builder: (context) => VoucherFormDialog(),
         ),
-      ).then((v) =>
-          optionOf(v).map(addVoucher).map(ref.read(vouchersProvider.bloc).add)),
+      ).then((v) => O
+          .fromNullable(v)
+          .chain(O.map(addVoucher))
+          .chain(O.map(ref.read(vouchersProvider.bloc).add))),
       child: Icon(Icons.add),
     )),
   );

@@ -2,14 +2,14 @@ part of 'barcode_scanner_field.dart';
 
 final _key = GlobalKey(debugLabel: "QR");
 
-ValueNotifier<Option<QRViewController>> _useController() {
-  final controller = useState<Option<QRViewController>>(none());
+ValueNotifier<O.Option<QRViewController>> _useController() {
+  final controller = useState<O.Option<QRViewController>>(O.none());
 
   useEffect(() {
-    return controller.value.match(
-      (c) => c.dispose,
+    return controller.value.chain(O.fold(
       () => () {},
-    );
+      (c) => c.dispose,
+    ));
   }, [controller.value]);
 
   return controller;
@@ -23,15 +23,15 @@ Widget barcodeScannerDialog(
   final controller = _useController();
 
   useEffect(() {
-    return controller.value.match(
+    return controller.value.chain(O.fold(
+      () => () {},
       (c) => c.scannedDataStream
           .where((d) => d.code != null)
           .take(1)
           .listen((data) {
         onScan(data.format, data.code!);
       }).cancel,
-      () => () {},
-    );
+    ));
   }, [controller.value, onScan]);
 
   return AnnotatedRegion(
@@ -49,7 +49,7 @@ Widget barcodeScannerDialog(
                 borderWidth: 15,
                 cutOutSize: 300,
               ),
-              onQRViewCreated: (c) => controller.value = some(c),
+              onQRViewCreated: (c) => controller.value = O.some(c),
               // formatsAllowed: BarcodeFormat.values,
             ),
           ),
@@ -67,7 +67,7 @@ Widget barcodeScannerDialog(
                     Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        controller.value.map((c) => c.toggleFlash());
+                        controller.value.chain(O.map((c) => c.toggleFlash()));
                       },
                       child: Text('Toggle flash'),
                     ),

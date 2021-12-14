@@ -1,13 +1,15 @@
-import 'package:fpdart/fpdart.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/barcode_scanner_field/barcode_scanner_field.dart';
 import 'package:vouchervault/lib/barcode.dart' as barcode;
+import 'package:vouchervault/lib/option_of_string.dart';
 import 'package:vouchervault/models/voucher.dart'
     show Voucher, VoucherCodeType, VoucherColor;
 import 'package:vouchervault/models/voucher.dart' as V;
@@ -42,24 +44,25 @@ Widget voucherForm(
         SizedBox(height: AppTheme.space3),
         FormBuilderField<String>(
           name: 'code',
-          valueTransformer: (String? s) => optionOf(s)
-              .flatMap((s) => s.isEmpty ? none() : some(s))
-              .toNullable(),
+          valueTransformer: (String? s) =>
+              optionOfString(s).chain(O.toNullable),
           validator: FormBuilderValidators.required(context),
           builder: (field) => BarcodeScannerField(
             labelText: 'Code',
             onChange: field.didChange,
-            errorText: optionOf(field.errorText),
+            errorText: optionOfString(field.errorText),
             initialValue: field.value ?? '',
-            barcodeType: optionOf(formKey.currentState!.fields['codeType'])
-                .map<String>((f) => f.value)
-                .alt(() => optionOf(initialFormValue['codeType']))
-                .flatMap(barcode.fromCodeTypeJson),
-            onScan: some((f) =>
-                optionOf(formKey.currentState!.fields['codeType'])
-                    .map((f) => f.didChange)
-                    .map((didChange) =>
-                        didChange(barcode.codeTypeValueFromFormat(f)))),
+            barcodeType: O
+                .fromNullable(formKey.currentState!.fields['codeType'])
+                .chain(O.map((f) => f.value as String))
+                .chain(
+                    O.alt(() => optionOfString(initialFormValue['codeType'])))
+                .chain(O.flatMap(barcode.fromCodeTypeJson)),
+            onScan: O.some((f) => O
+                .fromNullable(formKey.currentState!.fields['codeType'])
+                .chain(O.map((f) => f.didChange))
+                .chain(O.map((didChange) =>
+                    didChange(barcode.codeTypeValueFromFormat(f))))),
           ),
         ),
         FormBuilderChoiceChip(
@@ -98,8 +101,10 @@ Widget voucherForm(
               lastDate: DateTime.now().add(Duration(days: 365 * 100)),
             ),
           ),
-          valueTransformer: (DateTime? d) =>
-              optionOf(d).map((d) => d.toString()).toNullable(),
+          valueTransformer: (DateTime? d) => O
+              .fromNullable(d)
+              .chain(O.map((d) => d.toString()))
+              .chain(O.toNullable),
         ),
         FormBuilderSwitch(
           name: 'removeOnceExpired',
@@ -116,10 +121,11 @@ Widget voucherForm(
         FormBuilderField<int>(
           name: 'balanceMilliunits',
           builder: (field) => TextFormField(
-            initialValue: optionOf(field.value)
-                .map((d) => d / 1000.0)
-                .map((d) => d.toString())
-                .getOrElse(() => ''),
+            initialValue: O
+                .fromNullable(field.value)
+                .chain(O.map((d) => d / 1000.0))
+                .chain(O.map((d) => d.toString()))
+                .chain(O.getOrElse(() => '')),
             onChanged: (s) => field
                 .didChange(s.isEmpty ? null : (double.parse(s) * 1000).round()),
             keyboardType: TextInputType.numberWithOptions(

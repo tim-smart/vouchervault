@@ -1,4 +1,3 @@
-extension AndThen<T> on T {
-  R andThen<R>(R Function(T value) transform) => transform(this);
-  R pipe<R>(R Function(T value) transform) => transform(this);
+extension Chain<T> on T {
+  R chain<R>(R Function(T value) transform) => transform(this);
 }

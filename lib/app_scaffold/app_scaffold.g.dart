@@ -12,7 +12,7 @@ class AppScaffold extends HookWidget {
       required this.title,
       required this.slivers,
       this.actions = const [],
-      this.floatingActionButton = const None(),
+      this.floatingActionButton = const O.None(),
       this.leading = false})
       : super(key: key);
 

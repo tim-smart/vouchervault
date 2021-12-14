@@ -1,4 +1,6 @@
-import 'package:fpdart/fpdart.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/task.dart' as T;
+import 'package:fpdt/task_either.dart' as TE;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/auth_strings.dart';
@@ -65,31 +67,31 @@ class AuthActions {
           return Future.value();
         }
 
-        return TaskEither.tryCatch(
-          () => read(localAuthProvider).isDeviceSupported(),
-          (error, stackTrace) => 'Could not check if auth is available',
-        )
-            .filterOrElse(
+        return TE
+            .tryCatch(
+              () => read(localAuthProvider).isDeviceSupported(),
+              (error, stackTrace) => 'Could not check if auth is available',
+            )
+            .chain(TE.filter(
               (available) => available,
               (_) => 'Auth not available',
-            )
-            .match(
+            ))
+            .chain(TE.fold(
+              (_) => AuthenticatedReason.NOT_REQUIRED,
               (message) {
                 _log.info(message);
                 return AuthenticatedReason.NOT_AVAILABLE;
               },
-              (_) => AuthenticatedReason.NOT_REQUIRED,
-            )
-            .map((reason) => AuthState.authenticated(reason))
-            .map(add)
-            .run();
+            ))
+            .chain(T.map((reason) => AuthState.authenticated(reason)))
+            .chain(T.map(add))();
       };
 
   static AuthAction toggle() =>
       (value, add) => add(value.enabled ? value.disable() : value.enable());
 
-  static AuthAction authenticate(RefRead read) => (value, add) =>
-      TaskEither.tryCatch(
+  static AuthAction authenticate(RefRead read) => (value, add) => TE
+      .tryCatch(
         () => read(localAuthProvider).authenticate(
           androidAuthStrings: AndroidAuthMessages(
             signInTitle: 'Voucher Vault',
@@ -101,10 +103,10 @@ class AuthActions {
         ),
         (err, _) => 'Error trying to authenticate: $err',
       )
-          .filterOrElse((success) => success, (_) => 'Authentication failed')
-          .map((_) => add(AuthState.authenticated(AuthenticatedReason.SUCCESS)))
-          .getOrElse(_log.warning)
-          .run();
+      .chain(TE.filter((success) => success, (_) => 'Authentication failed'))
+      .chain(TE.map(
+          (_) => add(AuthState.authenticated(AuthenticatedReason.SUCCESS))))
+      .chain(TE.getOrElse(_log.warning))();
 }
 
 class AuthBloc extends PersistedBlocStream<AuthState> {

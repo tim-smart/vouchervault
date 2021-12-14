@@ -13,8 +13,8 @@ class BarcodeScannerField extends HookWidget {
       required this.initialValue,
       required this.barcodeType,
       required this.labelText,
-      this.errorText = const None(),
-      this.onScan = const None()})
+      this.errorText = const O.None(),
+      this.onScan = const O.None()})
       : super(key: key);
 
   final void Function(String?) onChange;

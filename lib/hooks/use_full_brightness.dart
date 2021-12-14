@@ -1,7 +1,7 @@
 import 'package:brightness_volume/brightness_volume.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fpdart/fpdart.dart';
+import 'package:fpdt/option.dart';
 import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
 import 'package:vouchervault/hooks/use_route_observer.dart';
 

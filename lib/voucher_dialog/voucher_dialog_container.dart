@@ -1,8 +1,9 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/voucher_vault_app.dart';
@@ -30,14 +31,15 @@ Widget voucherDialogContainer(
 
   // state
   final bloc = ref.watch(vouchersProvider.bloc);
-  final v =
-      ref.watch(voucherProvider(voucher.uuid ?? '')).getOrElse(() => voucher);
+  final v = ref
+      .watch(voucherProvider(voucher.uuid ?? ''))
+      .chain(O.getOrElse(() => voucher));
 
   final onTapBarcode = useCallback(
-    () => v.codeOption.map((code) {
+    () => v.codeOption.chain(O.map((code) {
       Clipboard.setData(ClipboardData(text: code));
       Fluttertoast.showToast(msg: 'Copied to clipboard');
-    }),
+    })),
     [v.codeOption],
   );
 
@@ -54,11 +56,11 @@ Widget voucherDialogContainer(
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => VoucherFormDialog(initialValue: some(v)),
+        builder: (context) => VoucherFormDialog(initialValue: O.some(v)),
       ),
     );
 
-    optionOf(voucher).map(updateVoucher).map(bloc.add);
+    O.fromNullable(voucher).chain(O.map(updateVoucher)).chain(O.map(bloc.add));
   }, [bloc, v]);
 
   final onRemove = useCallback(

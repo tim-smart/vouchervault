@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/barcode.dart' as B;
@@ -48,7 +50,8 @@ Widget voucherDialog(
             voucher.description,
             style: theme.textTheme.headline3,
           ),
-          ...voucher.codeOption.match(
+          ...voucher.codeOption.chain(O.fold(
+            () => [],
             (data) => [
               SizedBox(height: AppTheme.space3),
               _Barcode(
@@ -57,8 +60,7 @@ Widget voucherDialog(
                 onTap: onTapBarcode,
               ),
             ],
-            () => [],
-          ),
+          )),
           if (voucher.hasDetails) ...[
             SizedBox(height: AppTheme.space4),
             ...buildVoucherDetails(
@@ -71,7 +73,7 @@ Widget voucherDialog(
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              if (voucher.balanceOption.isSome())
+              if (O.isSome(voucher.balanceOption))
                 IconButton(
                   color: textColor,
                   icon: Icon(Icons.shopping_cart),
@@ -138,10 +140,10 @@ Widget _barcode(
   final theme = Theme.of(context);
   final barcode = B.fromCodeType(type);
   return SizedBox(
-    height: AppTheme.rem(barcode.match(
-      (_) => 10,
+    height: AppTheme.rem(barcode.chain(O.fold(
       () => 6,
-    )),
+      (_) => 10,
+    ))),
     child: Material(
       color: Colors.white,
       elevation: 1,
@@ -151,15 +153,7 @@ Widget _barcode(
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.all(AppTheme.space4),
-          child: barcode.match(
-            (type) => BarcodeWidget(
-              backgroundColor: Colors.transparent,
-              data: data,
-              style: theme.textTheme.bodyText2!.copyWith(
-                color: Colors.black,
-              ),
-              barcode: type,
-            ),
+          child: barcode.chain(O.fold(
             () => Center(
               child: AutoSizeText(
                 data,
@@ -170,7 +164,15 @@ Widget _barcode(
                 maxLines: 1,
               ),
             ),
-          ),
+            (type) => BarcodeWidget(
+              backgroundColor: Colors.transparent,
+              data: data,
+              style: theme.textTheme.bodyText2!.copyWith(
+                color: Colors.black,
+              ),
+              barcode: type,
+            ),
+          )),
         ),
       ),
     ),

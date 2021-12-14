@@ -245,24 +245,24 @@ class _$_Voucher extends _Voucher {
 
   @override
   final String? uuid;
-  @JsonKey(defaultValue: '')
+  @JsonKey()
   @override
   final String description;
   @override
   final String? code;
-  @JsonKey(defaultValue: VoucherCodeType.CODE128)
+  @JsonKey()
   @override
   final VoucherCodeType codeType;
   @override
   final DateTime? expires;
-  @JsonKey(defaultValue: true)
+  @JsonKey()
   @override
   final bool removeOnceExpired;
   @override
   final double? balance;
   @override
   final int? balanceMilliunits;
-  @JsonKey(defaultValue: VoucherColor.GREY)
+  @JsonKey()
   @override
   final VoucherColor color;
 

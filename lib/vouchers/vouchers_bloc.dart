@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:fpdart/fpdart.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart' as O;
+import 'package:fpdt/task_either.dart' as TE;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
@@ -19,7 +21,7 @@ final vouchersProvider =
 
 final voucherProvider = Provider.autoDispose.family((ref, String uuid) {
   final state = ref.watch(vouchersProvider);
-  return optionOf(state.vouchers.firstWhereOrNull((v) => v.uuid == uuid));
+  return O.fromNullable(state.vouchers.firstWhereOrNull((v) => v.uuid == uuid));
 });
 
 final _uuidgen = Uuid();
@@ -32,11 +34,11 @@ class VouchersState with _$VouchersState {
   late final IList<Voucher> sortedVouchers = vouchers.sort((a, b) {
     final compare = a.description.compareTo(b.description);
     final expiresCompare = a.expiresOption
-        .map((d) => d.millisecondsSinceEpoch)
-        .getOrElse(() => 0)
+        .chain(O.map((d) => d.millisecondsSinceEpoch))
+        .chain(O.getOrElse(() => 0))
         .compareTo(b.expiresOption
-            .map((d) => d.millisecondsSinceEpoch)
-            .getOrElse(() => 0));
+            .chain(O.map((d) => d.millisecondsSinceEpoch))
+            .chain(O.getOrElse(() => 0)));
 
     return compare != 0 ? compare : expiresCompare;
   });
@@ -53,13 +55,13 @@ VouchersAction removeExpiredVouchers() => (value, add) => add(value.copyWith(
       vouchers: value.vouchers.fold(
         value.vouchers,
         (acc, v) => v.expiresOption
-            .filter((_) => v.removeOnceExpired)
-            .map(endOfDay)
-            .filter((expires) => expires.isBefore(DateTime.now()))
-            .match(
-              (_) => acc.remove(v),
+            .chain(O.filter((_) => v.removeOnceExpired))
+            .chain(O.map(endOfDay))
+            .chain(O.filter((expires) => expires.isBefore(DateTime.now())))
+            .chain(O.fold(
               () => acc,
-            ),
+              (_) => acc.remove(v),
+            )),
       ),
     ));
 
@@ -73,13 +75,17 @@ VouchersAction updateVoucher(Voucher voucher) =>
           vouchers: value.vouchers.updateById([voucher], (v) => v.uuid),
         ));
 
-VouchersAction Function(Option<String>) maybeUpdateVoucherBalance(Voucher v) =>
+VouchersAction Function(O.Option<String>) maybeUpdateVoucherBalance(
+  Voucher v,
+) =>
     (s) => (value, add) => s
-        .flatMap((s) => Option.tryCatch(() => double.parse(s)))
-        .map((amount) => (amount * 1000).round())
-        .flatMap((amount) => v.balanceOption.map((balance) => balance - amount))
-        .map((balance) => updateVoucher(v.copyWith(balanceMilliunits: balance)))
-        .map((action) => action(value, add));
+        .chain(O.flatMap((s) => O.tryCatch(() => double.parse(s))))
+        .chain(O.map((amount) => (amount * 1000).round()))
+        .chain(O.flatMap((amount) =>
+            v.balanceOption.chain(O.map((balance) => balance - amount))))
+        .chain(O.map(
+            (balance) => updateVoucher(v.copyWith(balanceMilliunits: balance))))
+        .chain(O.map((action) => action(value, add)));
 
 VouchersAction removeVoucher(Voucher voucher) =>
     (value, add) => add(value.copyWith(
@@ -88,19 +94,16 @@ VouchersAction removeVoucher(Voucher voucher) =>
 
 VouchersAction importVouchers() => (b, add) => files
     .pick(['json'])
-    .map((r) => String.fromCharCodes(r.second))
-    .flatMap(TaskEither.tryCatchK(
+    .chain(TE.map((r) => String.fromCharCodes(r.second)))
+    .chain(TE.chainTryCatchK(
       (json) async => jsonDecode(json),
       (error, _stackTrace) => 'Could not parse import JSON: $error',
     ))
-    .flatMap((r) => TaskEither.fromOption(
-          optionOf(r),
-          () => 'Import was null',
-        ))
-    .map((json) => VouchersState.fromJson(json))
-    .map(add)
-    .getOrElse((msg) => print("vouchers_bloc.dart: $msg"))
-    .run();
+    .chain(TE.flatMap(
+        (r) => O.fromNullable(r).chain(TE.fromOption(() => 'Import was null'))))
+    .chain(TE.map((json) => VouchersState.fromJson(json)))
+    .chain(TE.map(add))
+    .chain(TE.getOrElse((msg) => print("vouchers_bloc.dart: $msg")))();
 
 VouchersAction exportVouchers() => (value, add) => files
     .writeString('vouchervault.json', jsonEncode(value.toJson()))

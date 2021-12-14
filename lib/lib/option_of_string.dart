@@ -1,4 +1,5 @@
-import 'package:fpdart/fpdart.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart';
 
 Option<String> optionOfString(String? s) =>
-    optionOf(s).filter((s) => s.isNotEmpty);
+    fromNullable(s).chain(filter((s) => s.isNotEmpty));
