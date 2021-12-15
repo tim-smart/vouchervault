@@ -9,7 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/barcode_scanner_field/barcode_scanner_field.dart';
 import 'package:vouchervault/lib/barcode.dart' as barcode;
-import 'package:vouchervault/lib/option_of_string.dart';
+import 'package:vouchervault/lib/milliunits.dart' as millis;
+import 'package:vouchervault/lib/option.dart';
 import 'package:vouchervault/models/voucher.dart'
     show Voucher, VoucherCodeType, VoucherColor;
 import 'package:vouchervault/models/voucher.dart' as V;
@@ -101,10 +102,10 @@ Widget voucherForm(
               lastDate: DateTime.now().add(Duration(days: 365 * 100)),
             ),
           ),
-          valueTransformer: (DateTime? d) => O
-              .fromNullable(d)
-              .chain(O.map((d) => d.toString()))
-              .chain(O.toNullable),
+          valueTransformer: O
+              .fromNullableWith<DateTime>()
+              .compose(O.map((d) => d.toString()))
+              .compose(O.toNullable),
         ),
         FormBuilderSwitch(
           name: 'removeOnceExpired',
@@ -121,13 +122,11 @@ Widget voucherForm(
         FormBuilderField<int>(
           name: 'balanceMilliunits',
           builder: (field) => TextFormField(
-            initialValue: O
-                .fromNullable(field.value)
-                .chain(O.map((d) => d / 1000.0))
-                .chain(O.map((d) => d.toString()))
-                .chain(O.getOrElse(() => '')),
-            onChanged: (s) => field
-                .didChange(s.isEmpty ? null : (double.parse(s) * 1000).round()),
+            initialValue:
+                millis.toString(field.value).chain(O.getOrElse(() => '')),
+            onChanged: millis.fromString
+                .compose(O.toNullable)
+                .compose(field.didChange),
             keyboardType: TextInputType.numberWithOptions(
               signed: true,
               decimal: true,

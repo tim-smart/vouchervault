@@ -4,6 +4,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/task_either.dart' as TE;
+import 'package:fpdt/tuple.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
@@ -11,7 +12,7 @@ import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
 import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vouchervault/lib/files.dart' as files;
-import 'package:vouchervault/lib/lib.dart';
+import 'package:vouchervault/lib/milliunits.dart' as millis;
 import 'package:vouchervault/models/voucher.dart';
 
 part 'vouchers_bloc.freezed.dart';
@@ -26,6 +27,10 @@ final voucherProvider = Provider.autoDispose.family((ref, String uuid) {
 
 final _uuidgen = Uuid();
 
+final _unix = O
+    .map((DateTime d) => d.millisecondsSinceEpoch)
+    .compose(O.getOrElse(() => 0));
+
 @freezed
 class VouchersState with _$VouchersState {
   VouchersState._();
@@ -33,12 +38,8 @@ class VouchersState with _$VouchersState {
 
   late final IList<Voucher> sortedVouchers = vouchers.sort((a, b) {
     final compare = a.description.compareTo(b.description);
-    final expiresCompare = a.expiresOption
-        .chain(O.map((d) => d.millisecondsSinceEpoch))
-        .chain(O.getOrElse(() => 0))
-        .compareTo(b.expiresOption
-            .chain(O.map((d) => d.millisecondsSinceEpoch))
-            .chain(O.getOrElse(() => 0)));
+    final expiresCompare =
+        _unix(a.expiresOption).compareTo(_unix(b.expiresOption));
 
     return compare != 0 ? compare : expiresCompare;
   });
@@ -55,8 +56,6 @@ VouchersAction removeExpiredVouchers() => (value, add) => add(value.copyWith(
       vouchers: value.vouchers.fold(
         value.vouchers,
         (acc, v) => v.expiresOption
-            .chain(O.filter((_) => v.removeOnceExpired))
-            .chain(O.map(endOfDay))
             .chain(O.filter((expires) => expires.isBefore(DateTime.now())))
             .chain(O.fold(
               () => acc,
@@ -79,13 +78,11 @@ VouchersAction Function(O.Option<String>) maybeUpdateVoucherBalance(
   Voucher v,
 ) =>
     (s) => (value, add) => s
-        .chain(O.flatMap((s) => O.tryCatch(() => double.parse(s))))
-        .chain(O.map((amount) => (amount * 1000).round()))
-        .chain(O.flatMap((amount) =>
-            v.balanceOption.chain(O.map((balance) => balance - amount))))
-        .chain(O.map(
-            (balance) => updateVoucher(v.copyWith(balanceMilliunits: balance))))
-        .chain(O.map((action) => action(value, add)));
+        .chain(O.flatMap(millis.fromString))
+        .chain((amount) => tuple2(amount, v.balanceOption))
+        .chain(O.mapTuple2((amount, balance) => balance - amount))
+        .chain(O.map((balance) =>
+            updateVoucher(v.copyWith(balanceMilliunits: balance))(value, add)));
 
 VouchersAction removeVoucher(Voucher voucher) =>
     (value, add) => add(value.copyWith(
@@ -96,11 +93,10 @@ VouchersAction importVouchers() => (b, add) => files
     .pick(['json'])
     .chain(TE.map((r) => String.fromCharCodes(r.second)))
     .chain(TE.chainTryCatchK(
-      (json) async => jsonDecode(json),
+      jsonDecode,
       (error, _stackTrace) => 'Could not parse import JSON: $error',
     ))
-    .chain(TE.flatMap(
-        (r) => O.fromNullable(r).chain(TE.fromOption(() => 'Import was null'))))
+    .chain(TE.chainNullableK(() => 'Import was null'))
     .chain(TE.map((json) => VouchersState.fromJson(json)))
     .chain(TE.map(add))
     .chain(TE.getOrElse((msg) => print("vouchers_bloc.dart: $msg")))();

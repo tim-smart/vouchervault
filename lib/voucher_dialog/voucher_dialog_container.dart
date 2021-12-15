@@ -8,7 +8,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/voucher_vault_app.dart';
 import 'package:vouchervault/hooks/hooks.dart';
-import 'package:vouchervault/lib/option_of_string.dart';
+import 'package:vouchervault/lib/option.dart';
 import 'package:vouchervault/models/voucher.dart' as V;
 import 'package:vouchervault/models/voucher.dart' show Voucher;
 import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';

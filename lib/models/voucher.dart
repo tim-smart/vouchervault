@@ -2,6 +2,8 @@ import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vouchervault/lib/lib.dart';
+import 'package:vouchervault/lib/milliunits.dart' as millis;
 
 part 'voucher.freezed.dart';
 part 'voucher.g.dart';
@@ -53,7 +55,7 @@ String codeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type]!;
 
 VoucherCodeType codeTypeFromJson(String? s) => O
     .fromNullable(s)
-    .chain(O.map((s) => $enumDecode(_$VoucherCodeTypeEnumMap, s)))
+    .chain(O.chainTryCatchK((s) => $enumDecode(_$VoucherCodeTypeEnumMap, s)))
     .chain(O.getOrElse(() => VoucherCodeType.CODE128));
 
 @freezed
@@ -77,15 +79,17 @@ class Voucher with _$Voucher {
 
   late final O.Option<String> codeOption = O.fromNullable(code);
 
-  late final O.Option<DateTime> expiresOption = O.fromNullable(expires);
+  late final O.Option<DateTime> expiresOption = O
+      .fromNullable(expires)
+      .chain(O.filter((_) => removeOnceExpired))
+      .chain(O.map(endOfDay));
 
-  late final O.Option<int> balanceOption = O
-      .fromNullable(balanceMilliunits)
-      .chain(O.alt(() =>
-          O.fromNullable(balance).chain(O.map((b) => (b * 1000).round()))));
+  late final O.Option<int> balanceOption = balanceMilliunits
+      .chain(O.fromNullable)
+      .chain(O.alt(() => millis.fromNullableDouble(balance)));
 
   late final O.Option<double> balanceDoubleOption =
-      balanceOption.chain(O.map((b) => b / 1000.0));
+      balanceOption.chain(O.map(millis.toDouble));
 
   late final bool hasDetails =
       O.isSome(expiresOption) || O.isSome(balanceOption);

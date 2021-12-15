@@ -10,7 +10,7 @@ import 'package:fpdt/tuple.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart' hide Barcode;
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/lib/option_of_string.dart';
+import 'package:vouchervault/lib/option.dart';
 
 part 'barcode_scanner_dialog.dart';
 part 'barcode_scanner_field.g.dart';
