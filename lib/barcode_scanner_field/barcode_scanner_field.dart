@@ -6,7 +6,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart' show Option;
 import 'package:fpdt/option.dart' as O;
-import 'package:fpdt/tuple.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart' hide Barcode;
 import 'package:vouchervault/app/app.dart';

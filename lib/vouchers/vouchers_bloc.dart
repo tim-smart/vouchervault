@@ -7,15 +7,19 @@ import 'package:fpdt/task_either.dart' as TE;
 import 'package:fpdt/tuple.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
 import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
 import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vouchervault/lib/files.dart' as files;
 import 'package:vouchervault/lib/milliunits.dart' as millis;
+import 'package:vouchervault/lib/task_either.dart';
 import 'package:vouchervault/models/voucher.dart';
 
 part 'vouchers_bloc.freezed.dart';
+
+final _log = Logger('vouchers/vouchers_bloc.dart');
 
 final vouchersProvider =
     BlocStreamProvider<VouchersBloc, VouchersState>((ref) => VouchersBloc());
@@ -99,14 +103,21 @@ VouchersAction importVouchers() => (b, add) => files
     .chain(TE.chainNullableK(() => 'Import was null'))
     .chain(TE.map((json) => VouchersState.fromJson(json)))
     .chain(TE.map(add))
-    .chain(TE.getOrElse((msg) => print("vouchers_bloc.dart: $msg")))();
+    .chain(TE.toFutureVoid(_log.warning));
 
-VouchersAction exportVouchers() => (value, add) => files
-    .writeString('vouchervault.json', jsonEncode(value.toJson()))
-    .then((file) => Share.shareFiles(
-          [file.path],
-          subject: "VoucherVault export",
-        ));
+VouchersAction exportVouchers() => (value, add) => tryCatchString(
+      () => jsonEncode(value.toJson()),
+      prefix: 'encode json error',
+    )
+        .chain(TE.flatMap(
+          (json) => files.writeString('vouchervault.json', json),
+        ))
+        .chain(TE.chainTryCatchK(
+          (file) =>
+              Share.shareFiles([file.path], subject: 'VoucherVault export'),
+          (err, stackTrace) => 'share files error: $err',
+        ))
+        .chain(TE.toFutureVoid(_log.warning));
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
   VouchersBloc({VouchersState? initialValue})

@@ -1,7 +1,6 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart' as O;
-
 import 'package:qr_code_scanner/qr_code_scanner.dart' hide Barcode;
 import 'package:vouchervault/models/voucher.dart';
 

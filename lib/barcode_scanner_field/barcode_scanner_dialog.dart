@@ -2,6 +2,8 @@ part of 'barcode_scanner_field.dart';
 
 final _key = GlobalKey(debugLabel: "QR");
 
+final _toggleFlash = O.map((QRViewController c) => c.toggleFlash());
+
 ValueNotifier<O.Option<QRViewController>> _useController() {
   final controller = useState<O.Option<QRViewController>>(O.none());
 
@@ -67,7 +69,7 @@ Widget barcodeScannerDialog(
                     Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        controller.value.chain(O.map((c) => c.toggleFlash()));
+                        _toggleFlash(controller.value);
                       },
                       child: Text('Toggle flash'),
                     ),

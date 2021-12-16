@@ -1,5 +1,23 @@
 part of 'barcode_scanner_field.dart';
 
+final _barcodeWidget = O.map2((Barcode type, String code) => Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppTheme.rem(0.5)),
+      child: SizedBox(
+        height: AppTheme.rem(5),
+        child: BarcodeWidget(
+          data: code,
+          barcode: type,
+          errorBuilder: (context, err) => Text('Code not valid'),
+        ),
+      ),
+    ) as Widget);
+
+final _autoSizeText = optionOfString.compose(O.map((text) => AutoSizeText(
+      text,
+      style: TextStyle(fontSize: 40),
+      maxLines: 1,
+    ) as Widget));
+
 @swidget
 Widget _scanButton(
   BuildContext context, {
@@ -25,24 +43,8 @@ Widget _scanButton(
         ));
       },
       child: Center(
-        child: tuple2(barcodeType, optionOfString(data))
-            .chain(O.mapTuple2((type, code) => Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppTheme.rem(0.5)),
-                  child: SizedBox(
-                    height: AppTheme.rem(5),
-                    child: BarcodeWidget(
-                      data: code,
-                      barcode: type,
-                      errorBuilder: (context, err) => Text('Code not valid'),
-                    ),
-                  ),
-                ) as Widget))
-            .chain(O.alt(
-                () => optionOfString(data).chain(O.map((text) => AutoSizeText(
-                      text,
-                      style: TextStyle(fontSize: 40),
-                      maxLines: 1,
-                    ) as Widget))))
+        child: _barcodeWidget(barcodeType, optionOfString(data))
+            .chain(O.alt(() => _autoSizeText(data)))
             .chain(O.getOrElse(() => Text('Scan barcode'))),
       ),
     );
