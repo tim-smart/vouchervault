@@ -50,7 +50,7 @@ Widget voucherDialog(
             voucher.description,
             style: theme.textTheme.headline3,
           ),
-          ...voucher.codeOption.chain(O.fold(
+          ...voucher.code.chain(O.fold(
             () => [],
             (data) => [
               SizedBox(height: AppTheme.space3),

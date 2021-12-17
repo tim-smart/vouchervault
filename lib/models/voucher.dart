@@ -1,8 +1,9 @@
+import 'package:dart_date/dart_date.dart';
 import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart' show Option;
 import 'package:fpdt/option.dart' as O;
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/lib/milliunits.dart' as millis;
 
 part 'voucher.freezed.dart';
@@ -63,36 +64,32 @@ class Voucher with _$Voucher {
   Voucher._();
 
   factory Voucher({
-    String? uuid,
+    @Default(O.kNone) Option<String> uuid,
     @Default('') String description,
-    String? code,
+    @Default(O.kNone) Option<String> code,
     @Default(VoucherCodeType.CODE128) VoucherCodeType codeType,
-    DateTime? expires,
+    @Default(O.kNone) Option<DateTime> expires,
     @Default(true) bool removeOnceExpired,
-    double? balance,
-    int? balanceMilliunits,
+    @Default(O.kNone) Option<double> balance,
+    @Default(O.kNone) Option<int> balanceMilliunits,
     @Default(VoucherColor.GREY) VoucherColor color,
   }) = _Voucher;
 
   factory Voucher.fromJson(dynamic json) =>
       _$VoucherFromJson(Map<String, dynamic>.from(json));
 
-  late final O.Option<String> codeOption = O.fromNullable(code);
-
-  late final O.Option<DateTime> expiresOption = O
-      .fromNullable(expires)
+  late final O.Option<DateTime> normalizedExpires = expires
       .chain(O.filter((_) => removeOnceExpired))
-      .chain(O.map(endOfDay));
+      .chain(O.map((d) => d.endOfDay));
 
   late final O.Option<int> balanceOption = balanceMilliunits
-      .chain(O.fromNullable)
-      .chain(O.alt(() => millis.fromNullableDouble(balance)));
+      .chain(O.alt(() => balance.chain(O.map(millis.fromDouble))));
 
   late final O.Option<double> balanceDoubleOption =
       balanceOption.chain(O.map(millis.toDouble));
 
   late final bool hasDetails =
-      O.isSome(expiresOption) || O.isSome(balanceOption);
+      O.isSome(normalizedExpires) || O.isSome(balanceOption);
 
   static Voucher fromFormValue(dynamic json) => Voucher.fromJson(json);
 
@@ -100,7 +97,7 @@ class Voucher with _$Voucher {
         ...toJson(),
         'balanceMilliunits': O.toNullable(balanceOption),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
-        'expires': expires,
+        'expires': O.toNullable(expires),
         'color': _$VoucherColorEnumMap[this.color],
       };
 }

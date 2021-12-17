@@ -7,32 +7,53 @@ part of 'voucher.dart';
 // **************************************************************************
 
 _$_Voucher _$$_VoucherFromJson(Map<String, dynamic> json) => _$_Voucher(
-      uuid: json['uuid'] as String?,
+      uuid: json['uuid'] == null
+          ? O.kNone
+          : Option<String>.fromJson(json['uuid'], (value) => value as String),
       description: json['description'] as String? ?? '',
-      code: json['code'] as String?,
+      code: json['code'] == null
+          ? O.kNone
+          : Option<String>.fromJson(json['code'], (value) => value as String),
       codeType:
           $enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']) ??
               VoucherCodeType.CODE128,
       expires: json['expires'] == null
-          ? null
-          : DateTime.parse(json['expires'] as String),
+          ? O.kNone
+          : Option<DateTime>.fromJson(
+              json['expires'], (value) => DateTime.parse(value as String)),
       removeOnceExpired: json['removeOnceExpired'] as bool? ?? true,
-      balance: (json['balance'] as num?)?.toDouble(),
-      balanceMilliunits: json['balanceMilliunits'] as int?,
+      balance: json['balance'] == null
+          ? O.kNone
+          : Option<double>.fromJson(
+              json['balance'], (value) => (value as num).toDouble()),
+      balanceMilliunits: json['balanceMilliunits'] == null
+          ? O.kNone
+          : Option<int>.fromJson(
+              json['balanceMilliunits'], (value) => value as int),
       color: $enumDecodeNullable(_$VoucherColorEnumMap, json['color']) ??
           VoucherColor.GREY,
     );
 
 Map<String, dynamic> _$$_VoucherToJson(_$_Voucher instance) =>
     <String, dynamic>{
-      'uuid': instance.uuid,
+      'uuid': instance.uuid.toJson(
+        (value) => value,
+      ),
       'description': instance.description,
-      'code': instance.code,
+      'code': instance.code.toJson(
+        (value) => value,
+      ),
       'codeType': _$VoucherCodeTypeEnumMap[instance.codeType],
-      'expires': instance.expires?.toIso8601String(),
+      'expires': instance.expires.toJson(
+        (value) => value.toIso8601String(),
+      ),
       'removeOnceExpired': instance.removeOnceExpired,
-      'balance': instance.balance,
-      'balanceMilliunits': instance.balanceMilliunits,
+      'balance': instance.balance.toJson(
+        (value) => value,
+      ),
+      'balanceMilliunits': instance.balanceMilliunits.toJson(
+        (value) => value,
+      ),
       'color': _$VoucherColorEnumMap[instance.color],
     };
 

@@ -1,5 +1,4 @@
 import 'package:barcode_widget/barcode_widget.dart';
-import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:qr_code_scanner/qr_code_scanner.dart' hide Barcode;
 import 'package:vouchervault/models/voucher.dart';
@@ -24,9 +23,8 @@ final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
   BarcodeFormat.pdf417: VoucherCodeType.PDF417,
   BarcodeFormat.qrcode: VoucherCodeType.QR,
 };
-VoucherCodeType codeTypeFromFormat(BarcodeFormat f) => O
-    .fromNullable(_barcodeFormatMap[f])
-    .chain(O.getOrElse(() => VoucherCodeType.CODE128));
+VoucherCodeType codeTypeFromFormat(BarcodeFormat f) =>
+    _barcodeFormatMap[f] ?? VoucherCodeType.CODE128;
 
 String? codeTypeValueFromFormat(BarcodeFormat f) =>
     codeTypeToJson(codeTypeFromFormat(f));

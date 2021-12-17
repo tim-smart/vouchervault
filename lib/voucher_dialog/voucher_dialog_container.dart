@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart' as O;
+import 'package:fpdt/task.dart' as T;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/voucher_vault_app.dart';
@@ -32,22 +33,25 @@ Widget voucherDialogContainer(
   // state
   final bloc = ref.watch(vouchersProvider.bloc);
   final v = ref
-      .watch(voucherProvider(voucher.uuid ?? ''))
+      .watch(voucherProvider(voucher.uuid))
       .chain(O.getOrElse(() => voucher));
 
   final onTapBarcode = useCallback(
-    () => v.codeOption.chain(O.map((code) {
+    () => v.code.chain(O.map((code) {
       Clipboard.setData(ClipboardData(text: code));
       Fluttertoast.showToast(msg: 'Copied to clipboard');
     })),
-    [v.codeOption],
+    [v.code],
   );
 
   final onSpend = useCallback(
-    () => showDialog<String>(
-      context: context,
-      builder: (context) => VoucherSpendDialog(),
-    ).then(optionOfString).then(maybeUpdateVoucherBalance(v)).then(bloc.add),
+    (() => showDialog<String>(
+              context: context,
+              builder: (context) => VoucherSpendDialog(),
+            ))
+        .chain(T.map(optionOfString))
+        .chain(T.map(maybeUpdateVoucherBalance(v)))
+        .chain(T.map(bloc.add)),
     [bloc, v],
   );
 

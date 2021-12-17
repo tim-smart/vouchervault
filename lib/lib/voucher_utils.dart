@@ -1,20 +1,14 @@
+import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart' as O;
-import 'package:time/time.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/models/voucher.dart';
 
-DateTime endOfDay(DateTime dt) => dt.copyWith(
-      hour: 24,
-      minute: 59,
-      second: 59,
-    );
-
 String formatExpires(DateTime dt) {
-  dt = endOfDay(dt);
+  dt = dt.endOfDay;
   return dt.isBefore(DateTime.now())
       ? 'Expired'
       : timeago.format(
@@ -31,7 +25,7 @@ List<Widget> buildVoucherDetails(
 }) =>
     intersperse<Widget>(
         SizedBox(height: space.chain(O.getOrElse(() => AppTheme.space1))), [
-      ...voucher.expiresOption.chain(O.fold(
+      ...voucher.normalizedExpires.chain(O.fold(
         () => [],
         (dt) => [
           buildVoucherDetailRow(

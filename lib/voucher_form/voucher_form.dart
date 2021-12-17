@@ -1,3 +1,4 @@
+import 'package:dart_date/dart_date.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -97,7 +98,10 @@ Widget voucherForm(
             },
             onShowPicker: (context, d) => showDatePicker(
               context: context,
-              initialDate: d ?? DateTime.now(),
+              initialDate: O
+                  .fromNullable(d)
+                  .chain(O.filter((d) => d.isFuture))
+                  .chain(O.getOrElse(() => DateTime.now())),
               firstDate: DateTime.now(),
               lastDate: DateTime.now().add(Duration(days: 365 * 100)),
             ),

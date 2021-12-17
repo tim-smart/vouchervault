@@ -1,6 +1,8 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart' as O;
 import 'package:uuid/uuid.dart';
 import 'package:vouchervault/main.dart' as app;
 import 'package:vouchervault/models/voucher.dart';
@@ -12,36 +14,36 @@ void main() async {
   app.main(
     vouchers: IList([
       Voucher(
-        uuid: Uuid().v4(),
+        uuid: O.some(Uuid().v4()),
         description: "Walmart",
-        code: "12345",
+        code: O.some('12345'),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.BLUE,
-        balanceMilliunits: 77 * 1000,
-        expires: DateTime.now().add(Duration(days: 120)),
+        balanceMilliunits: O.some(77 * 1000),
+        expires: DateTime.now().add(Duration(days: 120)).chain(O.some),
       ),
       Voucher(
-        uuid: Uuid().v4(),
+        uuid: Uuid().v4().chain(O.some),
         description: "Starbucks",
-        code: "12345",
+        code: "12345".chain(O.some),
         codeType: VoucherCodeType.CODE128,
         color: VoucherColor.GREEN,
-        balanceMilliunits: 50 * 1000,
+        balanceMilliunits: O.some(50 * 1000),
       ),
       Voucher(
-        uuid: Uuid().v4(),
+        uuid: Uuid().v4().chain(O.some),
         description: "New World Clubcard",
-        code: "12345",
+        code: "12345".chain(O.some),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.RED,
       ),
       Voucher(
-        uuid: Uuid().v4(),
+        uuid: Uuid().v4().chain(O.some),
         description: "Barkers",
-        code: "12345",
+        code: "12345".chain(O.some),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.GREY,
-        balanceMilliunits: 100 * 1000,
+        balanceMilliunits: O.some(100 * 1000),
       ),
     ]),
   );

@@ -14,7 +14,6 @@ import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vouchervault/lib/files.dart' as files;
 import 'package:vouchervault/lib/milliunits.dart' as millis;
-import 'package:vouchervault/lib/task_either.dart';
 import 'package:vouchervault/models/voucher.dart';
 
 part 'vouchers_bloc.freezed.dart';
@@ -24,7 +23,8 @@ final _log = Logger('vouchers/vouchers_bloc.dart');
 final vouchersProvider =
     BlocStreamProvider<VouchersBloc, VouchersState>((ref) => VouchersBloc());
 
-final voucherProvider = Provider.autoDispose.family((ref, String uuid) {
+final voucherProvider =
+    Provider.autoDispose.family((ref, O.Option<String> uuid) {
   final state = ref.watch(vouchersProvider);
   return O.fromNullable(state.vouchers.firstWhereOrNull((v) => v.uuid == uuid));
 });
@@ -43,14 +43,14 @@ class VouchersState with _$VouchersState {
   late final IList<Voucher> sortedVouchers = vouchers.sort((a, b) {
     final compare = a.description.compareTo(b.description);
     final expiresCompare =
-        _unix(a.expiresOption).compareTo(_unix(b.expiresOption));
+        _unix(a.normalizedExpires).compareTo(_unix(b.normalizedExpires));
 
     return compare != 0 ? compare : expiresCompare;
   });
 
   dynamic toJson() => vouchers.toJson((v) => v.toJson());
   static VouchersState fromJson(dynamic json) => VouchersState(
-        (json as List).map((j) => Voucher.fromJson(j)).toIList(),
+        IList.fromJson(json, Voucher.fromJson),
       );
 }
 
@@ -59,7 +59,7 @@ typedef VouchersAction = BlocStreamAction<VouchersState>;
 VouchersAction removeExpiredVouchers() => (value, add) => add(value.copyWith(
       vouchers: value.vouchers.fold(
         value.vouchers,
-        (acc, v) => v.expiresOption
+        (acc, v) => v.normalizedExpires
             .chain(O.filter((expires) => expires.isBefore(DateTime.now())))
             .chain(O.fold(
               () => acc,
@@ -70,7 +70,8 @@ VouchersAction removeExpiredVouchers() => (value, add) => add(value.copyWith(
 
 VouchersAction addVoucher(Voucher voucher) =>
     (value, add) => add(value.copyWith(
-          vouchers: value.vouchers.add(voucher.copyWith(uuid: _uuidgen.v4())),
+          vouchers:
+              value.vouchers.add(voucher.copyWith(uuid: O.some(_uuidgen.v4()))),
         ));
 
 VouchersAction updateVoucher(Voucher voucher) =>
@@ -85,8 +86,9 @@ VouchersAction Function(O.Option<String>) maybeUpdateVoucherBalance(
         .chain(O.flatMap(millis.fromString))
         .chain((amount) => tuple2(amount, v.balanceOption))
         .chain(O.mapTuple2((amount, balance) => balance - amount))
-        .chain(O.map((balance) =>
-            updateVoucher(v.copyWith(balanceMilliunits: balance))(value, add)));
+        .chain(O.map((balance) => updateVoucher(v.copyWith(
+              balanceMilliunits: O.some(balance),
+            ))(value, add)));
 
 VouchersAction removeVoucher(Voucher voucher) =>
     (value, add) => add(value.copyWith(
@@ -97,27 +99,28 @@ VouchersAction importVouchers() => (b, add) => files
     .pick(['json'])
     .chain(TE.map((r) => String.fromCharCodes(r.second)))
     .chain(TE.chainTryCatchK(
-      jsonDecode,
-      (error, _stackTrace) => 'Could not parse import JSON: $error',
-    ))
+        jsonDecode, (err, s) => 'Could not parse import JSON: $err'))
     .chain(TE.chainNullableK(() => 'Import was null'))
-    .chain(TE.map((json) => VouchersState.fromJson(json)))
+    .chain(TE.map(VouchersState.fromJson))
     .chain(TE.map(add))
     .chain(TE.toFutureVoid(_log.warning));
 
-VouchersAction exportVouchers() => (value, add) => tryCatchString(
+VouchersAction exportVouchers() => (value, add) => TE
+    .tryCatch(
       () => jsonEncode(value.toJson()),
-      prefix: 'encode json error',
+      (err, stack) => 'encode json error: $err',
     )
-        .chain(TE.flatMap(
-          (json) => files.writeString('vouchervault.json', json),
-        ))
-        .chain(TE.chainTryCatchK(
-          (file) =>
-              Share.shareFiles([file.path], subject: 'VoucherVault export'),
-          (err, stackTrace) => 'share files error: $err',
-        ))
-        .chain(TE.toFutureVoid(_log.warning));
+    .chain(TE.flatMap(
+      (json) => files.writeString('vouchervault.json', json),
+    ))
+    .chain(TE.chainTryCatchK(
+      (file) => Share.shareFiles(
+        [file.path],
+        subject: 'VoucherVault export',
+      ),
+      (err, stackTrace) => 'share files error: $err',
+    ))
+    .chain(TE.toFutureVoid(_log.warning));
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
   VouchersBloc({VouchersState? initialValue})

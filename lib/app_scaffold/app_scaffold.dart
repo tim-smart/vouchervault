@@ -14,7 +14,7 @@ Widget appScaffold(
   required String title,
   required List<Widget> slivers,
   List<Widget> actions = const [],
-  O.Option<Widget> floatingActionButton = const O.None(),
+  Option<Widget> floatingActionButton = O.kNone,
   bool leading = false,
 }) {
   final theme = Theme.of(context);

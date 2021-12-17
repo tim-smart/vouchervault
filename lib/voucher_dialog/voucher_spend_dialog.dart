@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part 'voucher_spend_dialog.g.dart';
 
-@hwidget
-Widget voucherSpendDialog(BuildContext context) {
-  final amount = useState('');
-  void submit() => Navigator.pop(context, amount.value);
+final _amountProvider = StateProvider.autoDispose((ref) => '');
+
+@cwidget
+Widget voucherSpendDialog(BuildContext context, WidgetRef ref) {
+  final amount = ref.watch(_amountProvider.notifier);
+  void submit() => Navigator.pop(context, amount.state);
 
   return AlertDialog(
     title: Text('How much did you spend?'),
@@ -18,7 +20,7 @@ Widget voucherSpendDialog(BuildContext context) {
         labelText: 'Amount',
       ),
       keyboardType: TextInputType.numberWithOptions(signed: true),
-      onChanged: (s) => amount.value = s,
+      onChanged: (s) => amount.state = s,
       onSubmitted: (s) => submit(),
     ),
     actions: [

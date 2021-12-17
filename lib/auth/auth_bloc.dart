@@ -64,7 +64,7 @@ class AuthActions {
   static AuthAction init(RefRead read) => (value, add) {
         if (value.enabled) {
           add(AuthState.unauthenticated());
-          return Future.value();
+          return null;
         }
 
         return TE
@@ -83,7 +83,7 @@ class AuthActions {
                 return AuthenticatedReason.NOT_AVAILABLE;
               },
             ))
-            .chain(T.map((reason) => AuthState.authenticated(reason)))
+            .chain(T.map(AuthState.authenticated))
             .chain(T.map(add))();
       };
 
@@ -103,10 +103,10 @@ class AuthActions {
         ),
         (err, _) => 'Error trying to authenticate: $err',
       )
-      .chain(TE.filter((success) => success, (_) => 'Authentication failed'))
+      .chain(TE.filter(identity, (_) => 'Authentication failed'))
       .chain(TE.map(
           (_) => add(AuthState.authenticated(AuthenticatedReason.SUCCESS))))
-      .chain(TE.getOrElse(_log.warning))();
+      .chain(TE.toFutureVoid(_log.warning));
 }
 
 class AuthBloc extends PersistedBlocStream<AuthState> {
