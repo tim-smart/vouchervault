@@ -12,7 +12,7 @@ final _barcodeWidget = O.map2((Barcode type, String code) => Padding(
       ),
     ) as Widget);
 
-final _autoSizeText = optionOfString.compose(O.map((text) => AutoSizeText(
+final _autoSizeText = optionOfString.c(O.map((text) => AutoSizeText(
       text,
       style: TextStyle(fontSize: 40),
       maxLines: 1,
@@ -44,7 +44,7 @@ Widget _scanButton(
       },
       child: Center(
         child: _barcodeWidget(barcodeType, optionOfString(data))
-            .chain(O.alt(() => _autoSizeText(data)))
-            .chain(O.getOrElse(() => Text('Scan barcode'))),
+            .p(O.alt(() => _autoSizeText(data)))
+            .p(O.getOrElse(() => Text('Scan barcode'))),
       ),
     );

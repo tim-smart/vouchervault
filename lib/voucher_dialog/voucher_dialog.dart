@@ -50,7 +50,7 @@ Widget voucherDialog(
             voucher.description,
             style: theme.textTheme.headline3,
           ),
-          ...voucher.code.chain(O.fold(
+          ...voucher.code.p(O.fold(
             () => [],
             (data) => [
               SizedBox(height: AppTheme.space3),
@@ -140,7 +140,7 @@ Widget _barcode(
   final theme = Theme.of(context);
   final barcode = B.fromCodeType(type);
   return SizedBox(
-    height: AppTheme.rem(barcode.chain(O.fold(
+    height: AppTheme.rem(barcode.p(O.fold(
       () => 6,
       (_) => 10,
     ))),
@@ -153,7 +153,7 @@ Widget _barcode(
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.all(AppTheme.space4),
-          child: barcode.chain(O.fold(
+          child: barcode.p(O.fold(
             () => Center(
               child: AutoSizeText(
                 data,

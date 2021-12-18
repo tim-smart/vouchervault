@@ -8,7 +8,7 @@ ValueNotifier<O.Option<QRViewController>> _useController() {
   final controller = useState<O.Option<QRViewController>>(O.none());
 
   useEffect(() {
-    return controller.value.chain(O.fold(
+    return controller.value.p(O.fold(
       () => () {},
       (c) => c.dispose,
     ));
@@ -25,7 +25,7 @@ Widget barcodeScannerDialog(
   final controller = _useController();
 
   useEffect(() {
-    return controller.value.chain(O.fold(
+    return controller.value.p(O.fold(
       () => () {},
       (c) => c.scannedDataStream
           .where((d) => d.code != null)

@@ -72,19 +72,19 @@ class AuthActions {
               () => read(localAuthProvider).isDeviceSupported(),
               (error, stackTrace) => 'Could not check if auth is available',
             )
-            .chain(TE.filter(
+            .p(TE.filter(
               (available) => available,
               (_) => 'Auth not available',
             ))
-            .chain(TE.fold(
+            .p(TE.fold(
               (_) => AuthenticatedReason.NOT_REQUIRED,
               (message) {
                 _log.info(message);
                 return AuthenticatedReason.NOT_AVAILABLE;
               },
             ))
-            .chain(T.map(AuthState.authenticated))
-            .chain(T.map(add))();
+            .p(T.map(AuthState.authenticated))
+            .p(T.map(add))();
       };
 
   static AuthAction toggle() =>
@@ -103,10 +103,10 @@ class AuthActions {
         ),
         (err, _) => 'Error trying to authenticate: $err',
       )
-      .chain(TE.filter(identity, (_) => 'Authentication failed'))
-      .chain(TE.map(
+      .p(TE.filter(identity, (_) => 'Authentication failed'))
+      .p(TE.map(
           (_) => add(AuthState.authenticated(AuthenticatedReason.SUCCESS))))
-      .chain(TE.toFutureVoid(_log.warning));
+      .p(TE.toFutureVoid(_log.warning));
 }
 
 class AuthBloc extends PersistedBlocStream<AuthState> {

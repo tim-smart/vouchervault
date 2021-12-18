@@ -46,8 +46,7 @@ Widget voucherForm(
         SizedBox(height: AppTheme.space3),
         FormBuilderField<String>(
           name: 'code',
-          valueTransformer: (String? s) =>
-              optionOfString(s).chain(O.toNullable),
+          valueTransformer: (String? s) => optionOfString(s).p(O.toNullable),
           validator: FormBuilderValidators.required(context),
           builder: (field) => BarcodeScannerField(
             labelText: 'Code',
@@ -56,14 +55,13 @@ Widget voucherForm(
             initialValue: field.value ?? '',
             barcodeType: O
                 .fromNullable(formKey.currentState!.fields['codeType'])
-                .chain(O.map((f) => f.value as String))
-                .chain(
-                    O.alt(() => optionOfString(initialFormValue['codeType'])))
-                .chain(O.flatMap(barcode.fromCodeTypeJson)),
+                .p(O.map((f) => f.value as String))
+                .p(O.alt(() => optionOfString(initialFormValue['codeType'])))
+                .p(O.flatMap(barcode.fromCodeTypeJson)),
             onScan: O.some((f) => O
                 .fromNullable(formKey.currentState!.fields['codeType'])
-                .chain(O.map((f) => f.didChange))
-                .chain(O.map((didChange) =>
+                .p(O.map((f) => f.didChange))
+                .p(O.map((didChange) =>
                     didChange(barcode.codeTypeValueFromFormat(f))))),
           ),
         ),
@@ -100,16 +98,16 @@ Widget voucherForm(
               context: context,
               initialDate: O
                   .fromNullable(d)
-                  .chain(O.filter((d) => d.isFuture))
-                  .chain(O.getOrElse(() => DateTime.now())),
+                  .p(O.filter((d) => d.isFuture))
+                  .p(O.getOrElse(() => DateTime.now())),
               firstDate: DateTime.now(),
               lastDate: DateTime.now().add(Duration(days: 365 * 100)),
             ),
           ),
           valueTransformer: O
               .fromNullableWith<DateTime>()
-              .compose(O.map((d) => d.toString()))
-              .compose(O.toNullable),
+              .c(O.map((d) => d.toString()))
+              .c(O.toNullable),
         ),
         FormBuilderSwitch(
           name: 'removeOnceExpired',
@@ -126,11 +124,8 @@ Widget voucherForm(
         FormBuilderField<int>(
           name: 'balanceMilliunits',
           builder: (field) => TextFormField(
-            initialValue:
-                millis.toString(field.value).chain(O.getOrElse(() => '')),
-            onChanged: millis.fromString
-                .compose(O.toNullable)
-                .compose(field.didChange),
+            initialValue: millis.toString(field.value).p(O.getOrElse(() => '')),
+            onChanged: millis.fromString.c(O.toNullable).c(field.didChange),
             keyboardType: TextInputType.numberWithOptions(
               signed: true,
               decimal: true,

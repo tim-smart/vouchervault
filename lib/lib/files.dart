@@ -9,16 +9,16 @@ import 'package:path_provider/path_provider.dart';
 
 TE.TaskEither<String, File> create(String filename) => TE
     .tryCatch(getTemporaryDirectory, (err, s) => 'Failed to get tmp dir: $err')
-    .chain(TE.map((d) => File('${d.path}/$filename')));
+    .p(TE.map((d) => File('${d.path}/$filename')));
 
 TE.TaskEither<String, File> write(String filename, List<int> bytes) =>
-    create(filename).chain(TE.chainTryCatchK(
+    create(filename).p(TE.chainTryCatchK(
       (f) => f.writeAsBytes(bytes),
       (err, stackTrace) => 'Failed to write bytes: $err',
     ));
 
 TE.TaskEither<String, File> writeString(String filename, String data) =>
-    create(filename).chain(TE.chainTryCatchK(
+    create(filename).p(TE.chainTryCatchK(
       (f) => f.writeAsString(data),
       (err, stackTrace) => 'Failed to write string: $err',
     ));
@@ -31,7 +31,7 @@ TE.TaskEither<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
           () => f.readStream!.reduce((bytes, chunk) => bytes + chunk),
           (err, s) => 'Could not read file: $err',
         )
-        .chain(TE.map((bytes) => tuple2(f, bytes)));
+        .p(TE.map((bytes) => tuple2(f, bytes)));
 
 TE.TaskEither<String, Tuple2<PlatformFile, List<int>>> pick(
   List<String> extensions,
@@ -45,7 +45,7 @@ TE.TaskEither<String, Tuple2<PlatformFile, List<int>>> pick(
           ),
           (err, s) => 'pickFiles failed: $err',
         )
-        .chain(TE.chainNullableK(() => 'pickFiles gave no result'))
-        .chain(TE.flatMap((r) => r.files.head
-            .chain(TE.fromOption(() => 'pickFiles had an empty response'))))
-        .chain(TE.flatMap(_readPlatformFileStream));
+        .p(TE.chainNullableK(() => 'pickFiles gave no result'))
+        .p(TE.flatMap((r) => r.files.head
+            .p(TE.fromOption(() => 'pickFiles had an empty response'))))
+        .p(TE.flatMap(_readPlatformFileStream));

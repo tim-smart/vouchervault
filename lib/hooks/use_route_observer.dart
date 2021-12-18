@@ -46,19 +46,19 @@ class _RouteObserverHookState extends HookState<void, _RouteObserverHook>
   }
 
   void didPopNext() {
-    hook.didPopNext.chain(O.map((f) => f()));
+    hook.didPopNext.p(O.map((f) => f()));
   }
 
   void didPush() {
-    hook.didPush.chain(O.map((f) => f()));
+    hook.didPush.p(O.map((f) => f()));
   }
 
   void didPop() {
-    hook.didPop.chain(O.map((f) => f()));
+    hook.didPop.p(O.map((f) => f()));
   }
 
   void didPushNext() {
-    hook.didPushNext.chain(O.map((f) => f()));
+    hook.didPushNext.p(O.map((f) => f()));
   }
 }
 

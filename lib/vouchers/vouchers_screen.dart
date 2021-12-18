@@ -38,8 +38,8 @@ Widget vouchersScreen(BuildContext context, WidgetRef ref) {
         ),
       ).then((v) => O
           .fromNullable(v)
-          .chain(O.map(addVoucher))
-          .chain(O.map(ref.read(vouchersProvider.bloc).add))),
+          .p(O.map(addVoucher))
+          .p(O.map(ref.read(vouchersProvider.bloc).add))),
       child: Icon(Icons.add),
     )),
   );

@@ -4,12 +4,12 @@ import 'package:vouchervault/lib/option.dart';
 
 int fromDouble(double i) => (i * 1000).round();
 
-final fromNullableDouble = fromNullableWith<double>().compose(map(fromDouble));
+final fromNullableDouble = fromNullableWith<double>().c(map(fromDouble));
 
-final fromString = maybeParseDouble.compose(map(fromDouble));
+final fromString = maybeParseDouble.c(map(fromDouble));
 
 double toDouble(int units) => units / 1000.0;
 
-final maybeToDouble = fromNullableWith<int>().compose(map(toDouble));
+final maybeToDouble = fromNullableWith<int>().c(map(toDouble));
 
-final toString = maybeToDouble.compose(map((d) => d.toStringAsFixed(2)));
+final toString = maybeToDouble.c(map((d) => d.toStringAsFixed(2)));

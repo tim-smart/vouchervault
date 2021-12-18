@@ -32,12 +32,11 @@ Widget voucherDialogContainer(
 
   // state
   final bloc = ref.watch(vouchersProvider.bloc);
-  final v = ref
-      .watch(voucherProvider(voucher.uuid))
-      .chain(O.getOrElse(() => voucher));
+  final v =
+      ref.watch(voucherProvider(voucher.uuid)).p(O.getOrElse(() => voucher));
 
   final onTapBarcode = useCallback(
-    () => v.code.chain(O.map((code) {
+    () => v.code.p(O.map((code) {
       Clipboard.setData(ClipboardData(text: code));
       Fluttertoast.showToast(msg: 'Copied to clipboard');
     })),
@@ -49,9 +48,9 @@ Widget voucherDialogContainer(
               context: context,
               builder: (context) => VoucherSpendDialog(),
             ))
-        .chain(T.map(optionOfString))
-        .chain(T.map(maybeUpdateVoucherBalance(v)))
-        .chain(T.map(bloc.add)),
+        .p(T.map(optionOfString))
+        .p(T.map(maybeUpdateVoucherBalance(v)))
+        .p(T.map(bloc.add)),
     [bloc, v],
   );
 
@@ -64,7 +63,7 @@ Widget voucherDialogContainer(
       ),
     );
 
-    O.fromNullable(voucher).chain(O.map(updateVoucher)).chain(O.map(bloc.add));
+    O.fromNullable(voucher).p(O.map(updateVoucher)).p(O.map(bloc.add));
   }, [bloc, v]);
 
   final onRemove = useCallback(

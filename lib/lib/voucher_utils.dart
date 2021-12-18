@@ -24,8 +24,8 @@ List<Widget> buildVoucherDetails(
   O.Option<double> space = const O.None(),
 }) =>
     intersperse<Widget>(
-        SizedBox(height: space.chain(O.getOrElse(() => AppTheme.space1))), [
-      ...voucher.normalizedExpires.chain(O.fold(
+        SizedBox(height: space.p(O.getOrElse(() => AppTheme.space1))), [
+      ...voucher.normalizedExpires.p(O.fold(
         () => [],
         (dt) => [
           buildVoucherDetailRow(
@@ -36,7 +36,7 @@ List<Widget> buildVoucherDetails(
           )
         ],
       )),
-      ...voucher.balanceDoubleOption.chain(O.fold(
+      ...voucher.balanceDoubleOption.p(O.fold(
         () => [],
         (b) => [
           buildVoucherDetailRow(

@@ -41,7 +41,7 @@ Widget barcodeScannerField(
                 TextSelection.fromPosition(TextPosition(offset: data.length)),
           );
           onChange(data);
-          onScan.chain(O.map((f) => f(format)));
+          onScan.p(O.map((f) => f(format)));
         },
       ),
       SizedBox(height: AppTheme.space3),
@@ -53,7 +53,7 @@ Widget barcodeScannerField(
         ),
         onChanged: onChange,
       ),
-      ...errorText.chain(O.fold(
+      ...errorText.p(O.fold(
         () => [],
         (error) => [
           SizedBox(height: AppTheme.space2),

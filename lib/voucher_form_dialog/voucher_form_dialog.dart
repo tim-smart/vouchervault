@@ -18,11 +18,11 @@ Widget voucherFormDialog(
   O.Option<Voucher> initialValue = const O.None(),
 }) {
   final formKey = useMemoized(() => GlobalKey<FormBuilderState>());
-  final title = initialValue.chain(O.fold(
+  final title = initialValue.p(O.fold(
     () => 'Add voucher',
     (_) => 'Edit voucher',
   ));
-  final action = initialValue.chain(O.fold(
+  final action = initialValue.p(O.fold(
     () => 'Create',
     (_) => 'Update',
   ));
@@ -38,7 +38,7 @@ Widget voucherFormDialog(
         sliver: SliverToBoxAdapter(
           child: VoucherForm(
             formKey: formKey,
-            initialValue: initialValue.chain(O.getOrElse(() => Voucher())),
+            initialValue: initialValue.p(O.getOrElse(() => Voucher())),
           ),
         ),
       ),
@@ -59,7 +59,7 @@ Widget voucherFormDialog(
 
                 Navigator.pop(
                   context,
-                  initialValue.chain(O.fold(
+                  initialValue.p(O.fold(
                     () => voucher,
                     (iv) => voucher.copyWith(uuid: iv.uuid),
                   )),

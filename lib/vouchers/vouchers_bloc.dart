@@ -31,9 +31,8 @@ final voucherProvider =
 
 final _uuidgen = Uuid();
 
-final _unix = O
-    .map((DateTime d) => d.millisecondsSinceEpoch)
-    .compose(O.getOrElse(() => 0));
+final _unix =
+    O.map((DateTime d) => d.millisecondsSinceEpoch).c(O.getOrElse(() => 0));
 
 @freezed
 class VouchersState with _$VouchersState {
@@ -59,9 +58,9 @@ typedef VouchersAction = BlocStreamAction<VouchersState>;
 VouchersAction removeExpiredVouchers() => (value, add) => add(value.copyWith(
       vouchers: value.vouchers.fold(
         value.vouchers,
-        (acc, v) => v.normalizedExpires
-            .chain(O.filter((expires) => expires.isBefore(DateTime.now())))
-            .chain(O.fold(
+        (acc, v) => v.removeAt
+            .p(O.filter((expires) => expires.isBefore(DateTime.now())))
+            .p(O.fold(
               () => acc,
               (_) => acc.remove(v),
             )),
@@ -83,10 +82,10 @@ VouchersAction Function(O.Option<String>) maybeUpdateVoucherBalance(
   Voucher v,
 ) =>
     (s) => (value, add) => s
-        .chain(O.flatMap(millis.fromString))
-        .chain((amount) => tuple2(amount, v.balanceOption))
-        .chain(O.mapTuple2((amount, balance) => balance - amount))
-        .chain(O.map((balance) => updateVoucher(v.copyWith(
+        .p(O.flatMap(millis.fromString))
+        .p((amount) => tuple2(amount, v.balanceOption))
+        .p(O.mapTuple2((amount, balance) => balance - amount))
+        .p(O.map((balance) => updateVoucher(v.copyWith(
               balanceMilliunits: O.some(balance),
             ))(value, add)));
 
@@ -97,30 +96,30 @@ VouchersAction removeVoucher(Voucher voucher) =>
 
 VouchersAction importVouchers() => (b, add) => files
     .pick(['json'])
-    .chain(TE.map((r) => String.fromCharCodes(r.second)))
-    .chain(TE.chainTryCatchK(
+    .p(TE.map((r) => String.fromCharCodes(r.second)))
+    .p(TE.chainTryCatchK(
         jsonDecode, (err, s) => 'Could not parse import JSON: $err'))
-    .chain(TE.chainNullableK(() => 'Import was null'))
-    .chain(TE.map(VouchersState.fromJson))
-    .chain(TE.map(add))
-    .chain(TE.toFutureVoid(_log.warning));
+    .p(TE.chainNullableK(() => 'Import was null'))
+    .p(TE.map(VouchersState.fromJson))
+    .p(TE.map(add))
+    .p(TE.toFutureVoid(_log.warning));
 
 VouchersAction exportVouchers() => (value, add) => TE
     .tryCatch(
       () => jsonEncode(value.toJson()),
       (err, stack) => 'encode json error: $err',
     )
-    .chain(TE.flatMap(
+    .p(TE.flatMap(
       (json) => files.writeString('vouchervault.json', json),
     ))
-    .chain(TE.chainTryCatchK(
+    .p(TE.chainTryCatchK(
       (file) => Share.shareFiles(
         [file.path],
         subject: 'VoucherVault export',
       ),
       (err, stackTrace) => 'share files error: $err',
     ))
-    .chain(TE.toFutureVoid(_log.warning));
+    .p(TE.toFutureVoid(_log.warning));
 
 class VouchersBloc extends PersistedBlocStream<VouchersState> {
   VouchersBloc({VouchersState? initialValue})

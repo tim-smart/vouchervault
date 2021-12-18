@@ -38,7 +38,7 @@ final _colors = <VoucherColor, Color>{
   VoucherColor.PURPLE: Colors.purple[500]!,
 };
 Color color(VoucherColor c) =>
-    O.fromNullable(_colors[c]).chain(O.getOrElse(() => Colors.grey[700]!));
+    O.fromNullable(_colors[c]).p(O.getOrElse(() => Colors.grey[700]!));
 String colorToJson(VoucherColor c) => _$VoucherColorEnumMap[c]!;
 
 // Voucher code type functions
@@ -56,8 +56,8 @@ String codeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type]!;
 
 VoucherCodeType codeTypeFromJson(String? s) => O
     .fromNullable(s)
-    .chain(O.chainTryCatchK((s) => $enumDecode(_$VoucherCodeTypeEnumMap, s)))
-    .chain(O.getOrElse(() => VoucherCodeType.CODE128));
+    .p(O.chainTryCatchK((s) => $enumDecode(_$VoucherCodeTypeEnumMap, s)))
+    .p(O.getOrElse(() => VoucherCodeType.CODE128));
 
 @freezed
 class Voucher with _$Voucher {
@@ -78,15 +78,17 @@ class Voucher with _$Voucher {
   factory Voucher.fromJson(dynamic json) =>
       _$VoucherFromJson(Map<String, dynamic>.from(json));
 
-  late final O.Option<DateTime> normalizedExpires = expires
-      .chain(O.filter((_) => removeOnceExpired))
-      .chain(O.map((d) => d.endOfDay));
+  late final O.Option<DateTime> normalizedExpires =
+      expires.p(O.map((d) => d.endOfDay));
 
-  late final O.Option<int> balanceOption = balanceMilliunits
-      .chain(O.alt(() => balance.chain(O.map(millis.fromDouble))));
+  late final O.Option<DateTime> removeAt =
+      normalizedExpires.p(O.filter((_) => removeOnceExpired));
+
+  late final O.Option<int> balanceOption =
+      balanceMilliunits.p(O.alt(() => balance.p(O.map(millis.fromDouble))));
 
   late final O.Option<double> balanceDoubleOption =
-      balanceOption.chain(O.map(millis.toDouble));
+      balanceOption.p(O.map(millis.toDouble));
 
   late final bool hasDetails =
       O.isSome(normalizedExpires) || O.isSome(balanceOption);

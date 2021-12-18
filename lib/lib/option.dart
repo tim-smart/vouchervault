@@ -2,8 +2,7 @@ import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart';
 
 Option<String> optionOfString(String? s) =>
-    fromNullable(s).chain(filter((s) => s.isNotEmpty));
+    fromNullable(s).p(filter((s) => s.isNotEmpty));
 
-final maybeParseInt = optionOfString.compose(chainNullableK(int.tryParse));
-final maybeParseDouble =
-    optionOfString.compose(chainNullableK(double.tryParse));
+final maybeParseInt = optionOfString.c(chainNullableK(int.tryParse));
+final maybeParseDouble = optionOfString.c(chainNullableK(double.tryParse));
