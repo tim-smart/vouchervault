@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:fpdt/function.dart';
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/task_either.dart' as TE;
-import 'package:fpdt/tuple.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
@@ -23,8 +22,7 @@ final _log = Logger('vouchers/vouchers_bloc.dart');
 final vouchersProvider =
     BlocStreamProvider<VouchersBloc, VouchersState>((ref) => VouchersBloc());
 
-final voucherProvider =
-    Provider.autoDispose.family((ref, O.Option<String> uuid) {
+final voucherProvider = Provider.autoDispose.family((ref, Option<String> uuid) {
   final state = ref.watch(vouchersProvider);
   return O.fromNullable(state.vouchers.firstWhereOrNull((v) => v.uuid == uuid));
 });
@@ -78,7 +76,7 @@ VouchersAction updateVoucher(Voucher voucher) =>
           vouchers: value.vouchers.updateById([voucher], (v) => v.uuid),
         ));
 
-VouchersAction Function(O.Option<String>) maybeUpdateVoucherBalance(
+VouchersAction Function(Option<String>) maybeUpdateVoucherBalance(
   Voucher v,
 ) =>
     (s) => (value, add) => s

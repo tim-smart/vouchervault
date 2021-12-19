@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fpdt/function.dart';
-import 'package:fpdt/option.dart' show Option, None;
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 
 class _RouteObserverHook extends Hook<void> {

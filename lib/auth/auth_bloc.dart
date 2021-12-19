@@ -1,4 +1,4 @@
-import 'package:fpdt/function.dart';
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/task.dart' as T;
 import 'package:fpdt/task_either.dart' as TE;
 import 'package:freezed_annotation/freezed_annotation.dart';

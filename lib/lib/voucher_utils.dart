@@ -1,6 +1,6 @@
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
-import 'package:fpdt/function.dart';
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:vouchervault/app/app.dart';
@@ -21,7 +21,7 @@ List<Widget> buildVoucherDetails(
   BuildContext context,
   Voucher voucher, {
   Color textColor = Colors.white,
-  O.Option<double> space = const O.None(),
+  Option<double> space = const None(),
 }) =>
     intersperse<Widget>(
         SizedBox(height: space.p(O.getOrElse(() => AppTheme.space1))), [
@@ -54,7 +54,7 @@ Widget buildVoucherDetailRow(
   Color textColor,
   IconData icon,
   String text, {
-  O.Option<double> space = const O.None(),
+  Option<double> space = const None(),
 }) {
   final theme = Theme.of(context);
 

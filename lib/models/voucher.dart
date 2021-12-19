@@ -1,6 +1,5 @@
 import 'package:dart_date/dart_date.dart';
-import 'package:fpdt/function.dart';
-import 'package:fpdt/option.dart' show Option;
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -78,16 +77,16 @@ class Voucher with _$Voucher {
   factory Voucher.fromJson(dynamic json) =>
       _$VoucherFromJson(Map<String, dynamic>.from(json));
 
-  late final O.Option<DateTime> normalizedExpires =
+  late final Option<DateTime> normalizedExpires =
       expires.p(O.map((d) => d.endOfDay));
 
-  late final O.Option<DateTime> removeAt =
+  late final Option<DateTime> removeAt =
       normalizedExpires.p(O.filter((_) => removeOnceExpired));
 
-  late final O.Option<int> balanceOption =
+  late final Option<int> balanceOption =
       balanceMilliunits.p(O.alt(() => balance.p(O.map(millis.fromDouble))));
 
-  late final O.Option<double> balanceDoubleOption =
+  late final Option<double> balanceDoubleOption =
       balanceOption.p(O.map(millis.toDouble));
 
   late final bool hasDetails =

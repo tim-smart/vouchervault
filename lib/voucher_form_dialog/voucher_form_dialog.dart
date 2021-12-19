@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:fpdt/function.dart';
-import 'package:fpdt/option.dart' show Option;
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
@@ -15,7 +14,7 @@ part 'voucher_form_dialog.g.dart';
 @hwidget
 Widget voucherFormDialog(
   BuildContext context, {
-  O.Option<Voucher> initialValue = const O.None(),
+  Option<Voucher> initialValue = const None(),
 }) {
   final formKey = useMemoized(() => GlobalKey<FormBuilderState>());
   final title = initialValue.p(O.fold(

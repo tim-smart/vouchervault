@@ -1,4 +1,4 @@
-import 'package:fpdt/function.dart';
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart';
 
 Option<String> optionOfString(String? s) =>

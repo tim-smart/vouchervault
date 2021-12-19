@@ -3,8 +3,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fpdt/function.dart';
-import 'package:fpdt/option.dart' show Option;
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart' hide Barcode;
@@ -20,10 +19,10 @@ Widget barcodeScannerField(
   BuildContext context, {
   required void Function(String?) onChange,
   required String initialValue,
-  required O.Option<Barcode> barcodeType,
+  required Option<Barcode> barcodeType,
   required String labelText,
-  O.Option<String> errorText = const O.None(),
-  O.Option<void Function(BarcodeFormat)> onScan = const O.None(),
+  Option<String> errorText = const None(),
+  Option<void Function(BarcodeFormat)> onScan = const None(),
 }) {
   final theme = Theme.of(context);
   final controller = useTextEditingController(text: initialValue);

@@ -4,8 +4,8 @@ final _key = GlobalKey(debugLabel: "QR");
 
 final _toggleFlash = O.map((QRViewController c) => c.toggleFlash());
 
-ValueNotifier<O.Option<QRViewController>> _useController() {
-  final controller = useState<O.Option<QRViewController>>(O.none());
+ValueNotifier<Option<QRViewController>> _useController() {
+  final controller = useState<Option<QRViewController>>(O.none());
 
   useEffect(() {
     return controller.value.p(O.fold(

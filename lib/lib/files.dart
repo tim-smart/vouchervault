@@ -1,29 +1,27 @@
 import 'dart:io';
 
-import 'package:fpdt/function.dart';
-import 'package:fpdt/iterable.dart';
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/task_either.dart' as TE;
-import 'package:fpdt/tuple.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-TE.TaskEither<String, File> create(String filename) => TE
+TaskEither<String, File> create(String filename) => TE
     .tryCatch(getTemporaryDirectory, (err, s) => 'Failed to get tmp dir: $err')
     .p(TE.map((d) => File('${d.path}/$filename')));
 
-TE.TaskEither<String, File> write(String filename, List<int> bytes) =>
+TaskEither<String, File> write(String filename, List<int> bytes) =>
     create(filename).p(TE.chainTryCatchK(
       (f) => f.writeAsBytes(bytes),
       (err, stackTrace) => 'Failed to write bytes: $err',
     ));
 
-TE.TaskEither<String, File> writeString(String filename, String data) =>
+TaskEither<String, File> writeString(String filename, String data) =>
     create(filename).p(TE.chainTryCatchK(
       (f) => f.writeAsString(data),
       (err, stackTrace) => 'Failed to write string: $err',
     ));
 
-TE.TaskEither<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
+TaskEither<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
   PlatformFile f,
 ) =>
     TE
@@ -33,7 +31,7 @@ TE.TaskEither<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
         )
         .p(TE.map((bytes) => tuple2(f, bytes)));
 
-TE.TaskEither<String, Tuple2<PlatformFile, List<int>>> pick(
+TaskEither<String, Tuple2<PlatformFile, List<int>>> pick(
   List<String> extensions,
 ) =>
     TE
