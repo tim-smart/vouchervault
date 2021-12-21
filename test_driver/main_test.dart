@@ -27,7 +27,10 @@ Future<void> main() async {
     });
 
     test('walmart', () async {
-      await driver.tap(find.text('Walmart'));
+      await driver.tap(find.ancestor(
+        of: find.text('Walmart'),
+        matching: find.byType('VoucherItem'),
+      ));
       await driver.waitUntilNoTransientCallbacks();
       await screenshot('02');
 
