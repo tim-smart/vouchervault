@@ -15,11 +15,11 @@ TaskEither<String, File> write(String filename, List<int> bytes) =>
       (err, stackTrace) => 'Failed to write bytes: $err',
     ));
 
-TaskEither<String, File> writeString(String filename, String data) =>
-    create(filename).p(TE.chainTryCatchK(
-      (f) => f.writeAsString(data),
-      (err, stackTrace) => 'Failed to write string: $err',
-    ));
+TaskEither<String, File> Function(String data) writeString(String filename) =>
+    (data) => create(filename).p(TE.chainTryCatchK(
+          (f) => f.writeAsString(data),
+          (err, stackTrace) => 'Failed to write string: $err',
+        ));
 
 TaskEither<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
   PlatformFile f,
@@ -43,7 +43,9 @@ TaskEither<String, Tuple2<PlatformFile, List<int>>> pick(
           ),
           (err, s) => 'pickFiles failed: $err',
         )
-        .p(TE.chainNullableK(() => 'pickFiles gave no result'))
-        .p(TE.flatMap((r) => r.files.head
-            .p(TE.fromOption(() => 'pickFiles had an empty response'))))
+        .p(TE.chainNullableK(identity, (_) => 'pickFiles gave no result'))
+        .p(TE.flatMap(
+          (r) => r.files.head
+              .p(TE.fromOption(() => 'pickFiles had an empty response')),
+        ))
         .p(TE.flatMap(_readPlatformFileStream));

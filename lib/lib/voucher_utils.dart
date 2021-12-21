@@ -2,19 +2,18 @@ import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/lib.dart';
+import 'package:vouchervault/lib/milliunits.dart' as millis;
+import 'package:vouchervault/lib/option.dart';
 import 'package:vouchervault/models/voucher.dart';
+
+part 'voucher_utils.g.dart';
 
 String formatExpires(DateTime dt) {
   dt = dt.endOfDay;
-  return dt.isBefore(DateTime.now())
-      ? 'Expired'
-      : timeago.format(
-          dt,
-          allowFromNow: true,
-        );
+  return dt.isPast ? 'Expired' : dt.timeago(allowFromNow: true);
 }
 
 List<Widget> buildVoucherDetails(
@@ -23,39 +22,34 @@ List<Widget> buildVoucherDetails(
   Color textColor = Colors.white,
   Option<double> space = const None(),
 }) =>
-    intersperse<Widget>(
-        SizedBox(height: space.p(O.getOrElse(() => AppTheme.space1))), [
-      ...voucher.normalizedExpires.p(O.fold(
-        () => [],
-        (dt) => [
-          buildVoucherDetailRow(
-            context,
-            textColor,
-            Icons.calendar_today,
-            formatExpires(dt),
-          )
-        ],
-      )),
-      ...voucher.balanceDoubleOption.p(O.fold(
-        () => [],
-        (b) => [
-          buildVoucherDetailRow(
-            context,
-            textColor,
-            Icons.account_balance,
-            '\$$b',
-          ),
-        ],
-      )),
+    intersperse<Widget>(SizedBox(
+      height: space.p(O.getOrElse(() => AppTheme.space1)),
+    ))([
+      ...voucher.normalizedExpires.p(ifSomeList((dt) => [
+            _VoucherDetailRow(
+              textColor,
+              Icons.calendar_today,
+              formatExpires(dt),
+            )
+          ])),
+      ...voucher.balanceOption
+          .p(O.flatMap(millis.toString))
+          .p(ifSomeList((b) => [
+                _VoucherDetailRow(
+                  textColor,
+                  Icons.account_balance,
+                  '\$$b',
+                ),
+              ])),
     ]).toList();
 
-Widget buildVoucherDetailRow(
+@swidget
+Widget _voucherDetailRow(
   BuildContext context,
   Color textColor,
   IconData icon,
-  String text, {
-  Option<double> space = const None(),
-}) {
+  String text,
+) {
   final theme = Theme.of(context);
 
   return Row(children: [

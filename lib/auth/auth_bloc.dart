@@ -38,6 +38,12 @@ class AuthState with _$AuthState {
   const factory AuthState.authenticated(AuthenticatedReason reason) =
       Authenticated;
 
+  static const notAvailable =
+      AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE);
+  static const notRequired =
+      AuthState.authenticated(AuthenticatedReason.NOT_REQUIRED);
+  static const success = AuthState.authenticated(AuthenticatedReason.SUCCESS);
+
   factory AuthState.fromJson(Map<String, dynamic> json) =>
       _$AuthStateFromJson(json);
 
@@ -49,13 +55,9 @@ class AuthState with _$AuthState {
         authenticated: (reason) => reason == AuthenticatedReason.SUCCESS,
       );
 
-  AuthState enable() => available
-      ? AuthState.unauthenticated()
-      : AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE);
+  AuthState enable() => available ? AuthState.unauthenticated() : notAvailable;
 
-  AuthState disable() => available
-      ? AuthState.authenticated(AuthenticatedReason.NOT_REQUIRED)
-      : AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE);
+  AuthState disable() => available ? notRequired : notAvailable;
 }
 
 typedef AuthAction = BlocStreamAction<AuthState>;
@@ -77,13 +79,12 @@ class AuthActions {
               (_) => 'Auth not available',
             ))
             .p(TE.fold(
-              (_) => AuthenticatedReason.NOT_REQUIRED,
               (message) {
                 _log.info(message);
-                return AuthenticatedReason.NOT_AVAILABLE;
+                return AuthState.notAvailable;
               },
+              (_) => AuthState.notRequired,
             ))
-            .p(T.map(AuthState.authenticated))
             .p(T.map(add))();
       };
 
@@ -104,14 +105,12 @@ class AuthActions {
         (err, _) => 'Error trying to authenticate: $err',
       )
       .p(TE.filter(identity, (_) => 'Authentication failed'))
-      .p(TE.map(
-          (_) => add(AuthState.authenticated(AuthenticatedReason.SUCCESS))))
+      .p(TE.map((_) => add(AuthState.success)))
       .p(TE.toFutureVoid(_log.warning));
 }
 
 class AuthBloc extends PersistedBlocStream<AuthState> {
-  AuthBloc()
-      : super(AuthState.authenticated(AuthenticatedReason.NOT_AVAILABLE));
+  AuthBloc() : super(AuthState.notAvailable);
 
   @override
   toJson(AuthState value) => value.toJson();

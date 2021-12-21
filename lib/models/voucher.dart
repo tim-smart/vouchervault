@@ -36,8 +36,7 @@ final _colors = <VoucherColor, Color>{
   VoucherColor.ORANGE: Colors.orange[800]!,
   VoucherColor.PURPLE: Colors.purple[500]!,
 };
-Color color(VoucherColor c) =>
-    O.fromNullable(_colors[c]).p(O.getOrElse(() => Colors.grey[700]!));
+final color = _colors.lookup.c(O.getOrElse(() => Colors.grey[700]!));
 String colorToJson(VoucherColor c) => _$VoucherColorEnumMap[c]!;
 
 // Voucher code type functions
@@ -53,10 +52,10 @@ final Map<VoucherCodeType, String> _codeTypeLabelMap = {
 };
 String codeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type]!;
 
-VoucherCodeType codeTypeFromJson(String? s) => O
-    .fromNullable(s)
-    .p(O.chainTryCatchK((s) => $enumDecode(_$VoucherCodeTypeEnumMap, s)))
-    .p(O.getOrElse(() => VoucherCodeType.CODE128));
+final codeTypeFromJson = O
+    .fromNullableWith<String>()
+    .c(O.chainTryCatchK((s) => $enumDecode(_$VoucherCodeTypeEnumMap, s)))
+    .c(O.getOrElse(() => VoucherCodeType.CODE128));
 
 @freezed
 class Voucher with _$Voucher {

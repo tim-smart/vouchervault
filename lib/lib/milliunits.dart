@@ -3,12 +3,11 @@ import 'package:fpdt/option.dart';
 import 'package:vouchervault/lib/option.dart';
 
 int fromDouble(double i) => (i * 1000).round();
+double toDouble(int units) => units / 1000.0;
 
 final fromNullableDouble = fromNullableWith<double>().c(map(fromDouble));
 
 final fromString = maybeParseDouble.c(map(fromDouble));
-
-double toDouble(int units) => units / 1000.0;
 
 final maybeToDouble = fromNullableWith<int>().c(map(toDouble));
 

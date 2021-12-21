@@ -1,5 +1,7 @@
 import 'package:enum_utils/enum_utils.dart' as enums;
 import 'package:flutter/material.dart';
+import 'package:fpdt/function.dart';
+import 'package:fpdt/option.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/auth/auth_bloc.dart';
@@ -27,14 +29,14 @@ Widget vouchersMenuContainer(WidgetRef ref) {
 
   return VouchersMenu(
     onSelected: (action) {
-      _actionMap(action).map((a) => bloc.add(a()));
-      _authActionMap(action).map((a) => authBloc.add(a()));
+      _actionMap(action).p(tap((a) => bloc.add(a())));
+      _authActionMap(action).p(tap((a) => authBloc.add(a())));
     },
     values: {
       VouchersMenuAction.AUTHENTICATION: authEnabled,
     },
-    disabled: Set.from([
+    disabled: {
       if (!authAvailable) VouchersMenuAction.AUTHENTICATION,
-    ]),
+    },
   );
 }

@@ -11,10 +11,8 @@ final Map<VoucherCodeType, Barcode> _codeTypeMap = {
   VoucherCodeType.PDF417: Barcode.pdf417(),
   VoucherCodeType.QR: Barcode.qrCode(),
 };
-Option<Barcode> fromCodeType(VoucherCodeType type) =>
-    O.fromNullable(_codeTypeMap[type]);
-
-Option<Barcode> fromCodeTypeJson(String s) => fromCodeType(codeTypeFromJson(s));
+final fromCodeType = _codeTypeMap.lookup;
+final fromCodeTypeJson = codeTypeFromJson.c(fromCodeType);
 
 final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
   BarcodeFormat.code128: VoucherCodeType.CODE128,
@@ -23,8 +21,7 @@ final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
   BarcodeFormat.pdf417: VoucherCodeType.PDF417,
   BarcodeFormat.qrcode: VoucherCodeType.QR,
 };
-VoucherCodeType codeTypeFromFormat(BarcodeFormat f) =>
-    _barcodeFormatMap[f] ?? VoucherCodeType.CODE128;
+final codeTypeFromFormat =
+    _barcodeFormatMap.lookup.c(O.getOrElse(() => VoucherCodeType.CODE128));
 
-String? codeTypeValueFromFormat(BarcodeFormat f) =>
-    codeTypeToJson(codeTypeFromFormat(f));
+final codeTypeValueFromFormat = codeTypeFromFormat.c(codeTypeToJson);

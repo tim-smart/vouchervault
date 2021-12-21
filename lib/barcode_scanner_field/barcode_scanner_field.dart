@@ -17,7 +17,7 @@ part 'scan_button.dart';
 @hwidget
 Widget barcodeScannerField(
   BuildContext context, {
-  required void Function(String?) onChange,
+  required void Function(String) onChange,
   required String initialValue,
   required Option<Barcode> barcodeType,
   required String labelText,
@@ -26,6 +26,13 @@ Widget barcodeScannerField(
 }) {
   final theme = Theme.of(context);
   final controller = useTextEditingController(text: initialValue);
+  final setText = useCallback(
+    (String data) => controller.value = TextEditingValue(
+      text: data,
+      selection: TextSelection.fromPosition(TextPosition(offset: data.length)),
+    ),
+    [controller],
+  );
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,11 +41,7 @@ Widget barcodeScannerField(
         barcodeType: barcodeType,
         data: initialValue,
         onScan: (format, data) {
-          controller.value = TextEditingValue(
-            text: data,
-            selection:
-                TextSelection.fromPosition(TextPosition(offset: data.length)),
-          );
+          setText(data);
           onChange(data);
           onScan.p(O.map((f) => f(format)));
         },

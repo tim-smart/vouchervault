@@ -84,7 +84,7 @@ packages:
       name: build
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   build_config:
     dependency: transitive
     description:
@@ -245,7 +245,7 @@ packages:
       name: enum_utils
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.0"
+    version: "0.2.0"
   fake_async:
     dependency: transitive
     description:
@@ -375,7 +375,7 @@ packages:
       name: fpdt
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.31"
+    version: "0.0.34"
   freezed:
     dependency: "direct dev"
     description:

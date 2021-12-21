@@ -7,53 +7,88 @@ import 'package:vouchervault/models/voucher.dart' show Voucher;
 
 part 'voucher_item.g.dart';
 
+final kVoucherItemBorderRadius = 15.0;
+
 @swidget
 Widget voucherItem(
   BuildContext context, {
   required V.Voucher voucher,
   required VoidCallback onPressed,
+  double bottomPadding = 0,
 }) {
   final color = V.color(voucher.color);
   final textColor =
       color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
   final theme = Theme.of(context);
 
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      padding: EdgeInsets.zero,
-      elevation: 10,
-      shape: RoundedRectangleBorder(),
-      primary: color,
-      onPrimary: textColor,
-    ),
-    onPressed: onPressed,
-    child: SizedBox(
-      width: double.infinity,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: AppTheme.space4,
-          vertical: AppTheme.space4,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              voucher.description,
-              style: theme.textTheme.headline3!.copyWith(
-                color: textColor,
+  return Stack(
+    clipBehavior: Clip.none,
+    children: [
+      Positioned(
+        bottom: -bottomPadding,
+        left: 0,
+        right: 0,
+        top: 0,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(kVoucherItemBorderRadius),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(150),
+                offset: Offset(0, 7),
+                blurRadius: 20,
               ),
+            ],
+          ),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: bottomPadding == 0
+                    ? BorderRadius.circular(kVoucherItemBorderRadius)
+                    : BorderRadius.vertical(
+                        top: Radius.circular(kVoucherItemBorderRadius),
+                      ),
+              ),
+              primary: color,
+              onPrimary: textColor,
+            ).copyWith(
+              elevation: MaterialStateProperty.all(0),
             ),
-            if (voucher.hasDetails) ...[
-              SizedBox(height: AppTheme.space2),
-              ...buildVoucherDetails(
-                context,
-                voucher,
-                textColor: textColor,
-              ),
-            ]
-          ],
+            onPressed: onPressed,
+            child: Container(),
+          ),
         ),
       ),
-    ),
+      IgnorePointer(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: AppTheme.space4,
+            right: AppTheme.space4,
+            top: AppTheme.space4,
+            bottom: AppTheme.space4,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                voucher.description,
+                style: theme.textTheme.headline3!.copyWith(
+                  color: textColor,
+                ),
+              ),
+              if (voucher.hasDetails) ...[
+                SizedBox(height: AppTheme.space2),
+                ...buildVoucherDetails(
+                  context,
+                  voucher,
+                  textColor: Color.alphaBlend(color.withAlpha(30), textColor),
+                ),
+              ]
+            ],
+          ),
+        ),
+      ),
+    ],
   );
 }

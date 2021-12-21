@@ -12,16 +12,21 @@ part 'voucher_list.g.dart';
 Widget voucherList({
   required IList<Voucher> vouchers,
   required void Function(Voucher) onPressed,
-}) =>
-    SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          final v = vouchers[index];
-          return VoucherItem(
-            voucher: v,
-            onPressed: () => onPressed(v),
-          );
-        },
-        childCount: vouchers.length,
-      ),
-    );
+}) {
+  final vouchersLength = vouchers.length;
+
+  return SliverList(
+    delegate: SliverChildBuilderDelegate(
+      (context, index) {
+        final v = vouchers[index];
+        return VoucherItem(
+          voucher: v,
+          onPressed: () => onPressed(v),
+          bottomPadding:
+              index == vouchersLength - 1 ? 0 : kVoucherItemBorderRadius,
+        );
+      },
+      childCount: vouchersLength,
+    ),
+  );
+}
