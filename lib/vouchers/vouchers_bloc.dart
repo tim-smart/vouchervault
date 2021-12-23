@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dart_date/dart_date.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/task_either.dart' as TE;

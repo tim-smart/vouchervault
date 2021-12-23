@@ -1,5 +1,5 @@
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdt/fpdt.dart';
 import 'package:logging/logging.dart';
 import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
 import 'package:vouchervault/app/app.dart';
