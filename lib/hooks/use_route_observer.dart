@@ -44,18 +44,22 @@ class _RouteObserverHookState extends HookState<void, _RouteObserverHook>
     }
   }
 
+  @override
   void didPopNext() {
     hook.didPopNext.p(O.map((f) => f()));
   }
 
+  @override
   void didPush() {
     hook.didPush.p(O.map((f) => f()));
   }
 
+  @override
   void didPop() {
     hook.didPop.p(O.map((f) => f()));
   }
 
+  @override
   void didPushNext() {
     hook.didPushNext.p(O.map((f) => f()));
   }

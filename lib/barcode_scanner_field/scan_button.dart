@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_cast
+
 part of 'barcode_scanner_field.dart';
 
 final _barcodeWidget = O.map2((Barcode type, String code) => Padding(
@@ -7,14 +9,14 @@ final _barcodeWidget = O.map2((Barcode type, String code) => Padding(
         child: BarcodeWidget(
           data: code,
           barcode: type,
-          errorBuilder: (context, err) => Text('Code not valid'),
+          errorBuilder: (context, err) => const Text('Code not valid'),
         ),
       ),
     ) as Widget);
 
 final _autoSizeText = optionOfString.c(O.map((text) => AutoSizeText(
       text,
-      style: TextStyle(fontSize: 40),
+      style: const TextStyle(fontSize: 40),
       maxLines: 1,
     ) as Widget));
 
@@ -45,6 +47,6 @@ Widget _scanButton(
       child: Center(
         child: _barcodeWidget(barcodeType, optionOfString(data))
             .p(O.alt(() => _autoSizeText(data)))
-            .p(O.getOrElse(() => Text('Scan barcode'))),
+            .p(O.getOrElse(() => const Text('Scan barcode'))),
       ),
     );

@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/task.dart' as T;
 import 'package:fpdt/task_either.dart' as TE;
@@ -49,14 +51,15 @@ class AuthState with _$AuthState {
       _$AuthStateFromJson(json);
 
   bool get available =>
-      this != Authenticated(AuthenticatedReason.NOT_AVAILABLE);
+      this != const Authenticated(AuthenticatedReason.NOT_AVAILABLE);
 
   bool get enabled => when(
         unauthenticated: () => true,
         authenticated: (reason) => reason == AuthenticatedReason.SUCCESS,
       );
 
-  AuthState enable() => available ? AuthState.unauthenticated() : notAvailable;
+  AuthState enable() =>
+      available ? const AuthState.unauthenticated() : notAvailable;
 
   AuthState disable() => available ? notRequired : notAvailable;
 }
@@ -66,7 +69,7 @@ typedef AuthAction = BlocStreamAction<AuthState>;
 class AuthActions {
   static AuthAction init(RefRead read) => (value, add) {
         if (value.enabled) {
-          add(AuthState.unauthenticated());
+          add(const AuthState.unauthenticated());
           return null;
         }
 
@@ -95,11 +98,11 @@ class AuthActions {
   static AuthAction authenticate(RefRead read) => (value, add) => TE
       .tryCatch(
         () => read(localAuthProvider).authenticate(
-          androidAuthStrings: AndroidAuthMessages(
+          androidAuthStrings: const AndroidAuthMessages(
             signInTitle: 'Voucher Vault',
             biometricHint: '',
           ),
-          iOSAuthStrings: IOSAuthMessages(),
+          iOSAuthStrings: const IOSAuthMessages(),
           localizedReason: 'Please authenticate to view your vouchers',
           stickyAuth: true,
         ),

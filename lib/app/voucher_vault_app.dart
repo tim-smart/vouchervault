@@ -27,7 +27,7 @@ Widget voucherVaultApp(
           vouchersProvider.overrideWithValue(
               VouchersBloc(initialValue: VouchersState(vouchers))),
       ],
-      child: _App(),
+      child: const _App(),
     );
 
 @hcwidget
@@ -45,8 +45,8 @@ Widget _app(WidgetRef ref) {
     theme: AppTheme.light(),
     darkTheme: AppTheme.dark(),
     home: authState.when(
-      unauthenticated: () => AuthScreen(),
-      authenticated: (_) => VouchersScreen(),
+      unauthenticated: () => const AuthScreen(),
+      authenticated: (_) => const VouchersScreen(),
     ),
     navigatorObservers: [routeObserver],
   );

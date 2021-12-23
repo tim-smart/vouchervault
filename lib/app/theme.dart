@@ -83,7 +83,7 @@ class AppTheme {
           color: textTheme.bodyText1!.color,
         ),
       ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: Colors.red,
         foregroundColor: Colors.white,
       ),

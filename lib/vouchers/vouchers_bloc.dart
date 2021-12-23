@@ -29,7 +29,7 @@ final voucherProvider = Provider.autoDispose.family(
       .firstWhereOption((v) => v.uuid == uuid),
 );
 
-final _uuidgen = Uuid();
+const _uuidgen = Uuid();
 
 final _unix =
     O.map((DateTime d) => d.millisecondsSinceEpoch).c(O.getOrElse(() => 0));

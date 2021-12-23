@@ -12,25 +12,25 @@ Widget voucherSpendDialog(BuildContext context, WidgetRef ref) {
   void submit() => Navigator.pop(context, amount.state);
 
   return AlertDialog(
-    title: Text('How much did you spend?'),
+    title: const Text('How much did you spend?'),
     content: TextField(
       autofocus: true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Amount',
       ),
-      keyboardType: TextInputType.numberWithOptions(signed: true),
+      keyboardType: const TextInputType.numberWithOptions(signed: true),
       onChanged: (s) => amount.state = s,
       onSubmitted: (s) => submit(),
     ),
     actions: [
       TextButton(
         onPressed: () => Navigator.pop(context, null),
-        child: Text('Cancel'),
+        child: const Text('Cancel'),
       ),
       TextButton(
         onPressed: submit,
-        child: Text('OK'),
+        child: const Text('OK'),
       ),
     ],
   );

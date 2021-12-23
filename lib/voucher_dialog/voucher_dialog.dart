@@ -76,18 +76,18 @@ Widget voucherDialog(
               if (O.isSome(voucher.balanceOption))
                 IconButton(
                   color: textColor,
-                  icon: Icon(Icons.shopping_cart),
+                  icon: const Icon(Icons.shopping_cart),
                   onPressed: onSpend,
                 ),
               IconButton(
                 color: textColor,
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 onPressed: onRemove,
               ),
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
                 onPressed: onEdit,
-                child: Text('Edit'),
+                child: const Text('Edit'),
               ),
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
@@ -96,7 +96,7 @@ Widget voucherDialog(
                   onPrimary: Colors.black,
                 ),
                 onPressed: onClose,
-                child: Text('Close'),
+                child: const Text('Close'),
               ),
             ],
           ),
@@ -157,7 +157,7 @@ Widget _barcode(
             () => Center(
               child: AutoSizeText(
                 data,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 100,
                 ),

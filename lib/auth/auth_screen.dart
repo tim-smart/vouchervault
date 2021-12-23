@@ -24,7 +24,7 @@ Widget authScreen(WidgetRef ref) {
           children: [
             const Icon(Icons.lock_open),
             SizedBox(width: AppTheme.space2),
-            Text('Unlock'),
+            const Text('Unlock'),
           ],
         ),
       ),

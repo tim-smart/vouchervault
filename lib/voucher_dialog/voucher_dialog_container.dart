@@ -46,7 +46,7 @@ Widget voucherDialogContainer(
   final onSpend = useCallback(
     (() => showDialog<String>(
               context: context,
-              builder: (context) => VoucherSpendDialog(),
+              builder: (context) => const VoucherSpendDialog(),
             ))
         .p(T.map(optionOfString))
         .p(T.map(maybeUpdateVoucherBalance(v)))
@@ -70,19 +70,19 @@ Widget voucherDialogContainer(
     () => showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Are you sure?'),
-        content: Text('That you want to remove this voucher?'),
+        title: const Text('Are you sure?'),
+        content: const Text('That you want to remove this voucher?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
               bloc.add(removeVoucher(v));
               Navigator.pop(context, true);
             },
-            child: Text('Remove'),
+            child: const Text('Remove'),
           ),
         ],
       ),

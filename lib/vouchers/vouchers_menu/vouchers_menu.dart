@@ -4,16 +4,20 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 
 part 'vouchers_menu.g.dart';
 
-enum VouchersMenuAction { IMPORT, EXPORT, AUTHENTICATION }
+enum VouchersMenuAction {
+  import,
+  export,
+  authentication,
+}
 
 final _actionLabel = enums.valueMap({
-  VouchersMenuAction.IMPORT: 'Import',
-  VouchersMenuAction.EXPORT: 'Export',
-  VouchersMenuAction.AUTHENTICATION: 'App lock',
+  VouchersMenuAction.import: 'Import',
+  VouchersMenuAction.export: 'Export',
+  VouchersMenuAction.authentication: 'App lock',
 }, () => 'N/A');
 
 final _actionHasCheckbox = enums.valueMap({
-  VouchersMenuAction.AUTHENTICATION: true,
+  VouchersMenuAction.authentication: true,
 }, () => false);
 
 @swidget
@@ -32,7 +36,7 @@ Widget vouchersMenu({
                   children: [
                     Text(_actionLabel(a)),
                     if (_actionHasCheckbox(a)) ...[
-                      Spacer(),
+                      const Spacer(),
                       Checkbox(
                         value: values[a] ?? false,
                         onChanged: disabled.contains(a)

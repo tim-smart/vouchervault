@@ -32,7 +32,7 @@ Widget vouchersListContainer(BuildContext context, WidgetRef ref) {
     vouchers: state.sortedVouchers,
     onPressed: (v) => Navigator.of(context).push(_DialogRoute(
       (context) => Dismissible(
-        key: Key('VoucherDialogDismissable'),
+        key: const Key('VoucherDialogDismissable'),
         direction: DismissDirection.vertical,
         onDismissed: (d) => Navigator.pop(context),
         child: Center(child: VoucherDialogContainer(voucher: v)),

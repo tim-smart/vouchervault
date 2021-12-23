@@ -32,12 +32,12 @@ Widget voucherForm(
     initialValue: initialFormValue,
     child: Column(
       children: [
-        SizedBox(height: 3),
+        const SizedBox(height: 3),
         FormBuilderTextField(
           autofocus: true,
           name: 'description',
           textCapitalization: TextCapitalization.words,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             labelText: 'Description',
           ),
@@ -68,7 +68,7 @@ Widget voucherForm(
         FormBuilderChoiceChip(
           name: 'codeType',
           alignment: WrapAlignment.spaceAround,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
           ),
@@ -87,7 +87,7 @@ Widget voucherForm(
           builder: (field) => DateTimeField(
             initialValue: field.value,
             format: DateFormat('d/M/y'),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Expires',
             ),
@@ -101,7 +101,7 @@ Widget voucherForm(
                   .p(O.filter((d) => d.isFuture))
                   .p(O.getOrElse(() => DateTime.now())),
               firstDate: DateTime.now(),
-              lastDate: DateTime.now().add(Duration(days: 365 * 100)),
+              lastDate: DateTime.now().add(const Duration(days: 365 * 100)),
             ),
           ),
           valueTransformer: O
@@ -115,7 +115,7 @@ Widget voucherForm(
             'Remove once expired',
             style: theme.textTheme.bodyText1,
           ),
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
           ),
@@ -126,11 +126,11 @@ Widget voucherForm(
           builder: (field) => TextFormField(
             initialValue: millis.toString(field.value).p(O.getOrElse(() => '')),
             onChanged: millis.fromString.c(O.toNullable).c(field.didChange),
-            keyboardType: TextInputType.numberWithOptions(
+            keyboardType: const TextInputType.numberWithOptions(
               signed: true,
               decimal: true,
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Balance',
             ),
@@ -139,7 +139,7 @@ Widget voucherForm(
         SizedBox(height: AppTheme.space3),
         FormBuilderChoiceChip(
           name: 'color',
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
           ),
           alignment: WrapAlignment.spaceAround,

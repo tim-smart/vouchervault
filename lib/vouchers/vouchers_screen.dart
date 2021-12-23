@@ -25,7 +25,7 @@ final _maybeAddVoucher = (RefRead read) => T.map(
 Widget vouchersScreen(BuildContext context, WidgetRef ref) {
   return AppScaffold(
     title: 'Vouchers',
-    actions: [
+    actions: const [
       VouchersMenuContainer(),
     ],
     slivers: [
@@ -34,7 +34,7 @@ Widget vouchersScreen(BuildContext context, WidgetRef ref) {
           top: AppTheme.rem(1.5),
           bottom: AppTheme.space6,
         ),
-        sliver: VouchersListContainer(),
+        sliver: const VouchersListContainer(),
       ),
     ],
     floatingActionButton: O.some(FloatingActionButton(
@@ -43,11 +43,11 @@ Widget vouchersScreen(BuildContext context, WidgetRef ref) {
           context,
           MaterialPageRoute(
             fullscreenDialog: true,
-            builder: (context) => VoucherFormDialog(),
+            builder: (context) => const VoucherFormDialog(),
           ),
         );
       }.p(_maybeAddVoucher(ref.read)),
-      child: Icon(Icons.add),
+      child: const Icon(Icons.add),
     )),
   );
 }

@@ -10,6 +10,7 @@ void main({IList<Voucher>? vouchers}) async {
 
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((r) =>
+      // ignore: avoid_print
       print('${r.loggerName}: ${r.level.name}: ${r.time}: ${r.message}'));
 
   PersistedBlocStream.storage = await SharedPreferencesStorage.build();

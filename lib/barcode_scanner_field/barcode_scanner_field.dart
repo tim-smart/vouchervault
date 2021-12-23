@@ -50,7 +50,7 @@ Widget barcodeScannerField(
       TextField(
         controller: controller,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           labelText: labelText,
         ),
         onChanged: onChange,

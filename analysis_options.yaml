@@ -1,5 +1,11 @@
+include: package:flutter_lints/flutter.yaml
+  
 analyzer:
-  errors:
-    import_of_legacy_library_into_null_safe: ignore
-    unnecessary_cast: ignore
-      
+  exclude:
+    - lib/**/*.freezed.dart
+    - lib/**/*.g.dart
+
+linter:
+  rules:
+    library_prefixes: false
+    prefer_function_declarations_over_variables: false

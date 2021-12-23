@@ -7,7 +7,7 @@ import 'package:vouchervault/models/voucher.dart' show Voucher;
 
 part 'voucher_item.g.dart';
 
-final kVoucherItemBorderRadius = 15.0;
+const kVoucherItemBorderRadius = 15.0;
 
 @swidget
 Widget voucherItem(
@@ -35,7 +35,7 @@ Widget voucherItem(
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withAlpha(150),
-                offset: Offset(0, 7),
+                offset: const Offset(0, 7),
                 blurRadius: 20,
               ),
             ],
@@ -46,7 +46,7 @@ Widget voucherItem(
               shape: RoundedRectangleBorder(
                 borderRadius: bottomPadding == 0
                     ? BorderRadius.circular(kVoucherItemBorderRadius)
-                    : BorderRadius.vertical(
+                    : const BorderRadius.vertical(
                         top: Radius.circular(kVoucherItemBorderRadius),
                       ),
               ),

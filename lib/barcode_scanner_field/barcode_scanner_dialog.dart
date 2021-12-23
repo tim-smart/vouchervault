@@ -66,12 +66,12 @@ Widget barcodeScannerDialog(
                 padding: EdgeInsets.all(AppTheme.space3),
                 child: Row(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     ElevatedButton(
                       onPressed: () {
                         _toggleFlash(controller.value);
                       },
-                      child: Text('Toggle flash'),
+                      child: const Text('Toggle flash'),
                     ),
                     SizedBox(width: AppTheme.space3),
                     ElevatedButton(
@@ -80,7 +80,7 @@ Widget barcodeScannerDialog(
                         onPrimary: Colors.black,
                       ),
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Cancel'),
+                      child: const Text('Cancel'),
                     ),
                   ],
                 ),

@@ -14,16 +14,16 @@ void main() async {
   app.main(
     vouchers: IList([
       Voucher(
-        uuid: O.some(Uuid().v4()),
+        uuid: O.some(const Uuid().v4()),
         description: "Walmart",
         code: O.some('12345'),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.BLUE,
         balanceMilliunits: O.some(77 * 1000),
-        expires: DateTime.now().add(Duration(days: 120)).chain(O.some),
+        expires: DateTime.now().add(const Duration(days: 120)).chain(O.some),
       ),
       Voucher(
-        uuid: Uuid().v4().chain(O.some),
+        uuid: const Uuid().v4().chain(O.some),
         description: "Starbucks",
         code: "12345".chain(O.some),
         codeType: VoucherCodeType.CODE128,
@@ -31,14 +31,14 @@ void main() async {
         balanceMilliunits: O.some(50 * 1000),
       ),
       Voucher(
-        uuid: Uuid().v4().chain(O.some),
+        uuid: const Uuid().v4().chain(O.some),
         description: "New World Clubcard",
         code: "12345".chain(O.some),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.RED,
       ),
       Voucher(
-        uuid: Uuid().v4().chain(O.some),
+        uuid: const Uuid().v4().chain(O.some),
         description: "Barkers",
         code: "12345".chain(O.some),
         codeType: VoucherCodeType.QR,

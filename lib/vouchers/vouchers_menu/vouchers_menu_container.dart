@@ -11,12 +11,12 @@ import 'package:vouchervault/vouchers/vouchers_menu/vouchers_menu.dart';
 part 'vouchers_menu_container.g.dart';
 
 final _actionMap = enums.optionValueMap({
-  VouchersMenuAction.IMPORT: importVouchers,
-  VouchersMenuAction.EXPORT: exportVouchers,
+  VouchersMenuAction.import: importVouchers,
+  VouchersMenuAction.export: exportVouchers,
 });
 
 final _authActionMap = enums.optionValueMap({
-  VouchersMenuAction.AUTHENTICATION: AuthActions.toggle,
+  VouchersMenuAction.authentication: AuthActions.toggle,
 });
 
 @cwidget
@@ -33,10 +33,10 @@ Widget vouchersMenuContainer(WidgetRef ref) {
       _authActionMap(action).p(tap((a) => authBloc.add(a())));
     },
     values: {
-      VouchersMenuAction.AUTHENTICATION: authEnabled,
+      VouchersMenuAction.authentication: authEnabled,
     },
     disabled: {
-      if (!authAvailable) VouchersMenuAction.AUTHENTICATION,
+      if (!authAvailable) VouchersMenuAction.authentication,
     },
   );
 }
