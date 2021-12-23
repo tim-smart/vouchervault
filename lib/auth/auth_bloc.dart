@@ -17,8 +17,9 @@ final _log = Logger('auth_bloc.dart');
 
 final localAuthProvider = Provider((ref) => LocalAuthentication());
 
-final authProvider = BlocStreamProvider<AuthBloc, AuthState>(
-    (ref) => AuthBloc()..add(AuthActions.init(ref.read)));
+final authProvider = BlocStreamProvider(
+  (ref) => AuthBloc()..add(AuthActions.init(ref.read)),
+);
 
 final authEnabledProvider = Provider((ref) => ref.watch(authProvider).enabled);
 final authAvailableProvider =

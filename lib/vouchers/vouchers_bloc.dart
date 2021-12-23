@@ -20,8 +20,7 @@ part 'vouchers_bloc.freezed.dart';
 
 final _log = Logger('vouchers/vouchers_bloc.dart');
 
-final vouchersProvider =
-    BlocStreamProvider<VouchersBloc, VouchersState>((ref) => VouchersBloc());
+final vouchersProvider = BlocStreamProvider((ref) => VouchersBloc());
 
 final voucherProvider = Provider.autoDispose.family(
   (ref, Option<String> uuid) => ref
