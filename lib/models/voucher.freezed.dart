@@ -30,6 +30,7 @@ class _$VoucherTearOff {
       bool removeOnceExpired = true,
       O.Option<double> balance = O.kNone,
       O.Option<int> balanceMilliunits = O.kNone,
+      String notes = '',
       VoucherColor color = VoucherColor.GREY}) {
     return _Voucher(
       uuid: uuid,
@@ -40,6 +41,7 @@ class _$VoucherTearOff {
       removeOnceExpired: removeOnceExpired,
       balance: balance,
       balanceMilliunits: balanceMilliunits,
+      notes: notes,
       color: color,
     );
   }
@@ -62,6 +64,7 @@ mixin _$Voucher {
   bool get removeOnceExpired => throw _privateConstructorUsedError;
   O.Option<double> get balance => throw _privateConstructorUsedError;
   O.Option<int> get balanceMilliunits => throw _privateConstructorUsedError;
+  String get notes => throw _privateConstructorUsedError;
   VoucherColor get color => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -82,6 +85,7 @@ abstract class $VoucherCopyWith<$Res> {
       bool removeOnceExpired,
       O.Option<double> balance,
       O.Option<int> balanceMilliunits,
+      String notes,
       VoucherColor color});
 }
 
@@ -103,6 +107,7 @@ class _$VoucherCopyWithImpl<$Res> implements $VoucherCopyWith<$Res> {
     Object? removeOnceExpired = freezed,
     Object? balance = freezed,
     Object? balanceMilliunits = freezed,
+    Object? notes = freezed,
     Object? color = freezed,
   }) {
     return _then(_value.copyWith(
@@ -138,6 +143,10 @@ class _$VoucherCopyWithImpl<$Res> implements $VoucherCopyWith<$Res> {
           ? _value.balanceMilliunits
           : balanceMilliunits // ignore: cast_nullable_to_non_nullable
               as O.Option<int>,
+      notes : notes == freezed
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+          as String,
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -160,6 +169,7 @@ abstract class _$VoucherCopyWith<$Res> implements $VoucherCopyWith<$Res> {
       bool removeOnceExpired,
       O.Option<double> balance,
       O.Option<int> balanceMilliunits,
+      String notes,
       VoucherColor color});
 }
 
@@ -182,6 +192,7 @@ class __$VoucherCopyWithImpl<$Res> extends _$VoucherCopyWithImpl<$Res>
     Object? removeOnceExpired = freezed,
     Object? balance = freezed,
     Object? balanceMilliunits = freezed,
+    Object? notes = freezed,
     Object? color = freezed,
   }) {
     return _then(_Voucher(
@@ -217,6 +228,10 @@ class __$VoucherCopyWithImpl<$Res> extends _$VoucherCopyWithImpl<$Res>
           ? _value.balanceMilliunits
           : balanceMilliunits // ignore: cast_nullable_to_non_nullable
               as O.Option<int>,
+      notes: notes == freezed
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+          as String,
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -237,6 +252,7 @@ class _$_Voucher extends _Voucher {
       this.removeOnceExpired = true,
       this.balance = O.kNone,
       this.balanceMilliunits = O.kNone,
+      this.notes = '',
       this.color = VoucherColor.GREY})
       : super._();
 
@@ -269,6 +285,9 @@ class _$_Voucher extends _Voucher {
   final O.Option<int> balanceMilliunits;
   @JsonKey()
   @override
+  final String notes;
+  @JsonKey()
+  @override
   final VoucherColor color;
 
   @override
@@ -292,6 +311,8 @@ class _$_Voucher extends _Voucher {
             const DeepCollectionEquality().equals(other.balance, balance) &&
             const DeepCollectionEquality()
                 .equals(other.balanceMilliunits, balanceMilliunits) &&
+            const DeepCollectionEquality()
+                .equals(other.notes, notes) &&
             const DeepCollectionEquality().equals(other.color, color));
   }
 
@@ -306,6 +327,7 @@ class _$_Voucher extends _Voucher {
       const DeepCollectionEquality().hash(removeOnceExpired),
       const DeepCollectionEquality().hash(balance),
       const DeepCollectionEquality().hash(balanceMilliunits),
+      const DeepCollectionEquality().hash(notes),
       const DeepCollectionEquality().hash(color));
 
   @JsonKey(ignore: true)
@@ -329,6 +351,7 @@ abstract class _Voucher extends Voucher {
       bool removeOnceExpired,
       O.Option<double> balance,
       O.Option<int> balanceMilliunits,
+      String notes,
       VoucherColor color}) = _$_Voucher;
   _Voucher._() : super._();
 
@@ -350,6 +373,8 @@ abstract class _Voucher extends Voucher {
   O.Option<double> get balance;
   @override
   O.Option<int> get balanceMilliunits;
+  @override
+  String get notes;
   @override
   VoucherColor get color;
   @override

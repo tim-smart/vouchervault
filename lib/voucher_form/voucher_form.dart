@@ -137,6 +137,17 @@ Widget voucherForm(
           ),
         ),
         SizedBox(height: AppTheme.space3),
+        FormBuilderTextField(
+                autofocus: true,
+                name: 'notes',
+                maxLines: null,
+                textCapitalization: TextCapitalization.words,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Notes',
+                ),
+        ),
+        SizedBox(height: AppTheme.space3),
         FormBuilderChoiceChip(
           name: 'color',
           decoration: const InputDecoration(

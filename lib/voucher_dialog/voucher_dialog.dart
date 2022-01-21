@@ -69,6 +69,22 @@ Widget voucherDialog(
               textColor: textColor,
             ),
           ],
+          if (voucher.notes.isNotEmpty) ...[
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Icon(
+                Icons.note,
+                size: AppTheme.rem(1),
+                color: textColor,
+              ),
+              SizedBox(width: AppTheme.space2),
+              Text(
+                voucher.notes,
+                style: theme.textTheme.bodyText1!.copyWith(
+                  color: textColor,
+                ),
+              ),
+            ])
+          ],
           SizedBox(height: AppTheme.space4),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
