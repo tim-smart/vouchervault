@@ -34,6 +34,7 @@ _$_Voucher _$$_VoucherFromJson(Map<String, dynamic> json) => _$_Voucher(
           ? O.kNone
           : Option<int>.fromJson(
               json['balanceMilliunits'], (value) => value as int),
+      notes: json['notes'] as String? ?? '',
       color: $enumDecodeNullable(_$VoucherColorEnumMap, json['color']) ??
           VoucherColor.GREY,
     );
@@ -61,6 +62,7 @@ Map<String, dynamic> _$$_VoucherToJson(_$_Voucher instance) =>
       'balanceMilliunits': instance.balanceMilliunits.toJson(
         (value) => value,
       ),
+      'notes': instance.notes,
       'color': _$VoucherColorEnumMap[instance.color],
     };
 

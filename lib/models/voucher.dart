@@ -73,6 +73,7 @@ class Voucher with _$Voucher {
     @Default(true) bool removeOnceExpired,
     @Default(O.kNone) Option<double> balance,
     @Default(O.kNone) Option<int> balanceMilliunits,
+    @Default('') String notes,
     @Default(VoucherColor.GREY) VoucherColor color,
   }) = _Voucher;
 
