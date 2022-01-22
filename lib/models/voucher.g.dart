@@ -17,6 +17,10 @@ _$_Voucher _$$_VoucherFromJson(Map<String, dynamic> json) => _$_Voucher(
       codeType:
           $enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']) ??
               VoucherCodeType.CODE128,
+      pinCode: json['pinCode'] == null
+          ? O.kNone
+          : Option<int>.fromJson(
+              json['pinCode'], (value) => value as int),
       expires: json['expires'] == null
           ? O.kNone
           : Option<DateTime>.fromJson(
@@ -44,6 +48,9 @@ Map<String, dynamic> _$$_VoucherToJson(_$_Voucher instance) =>
         (value) => value,
       ),
       'codeType': _$VoucherCodeTypeEnumMap[instance.codeType],
+      'pinCode': instance.pinCode.toJson(
+        (value) => value,
+      ),
       'expires': instance.expires.toJson(
         (value) => value.toIso8601String(),
       ),

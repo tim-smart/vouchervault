@@ -3,12 +3,15 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
+import 'package:fpdt/option.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/barcode.dart' as B;
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/models/voucher.dart' as V;
 import 'package:vouchervault/models/voucher.dart' show Voucher, VoucherCodeType;
+
+import '../lib/option.dart';
 
 export 'voucher_dialog_container.dart';
 export 'voucher_spend_dialog.dart';
@@ -61,14 +64,32 @@ Widget voucherDialog(
               ),
             ],
           )),
+          SizedBox(height: AppTheme.space4),
           if (voucher.hasDetails) ...[
-            SizedBox(height: AppTheme.space4),
             ...buildVoucherDetails(
               context,
               voucher,
               textColor: textColor,
             ),
           ],
+          ...voucher.pinCode.p(O.fold(
+              () => [],
+              (data) => [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(Icons.lock, size: AppTheme.rem(1), color: textColor, ),
+                    SizedBox(width: AppTheme.space2),
+                    Text(
+                      '$data',
+                      style: theme.textTheme.bodyText1!.copyWith(
+                        color: textColor,
+                      ),
+                    ),
+                  ]
+                )
+              ]
+          )),
           SizedBox(height: AppTheme.space4),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

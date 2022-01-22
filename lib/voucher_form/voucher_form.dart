@@ -82,6 +82,24 @@ Widget voucherForm(
           validator: FormBuilderValidators.required(context),
         ),
         SizedBox(height: AppTheme.space3),
+        FormBuilderField<int>(
+          name: 'pinCode',
+          builder: (field) => TextFormField(
+            initialValue: (field.value != null) ? field.value.toString() : '',
+            onChanged: (c) {
+              (c.isEmpty) ? field.didChange(null): field.didChange(int.parse(c));
+            },
+            keyboardType: const TextInputType.numberWithOptions(
+              signed: false,
+              decimal: false,
+            ),
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Pin Code',
+            ),
+          ),
+        ),
+        SizedBox(height: AppTheme.space3),
         FormBuilderField<DateTime>(
           name: 'expires',
           builder: (field) => DateTimeField(

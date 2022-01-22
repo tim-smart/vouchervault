@@ -68,6 +68,7 @@ class Voucher with _$Voucher {
     @Default('') String description,
     @Default(O.kNone) Option<String> code,
     @Default(VoucherCodeType.CODE128) VoucherCodeType codeType,
+    @Default(O.kNone) Option<int> pinCode,
     @Default(O.kNone) Option<DateTime> expires,
     @Default(true) bool removeOnceExpired,
     @Default(O.kNone) Option<double> balance,
@@ -99,6 +100,7 @@ class Voucher with _$Voucher {
         ...toJson(),
         'balanceMilliunits': O.toNullable(balanceOption),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
+        'pinCode': O.toNullable(pinCode),
         'expires': O.toNullable(expires),
         'color': _$VoucherColorEnumMap[this.color],
       };

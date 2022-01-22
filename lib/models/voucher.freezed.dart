@@ -26,6 +26,7 @@ class _$VoucherTearOff {
       String description = '',
       O.Option<String> code = O.kNone,
       VoucherCodeType codeType = VoucherCodeType.CODE128,
+      O.Option<int> pinCode = O.kNone,
       O.Option<DateTime> expires = O.kNone,
       bool removeOnceExpired = true,
       O.Option<double> balance = O.kNone,
@@ -36,6 +37,7 @@ class _$VoucherTearOff {
       description: description,
       code: code,
       codeType: codeType,
+      pinCode: pinCode,
       expires: expires,
       removeOnceExpired: removeOnceExpired,
       balance: balance,
@@ -58,6 +60,7 @@ mixin _$Voucher {
   String get description => throw _privateConstructorUsedError;
   O.Option<String> get code => throw _privateConstructorUsedError;
   VoucherCodeType get codeType => throw _privateConstructorUsedError;
+  O.Option<int> get pinCode => throw _privateConstructorUsedError;
   O.Option<DateTime> get expires => throw _privateConstructorUsedError;
   bool get removeOnceExpired => throw _privateConstructorUsedError;
   O.Option<double> get balance => throw _privateConstructorUsedError;
@@ -78,6 +81,7 @@ abstract class $VoucherCopyWith<$Res> {
       String description,
       O.Option<String> code,
       VoucherCodeType codeType,
+      O.Option<int> pinCode,
       O.Option<DateTime> expires,
       bool removeOnceExpired,
       O.Option<double> balance,
@@ -99,6 +103,7 @@ class _$VoucherCopyWithImpl<$Res> implements $VoucherCopyWith<$Res> {
     Object? description = freezed,
     Object? code = freezed,
     Object? codeType = freezed,
+    Object? pinCode = freezed,
     Object? expires = freezed,
     Object? removeOnceExpired = freezed,
     Object? balance = freezed,
@@ -122,6 +127,10 @@ class _$VoucherCopyWithImpl<$Res> implements $VoucherCopyWith<$Res> {
           ? _value.codeType
           : codeType // ignore: cast_nullable_to_non_nullable
               as VoucherCodeType,
+      pinCode : pinCode == freezed
+          ? _value.pinCode
+          : pinCode // ignore: cast_nullable_to_non_nullable
+              as O.Option<int>,
       expires: expires == freezed
           ? _value.expires
           : expires // ignore: cast_nullable_to_non_nullable
@@ -156,6 +165,7 @@ abstract class _$VoucherCopyWith<$Res> implements $VoucherCopyWith<$Res> {
       String description,
       O.Option<String> code,
       VoucherCodeType codeType,
+      O.Option<int> pinCode,
       O.Option<DateTime> expires,
       bool removeOnceExpired,
       O.Option<double> balance,
@@ -178,6 +188,7 @@ class __$VoucherCopyWithImpl<$Res> extends _$VoucherCopyWithImpl<$Res>
     Object? description = freezed,
     Object? code = freezed,
     Object? codeType = freezed,
+    Object? pinCode = freezed,
     Object? expires = freezed,
     Object? removeOnceExpired = freezed,
     Object? balance = freezed,
@@ -201,6 +212,10 @@ class __$VoucherCopyWithImpl<$Res> extends _$VoucherCopyWithImpl<$Res>
           ? _value.codeType
           : codeType // ignore: cast_nullable_to_non_nullable
               as VoucherCodeType,
+      pinCode: pinCode == freezed
+          ? _value.pinCode
+          : pinCode // ignore: cast_nullable_to_non_nullable
+              as O.Option<int>,
       expires: expires == freezed
           ? _value.expires
           : expires // ignore: cast_nullable_to_non_nullable
@@ -233,6 +248,7 @@ class _$_Voucher extends _Voucher {
       this.description = '',
       this.code = O.kNone,
       this.codeType = VoucherCodeType.CODE128,
+      this.pinCode = O.kNone,
       this.expires = O.kNone,
       this.removeOnceExpired = true,
       this.balance = O.kNone,
@@ -255,6 +271,9 @@ class _$_Voucher extends _Voucher {
   @JsonKey()
   @override
   final VoucherCodeType codeType;
+  @JsonKey()
+  @override
+  final O.Option<int> pinCode;
   @JsonKey()
   @override
   final O.Option<DateTime> expires;
@@ -286,6 +305,8 @@ class _$_Voucher extends _Voucher {
                 .equals(other.description, description) &&
             const DeepCollectionEquality().equals(other.code, code) &&
             const DeepCollectionEquality().equals(other.codeType, codeType) &&
+            const DeepCollectionEquality()
+                .equals(other.pinCode, pinCode) &&
             const DeepCollectionEquality().equals(other.expires, expires) &&
             const DeepCollectionEquality()
                 .equals(other.removeOnceExpired, removeOnceExpired) &&
@@ -302,6 +323,7 @@ class _$_Voucher extends _Voucher {
       const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(code),
       const DeepCollectionEquality().hash(codeType),
+      const DeepCollectionEquality().hash(pinCode),
       const DeepCollectionEquality().hash(expires),
       const DeepCollectionEquality().hash(removeOnceExpired),
       const DeepCollectionEquality().hash(balance),
@@ -325,6 +347,7 @@ abstract class _Voucher extends Voucher {
       String description,
       O.Option<String> code,
       VoucherCodeType codeType,
+      O.Option<int> pinCode,
       O.Option<DateTime> expires,
       bool removeOnceExpired,
       O.Option<double> balance,
@@ -342,6 +365,8 @@ abstract class _Voucher extends Voucher {
   O.Option<String> get code;
   @override
   VoucherCodeType get codeType;
+  @override
+  O.Option<int> get pinCode;
   @override
   O.Option<DateTime> get expires;
   @override
