@@ -21,6 +21,7 @@ List<Widget> buildVoucherDetails(
   Voucher voucher, {
   Color textColor = Colors.white,
   Option<double> space = const None(),
+  bool includeNotes = false,
 }) =>
     intersperse<Widget>(SizedBox(
       height: space.p(O.getOrElse(() => AppTheme.space1)),
@@ -28,7 +29,7 @@ List<Widget> buildVoucherDetails(
       ...voucher.normalizedExpires.p(ifSomeList((dt) => [
             _VoucherDetailRow(
               textColor,
-              Icons.calendar_today,
+              Icons.history,
               formatExpires(dt),
             )
           ])),
@@ -41,6 +42,17 @@ List<Widget> buildVoucherDetails(
                   '\$$b',
                 ),
               ])),
+      ...voucher.notesOption
+          .p(O.filter((_) => includeNotes))
+          .p(ifSomeList((notes) => [
+                _VoucherDetailRow(
+                  textColor,
+                  Icons.article,
+                  notes,
+                  alignment: CrossAxisAlignment.start,
+                  iconPadding: true,
+                ),
+              ])),
     ]).toList();
 
 @swidget
@@ -48,12 +60,19 @@ Widget _voucherDetailRow(
   BuildContext context,
   Color textColor,
   IconData icon,
-  String text,
-) {
+  String text, {
+  CrossAxisAlignment alignment = CrossAxisAlignment.center,
+  bool iconPadding = false,
+}) {
   final theme = Theme.of(context);
 
-  return Row(children: [
-    Icon(icon, size: AppTheme.rem(1), color: textColor),
+  return Row(crossAxisAlignment: alignment, children: [
+    Padding(
+      padding: iconPadding
+          ? EdgeInsets.only(top: AppTheme.rem(0.1))
+          : EdgeInsets.zero,
+      child: Icon(icon, size: AppTheme.rem(1), color: textColor),
+    ),
     SizedBox(width: AppTheme.space2),
     Text(
       text,

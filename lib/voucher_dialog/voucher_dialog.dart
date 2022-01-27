@@ -7,6 +7,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/barcode.dart' as B;
 import 'package:vouchervault/lib/lib.dart';
+import 'package:vouchervault/lib/option.dart';
 import 'package:vouchervault/models/voucher.dart' as V;
 import 'package:vouchervault/models/voucher.dart' show Voucher, VoucherCodeType;
 
@@ -50,40 +51,22 @@ Widget voucherDialog(
             voucher.description,
             style: theme.textTheme.headline3,
           ),
-          ...voucher.code.p(O.fold(
-            () => [],
-            (data) => [
-              SizedBox(height: AppTheme.space3),
-              _Barcode(
-                type: voucher.codeType,
-                data: data,
-                onTap: onTapBarcode,
-              ),
-            ],
-          )),
-          if (voucher.hasDetails) ...[
+          ...voucher.code.p(ifSomeList((data) => [
+                SizedBox(height: AppTheme.space3),
+                _Barcode(
+                  type: voucher.codeType,
+                  data: data,
+                  onTap: onTapBarcode,
+                ),
+              ])),
+          if (voucher.hasDetailsOrNotes) ...[
             SizedBox(height: AppTheme.space4),
             ...buildVoucherDetails(
               context,
               voucher,
               textColor: textColor,
+              includeNotes: true,
             ),
-          ],
-          if (voucher.notes.isNotEmpty) ...[
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Icon(
-                Icons.note,
-                size: AppTheme.rem(1),
-                color: textColor,
-              ),
-              SizedBox(width: AppTheme.space2),
-              Text(
-                voucher.notes,
-                style: theme.textTheme.bodyText1!.copyWith(
-                  color: textColor,
-                ),
-              ),
-            ])
           ],
           SizedBox(height: AppTheme.space4),
           Row(

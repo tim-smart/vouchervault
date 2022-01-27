@@ -143,10 +143,10 @@ class _$VoucherCopyWithImpl<$Res> implements $VoucherCopyWith<$Res> {
           ? _value.balanceMilliunits
           : balanceMilliunits // ignore: cast_nullable_to_non_nullable
               as O.Option<int>,
-      notes : notes == freezed
+      notes: notes == freezed
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
-          as String,
+              as String,
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -231,7 +231,7 @@ class __$VoucherCopyWithImpl<$Res> extends _$VoucherCopyWithImpl<$Res>
       notes: notes == freezed
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
-          as String,
+              as String,
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -292,7 +292,7 @@ class _$_Voucher extends _Voucher {
 
   @override
   String toString() {
-    return 'Voucher(uuid: $uuid, description: $description, code: $code, codeType: $codeType, expires: $expires, removeOnceExpired: $removeOnceExpired, balance: $balance, balanceMilliunits: $balanceMilliunits, color: $color)';
+    return 'Voucher(uuid: $uuid, description: $description, code: $code, codeType: $codeType, expires: $expires, removeOnceExpired: $removeOnceExpired, balance: $balance, balanceMilliunits: $balanceMilliunits, notes: $notes, color: $color)';
   }
 
   @override
@@ -311,8 +311,7 @@ class _$_Voucher extends _Voucher {
             const DeepCollectionEquality().equals(other.balance, balance) &&
             const DeepCollectionEquality()
                 .equals(other.balanceMilliunits, balanceMilliunits) &&
-            const DeepCollectionEquality()
-                .equals(other.notes, notes) &&
+            const DeepCollectionEquality().equals(other.notes, notes) &&
             const DeepCollectionEquality().equals(other.color, color));
   }
 

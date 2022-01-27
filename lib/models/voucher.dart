@@ -6,6 +6,7 @@ import 'package:fpdt/option.dart' as O;
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:vouchervault/lib/milliunits.dart' as millis;
+import 'package:vouchervault/lib/option.dart';
 
 part 'voucher.freezed.dart';
 part 'voucher.g.dart';
@@ -91,8 +92,11 @@ class Voucher with _$Voucher {
   late final Option<double> balanceDoubleOption =
       balanceOption.p(O.map(millis.toDouble));
 
+  late final Option<String> notesOption = optionOfString(notes);
+
   late final bool hasDetails =
       O.isSome(normalizedExpires) || O.isSome(balanceOption);
+  late final bool hasDetailsOrNotes = hasDetails || O.isSome(notesOption);
 
   static Voucher fromFormValue(dynamic json) => Voucher.fromJson(json);
 

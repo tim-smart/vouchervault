@@ -46,7 +46,7 @@ Widget voucherForm(
         SizedBox(height: AppTheme.space3),
         FormBuilderField<String>(
           name: 'code',
-          valueTransformer: (String? s) => optionOfString(s).p(O.toNullable),
+          valueTransformer: optionOfString.c(O.toNullable),
           validator: FormBuilderValidators.required(context),
           builder: (field) => BarcodeScannerField(
             labelText: 'Code',
@@ -138,14 +138,16 @@ Widget voucherForm(
         ),
         SizedBox(height: AppTheme.space3),
         FormBuilderTextField(
-                autofocus: true,
-                name: 'notes',
-                maxLines: null,
-                textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Notes',
-                ),
+          autofocus: true,
+          name: 'notes',
+          valueTransformer: optionOfString.c(O.toNullable),
+          minLines: 2,
+          maxLines: null,
+          textCapitalization: TextCapitalization.sentences,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Notes',
+          ),
         ),
         SizedBox(height: AppTheme.space3),
         FormBuilderChoiceChip(

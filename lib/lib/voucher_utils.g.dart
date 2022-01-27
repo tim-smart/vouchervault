@@ -7,7 +7,10 @@ part of 'voucher_utils.dart';
 // **************************************************************************
 
 class _VoucherDetailRow extends StatelessWidget {
-  const _VoucherDetailRow(this.textColor, this.icon, this.text, {Key? key})
+  const _VoucherDetailRow(this.textColor, this.icon, this.text,
+      {Key? key,
+      this.alignment = CrossAxisAlignment.center,
+      this.iconPadding = false})
       : super(key: key);
 
   final Color textColor;
@@ -16,7 +19,12 @@ class _VoucherDetailRow extends StatelessWidget {
 
   final String text;
 
+  final CrossAxisAlignment alignment;
+
+  final bool iconPadding;
+
   @override
   Widget build(BuildContext _context) =>
-      _voucherDetailRow(_context, textColor, icon, text);
+      _voucherDetailRow(_context, textColor, icon, text,
+          alignment: alignment, iconPadding: iconPadding);
 }
