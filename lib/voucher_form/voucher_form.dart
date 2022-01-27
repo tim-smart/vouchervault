@@ -138,7 +138,6 @@ Widget voucherForm(
         ),
         SizedBox(height: AppTheme.space3),
         FormBuilderTextField(
-          autofocus: true,
           name: 'notes',
           valueTransformer: optionOfString.c(O.toNullable),
           minLines: 2,
