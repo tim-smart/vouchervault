@@ -67,7 +67,7 @@ Widget voucherForm(
         ),
         FormBuilderChoiceChip(
           name: 'codeType',
-          alignment: WrapAlignment.spaceAround,
+          alignment: WrapAlignment.spaceEvenly,
           decoration: const InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
