@@ -51,6 +51,7 @@ List<Widget> buildVoucherDetails(
                   notes,
                   alignment: CrossAxisAlignment.start,
                   iconPadding: true,
+                  selectable: true,
                 ),
               ])),
     ]).toList();
@@ -63,6 +64,7 @@ Widget _voucherDetailRow(
   String text, {
   CrossAxisAlignment alignment = CrossAxisAlignment.center,
   bool iconPadding = false,
+  bool selectable = false,
 }) {
   final theme = Theme.of(context);
 
@@ -74,11 +76,18 @@ Widget _voucherDetailRow(
       child: Icon(icon, size: AppTheme.rem(1), color: textColor),
     ),
     SizedBox(width: AppTheme.space2),
-    Text(
-      text,
-      style: theme.textTheme.bodyText1!.copyWith(
-        color: textColor,
-      ),
-    ),
+    selectable
+        ? SelectableText(
+            text,
+            style: theme.textTheme.bodyText1!.copyWith(
+              color: textColor,
+            ),
+          )
+        : Text(
+            text,
+            style: theme.textTheme.bodyText1!.copyWith(
+              color: textColor,
+            ),
+          ),
   ]);
 }

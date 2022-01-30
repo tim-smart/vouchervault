@@ -10,7 +10,8 @@ class _VoucherDetailRow extends StatelessWidget {
   const _VoucherDetailRow(this.textColor, this.icon, this.text,
       {Key? key,
       this.alignment = CrossAxisAlignment.center,
-      this.iconPadding = false})
+      this.iconPadding = false,
+      this.selectable = false})
       : super(key: key);
 
   final Color textColor;
@@ -23,8 +24,12 @@ class _VoucherDetailRow extends StatelessWidget {
 
   final bool iconPadding;
 
+  final bool selectable;
+
   @override
   Widget build(BuildContext _context) =>
       _voucherDetailRow(_context, textColor, icon, text,
-          alignment: alignment, iconPadding: iconPadding);
+          alignment: alignment,
+          iconPadding: iconPadding,
+          selectable: selectable);
 }
