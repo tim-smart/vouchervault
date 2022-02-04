@@ -13,6 +13,7 @@ Widget authScreen(WidgetRef ref) {
   final bloc = ref.watch(authProvider.bloc);
   useEffect(() {
     bloc.add(AuthActions.authenticate(ref.read));
+    return null;
   }, [bloc]);
 
   return AppScaffoldSimple(

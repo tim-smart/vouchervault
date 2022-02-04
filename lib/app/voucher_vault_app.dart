@@ -36,6 +36,7 @@ Widget _app(WidgetRef ref) {
   final bloc = ref.watch(vouchersProvider.bloc);
   useEffect(() {
     bloc.add(removeExpiredVouchers());
+    return null;
   }, [bloc]);
 
   // Auth state

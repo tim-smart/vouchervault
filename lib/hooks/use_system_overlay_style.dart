@@ -22,6 +22,7 @@ SystemUiOverlayStyle useSystemOverlayStyle() {
 
   useEffect(() {
     SystemChrome.setSystemUIOverlayStyle(style);
+    return null;
   }, [style]);
 
   return style;

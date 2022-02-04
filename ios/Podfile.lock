@@ -47,14 +47,14 @@ PODS:
   - qr_code_scanner (0.2.0):
     - Flutter
     - MTBBarcodeScanner
-  - SDWebImage (5.10.4):
-    - SDWebImage/Core (= 5.10.4)
-  - SDWebImage/Core (5.10.4)
+  - SDWebImage (5.12.3):
+    - SDWebImage/Core (= 5.12.3)
+  - SDWebImage/Core (5.12.3)
   - share (0.0.1):
     - Flutter
   - shared_preferences_ios (0.0.1):
     - Flutter
-  - SwiftyGif (5.4.0)
+  - SwiftyGif (5.4.2)
   - Toast (4.0.0)
 
 DEPENDENCIES:
@@ -108,12 +108,12 @@ SPEC CHECKSUMS:
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
-  SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
+  SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences_ios: aef470a42dc4675a1cdd50e3158b42e3d1232b32
-  SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
+  SwiftyGif: dec758a9dd3d278e5a855dbf279bf062c923c387
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: d0cbea1f25d8105d757f801b6daa7c67e440f8ad
 
 COCOAPODS: 1.11.2
