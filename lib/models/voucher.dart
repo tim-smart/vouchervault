@@ -12,6 +12,7 @@ part 'voucher.freezed.dart';
 part 'voucher.g.dart';
 
 enum VoucherCodeType {
+  AZTEC,
   CODE128,
   CODE39,
   EAN13,
@@ -46,6 +47,7 @@ String colorToJson(VoucherColor c) => _$VoucherColorEnumMap[c]!;
 String codeTypeToJson(VoucherCodeType c) => _$VoucherCodeTypeEnumMap[c]!;
 
 final Map<VoucherCodeType, String> _codeTypeLabelMap = {
+  VoucherCodeType.AZTEC: 'Aztec',
   VoucherCodeType.CODE128: 'Code128',
   VoucherCodeType.CODE39: 'Code39',
   VoucherCodeType.EAN13: 'EAN-13',

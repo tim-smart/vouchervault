@@ -60,6 +60,7 @@ Map<String, dynamic> _$$_VoucherToJson(_$_Voucher instance) =>
     };
 
 const _$VoucherCodeTypeEnumMap = {
+  VoucherCodeType.AZTEC: 'AZTEC',
   VoucherCodeType.CODE128: 'CODE128',
   VoucherCodeType.CODE39: 'CODE39',
   VoucherCodeType.EAN13: 'EAN13',

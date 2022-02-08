@@ -5,6 +5,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart' hide Barcode;
 import 'package:vouchervault/models/voucher.dart';
 
 final Map<VoucherCodeType, Barcode> _codeTypeMap = {
+  VoucherCodeType.AZTEC: Barcode.aztec(minECCPercent: 5),
   VoucherCodeType.CODE128: Barcode.code128(),
   VoucherCodeType.CODE39: Barcode.code39(),
   VoucherCodeType.EAN13: Barcode.ean13(),
@@ -15,6 +16,7 @@ final fromCodeType = _codeTypeMap.lookup;
 final fromCodeTypeJson = codeTypeFromJson.c(fromCodeType);
 
 final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
+  BarcodeFormat.aztec: VoucherCodeType.AZTEC,
   BarcodeFormat.code128: VoucherCodeType.CODE128,
   BarcodeFormat.code39: VoucherCodeType.CODE39,
   BarcodeFormat.ean13: VoucherCodeType.EAN13,
