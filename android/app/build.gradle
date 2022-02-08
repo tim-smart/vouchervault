@@ -38,7 +38,7 @@ android {
 
     defaultConfig {
         applicationId "co.timsmart.vouchervault"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 22
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
