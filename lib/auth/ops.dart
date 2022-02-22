@@ -9,7 +9,6 @@ import 'package:vouchervault/lib/riverpod.dart';
 
 final _log = Logger('auth/auth_state.dart');
 
-typedef AuthStateMachine = StateRTEMachine<AuthState, RefRead, String>;
 typedef AuthOp<R> = StateReaderTaskEither<AuthState, RefRead, String, R>;
 AuthOp<RefRead> _ask() => SRTE.ask();
 

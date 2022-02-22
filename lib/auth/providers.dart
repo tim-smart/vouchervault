@@ -10,6 +10,8 @@ import 'package:vouchervault/lib/riverpod.dart';
 
 final localAuthProvider = Provider((ref) => LocalAuthentication());
 
+typedef AuthStateMachine = StateRTEMachine<AuthState, RefRead, String>;
+
 final authSMProvider = persistProvider<Provider<AuthStateMachine>, AuthState>(
   (read, write) => Provider((ref) {
     final sm =
@@ -26,7 +28,9 @@ final authSMProvider = persistProvider<Provider<AuthStateMachine>, AuthState>(
     return sm;
   }),
   buildStorage: (ref) => SharedPreferencesStorage(
-    key: 'auth_state',
+    // Use same key as previous AuthBloc
+    keyPrefix: 'pbs_',
+    key: 'AuthBloc',
     toJson: (s) => s.toJson(),
     fromJson: (json) => AuthState.fromJson(json),
     instance: ref.watch(sharedPreferencesProvider),
