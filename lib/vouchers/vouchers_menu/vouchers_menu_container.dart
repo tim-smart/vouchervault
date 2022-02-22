@@ -4,7 +4,8 @@ import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vouchervault/auth/auth_bloc.dart';
+import 'package:vouchervault/auth/ops.dart';
+import 'package:vouchervault/auth/providers.dart';
 import 'package:vouchervault/vouchers/vouchers_bloc.dart';
 import 'package:vouchervault/vouchers/vouchers_menu/vouchers_menu.dart';
 
@@ -16,21 +17,21 @@ final _actionMap = enums.optionValueMap({
 });
 
 final _authActionMap = enums.optionValueMap({
-  VouchersMenuAction.authentication: AuthActions.toggle,
+  VouchersMenuAction.authentication: toggle,
 });
 
 @cwidget
 Widget vouchersMenuContainer(WidgetRef ref) {
   final bloc = ref.watch(vouchersProvider.bloc);
 
-  final authBloc = ref.watch(authProvider.bloc);
+  final authSM = ref.watch(authSMProvider);
   final authEnabled = ref.watch(authEnabledProvider);
   final authAvailable = ref.watch(authAvailableProvider);
 
   return VouchersMenu(
     onSelected: (action) {
       _actionMap(action).p(tap((a) => bloc.add(a())));
-      _authActionMap(action).p(tap((a) => authBloc.add(a())));
+      _authActionMap(action).p(tap(authSM.evaluate));
     },
     values: {
       VouchersMenuAction.authentication: authEnabled,

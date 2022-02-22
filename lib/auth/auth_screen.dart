@@ -4,22 +4,23 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/app_scaffold/app_scaffold_simple.dart';
-import 'package:vouchervault/auth/auth_bloc.dart';
+import 'package:vouchervault/auth/ops.dart';
+import 'package:vouchervault/auth/providers.dart';
 
 part 'auth_screen.g.dart';
 
 @hcwidget
 Widget authScreen(WidgetRef ref) {
-  final bloc = ref.watch(authProvider.bloc);
+  final sm = ref.watch(authSMProvider);
   useEffect(() {
-    bloc.add(AuthActions.authenticate(ref.read));
+    sm.evaluate(authenticate);
     return null;
-  }, [bloc]);
+  }, [sm]);
 
   return AppScaffoldSimple(
     body: Center(
       child: ElevatedButton(
-        onPressed: () => bloc.add(AuthActions.authenticate(ref.read)),
+        onPressed: () => sm.evaluate(authenticate),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
