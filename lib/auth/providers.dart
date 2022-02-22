@@ -23,7 +23,7 @@ final authSMProvider = persistProvider<Provider<AuthStateMachine>, AuthState>(
     ref.onDispose(sm.stream.listen(write(ref)).cancel);
 
     // Init
-    sm.evaluate(init);
+    sm.run(init);
 
     return sm;
   }),

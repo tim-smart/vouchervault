@@ -31,7 +31,7 @@ Widget vouchersMenuContainer(WidgetRef ref) {
   return VouchersMenu(
     onSelected: (action) {
       _actionMap(action).p(tap((a) => bloc.add(a())));
-      _authActionMap(action).p(tap(authSM.evaluate));
+      _authActionMap(action).p(tap(authSM.run));
     },
     values: {
       VouchersMenuAction.authentication: authEnabled,

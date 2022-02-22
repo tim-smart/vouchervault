@@ -13,14 +13,14 @@ part 'auth_screen.g.dart';
 Widget authScreen(WidgetRef ref) {
   final sm = ref.watch(authSMProvider);
   useEffect(() {
-    sm.evaluate(authenticate);
+    sm.run(authenticate);
     return null;
   }, [sm]);
 
   return AppScaffoldSimple(
     body: Center(
       child: ElevatedButton(
-        onPressed: () => sm.evaluate(authenticate),
+        onPressed: () => sm.run(authenticate),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
