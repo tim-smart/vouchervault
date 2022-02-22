@@ -14,11 +14,13 @@ typedef AuthStateMachine = StateRTEMachine<AuthState, RefRead, String>;
 
 final authSMProvider = persistProvider<Provider<AuthStateMachine>, AuthState>(
   (read, write) => Provider((ref) {
-    final sm =
-        stateMachineProvider(ref)(StateRTEMachine<AuthState, RefRead, String>(
-      read(ref) ?? AuthState.notAvailable,
-      ref.read,
-    ));
+    final sm = stateMachineProvider<AuthStateMachine>(
+      ref,
+      StateRTEMachine(
+        read(ref) ?? AuthState.notAvailable,
+        ref.read,
+      ),
+    );
 
     ref.onDispose(sm.stream.listen(write(ref)).cancel);
 
@@ -38,8 +40,7 @@ final authSMProvider = persistProvider<Provider<AuthStateMachine>, AuthState>(
 );
 
 final authProvider = Provider(
-  (ref) => stateMachineStateProvider(ref)(ref.watch(authSMProvider)),
-);
+    (ref) => stateMachineStateProvider(ref, ref.watch(authSMProvider)));
 
 final authEnabledProvider = Provider((ref) => ref.watch(authProvider).enabled);
 final authAvailableProvider =

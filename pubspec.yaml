@@ -23,7 +23,7 @@ dependencies:
   flutter_hooks: ^0.18.0
   fluttertoast: ^8.0.7
   form_builder_validators: ^7.1.0
-  fpdt: ^0.0.35
+  fpdt: ^0.0.54
   freezed_annotation: ^1.0.0
   functional_widget_annotation: ^0.9.2
   intl: ^0.17.0
