@@ -23,9 +23,11 @@ const _uuidgen = Uuid();
 typedef VouchersOp<R>
     = StateReaderTaskEither<VouchersState, RefRead, String, R>;
 
-VouchersOp<RefRead> ask() => SRTE.ask();
-VouchersOp<VouchersState> get() => SRTE.get();
-VouchersOp<void> rightVoid() => SRTE.right(null);
+VouchersOp<VouchersState> _get() => SRTE.get();
+VouchersOp<void> _rightVoid() => SRTE.right(null);
+
+final VouchersOp<void> Function(VouchersOp<dynamic>) _logWarning =
+    tapLeftC((read) => read(_log).warning);
 
 // == Remove expired vouchers
 IList<Voucher> _removeExpired(IList<Voucher> vouchers) => vouchers.removeWhere(
@@ -56,7 +58,7 @@ final _newBalance = (Voucher v) => (Option<String> s) => s
     .p(O.map2K(v.balanceOption, (amount, int balance) => balance - amount));
 
 final maybeUpdateBalance = (Voucher v) => _newBalance(v).c(O.fold(
-      rightVoid,
+      _rightVoid,
       (balance) => update(v.copyWith(
         balanceMilliunits: O.some(balance),
       )),
@@ -82,10 +84,10 @@ final _importFromFiles = files
       (err, stack) => 'Could not convert json to VouchersState: $err',
     ));
 
-final import = get()
+final import = _get()
     .p(SRTE.flatMapTaskEither((_) => _importFromFiles))
     .p(SRTE.flatMap(SRTE.put))
-    .p(tapLeftC((read) => read(_log).warning));
+    .p(_logWarning);
 
 // == Export vouchers to JSON file
 final _writeStateToFile = (String fileName) => (VouchersState value) => TE
@@ -106,6 +108,6 @@ final _shareFile = TE.tryCatchK(
 final _writeAndShareState =
     (String fileName) => _writeStateToFile(fileName).c(TE.flatMap(_shareFile));
 
-final export = get()
+final export = _get()
     .p(SRTE.flatMapTaskEither(_writeAndShareState('vouchervault.json')))
-    .p(tapLeftC((read) => read(_log).warning));
+    .p(_logWarning);
