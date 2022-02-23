@@ -10,7 +10,7 @@ final localAuthProvider = Provider((ref) => LocalAuthentication());
 
 final authSMProvider = persistedSMProvider<AuthState, RefRead, String>(
   create: (ref, initial) => StateRTEMachine(
-    initial ?? AuthState.notAvailable,
+    initial?.init() ?? AuthState.notAvailable,
     ref.read,
   )..run(init),
   key: 'AuthBloc',

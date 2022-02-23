@@ -15,22 +15,16 @@ AuthOp<RefRead> _ask() => SRTE.ask();
 AuthOp<AuthState> _get() => SRTE.get();
 
 final init = _get()
-    .p(SRTE.flatMapReaderTaskEither((s) => (read) {
-          if (s.enabled) {
-            return TE.right(const AuthState.unauthenticated());
-          }
-
-          return TE
-              .tryCatch(
-                () => read(localAuthProvider).isDeviceSupported(),
-                (error, stackTrace) => 'Could not check if auth is available',
-              )
-              .p(TE.filter(identity, (_) => 'Auth not available'))
-              .p(TE.map((_) => AuthState.notRequired))
-              .p(TE.tapLeft(read(_log).info))
-              .p(TE.orElse(TE.right(AuthState.notAvailable)));
-        }))
-    .p(SRTE.flatMap(SRTE.put))
+    .p(SRTE.filter(
+      (s) => !s.enabled,
+      (_) => 'Auth already enabled',
+    ))
+    .p(SRTE.flatMapReaderTaskEither((s) => TE.tryCatchK(
+          (read) => read(localAuthProvider).isDeviceSupported(),
+          (error, stackTrace) => 'Could not check if auth is available',
+        )))
+    .p(SRTE.flatMap((available) =>
+        SRTE.put(available ? AuthState.notRequired : AuthState.notAvailable)))
     .p(tapLeftC((read) => read(_log).info));
 
 final toggle =

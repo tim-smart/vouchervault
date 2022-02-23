@@ -39,4 +39,6 @@ class AuthState with _$AuthState {
       available ? const AuthState.unauthenticated() : notAvailable;
 
   AuthState disable() => available ? notRequired : notAvailable;
+
+  AuthState init() => enabled ? const AuthState.unauthenticated() : this;
 }
