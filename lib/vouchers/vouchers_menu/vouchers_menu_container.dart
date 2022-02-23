@@ -6,14 +6,15 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/auth/ops.dart';
 import 'package:vouchervault/auth/providers.dart';
-import 'package:vouchervault/vouchers/vouchers_bloc.dart';
+import 'package:vouchervault/vouchers/ops.dart' as Ops;
+import 'package:vouchervault/vouchers/providers.dart';
 import 'package:vouchervault/vouchers/vouchers_menu/vouchers_menu.dart';
 
 part 'vouchers_menu_container.g.dart';
 
 final _actionMap = enums.optionValueMap({
-  VouchersMenuAction.import: importVouchers,
-  VouchersMenuAction.export: exportVouchers,
+  VouchersMenuAction.import: Ops.import,
+  VouchersMenuAction.export: Ops.export,
 });
 
 final _authActionMap = enums.optionValueMap({
@@ -22,7 +23,7 @@ final _authActionMap = enums.optionValueMap({
 
 @cwidget
 Widget vouchersMenuContainer(WidgetRef ref) {
-  final bloc = ref.watch(vouchersProvider.bloc);
+  final bloc = ref.watch(vouchersSMProvider);
 
   final authSM = ref.watch(authSMProvider);
   final authEnabled = ref.watch(authEnabledProvider);
@@ -30,7 +31,7 @@ Widget vouchersMenuContainer(WidgetRef ref) {
 
   return VouchersMenu(
     onSelected: (action) {
-      _actionMap(action).p(tap((a) => bloc.add(a())));
+      _actionMap(action).p(tap(bloc.evaluate));
       _authActionMap(action).p(tap(authSM.run));
     },
     values: {

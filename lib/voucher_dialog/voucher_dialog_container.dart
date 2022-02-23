@@ -14,7 +14,8 @@ import 'package:vouchervault/models/voucher.dart' as V;
 import 'package:vouchervault/models/voucher.dart' show Voucher;
 import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';
 import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
-import 'package:vouchervault/vouchers/vouchers_bloc.dart';
+import 'package:vouchervault/vouchers/providers.dart';
+import 'package:vouchervault/vouchers/ops.dart' as Ops;
 
 part 'voucher_dialog_container.g.dart';
 
@@ -31,7 +32,7 @@ Widget voucherDialogContainer(
   );
 
   // state
-  final bloc = ref.watch(vouchersProvider.bloc);
+  final sm = ref.watch(vouchersSMProvider);
   final v =
       ref.watch(voucherProvider(voucher.uuid)).p(O.getOrElse(() => voucher));
 
@@ -49,9 +50,9 @@ Widget voucherDialogContainer(
               builder: (context) => const VoucherSpendDialog(),
             ))
         .p(T.map(optionOfString))
-        .p(T.map(maybeUpdateVoucherBalance(v)))
-        .p(T.map(bloc.add)),
-    [bloc, v],
+        .p(T.map(Ops.maybeUpdateBalance(v)))
+        .p(T.map(sm.run)),
+    [sm, v],
   );
 
   final onEdit = useCallback(() async {
@@ -63,8 +64,8 @@ Widget voucherDialogContainer(
       ),
     );
 
-    O.fromNullable(voucher).p(O.map(updateVoucher)).p(O.map(bloc.add));
-  }, [bloc, v]);
+    O.fromNullable(voucher).p(O.map(Ops.update)).p(O.map(sm.run));
+  }, [sm, v]);
 
   final onRemove = useCallback(
     () => showDialog<bool>(
@@ -79,7 +80,7 @@ Widget voucherDialogContainer(
           ),
           TextButton(
             onPressed: () {
-              bloc.add(removeVoucher(v));
+              sm.evaluate(Ops.remove(v));
               Navigator.pop(context, true);
             },
             child: const Text('Remove'),
@@ -90,7 +91,7 @@ Widget voucherDialogContainer(
       if (removed != true) return;
       Navigator.pop(context);
     }),
-    [bloc, v],
+    [sm, v],
   );
 
   return VoucherDialog(

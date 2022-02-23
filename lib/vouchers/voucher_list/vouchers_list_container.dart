@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';
-import 'package:vouchervault/vouchers/vouchers_bloc.dart';
+import 'package:vouchervault/vouchers/providers.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'vouchers_list_container.g.dart';

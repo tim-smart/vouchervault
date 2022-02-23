@@ -1,34 +1,47 @@
 import 'package:brightness_volume/brightness_volume.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart';
-import 'package:riverpod_bloc_stream/riverpod_bloc_stream.dart';
+import 'package:fpdt/state_reader_task_either.dart' as SRTE;
+import 'package:fpdt/task_either.dart' as TE;
 import 'package:vouchervault/hooks/use_route_observer.dart';
 
-class _BrightnessBloc extends BlocStream<bool> {
-  _BrightnessBloc() : super(false);
-}
+StateRTEMachine<bool, void, String> _createSM(bool initial) =>
+    StateRTEMachine(initial, null);
 
-typedef _BrightnessAction = BlocStreamAction<bool>;
+typedef _BrightnessOp<R> = StateReaderTaskEither<bool, void, String, R>;
+_BrightnessOp<void> _ask() => SRTE.ask();
 
-_BrightnessAction _goDark() => (value, add) =>
-    value ? BVUtils.resetCustomBrightness().then((_) => add(false)) : null;
+final _set = TE.tryCatchK(
+  (double brightness) => BVUtils.setBrightness(brightness),
+  (err, stackTrace) => 'Could not set brightness: $err',
+);
 
-_BrightnessAction _goBright(bool enabled) => (value, add) {
-      if (!enabled) return null;
-      return BVUtils.setBrightness(1).then((_) => add(true));
-    };
+final _reset = TE.tryCatch(
+  () => BVUtils.resetCustomBrightness(),
+  (err, stackTrace) => 'Could not reset brightness $err',
+);
+
+final _goDark =
+    _ask().p(SRTE.flatMapTaskEither((_) => _reset)).p(SRTE.chainPut(false));
+
+final _goBright =
+    _ask().p(SRTE.flatMapTaskEither((_) => _set(1))).p(SRTE.chainPut(true));
 
 void useFullBrightness(
   RouteObserver<ModalRoute> routeObserver, {
   bool enabled = true,
 }) {
-  final bloc = useMemoized(() => _BrightnessBloc(), []);
+  final bloc = useMemoized(() => _createSM(enabled), [enabled]);
 
   useEffect(() {
-    bloc.add(_goBright(enabled));
+    if (enabled) {
+      bloc.evaluate(_goBright);
+    }
+
     return () {
-      bloc.add(_goDark());
+      bloc.evaluate(_goDark);
       bloc.close();
     };
   }, [bloc, enabled]);
@@ -37,10 +50,11 @@ void useFullBrightness(
   useRouteObserver(
     routeObserver,
     didPushNext: some(() {
-      bloc.add(_goDark());
+      bloc.evaluate(_goDark);
     }),
     didPopNext: some(() {
-      bloc.add(_goBright(enabled));
+      if (!enabled) return;
+      bloc.evaluate(_goBright);
     }),
     keys: [bloc, enabled],
   );

@@ -9,5 +9,5 @@ final maybeParseInt = optionOfString.c(chainNullableK(int.tryParse));
 
 final maybeParseDouble = optionOfString.c(chainNullableK(double.tryParse));
 
-List<B> Function(Option<A>) ifSomeList<A, B>(List<B> Function(A a) f) =>
+Iterable<B> Function(Option<A>) ifSomeList<A, B>(Iterable<B> Function(A a) f) =>
     fold(() => [], f);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -7,8 +6,9 @@ import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/auth/auth_screen.dart';
 import 'package:vouchervault/auth/providers.dart';
 import 'package:vouchervault/models/voucher.dart';
+import 'package:vouchervault/vouchers/model.dart';
+import 'package:vouchervault/vouchers/providers.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
-import 'package:vouchervault/vouchers/vouchers_bloc.dart';
 
 part 'voucher_vault_app.g.dart';
 
@@ -24,21 +24,15 @@ Widget voucherVaultApp(
       overrides: [
         ...overrides,
         if (vouchers != null)
-          vouchersProvider.overrideWithValue(
-              VouchersBloc(initialValue: VouchersState(vouchers))),
+          vouchersSMProvider.overrideWithProvider(
+            createVouchersSMProvider(VouchersState(vouchers)),
+          ),
       ],
       child: const _App(),
     );
 
 @hcwidget
 Widget _app(WidgetRef ref) {
-  // Remove expired vouchers
-  final bloc = ref.watch(vouchersProvider.bloc);
-  useEffect(() {
-    bloc.add(removeExpiredVouchers());
-    return null;
-  }, [bloc]);
-
   // Auth state
   final authState = ref.watch(authProvider);
 

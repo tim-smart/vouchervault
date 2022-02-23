@@ -28,8 +28,7 @@ class AuthState with _$AuthState {
   factory AuthState.fromJson(Map<String, dynamic> json) =>
       _$AuthStateFromJson(json);
 
-  bool get available =>
-      this != const Authenticated(AuthenticatedReason.NOT_AVAILABLE);
+  bool get available => this != notAvailable;
 
   bool get enabled => when(
         unauthenticated: () => true,

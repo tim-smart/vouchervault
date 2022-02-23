@@ -57,13 +57,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
-  bloc_stream:
-    dependency: transitive
-    description:
-      name: bloc_stream
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.0.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -369,20 +362,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.6.1"
-  fpdart:
-    dependency: transitive
-    description:
-      name: fpdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.14"
   fpdt:
     dependency: "direct main"
     description:
       name: fpdt
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.54"
+    version: "0.0.55"
   freezed:
     dependency: "direct dev"
     description:
@@ -437,13 +423,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  hive:
-    dependency: transitive
-    description:
-      name: hive
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.5"
   hooks_riverpod:
     dependency: "direct main"
     description:
@@ -626,13 +605,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  persisted_bloc_stream:
-    dependency: "direct main"
-    description:
-      name: persisted_bloc_stream
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.0.1"
   petitparser:
     dependency: transitive
     description:
@@ -703,13 +675,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  riverpod_bloc_stream:
-    dependency: "direct main"
-    description:
-      name: riverpod_bloc_stream
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.0.3"
   riverpod_persistence:
     dependency: "direct main"
     description:
@@ -897,13 +862,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
-  synchronized:
-    dependency: transitive
-    description:
-      name: synchronized
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   term_glyph:
     dependency: transitive
     description:

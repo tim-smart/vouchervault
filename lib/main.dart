@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:logging/logging.dart';
-import 'package:persisted_bloc_stream/persisted_bloc_stream.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/app/providers.dart';
@@ -16,7 +15,6 @@ void main({IList<Voucher>? vouchers}) async {
       print('${r.loggerName}: ${r.level.name}: ${r.time}: ${r.message}'));
 
   final sharedPrefs = await SharedPreferences.getInstance();
-  PersistedBlocStream.storage = await SharedPreferencesStorage.build();
 
   runApp(VoucherVaultApp(
     vouchers: vouchers,
