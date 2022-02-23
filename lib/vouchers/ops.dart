@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:dart_date/dart_date.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
-import 'package:fpdt/reader_task_either.dart' as RTE;
 import 'package:fpdt/state_reader_task_either.dart' as SRTE;
 import 'package:fpdt/task_either.dart' as TE;
 import 'package:share/share.dart';
@@ -25,30 +24,31 @@ typedef VouchersOp<R>
     = StateReaderTaskEither<VouchersState, RefRead, String, R>;
 
 VouchersOp<RefRead> ask() => SRTE.ask();
-VouchersOp<void> askVoid() => SRTE.right(null);
+VouchersOp<VouchersState> get() => SRTE.get();
+VouchersOp<void> rightVoid() => SRTE.right(null);
 
 // == Remove expired vouchers
 IList<Voucher> _removeExpired(IList<Voucher> vouchers) => vouchers.removeWhere(
       (v) => v.removeAt.p(O.filter((expires) => expires.isPast)).p(O.isSome),
     );
 
-final removeExpired = ask().p(SRTE.chainModify(
+final VouchersOp<void> removeExpired = SRTE.modify(
   (value) => value.copyWith(vouchers: _removeExpired(value.vouchers)),
-));
+);
 
 // == Add new voucher
-final create =
-    (Voucher voucher) => ask().p(SRTE.chainModify((value) => value.copyWith(
+VouchersOp<void> create(Voucher voucher) =>
+    SRTE.modify((value) => value.copyWith(
           vouchers: value.vouchers.add(voucher.copyWith(
             uuid: O.some(_uuidgen.v4()),
           )),
-        )));
+        ));
 
 // == Update voucher
-final update =
-    (Voucher voucher) => ask().p(SRTE.chainModify((value) => value.copyWith(
+VouchersOp<void> update(Voucher voucher) =>
+    SRTE.modify((value) => value.copyWith(
           vouchers: value.vouchers.updateById([voucher], (v) => v.uuid),
-        )));
+        ));
 
 // == Update voucher balance from string
 final _newBalance = (Voucher v) => (Option<String> s) => s
@@ -56,17 +56,17 @@ final _newBalance = (Voucher v) => (Option<String> s) => s
     .p(O.map2K(v.balanceOption, (amount, int balance) => balance - amount));
 
 final maybeUpdateBalance = (Voucher v) => _newBalance(v).c(O.fold(
-      askVoid,
+      rightVoid,
       (balance) => update(v.copyWith(
         balanceMilliunits: O.some(balance),
       )),
     ));
 
 // == Remove voucher
-final remove =
-    (Voucher voucher) => ask().p(SRTE.chainModify((value) => value.copyWith(
+VouchersOp<void> remove(Voucher voucher) =>
+    SRTE.modify((value) => value.copyWith(
           vouchers: value.vouchers.removeWhere((v) => v.uuid == voucher.uuid),
-        )));
+        ));
 
 // == Import and replace voucher
 final _importFromFiles = files
@@ -82,7 +82,7 @@ final _importFromFiles = files
       (err, stack) => 'Could not convert json to VouchersState: $err',
     ));
 
-final import = ask()
+final import = get()
     .p(SRTE.flatMapTaskEither((_) => _importFromFiles))
     .p(SRTE.flatMap(SRTE.put))
     .p(tapLeftC((read) => read(_log).warning));
@@ -103,9 +103,9 @@ final _shareFile = TE.tryCatchK(
   (err, stackTrace) => 'share files error: $err',
 );
 
-final export = ask()
-    .p(SRTE.flatMapR(
-      (_) => _writeStateToFile('vouchervault.json').c(RTE.fromTaskEither),
-    ))
-    .p(SRTE.flatMapTaskEither(_shareFile))
+final _writeAndShareState =
+    (String fileName) => _writeStateToFile(fileName).c(TE.flatMap(_shareFile));
+
+final export = get()
+    .p(SRTE.flatMapTaskEither(_writeAndShareState('vouchervault.json')))
     .p(tapLeftC((read) => read(_log).warning));

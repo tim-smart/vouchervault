@@ -12,8 +12,9 @@ final _log = loggerProvider('auth/ops.dart');
 
 typedef AuthOp<R> = StateReaderTaskEither<AuthState, RefRead, String, R>;
 AuthOp<RefRead> _ask() => SRTE.ask();
+AuthOp<AuthState> _get() => SRTE.get();
 
-final init = _ask().p(SRTE.flatMapS((_) => (s) => (read) {
+final init = _get().p(SRTE.flatMapReaderTaskEither((s) => (read) {
       if (s.enabled) {
         return TE.right(const AuthState.unauthenticated());
       }
@@ -30,7 +31,7 @@ final init = _ask().p(SRTE.flatMapS((_) => (s) => (read) {
     }));
 
 final toggle =
-    _ask().p(SRTE.chainModify((s) => s.enabled ? s.disable() : s.enable()));
+    _get().p(SRTE.chainModify((s) => s.enabled ? s.disable() : s.enable()));
 
 final authenticate = _ask()
     .p(SRTE.flatMapTaskEither(TE.tryCatchK(
