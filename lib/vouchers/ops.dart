@@ -6,28 +6,37 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/state_reader_task_either.dart' as SRTE;
 import 'package:fpdt/task_either.dart' as TE;
+import 'package:logging/logging.dart';
 import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vouchervault/app/providers.dart';
 import 'package:vouchervault/lib/files.dart' as files;
 import 'package:vouchervault/lib/milliunits.dart' as millis;
-import 'package:vouchervault/lib/riverpod.dart';
 import 'package:vouchervault/lib/srte.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'package:vouchervault/vouchers/model.dart';
 
-final _log = loggerProvider('vouchers/ops.dart');
-
-const _uuidgen = Uuid();
+final vouchersLogProvider = loggerProvider('vouchers/ops.dart');
 
 typedef VouchersOp<R>
-    = StateReaderTaskEither<VouchersState, RefRead, String, R>;
+    = StateReaderTaskEither<VouchersState, VouchersContext, String, R>;
 
 VouchersOp<VouchersState> _get() => SRTE.get();
+VouchersOp<VouchersContext> _ask() => SRTE.ask();
 VouchersOp<void> _rightVoid() => SRTE.right(null);
 
+class VouchersContext {
+  const VouchersContext({
+    required this.log,
+    this.uuid = const Uuid(),
+  });
+
+  final Logger log;
+  final Uuid uuid;
+}
+
 final VouchersOp<void> Function(VouchersOp<dynamic>) _logWarning =
-    tapLeftC((read) => read(_log).warning);
+    tapLeftC((c) => c.log.warning);
 
 // == Remove expired vouchers
 IList<Voucher> _removeExpired(IList<Voucher> vouchers) => vouchers.removeWhere(
@@ -40,11 +49,11 @@ final VouchersOp<void> removeExpired = SRTE.modify(
 
 // == Add new voucher
 VouchersOp<void> create(Voucher voucher) =>
-    SRTE.modify((value) => value.copyWith(
+    _ask().p(SRTE.flatMap((c) => SRTE.modify((value) => value.copyWith(
           vouchers: value.vouchers.add(voucher.copyWith(
-            uuid: O.some(_uuidgen.v4()),
+            uuid: O.some(c.uuid.v4()),
           )),
-        ));
+        ))));
 
 // == Update voucher
 VouchersOp<void> update(Voucher voucher) =>
@@ -70,7 +79,7 @@ VouchersOp<void> remove(Voucher voucher) =>
           vouchers: value.vouchers.removeWhere((v) => v.uuid == voucher.uuid),
         ));
 
-// == Import and replace voucher
+// == Import and replace vouchers
 final _importFromFiles = files
     .pick(['json'])
     .p(TE.map((r) => String.fromCharCodes(r.second)))

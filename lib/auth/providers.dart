@@ -8,10 +8,13 @@ import 'package:vouchervault/lib/riverpod.dart';
 
 final localAuthProvider = Provider((ref) => LocalAuthentication());
 
-final authSMProvider = persistedSMProvider<AuthState, RefRead, String>(
+final authSMProvider = persistedSMProvider<AuthState, AuthContext, String>(
   create: (ref, initial) => StateRTEMachine(
     initial?.init() ?? AuthState.notAvailable,
-    ref.read,
+    AuthContext(
+      log: ref.watch(authLogProvider),
+      localAuth: ref.watch(localAuthProvider),
+    ),
   )..run(init),
   key: 'AuthBloc',
   fromJson: (json) => AuthState.fromJson(json),

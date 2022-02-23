@@ -6,10 +6,10 @@ import 'package:vouchervault/vouchers/model.dart';
 import 'package:vouchervault/vouchers/ops.dart';
 
 final createVouchersSMProvider = ([VouchersState? initialOverride]) =>
-    persistedSMProvider<VouchersState, RefRead, String>(
+    persistedSMProvider<VouchersState, VouchersContext, String>(
       create: (ref, initial) => StateRTEMachine(
         initialOverride ?? initial ?? VouchersState(IList()),
-        ref.read,
+        VouchersContext(log: ref.watch(vouchersLogProvider)),
       )..evaluate(removeExpired),
       key: 'VouchersBloc',
       fromJson: VouchersState.fromJson,
