@@ -14,21 +14,24 @@ typedef AuthOp<R> = StateReaderTaskEither<AuthState, RefRead, String, R>;
 AuthOp<RefRead> _ask() => SRTE.ask();
 AuthOp<AuthState> _get() => SRTE.get();
 
-final init = _get().p(SRTE.flatMapReaderTaskEither((s) => (read) {
-      if (s.enabled) {
-        return TE.right(const AuthState.unauthenticated());
-      }
+final init = _get()
+    .p(SRTE.flatMapReaderTaskEither((s) => (read) {
+          if (s.enabled) {
+            return TE.right(const AuthState.unauthenticated());
+          }
 
-      return TE
-          .tryCatch(
-            () => read(localAuthProvider).isDeviceSupported(),
-            (error, stackTrace) => 'Could not check if auth is available',
-          )
-          .p(TE.filter(identity, (_) => 'Auth not available'))
-          .p(TE.map((_) => AuthState.notRequired))
-          .p(TE.tapLeft(read(_log).info))
-          .p(TE.orElse(TE.right(AuthState.notAvailable)));
-    }));
+          return TE
+              .tryCatch(
+                () => read(localAuthProvider).isDeviceSupported(),
+                (error, stackTrace) => 'Could not check if auth is available',
+              )
+              .p(TE.filter(identity, (_) => 'Auth not available'))
+              .p(TE.map((_) => AuthState.notRequired))
+              .p(TE.tapLeft(read(_log).info))
+              .p(TE.orElse(TE.right(AuthState.notAvailable)));
+        }))
+    .p(SRTE.flatMap(SRTE.put))
+    .p(tapLeftC((read) => read(_log).info));
 
 final toggle =
     _get().p(SRTE.chainModify((s) => s.enabled ? s.disable() : s.enable()));
@@ -42,7 +45,6 @@ final authenticate = _ask()
         ),
         iOSAuthStrings: const IOSAuthMessages(),
         localizedReason: 'Please authenticate to view your vouchers',
-        stickyAuth: true,
       ),
       (err, _) => 'Error trying to authenticate: $err',
     )))
