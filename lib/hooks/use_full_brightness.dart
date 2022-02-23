@@ -7,28 +7,6 @@ import 'package:fpdt/state_reader_task_either.dart' as SRTE;
 import 'package:fpdt/task_either.dart' as TE;
 import 'package:vouchervault/hooks/use_route_observer.dart';
 
-StateRTEMachine<bool, void, String> _createSM(bool initial) =>
-    StateRTEMachine(initial, null);
-
-typedef _BrightnessOp<R> = StateReaderTaskEither<bool, void, String, R>;
-_BrightnessOp<void> _ask() => SRTE.ask();
-
-final _set = TE.tryCatchK(
-  (double brightness) => BVUtils.setBrightness(brightness),
-  (err, stackTrace) => 'Could not set brightness: $err',
-);
-
-final _reset = TE.tryCatch(
-  () => BVUtils.resetCustomBrightness(),
-  (err, stackTrace) => 'Could not reset brightness $err',
-);
-
-final _goDark =
-    _ask().p(SRTE.flatMapTaskEither((_) => _reset)).p(SRTE.chainPut(false));
-
-final _goBright =
-    _ask().p(SRTE.flatMapTaskEither((_) => _set(1))).p(SRTE.chainPut(true));
-
 void useFullBrightness(
   RouteObserver<ModalRoute> routeObserver, {
   bool enabled = true,
@@ -59,3 +37,26 @@ void useFullBrightness(
     keys: [bloc, enabled],
   );
 }
+
+// State
+StateRTEMachine<bool, void, String> _createSM(bool initial) =>
+    StateRTEMachine(initial, null);
+
+typedef _BrightnessOp<R> = StateReaderTaskEither<bool, void, String, R>;
+_BrightnessOp<bool> _get() => SRTE.get();
+
+final _set = TE.tryCatchK(
+  (double brightness) => BVUtils.setBrightness(brightness),
+  (err, stackTrace) => 'Could not set brightness: $err',
+);
+
+final _reset = TE.tryCatch(
+  () => BVUtils.resetCustomBrightness(),
+  (err, stackTrace) => 'Could not reset brightness $err',
+);
+
+final _goDark =
+    _get().p(SRTE.flatMapTaskEither((_) => _reset)).p(SRTE.chainPut(false));
+
+final _goBright =
+    _get().p(SRTE.flatMapTaskEither((_) => _set(1))).p(SRTE.chainPut(true));
