@@ -40,18 +40,23 @@ final init = _get()
 final toggle =
     _get().p(SRTE.chainModify((s) => s.enabled ? s.disable() : s.enable()));
 
-final authenticate = _ask()
-    .p(SRTE.flatMapTaskEither(TE.tryCatchK(
-      (c) => c.localAuth.authenticate(
-        androidAuthStrings: const AndroidAuthMessages(
-          signInTitle: 'Voucher Vault',
-          biometricHint: '',
-        ),
-        iOSAuthStrings: const IOSAuthMessages(),
-        localizedReason: 'Please authenticate to view your vouchers',
-      ),
-      (err, _) => 'Error trying to authenticate: $err',
-    )))
+final _cancel = _ask().p(SRTE.chainTryCatchK(
+  (c) => c.localAuth.stopAuthentication(),
+  (err, stackTrace) => 'Could not cancel previous auth requests',
+));
+
+final authenticate = _cancel
+    .p(SRTE.flatMapReaderTaskEither((_) => TE.tryCatchK(
+          (c) => c.localAuth.authenticate(
+            androidAuthStrings: const AndroidAuthMessages(
+              signInTitle: 'Voucher Vault',
+              biometricHint: '',
+            ),
+            iOSAuthStrings: const IOSAuthMessages(),
+            localizedReason: 'Please authenticate to view your vouchers',
+          ),
+          (err, _) => 'Error trying to authenticate: $err',
+        )))
     .p(SRTE.filter(identity, (_) => 'Authentication failed'))
     .p(SRTE.chainPut(AuthState.success))
     .p(tapLeftC((c) => c.log.info));
