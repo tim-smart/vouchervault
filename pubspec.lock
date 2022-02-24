@@ -231,7 +231,7 @@ packages:
       name: emulators
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.3"
+    version: "0.4.4"
   enum_utils:
     dependency: "direct main"
     description:
@@ -368,7 +368,7 @@ packages:
       name: fpdt
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.56"
+    version: "0.0.57"
   freezed:
     dependency: "direct dev"
     description:
@@ -682,13 +682,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.5"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.27.3"
   share:
     dependency: "direct main"
     description:

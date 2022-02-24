@@ -1,17 +1,15 @@
 import 'dart:io';
 
-import 'package:emulators/emulators.dart' as emu;
+import 'package:emulators/emulators.dart';
 
 Future<void> main() async {
-  final config = await emu.buildConfig();
+  final emu = await Emulators.build();
 
   // Shutdown all the running emulators
-  await emu.shutdownAll(config);
+  await emu.shutdownAll();
 
-  await emu.forEach(config)([
-    'Nexus_5X',
-  ])((device) async {
-    final p = await emu.drive(config)(
+  await emu.forEach(['Nexus_5X'])((device) async {
+    final p = await emu.drive(
       device,
       'test_driver/main.dart',
       args: ['--flavor', 'local'],

@@ -1,18 +1,18 @@
-import 'package:emulators/emulators.dart' as emu;
+import 'package:emulators/emulators.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 Future<void> main() async {
   final driver = await FlutterDriver.connect();
-  final config = await emu.buildConfig();
-  final screenshot = emu.writeScreenshotFromEnv(config)(
+  final emu = await Emulators.build();
+  final screenshot = emu.screenshotHelper(
     androidPath: 'fastlane/metadata/android/en-US/images/phoneScreenshots',
     iosPath: 'ios/fastlane/screenshots/en-AU',
   );
 
   setUpAll(() async {
     await driver.waitUntilFirstFrameRasterized();
-    await emu.cleanStatusBarFromEnv(config);
+    await screenshot.cleanStatusBar();
   });
 
   // Close the connection to the driver after the tests have completed.
@@ -23,7 +23,7 @@ Future<void> main() async {
   group('Screenshots', () {
     test('home screen', () async {
       await driver.waitFor(find.text('Vouchers'));
-      await screenshot('01');
+      await screenshot.capture('01');
     });
 
     test('walmart', () async {
@@ -32,7 +32,7 @@ Future<void> main() async {
         matching: find.byType('VoucherItem'),
       ));
       await driver.waitUntilNoTransientCallbacks();
-      await screenshot('02');
+      await screenshot.capture('02');
 
       await driver.tap(find.text('Close'));
       await driver.waitUntilNoTransientCallbacks();
@@ -42,7 +42,7 @@ Future<void> main() async {
     test('form', () async {
       await driver.tap(buttonFinder);
       await driver.waitUntilNoTransientCallbacks();
-      await screenshot('03');
+      await screenshot.capture('03');
     });
   });
 }
