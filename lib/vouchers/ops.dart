@@ -81,7 +81,7 @@ VouchersOp<void> remove(Voucher voucher) =>
 
 // == Import and replace vouchers
 final _importFromFiles = files
-    .pick(['json'])
+    .pick()
     .p(TE.map((r) => String.fromCharCodes(r.second)))
     .p(TE.chainTryCatchK(
       jsonDecode,

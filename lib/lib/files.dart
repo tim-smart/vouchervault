@@ -31,16 +31,20 @@ TaskEither<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
         )
         .p(TE.map((bytes) => tuple2(f, bytes)));
 
-TaskEither<String, Tuple2<PlatformFile, List<int>>> pick(
-  List<String> extensions,
-) =>
+TaskEither<String, Tuple2<PlatformFile, List<int>>> pick({
+  FileType type = FileType.any,
+  List<String>? extensions,
+}) =>
     TE
         .tryCatch(
-          () => FilePicker.platform.pickFiles(
-            type: FileType.custom,
-            allowedExtensions: extensions,
-            withReadStream: true,
-          ),
+          () async {
+            await FilePicker.platform.clearTemporaryFiles();
+            return FilePicker.platform.pickFiles(
+              type: type,
+              allowedExtensions: extensions,
+              withReadStream: true,
+            );
+          },
           (err, s) => 'pickFiles failed: $err',
         )
         .p(TE.chainNullableK(identity, (_) => 'pickFiles gave no result'))
