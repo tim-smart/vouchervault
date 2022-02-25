@@ -18,13 +18,6 @@ import 'package:vouchervault/vouchers/model.dart';
 
 final vouchersLogProvider = loggerProvider('vouchers/ops.dart');
 
-typedef VouchersOp<R>
-    = StateReaderTaskEither<VouchersState, VouchersContext, String, R>;
-
-VouchersOp<VouchersState> _get() => SRTE.get();
-VouchersOp<VouchersContext> _ask() => SRTE.ask();
-VouchersOp<void> _rightVoid() => SRTE.right(null);
-
 class VouchersContext {
   const VouchersContext({
     required this.log,
@@ -35,8 +28,15 @@ class VouchersContext {
   final Uuid uuid;
 }
 
-final VouchersOp<void> Function(VouchersOp<dynamic>) _logWarning =
-    tapLeftC((c) => c.log.warning);
+typedef VouchersOp<R>
+    = StateReaderTaskEither<VouchersState, VouchersContext, String, R>;
+
+VouchersOp<VouchersState> _get() => SRTE.get();
+VouchersOp<VouchersContext> _ask() => SRTE.ask();
+VouchersOp<void> _rightVoid() => SRTE.right(null);
+
+VouchersOp<R> _logWarning<R>(VouchersOp<R> op) =>
+    op.p(tapLeftC((c) => c.log.warning));
 
 // == Remove expired vouchers
 IList<Voucher> _removeExpired(IList<Voucher> vouchers) => vouchers.removeWhere(
