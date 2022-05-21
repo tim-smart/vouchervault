@@ -53,3 +53,14 @@ TaskEither<String, Tuple2<PlatformFile, List<int>>> pick({
               .p(TE.fromOption(() => 'pickFiles had an empty response')),
         ))
         .p(TE.flatMap(_readPlatformFileStream));
+
+TaskEither<String, PlatformFile> pickImage() => TE
+    .tryCatch(
+      () => FilePicker.platform.pickFiles(type: FileType.image),
+      (err, s) => 'pickFiles failed: $err',
+    )
+    .p(TE.chainNullableK(identity, (_) => 'pickFiles gave no result'))
+    .p(TE.flatMap(
+      (r) => r.files.head
+          .p(TE.fromOption(() => 'pickFiles had an empty response')),
+    ));

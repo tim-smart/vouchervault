@@ -2,20 +2,19 @@ part of 'barcode_scanner_field.dart';
 
 final _key = GlobalKey(debugLabel: "QR");
 
-final _toggleFlash = O.map((QRViewController c) => c.toggleFlash());
-
-ValueNotifier<Option<QRViewController>> _useController() {
-  final controller = useState<Option<QRViewController>>(O.none());
-
-  useEffect(() {
-    return controller.value.p(O.fold(
-      () => () {},
-      (c) => c.dispose,
-    ));
-  }, [controller.value]);
-
+MobileScannerController _useController() {
+  final controller = useMemoized(() => MobileScannerController(), []);
+  useEffect(() => controller.dispose, [controller]);
   return controller;
 }
+
+TaskEither<String, void> _chooseImage(MobileScannerController controller) =>
+    pickImage()
+        .p(TE.chainNullableK((file) => file.path, (_) => 'file path not found'))
+        .p(
+          TE.chainTryCatchK((file) => controller.analyzeImage(file),
+              (err, stackTrace) => 'analyzeImage err: $err'),
+        );
 
 @hwidget
 Widget barcodeScannerDialog(
@@ -24,18 +23,6 @@ Widget barcodeScannerDialog(
 }) {
   final controller = _useController();
 
-  useEffect(() {
-    return controller.value.p(O.fold(
-      () => () {},
-      (c) => c.scannedDataStream
-          .where((d) => d.code != null)
-          .take(1)
-          .listen((data) {
-        onScan(data.format, data.code!);
-      }).cancel,
-    ));
-  }, [controller.value, onScan]);
-
   return AnnotatedRegion(
     value: SystemUiOverlayStyle.light,
     child: Scaffold(
@@ -43,16 +30,14 @@ Widget barcodeScannerDialog(
       body: Stack(
         children: [
           Positioned.fill(
-            child: QRView(
+            child: MobileScanner(
               key: _key,
-              overlay: QrScannerOverlayShape(
-                borderLength: 50,
-                borderRadius: 10,
-                borderWidth: 15,
-                cutOutSize: 300,
-              ),
-              onQRViewCreated: (c) => controller.value = O.some(c),
-              // formatsAllowed: BarcodeFormat.values,
+              controller: controller,
+              onDetect: (barcode, args) {
+                if (barcode.rawValue != null) {
+                  onScan(barcode.format, barcode.rawValue!);
+                }
+              },
             ),
           ),
           Positioned(
@@ -69,7 +54,14 @@ Widget barcodeScannerDialog(
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        _toggleFlash(controller.value);
+                        _chooseImage(controller)();
+                      },
+                      child: const Text('Choose image'),
+                    ),
+                    SizedBox(width: AppTheme.space3),
+                    ElevatedButton(
+                      onPressed: () {
+                        controller.toggleTorch();
                       },
                       child: const Text('Toggle flash'),
                     ),

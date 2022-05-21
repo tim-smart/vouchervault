@@ -1,7 +1,6 @@
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/state_reader_task_either.dart' as SRTE;
 import 'package:fpdt/task_either.dart' as TE;
-import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
 import 'package:vouchervault/app/providers.dart';
@@ -48,11 +47,6 @@ final _cancel = _ask().p(SRTE.chainTryCatchK(
 final authenticate = _cancel
     .p(SRTE.flatMapReaderTaskEither((_) => TE.tryCatchK(
           (c) => c.localAuth.authenticate(
-            androidAuthStrings: const AndroidAuthMessages(
-              signInTitle: 'Voucher Vault',
-              biometricHint: '',
-            ),
-            iOSAuthStrings: const IOSAuthMessages(),
             localizedReason: 'Please authenticate to view your vouchers',
           ),
           (err, _) => 'Error trying to authenticate: $err',

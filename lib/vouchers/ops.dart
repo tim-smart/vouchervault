@@ -93,7 +93,7 @@ final _importFromFiles = files
       (err, stack) => 'Could not convert json to VouchersState: $err',
     ));
 
-final import = _get()
+final VouchersOp<Unit> import = _get()
     .p(SRTE.flatMapTaskEither((_) => _importFromFiles))
     .p(SRTE.flatMap(SRTE.put))
     .p(_logWarning);
@@ -106,17 +106,19 @@ final _writeStateToFile = (String fileName) => (VouchersState value) => TE
     )
     .p(TE.flatMap(files.writeString(fileName)));
 
-final _shareFile = TE.tryCatchK(
-  (File file) => Share.shareFiles(
-    [file.path],
-    subject: 'VoucherVault export',
-  ),
-  (err, stackTrace) => 'share files error: $err',
-);
+final _shareFile = TE
+    .tryCatchK(
+      (File file) => Share.shareFiles(
+        [file.path],
+        subject: 'VoucherVault export',
+      ),
+      (err, stackTrace) => 'share files error: $err',
+    )
+    .c(TE.map((_) => unit));
 
 final _writeAndShareState =
     (String fileName) => _writeStateToFile(fileName).c(TE.flatMap(_shareFile));
 
-final export = _get()
+final VouchersOp<Unit> export = _get()
     .p(SRTE.flatMapTaskEither(_writeAndShareState('vouchervault.json')))
     .p(_logWarning);

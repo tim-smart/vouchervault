@@ -41,13 +41,13 @@ Widget voucherForm(
             border: OutlineInputBorder(),
             labelText: 'Description',
           ),
-          validator: FormBuilderValidators.required(context),
+          validator: FormBuilderValidators.required(),
         ),
         SizedBox(height: AppTheme.space3),
         FormBuilderField<String>(
           name: 'code',
           valueTransformer: optionOfString.c(O.toNullable),
-          validator: FormBuilderValidators.required(context),
+          validator: FormBuilderValidators.required(),
           builder: (field) => BarcodeScannerField(
             labelText: 'Code',
             onChange: field.didChange,
@@ -79,7 +79,7 @@ Widget voucherForm(
                     child: Text(V.codeTypeLabel(t)),
                   ))
               .toList(),
-          validator: FormBuilderValidators.required(context),
+          validator: FormBuilderValidators.required(),
         ),
         SizedBox(height: AppTheme.space3),
         FormBuilderField<DateTime>(

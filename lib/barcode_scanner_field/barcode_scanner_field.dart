@@ -1,13 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:barcode_widget/barcode_widget.dart';
+import 'package:barcode_widget/barcode_widget.dart' show Barcode, BarcodeWidget;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
+import 'package:fpdt/task_either.dart' as TE;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart' hide Barcode;
+import 'package:mobile_scanner/mobile_scanner.dart' hide Barcode;
 import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/lib/files.dart';
 import 'package:vouchervault/lib/option.dart';
 
 part 'barcode_scanner_dialog.dart';
