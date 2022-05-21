@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'model.dart';
@@ -11,21 +12,7 @@ part of 'model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$VouchersStateTearOff {
-  const _$VouchersStateTearOff();
-
-  _VouchersState call(IList<Voucher> vouchers) {
-    return _VouchersState(
-      vouchers,
-    );
-  }
-}
-
-/// @nodoc
-const $VouchersState = _$VouchersStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$VouchersState {
@@ -67,31 +54,31 @@ class _$VouchersStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$VouchersStateCopyWith<$Res>
+abstract class _$$_VouchersStateCopyWith<$Res>
     implements $VouchersStateCopyWith<$Res> {
-  factory _$VouchersStateCopyWith(
-          _VouchersState value, $Res Function(_VouchersState) then) =
-      __$VouchersStateCopyWithImpl<$Res>;
+  factory _$$_VouchersStateCopyWith(
+          _$_VouchersState value, $Res Function(_$_VouchersState) then) =
+      __$$_VouchersStateCopyWithImpl<$Res>;
   @override
   $Res call({IList<Voucher> vouchers});
 }
 
 /// @nodoc
-class __$VouchersStateCopyWithImpl<$Res>
+class __$$_VouchersStateCopyWithImpl<$Res>
     extends _$VouchersStateCopyWithImpl<$Res>
-    implements _$VouchersStateCopyWith<$Res> {
-  __$VouchersStateCopyWithImpl(
-      _VouchersState _value, $Res Function(_VouchersState) _then)
-      : super(_value, (v) => _then(v as _VouchersState));
+    implements _$$_VouchersStateCopyWith<$Res> {
+  __$$_VouchersStateCopyWithImpl(
+      _$_VouchersState _value, $Res Function(_$_VouchersState) _then)
+      : super(_value, (v) => _then(v as _$_VouchersState));
 
   @override
-  _VouchersState get _value => super._value as _VouchersState;
+  _$_VouchersState get _value => super._value as _$_VouchersState;
 
   @override
   $Res call({
     Object? vouchers = freezed,
   }) {
-    return _then(_VouchersState(
+    return _then(_$_VouchersState(
       vouchers == freezed
           ? _value.vouchers
           : vouchers // ignore: cast_nullable_to_non_nullable
@@ -117,7 +104,7 @@ class _$_VouchersState extends _VouchersState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VouchersState &&
+            other is _$_VouchersState &&
             const DeepCollectionEquality().equals(other.vouchers, vouchers));
   }
 
@@ -127,18 +114,18 @@ class _$_VouchersState extends _VouchersState {
 
   @JsonKey(ignore: true)
   @override
-  _$VouchersStateCopyWith<_VouchersState> get copyWith =>
-      __$VouchersStateCopyWithImpl<_VouchersState>(this, _$identity);
+  _$$_VouchersStateCopyWith<_$_VouchersState> get copyWith =>
+      __$$_VouchersStateCopyWithImpl<_$_VouchersState>(this, _$identity);
 }
 
 abstract class _VouchersState extends VouchersState {
-  factory _VouchersState(IList<Voucher> vouchers) = _$_VouchersState;
+  factory _VouchersState(final IList<Voucher> vouchers) = _$_VouchersState;
   _VouchersState._() : super._();
 
   @override
-  IList<Voucher> get vouchers;
+  IList<Voucher> get vouchers => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$VouchersStateCopyWith<_VouchersState> get copyWith =>
+  _$$_VouchersStateCopyWith<_$_VouchersState> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -17,7 +17,7 @@ part 'barcode_scanner_field.g.dart';
 part 'scan_button.dart';
 
 @hwidget
-Widget barcodeScannerField(
+Widget _barcodeScannerField(
   BuildContext context, {
   required void Function(String) onChange,
   required String initialValue,

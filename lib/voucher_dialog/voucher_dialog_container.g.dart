@@ -14,5 +14,5 @@ class VoucherDialogContainer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext _context, WidgetRef _ref) =>
-      voucherDialogContainer(_context, _ref, voucher: voucher);
+      _voucherDialogContainer(_context, _ref, voucher: voucher);
 }

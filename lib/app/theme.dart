@@ -24,6 +24,7 @@ class AppTheme {
       brightness: brightness,
       fontFamily: 'Alegreya Sans',
     ).textTheme;
+
     textTheme = textTheme.copyWith(
       headline2: textTheme.headline2!.copyWith(
         color: textColor,
@@ -63,6 +64,12 @@ class AppTheme {
         errorColor: Colors.orange.shade700,
       ),
     ).copyWith(
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: <TargetPlatform, PageTransitionsBuilder>{
+          TargetPlatform.android:
+              FadeUpwardsPageTransitionsBuilder(), // Apply this to every platforms you need.
+        },
+      ),
       toggleableActiveColor: Colors.red,
       chipTheme: ChipThemeData.fromDefaults(
         brightness: brightness,

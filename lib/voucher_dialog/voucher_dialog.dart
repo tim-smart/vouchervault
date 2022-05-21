@@ -17,7 +17,7 @@ export 'voucher_spend_dialog.dart';
 part 'voucher_dialog.g.dart';
 
 @swidget
-Widget voucherDialog(
+Widget _voucherDialog(
   BuildContext context, {
   required Voucher voucher,
   required VoidCallback onTapBarcode,
@@ -106,7 +106,7 @@ Widget voucherDialog(
 }
 
 @swidget
-Widget _dialogWrap(
+Widget __dialogWrap(
   BuildContext context, {
   required ThemeData theme,
   required Widget child,
@@ -130,7 +130,7 @@ Widget _dialogWrap(
     );
 
 @swidget
-Widget _barcode(
+Widget __barcode(
   BuildContext context, {
   required V.VoucherCodeType type,
   required String data,

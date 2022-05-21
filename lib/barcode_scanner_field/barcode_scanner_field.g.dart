@@ -30,7 +30,7 @@ class BarcodeScannerField extends HookWidget {
   final Option<void Function(BarcodeFormat)> onScan;
 
   @override
-  Widget build(BuildContext _context) => barcodeScannerField(_context,
+  Widget build(BuildContext _context) => _barcodeScannerField(_context,
       onChange: onChange,
       initialValue: initialValue,
       barcodeType: barcodeType,
@@ -65,6 +65,6 @@ class _ScanButton extends StatelessWidget {
   final void Function(BarcodeFormat, String) onScan;
 
   @override
-  Widget build(BuildContext _context) => _scanButton(_context,
+  Widget build(BuildContext _context) => __scanButton(_context,
       barcodeType: barcodeType, data: data, onScan: onScan);
 }

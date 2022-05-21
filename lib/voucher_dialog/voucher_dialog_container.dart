@@ -20,7 +20,7 @@ import 'package:vouchervault/vouchers/ops.dart' as Ops;
 part 'voucher_dialog_container.g.dart';
 
 @hcwidget
-Widget voucherDialogContainer(
+Widget _voucherDialogContainer(
   BuildContext context,
   WidgetRef ref, {
   required Voucher voucher,

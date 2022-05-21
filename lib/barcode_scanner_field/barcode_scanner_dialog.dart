@@ -52,11 +52,11 @@ Widget barcodeScannerDialog(
                 child: Row(
                   children: [
                     const Spacer(),
-                    ElevatedButton(
+                    IconButton(
+                      icon: const Icon(Icons.add_photo_alternate),
                       onPressed: () {
                         _chooseImage(controller)();
                       },
-                      child: const Text('Choose image'),
                     ),
                     SizedBox(width: AppTheme.space3),
                     ElevatedButton(

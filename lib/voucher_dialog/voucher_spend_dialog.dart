@@ -7,7 +7,7 @@ part 'voucher_spend_dialog.g.dart';
 final _amountProvider = StateProvider.autoDispose((ref) => '');
 
 @cwidget
-Widget voucherSpendDialog(BuildContext context, WidgetRef ref) {
+Widget _voucherSpendDialog(BuildContext context, WidgetRef ref) {
   final amount = ref.watch(_amountProvider.notifier);
   void submit() => Navigator.pop(context, amount.state);
 

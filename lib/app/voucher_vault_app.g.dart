@@ -16,12 +16,12 @@ class VoucherVaultApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext _context) =>
-      voucherVaultApp(_context, vouchers: vouchers, overrides: overrides);
+      _voucherVaultApp(_context, vouchers: vouchers, overrides: overrides);
 }
 
 class _App extends HookConsumerWidget {
   const _App({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context, WidgetRef _ref) => _app(_ref);
+  Widget build(BuildContext _context, WidgetRef _ref) => __app(_ref);
 }

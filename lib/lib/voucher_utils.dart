@@ -57,7 +57,7 @@ List<Widget> buildVoucherDetails(
     ]).toList();
 
 @swidget
-Widget _voucherDetailRow(
+Widget __voucherDetailRow(
   BuildContext context,
   Color textColor,
   IconData icon,

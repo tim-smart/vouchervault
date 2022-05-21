@@ -22,12 +22,10 @@ final _maybeAddVoucher = (RefRead read) =>
         ));
 
 @cwidget
-Widget vouchersScreen(BuildContext context, WidgetRef ref) {
+Widget _vouchersScreen(BuildContext context, WidgetRef ref) {
   return AppScaffold(
     title: 'Vouchers',
-    actions: const [
-      VouchersMenuContainer(),
-    ],
+    actions: const [VouchersMenuContainer()],
     slivers: [
       SliverPadding(
         padding: EdgeInsets.only(
@@ -42,8 +40,8 @@ Widget vouchersScreen(BuildContext context, WidgetRef ref) {
         Navigator.push<Voucher>(
           context,
           MaterialPageRoute(
-            fullscreenDialog: true,
             builder: (context) => const VoucherFormDialog(),
+            fullscreenDialog: true,
           ),
         ).then(_maybeAddVoucher(ref.read));
       },

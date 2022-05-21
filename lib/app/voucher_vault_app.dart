@@ -15,7 +15,7 @@ part 'voucher_vault_app.g.dart';
 final routeObserver = RouteObserver<ModalRoute>();
 
 @swidget
-Widget voucherVaultApp(
+Widget _voucherVaultApp(
   BuildContext context, {
   IList<Voucher>? vouchers,
   List<Override> overrides = const [],
@@ -32,7 +32,7 @@ Widget voucherVaultApp(
     );
 
 @hcwidget
-Widget _app(WidgetRef ref) {
+Widget __app(WidgetRef ref) {
   // Auth state
   final authState = ref.watch(authProvider);
 

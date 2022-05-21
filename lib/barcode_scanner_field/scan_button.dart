@@ -21,7 +21,7 @@ final _autoSizeText = optionOfString.c(O.map((text) => AutoSizeText(
     ) as Widget));
 
 @swidget
-Widget _scanButton(
+Widget __scanButton(
   BuildContext context, {
   required Option<Barcode> barcodeType,
   required String data,

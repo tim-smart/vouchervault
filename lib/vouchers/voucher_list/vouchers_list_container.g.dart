@@ -11,5 +11,5 @@ class VouchersListContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext _context, WidgetRef _ref) =>
-      vouchersListContainer(_context, _ref);
+      _vouchersListContainer(_context, _ref);
 }

@@ -11,5 +11,5 @@ class VoucherSpendDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext _context, WidgetRef _ref) =>
-      voucherSpendDialog(_context, _ref);
+      _voucherSpendDialog(_context, _ref);
 }

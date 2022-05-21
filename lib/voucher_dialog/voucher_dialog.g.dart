@@ -30,7 +30,7 @@ class VoucherDialog extends StatelessWidget {
   final void Function() onSpend;
 
   @override
-  Widget build(BuildContext _context) => voucherDialog(_context,
+  Widget build(BuildContext _context) => _voucherDialog(_context,
       voucher: voucher,
       onTapBarcode: onTapBarcode,
       onEdit: onEdit,
@@ -49,7 +49,7 @@ class _DialogWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext _context) =>
-      _dialogWrap(_context, theme: theme, child: child);
+      __dialogWrap(_context, theme: theme, child: child);
 }
 
 class _Barcode extends StatelessWidget {
@@ -65,5 +65,5 @@ class _Barcode extends StatelessWidget {
 
   @override
   Widget build(BuildContext _context) =>
-      _barcode(_context, type: type, data: data, onTap: onTap);
+      __barcode(_context, type: type, data: data, onTap: onTap);
 }

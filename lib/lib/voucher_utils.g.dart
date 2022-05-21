@@ -28,7 +28,7 @@ class _VoucherDetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext _context) =>
-      _voucherDetailRow(_context, textColor, icon, text,
+      __voucherDetailRow(_context, textColor, icon, text,
           alignment: alignment,
           iconPadding: iconPadding,
           selectable: selectable);
