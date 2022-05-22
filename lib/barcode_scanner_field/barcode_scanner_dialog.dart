@@ -17,7 +17,7 @@ TaskEither<String, void> _chooseImage(MobileScannerController controller) =>
         );
 
 @hwidget
-Widget barcodeScannerDialog(
+Widget _barcodeScannerDialog(
   BuildContext context, {
   required void Function(BarcodeFormat, String) onScan,
 }) {

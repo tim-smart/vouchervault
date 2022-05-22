@@ -47,7 +47,7 @@ class BarcodeScannerDialog extends HookWidget {
 
   @override
   Widget build(BuildContext _context) =>
-      barcodeScannerDialog(_context, onScan: onScan);
+      _barcodeScannerDialog(_context, onScan: onScan);
 }
 
 class _ScanButton extends StatelessWidget {

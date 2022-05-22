@@ -47,5 +47,7 @@
 		<false/>
 		<key>NSFaceIDUsageDescription</key>
 		<string>Face ID is being used to protect your vouchers.</string>
-	</dict>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+</dict>
 </plist>
