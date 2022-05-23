@@ -32,7 +32,7 @@ Widget voucherForm(
     initialValue: initialFormValue,
     child: Column(
       children: [
-        const SizedBox(height: 3),
+        const SizedBox(height: 4),
         FormBuilderTextField(
           autofocus: true,
           name: 'description',

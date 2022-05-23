@@ -17,7 +17,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.0
   enum_utils: ^0.3.0
   file_picker: ^4.0.0
-  flutter_form_builder: ^7.0.0
+  flutter_form_builder: ^7.2.1
   flutter_hooks: ^0.18.0
   fluttertoast: ^8.0.7
   form_builder_validators: ^8.1.1
@@ -29,7 +29,7 @@ dependencies:
   json_annotation: ^4.4.0
   local_auth: ^2.1.0
   logging: ^1.0.2
-  mobile_scanner: ^1.1.0
+  mobile_scanner: ^1.1.1
   path_provider: ^2.0.1
   share: ^2.0.0
   uuid: ^3.0.1

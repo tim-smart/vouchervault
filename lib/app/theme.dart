@@ -64,6 +64,9 @@ class AppTheme {
         errorColor: Colors.orange.shade700,
       ),
     ).copyWith(
+      pageTransitionsTheme: const PageTransitionsTheme(builders: {
+        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder()
+      }),
       toggleableActiveColor: Colors.red,
       chipTheme: ChipThemeData.fromDefaults(
         brightness: brightness,

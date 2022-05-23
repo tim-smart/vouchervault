@@ -53,6 +53,7 @@ Widget _barcodeScannerDialog(
                   children: [
                     const Spacer(),
                     IconButton(
+                      color: Colors.white,
                       icon: const Icon(Icons.add_photo_alternate),
                       onPressed: () {
                         _chooseImage(controller)();
