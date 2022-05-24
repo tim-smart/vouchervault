@@ -21,6 +21,12 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+   keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -44,36 +50,24 @@ android {
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
-            
+            signingConfig signingConfigs.release
+
             minifyEnabled true
             shrinkResources true
             useProguard true
-            
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro' 
-        }
-    }
-
-    flavorDimensions "app"
-
-    productFlavors {
-        local {
-            dimension "app"
-        }
-
-        fdroid {
-            dimension "app"
-            signingConfig null
-        }
-    }
-
-    android.applicationVariants.all { variant ->
-        if (variant.flavorName == "fdroid") {
-            variant.outputs.all { output ->
-                output.outputFileName = "app-fdroid-release.apk"
-            }
         }
     }
 }
