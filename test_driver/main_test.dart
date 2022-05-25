@@ -34,6 +34,15 @@ Future<void> main() async {
       ));
       await driver.waitUntilNoTransientCallbacks();
       await screenshot.capture('02');
+    });
+
+    test('walmart spend', () async {
+      await driver.tap(find.byValueKey('SpendIconButton'));
+      await driver.waitUntilNoTransientCallbacks();
+      await screenshot.capture('03');
+
+      await driver.tap(find.text('Cancel'));
+      await driver.waitUntilNoTransientCallbacks();
 
       await driver.tap(find.text('Close'));
       await driver.waitUntilNoTransientCallbacks();
@@ -43,7 +52,7 @@ Future<void> main() async {
     test('form', () async {
       await driver.tap(buttonFinder);
       await driver.waitUntilNoTransientCallbacks();
-      await screenshot.capture('03');
+      await screenshot.capture('04');
     });
   });
 }

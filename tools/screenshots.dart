@@ -12,7 +12,6 @@ Future<void> main() async {
     final p = await emu.drive(
       device,
       'test_driver/main.dart',
-      args: ['--flavor', 'local'],
     );
     stderr.addStream(p.stderr);
     await stdout.addStream(p.stdout);

@@ -74,6 +74,7 @@ Widget _voucherDialog(
             children: [
               if (O.isSome(voucher.balanceOption))
                 IconButton(
+                  key: const ValueKey('SpendIconButton'),
                   color: textColor,
                   icon: const Icon(Icons.shopping_cart),
                   onPressed: onSpend,

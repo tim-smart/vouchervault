@@ -7,21 +7,13 @@
     {
       "name": "vouchervault",
       "request": "launch",
-      "type": "dart",
-      "args": ["--flavor", "local"]
+      "type": "dart"
     },
     {
       "name": "vouchervault profile",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile",
-      "args": ["--flavor", "local"]
-    },
-    {
-      "name": "vouchervault ios",
-      "request": "launch",
-      "type": "dart",
-      "args": []
+      "flutterMode": "profile"
     }
   ]
 }
