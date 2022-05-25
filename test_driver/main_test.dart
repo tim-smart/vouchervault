@@ -6,7 +6,8 @@ Future<void> main() async {
   final driver = await FlutterDriver.connect();
   final emu = await Emulators.build();
   final screenshot = emu.screenshotHelper(
-    androidPath: 'fastlane/metadata/android/en-US/images/phoneScreenshots',
+    androidPath:
+        'android/fastlane/metadata/android/en-US/images/phoneScreenshots',
     iosPath: 'ios/fastlane/screenshots/en-AU',
   );
 

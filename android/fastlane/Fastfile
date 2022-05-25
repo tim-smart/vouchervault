@@ -1,0 +1,53 @@
+default_platform(:android)
+
+build_number = File.open("../../metadata/build_number.txt", "r") { |f| f.read.strip.to_i }
+
+platform :android do
+  lane :build do
+    # Update changelogs
+    FileUtils.cp(
+      "../../metadata/release_notes.txt",
+      "metadata/android/en-US/changelogs/#{build_number}.txt",
+    )
+
+    Dir.chdir("../..") do
+      sh(
+        "flutter",
+        "build",
+        "appbundle",
+        "--release",
+        "--build-number=#{build_number}",
+      )
+    end
+  end
+
+  desc "Submit a new build to Google Play internal track"
+  lane :alpha do
+    build()
+    upload_to_play_store(
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      track: "internal",
+      release_status: "draft",
+    )
+  end
+
+  desc "Submit a new build to Google Play alpha track"
+  lane :beta do
+    alpha()
+    upload_to_play_store(
+      track: "internal",
+      track_promote_to: "alpha",
+      version_code: build_number.to_s,
+    )
+  end
+
+  desc "Submit a new build to Google Play production track"
+  lane :release do
+    beta()
+    upload_to_play_store(
+      track: "alpha",
+      track_promote_to: "production",
+      version_code: build_number.to_s,
+    )
+  end
+end
