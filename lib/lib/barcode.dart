@@ -1,7 +1,8 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
-import 'package:mobile_scanner/mobile_scanner.dart' hide Barcode;
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart'
+    show BarcodeFormat;
 import 'package:vouchervault/models/voucher.dart';
 
 final Map<VoucherCodeType, Barcode> _codeTypeMap = {

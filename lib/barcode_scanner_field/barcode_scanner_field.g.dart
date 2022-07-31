@@ -39,17 +39,6 @@ class BarcodeScannerField extends HookWidget {
       onScan: onScan);
 }
 
-class BarcodeScannerDialog extends HookWidget {
-  const BarcodeScannerDialog({Key? key, required this.onScan})
-      : super(key: key);
-
-  final void Function(BarcodeFormat, String) onScan;
-
-  @override
-  Widget build(BuildContext _context) =>
-      _barcodeScannerDialog(_context, onScan: onScan);
-}
-
 class _ScanButton extends StatelessWidget {
   const _ScanButton(
       {Key? key,

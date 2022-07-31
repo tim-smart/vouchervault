@@ -1,7 +1,7 @@
 name: vouchervault
 description: A new Flutter project.
 publish_to: "none"
-version: 1.1.12+31
+version: 1.1.12
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
@@ -12,6 +12,7 @@ dependencies:
   auto_size_text: ^3.0.0-nullsafety.0
   barcode_widget: ^2.0.0
   brightness_volume: ^1.0.3
+  camera: ^0.10.0
   cupertino_icons: ^1.0.2
   dart_date: ^1.1.0
   enum_utils: ^0.3.0
@@ -23,13 +24,15 @@ dependencies:
   fpdt: ^0.0.61
   freezed_annotation: ^2.0.3
   functional_widget_annotation: ^0.10.0
+  google_mlkit_barcode_scanning: ^0.4.0
+  google_mlkit_text_recognition: ^0.4.0
   hooks_riverpod: ^1.0.0
   intl: ^0.17.0
   json_annotation: ^4.4.0
   local_auth: ^2.1.0
   logging: ^1.0.2
-  mobile_scanner: ^2.0.0
   path_provider: ^2.0.1
+  rxdart: ^0.27.5
   share: ^2.0.0
   uuid: ^3.0.1
   riverpod_persistence: ^0.0.5

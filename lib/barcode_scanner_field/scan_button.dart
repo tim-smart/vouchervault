@@ -35,9 +35,9 @@ Widget __scanButton(
       ),
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => BarcodeScannerDialog(
-            onScan: (format, data) {
-              onScan(format, data);
+          builder: (context) => ScannerDialog(
+            onScan: (barcode) {
+              onScan(barcode.format, barcode.rawValue!);
               Navigator.of(context).pop();
             },
           ),
