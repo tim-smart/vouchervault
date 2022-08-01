@@ -25,6 +25,7 @@ dependencies:
   freezed_annotation: ^2.0.3
   functional_widget_annotation: ^0.10.0
   google_mlkit_barcode_scanning: ^0.4.0
+  google_mlkit_entity_extraction: ^0.5.0
   google_mlkit_text_recognition: ^0.4.0
   hooks_riverpod: ^1.0.0
   intl: ^0.17.0

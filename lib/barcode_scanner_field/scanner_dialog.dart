@@ -6,7 +6,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/barcode_scanner_field/providers.dart';
+import 'package:vouchervault/barcode_scanner_field/providers/providers.dart';
 
 part 'scanner_dialog.g.dart';
 
@@ -17,7 +17,7 @@ Widget _scannerDialog(
 }) {
   final controller = ref.watch(initializedCameraController);
 
-  final stream = ref.watch(barcodeProvider.stream);
+  final stream = ref.watch(barcodeProvider);
   useEffect(() => stream.take(1).listen(onScan).cancel, [stream]);
 
   return AnnotatedRegion(
