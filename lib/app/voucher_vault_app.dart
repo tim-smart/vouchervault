@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -44,5 +45,8 @@ Widget __app(WidgetRef ref) {
       authenticated: (_) => const VouchersScreen(),
     ),
     navigatorObservers: [routeObserver],
+    localizationsDelegates: const [
+      FormBuilderLocalizations.delegate,
+    ],
   );
 }

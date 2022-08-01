@@ -4,26 +4,24 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 SystemUiOverlayStyle useSystemOverlayStyle() {
   final context = useContext();
-  final theme = useMemoized(() => Theme.of(context), [context]);
+  final theme = Theme.of(context);
 
   final style = useMemoized(
-      () => theme.brightness == Brightness.light
-          ? SystemUiOverlayStyle.dark.copyWith(
-              statusBarColor: Colors.transparent,
-              systemNavigationBarColor: theme.backgroundColor,
-              systemNavigationBarIconBrightness: Brightness.dark,
-            )
-          : SystemUiOverlayStyle.light.copyWith(
-              statusBarColor: Colors.transparent,
-              systemNavigationBarColor: theme.backgroundColor,
-              systemNavigationBarIconBrightness: Brightness.light,
-            ),
-      [theme.brightness]);
+    () => theme.brightness == Brightness.light
+        ? SystemUiOverlayStyle.dark.copyWith(
+            statusBarColor: Colors.transparent,
+            systemNavigationBarColor: Colors.transparent,
+            systemNavigationBarIconBrightness: Brightness.dark,
+          )
+        : SystemUiOverlayStyle.light.copyWith(
+            statusBarColor: Colors.transparent,
+            systemNavigationBarColor: Colors.transparent,
+            systemNavigationBarIconBrightness: Brightness.light,
+          ),
+    [theme.brightness],
+  );
 
-  useEffect(() {
-    SystemChrome.setSystemUIOverlayStyle(style);
-    return null;
-  }, [style]);
+  SystemChrome.setSystemUIOverlayStyle(style);
 
   return style;
 }

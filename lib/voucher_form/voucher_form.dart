@@ -1,5 +1,3 @@
-import 'package:dart_date/dart_date.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -74,7 +72,7 @@ Widget voucherForm(
           ),
           visualDensity: VisualDensity.compact,
           options: VoucherCodeType.values
-              .map((t) => FormBuilderFieldOption(
+              .map((t) => FormBuilderChipOption(
                     value: V.codeTypeToJson(t),
                     child: Text(V.codeTypeLabel(t)),
                   ))
@@ -82,26 +80,20 @@ Widget voucherForm(
           validator: FormBuilderValidators.required(),
         ),
         SizedBox(height: AppTheme.space3),
-        FormBuilderField<DateTime>(
+        FormBuilderDateTimePicker(
           name: 'expires',
-          builder: (field) => DateTimeField(
-            initialValue: field.value,
-            format: DateFormat('d/M/y'),
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Expires',
-            ),
-            onChanged: (d) {
-              field.didChange(d);
-            },
-            onShowPicker: (context, d) => showDatePicker(
-              context: context,
-              initialDate: O
-                  .fromNullable(d)
-                  .p(O.filter((d) => d.isFuture))
-                  .p(O.getOrElse(() => DateTime.now())),
-              firstDate: DateTime.now(),
-              lastDate: DateTime.now().add(const Duration(days: 365 * 100)),
+          inputType: InputType.date,
+          format: DateFormat('d/M/y'),
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(const Duration(days: 365 * 100)),
+          resetIcon: null,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: 'Expires',
+            suffixIcon: IconButton(
+              onPressed: () =>
+                  formKey.currentState!.fields['expires']?.didChange(null),
+              icon: const Icon(Icons.close),
             ),
           ),
           valueTransformer: O
@@ -156,7 +148,7 @@ Widget voucherForm(
           ),
           alignment: WrapAlignment.spaceAround,
           options: VoucherColor.values
-              .map((c) => FormBuilderFieldOption(
+              .map((c) => FormBuilderChipOption(
                     value: V.colorToJson(c),
                     child: Material(
                       elevation: 2,
