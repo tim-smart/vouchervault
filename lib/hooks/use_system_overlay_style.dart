@@ -10,18 +10,16 @@ SystemUiOverlayStyle useSystemOverlayStyle() {
     () => theme.brightness == Brightness.light
         ? SystemUiOverlayStyle.dark.copyWith(
             statusBarColor: Colors.transparent,
-            systemNavigationBarColor: Colors.transparent,
+            systemNavigationBarColor: theme.scaffoldBackgroundColor,
             systemNavigationBarIconBrightness: Brightness.dark,
           )
         : SystemUiOverlayStyle.light.copyWith(
             statusBarColor: Colors.transparent,
-            systemNavigationBarColor: Colors.transparent,
+            systemNavigationBarColor: theme.scaffoldBackgroundColor,
             systemNavigationBarIconBrightness: Brightness.light,
           ),
     [theme.brightness],
   );
-
-  SystemChrome.setSystemUIOverlayStyle(style);
 
   return style;
 }

@@ -11,10 +11,8 @@ Widget appScaffoldSimple(
   required Widget body,
 }) {
   final style = useSystemOverlayStyle();
-  return Scaffold(
-    body: AnnotatedRegion(
-      value: style,
-      child: body,
-    ),
+  return AnnotatedRegion(
+    value: style,
+    child: Scaffold(body: body),
   );
 }
