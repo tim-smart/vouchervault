@@ -11,7 +11,6 @@ import 'package:vouchervault/barcode_scanner_field/providers/barcode_result.dart
 import 'package:vouchervault/barcode_scanner_field/providers/ml_providers.dart';
 import 'package:vouchervault/barcode_scanner_field/providers/ops.dart';
 import 'package:vouchervault/barcode_scanner_field/lib/camera_utils.dart';
-import 'package:vouchervault/lib/riverpod.dart';
 
 final _log = Logger('barcode_scanner_field/providers/providers.dart');
 
@@ -68,11 +67,11 @@ final flashProvider = Provider.autoDispose((ref) {
   c.whenData((c) => c.setFlashMode(enabled ? FlashMode.torch : FlashMode.off));
 });
 
-final imageProvider = Provider.autoDispose((ref) => ref
-    .watch(initializedCameraController)
-    .p(asyncValueToOption)
-    .p(O.map(cameraImageStream))
-    .p(O.getOrElse(() => neverStream())));
+final imageProvider = Provider.autoDispose(
+    (ref) => ref.watch(initializedCameraController).maybeWhen(
+          data: cameraImageStream,
+          orElse: () => neverStream<CameraControllerWithImage>(),
+        ));
 
 final mlContextProvider = Provider.autoDispose((ref) => MlContext(
       textRecognizer: ref.watch(textRecognizerProvider),
