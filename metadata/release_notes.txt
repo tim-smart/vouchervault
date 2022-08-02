@@ -1,1 +1,3 @@
-Released on Google Play!
+- Fixed bug with voucher form
+- Open scanner immediately
+- Added smart scanning features (english only)
