@@ -5,10 +5,12 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
+import 'package:fpdt/task_either.dart' as TE;
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:vouchervault/lib/files.dart';
 
 typedef CameraControllerWithImage = Tuple2<CameraController, CameraImage>;
 
@@ -72,3 +74,8 @@ Option<InputImage> inputImage(
 
 final _neverController = StreamController.broadcast(sync: true);
 Stream<T> neverStream<T>() => _neverController.stream.cast();
+
+final pickInputImage = pickImage().p(TE.flatMap((i) => O
+    .fromNullable(i.path)
+    .p(O.map(InputImage.fromFilePath))
+    .p(TE.fromOption(() => 'pickInputImage: pickImage returned empty path'))));

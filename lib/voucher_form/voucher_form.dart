@@ -16,6 +16,16 @@ import 'package:vouchervault/models/voucher.dart' as V;
 
 part 'voucher_form.g.dart';
 
+void _updateFieldIfEmpty<T>(
+  GlobalKey<FormBuilderState> k,
+  String field,
+  Option<T> Function() update,
+) =>
+    O
+        .fromNullable(k.currentState!.fields[field])
+        .p(O.filter((f) => f.value != null))
+        .p(O.tap((f) => update().p(O.tap(f.didChange))));
+
 @swidget
 Widget voucherForm(
   BuildContext context, {
@@ -39,6 +49,7 @@ Widget voucherForm(
             labelText: 'Description',
           ),
           validator: FormBuilderValidators.required(),
+          valueTransformer: optionOfString.c(O.toNullable),
         ),
         SizedBox(height: AppTheme.space3),
         FormBuilderField<String>(
@@ -51,33 +62,18 @@ Widget voucherForm(
             onChange: field.didChange,
             errorText: optionOfString(field.errorText),
             initialValue: field.value ?? '',
-            barcodeType: O
-                .fromNullable(formKey.currentState!.fields['codeType'])
-                .p(O.map((f) => f.value as String))
+            barcodeType: optionOfString(
+                    formKey.currentState!.fields['codeType']?.value)
                 .p(O.alt(() => optionOfString(initialFormValue['codeType'])))
                 .p(O.flatMap(barcode.fromCodeTypeJson)),
             onScan: O.some((r) {
-              final fields = formKey.currentState!.fields;
-
-              O.fromNullable(fields['codeType']).p(O.map((f) => f.didChange(
-                  barcode.codeTypeValueFromFormat(r.barcode.format))));
-
-              O
-                  .fromNullable(fields['balanceMilliunits'])
-                  .p(O.tap((f) => O.fromNullable(f.value as int?).p(O.fold(() {
-                        r.balance.p(O.tap(f.didChange));
-                      }, (value) {}))));
-
-              O
-                  .fromNullable(fields['expires'])
-                  .p(O.tap((f) => optionOfString(f.value).p(O.fold(() {
-                        r.expires.p(O.tap(f.didChange));
-                      }, (value) {}))));
-
-              O.fromNullable(fields['description']).p(
-                  O.tap((f) => optionOfString(f.value as String?).p(O.fold(() {
-                        r.merchant.p(O.tap(f.didChange));
-                      }, (value) {}))));
+              O.fromNullable(formKey.currentState!.fields['codeType']).p(O.map(
+                  (f) => f.didChange(
+                      barcode.codeTypeValueFromFormat(r.barcode.format))));
+              _updateFieldIfEmpty(
+                  formKey, 'balanceMilliunits', () => r.balance);
+              _updateFieldIfEmpty(formKey, 'expires', () => r.expires);
+              _updateFieldIfEmpty(formKey, 'description', () => r.merchant);
             }),
           ),
         ),

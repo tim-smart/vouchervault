@@ -1,5 +1,7 @@
+import 'package:dart_date/dart_date.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
+import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:recase/recase.dart';
 
@@ -79,3 +81,42 @@ final _noisePatterns = [
 ];
 
 bool _hasNoNoise(String s) => !_noisePatterns.any((r) => r.hasMatch(s));
+
+int _moneyToMillis(MoneyEntity e) =>
+    (e.integerPart * 1000) + (e.fractionPart * 10);
+
+Option<int> extractBalance(List<EntityAnnotation> e) => e
+    .expand((e) => e.entities)
+    .where((e) => e.type == EntityType.money)
+    .cast<MoneyEntity>()
+    .map(_moneyToMillis)
+    .toIList()
+    .sort()
+    .lastOption;
+
+DateTime _toDateTime(DateTimeEntity e) {
+  final dateTime = DateTime.fromMillisecondsSinceEpoch(e.timestamp * 1000);
+
+  return e.dateTimeGranularity == DateTimeGranularity.month
+      ? dateTime.endOfMonth
+      : dateTime;
+}
+
+List<DateTime> _extractDateTimes(List<EntityAnnotation> e) {
+  final dates = e
+      .expand((e) => e.entities)
+      .where((e) => e.type == EntityType.dateTime)
+      .cast<DateTimeEntity>()
+      .where((e) =>
+          e.dateTimeGranularity == DateTimeGranularity.day ||
+          e.dateTimeGranularity == DateTimeGranularity.month)
+      .map(_toDateTime)
+      .toList();
+
+  dates.sort();
+
+  return dates;
+}
+
+Option<DateTime> extractExpires(List<EntityAnnotation> e) =>
+    _extractDateTimes(e).where((dt) => dt.isFuture).lastOption;
