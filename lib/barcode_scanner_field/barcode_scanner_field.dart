@@ -50,7 +50,7 @@ Widget _barcodeScannerField(
   }, [context, setText, onChange, onScan]);
 
   useEffect(() {
-    if (launchScannerImmediately) {
+    if (launchScannerImmediately && initialValue.isEmpty) {
       SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
         showDialog();
       });
