@@ -7,10 +7,14 @@ import 'package:recase/recase.dart';
 
 // === Merchant extraction
 Option<String> extractMerchant(RecognizedText rt) {
-  final lines = eligibleMerchantLines(rt).where(_hasNoNoise);
+  final lines = eligibleMerchantLines(rt)
+      .where(_hasNoNoise)
+      .map(_normalizeWhitespace)
+      .where(_hasNWords(4));
+
   return findLineWithMerchantSuffix(lines)
       .p(O.alt(() => lines.firstOption))
-      .p(O.map((s) => s.titleCase));
+      .p(O.map((s) => s.toLowerCase().titleCase));
 }
 
 bool _isLargeBlock(TextBlock b) =>
@@ -21,8 +25,8 @@ bool _isEnglishBlock(TextBlock b) => b.recognizedLanguages.contains('en');
 bool _isValidBlock(TextBlock b) => !_isLargeBlock(b) && _isEnglishBlock(b);
 
 String _trimLine(String s) => s
-    .replaceAll(RegExp(r"^[^A-z0-9]+"), "")
-    .replaceAll(RegExp(r"[^A-z0-9]+$"), "");
+    .replaceAll(RegExp(r"^[^\p{L}]+", unicode: true), "")
+    .replaceAll(RegExp(r"[^\p{L}]+$", unicode: true), "");
 
 Iterable<String> eligibleMerchantLines(RecognizedText rt) => rt.blocks
     .where(_isValidBlock)
@@ -68,13 +72,13 @@ final _noiseWords = [
   'terms',
   'thank you',
   'total',
+  'voucher',
   'www',
   '\\.co',
 ];
 
 final _noisePatterns = [
-  RegExp(r"^[^A-z0-9. ']"),
-  RegExp(r"[0-9]$"),
+  RegExp(r"[^\p{L}'. ]", unicode: true),
   RegExp(
     _noiseWords.join("|"),
     caseSensitive: false,
@@ -82,6 +86,11 @@ final _noisePatterns = [
 ];
 
 bool _hasNoNoise(String s) => !_noisePatterns.any((r) => r.hasMatch(s));
+
+String _normalizeWhitespace(String s) => s.replaceAll(RegExp(r"\s+"), " ");
+
+bool Function(String) _hasNWords(int count) =>
+    (s) => s.split(" ").length <= count;
 
 // === Balance extraction
 Option<int> extractBalance(List<EntityAnnotation> e) => e
@@ -117,7 +126,7 @@ List<DateTime> _extractDateTimes(List<EntityAnnotation> e) {
 }
 
 DateTime _toDateTime(DateTimeEntity e) {
-  final dateTime = DateTime.fromMillisecondsSinceEpoch(e.timestamp * 1000);
+  final dateTime = DateTime.fromMillisecondsSinceEpoch(e.timestamp);
 
   return e.dateTimeGranularity == DateTimeGranularity.month
       ? dateTime.endOfMonth

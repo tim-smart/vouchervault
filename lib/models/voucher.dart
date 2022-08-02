@@ -100,11 +100,17 @@ class Voucher with _$Voucher {
       O.isSome(normalizedExpires) || O.isSome(balanceOption);
   late final bool hasDetailsOrNotes = hasDetails || O.isSome(notesOption);
 
-  static Voucher fromFormValue(dynamic json) => Voucher.fromJson(json);
+  static Voucher fromFormValue(dynamic json) =>
+      Voucher.fromJson(<String, dynamic>{
+        ...json,
+        'balanceMilliunits':
+            millis.fromString(json['balanceMilliunits']).p(O.toNullable),
+      });
 
   dynamic toFormValue() => <String, dynamic>{
         ...toJson(),
-        'balanceMilliunits': O.toNullable(balanceOption),
+        'balanceMilliunits':
+            balanceOption.p(O.flatMap(millis.toString)).p(O.toNullable),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
         'expires': O.toNullable(expires),
         'color': _$VoucherColorEnumMap[this.color],

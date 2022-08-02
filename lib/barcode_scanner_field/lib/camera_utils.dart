@@ -16,20 +16,24 @@ typedef CameraControllerWithImage = Tuple2<CameraController, CameraImage>;
 
 Stream<CameraControllerWithImage> cameraImageStream(
   CameraController c, {
-  Duration throttleTime = const Duration(milliseconds: 150),
+  Duration throttleTime = const Duration(milliseconds: 250),
+  int skipFrames = 3,
 }) {
   late StreamController<CameraControllerWithImage> sc;
 
-  void onStart() {
-    c.startImageStream((image) => sc.add(tuple2(c, image)));
-  }
+  Future<void> onStart() =>
+      c.startImageStream((image) => sc.add(tuple2(c, image)));
 
   sc = StreamController(
     onListen: onStart,
+    onCancel: c.stopImageStream,
     sync: true,
   );
 
-  return sc.stream.throttleTime(throttleTime);
+  return sc.stream
+      .throttleTime(throttleTime)
+      .skip(skipFrames)
+      .asBroadcastStream();
 }
 
 Option<InputImageData> inputImageData(

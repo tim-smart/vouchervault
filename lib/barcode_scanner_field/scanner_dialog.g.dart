@@ -16,17 +16,33 @@ class ScannerDialog extends HookConsumerWidget {
       _scannerDialog(_ref, onScan: onScan);
 }
 
-class _PreviewDialog extends ConsumerWidget {
+class _PreviewDialog extends StatelessWidget {
   const _PreviewDialog(
-      {Key? key, required this.controller, required this.onPressedPicker})
+      {Key? key,
+      required this.controller,
+      required this.onPressedPicker,
+      required this.onPressedFlash})
       : super(key: key);
 
   final Option<CameraController> controller;
 
   final void Function() onPressedPicker;
 
+  final void Function() onPressedFlash;
+
   @override
-  Widget build(BuildContext _context, WidgetRef _ref) =>
-      __previewDialog(_context, _ref,
-          controller: controller, onPressedPicker: onPressedPicker);
+  Widget build(BuildContext _context) => __previewDialog(_context,
+      controller: controller,
+      onPressedPicker: onPressedPicker,
+      onPressedFlash: onPressedFlash);
+}
+
+class _CameraPreview extends StatelessWidget {
+  const _CameraPreview({Key? key, required this.controller}) : super(key: key);
+
+  final CameraController controller;
+
+  @override
+  Widget build(BuildContext _context) =>
+      __cameraPreview(controller: controller);
 }

@@ -11,6 +11,7 @@ import 'package:vouchervault/barcode_scanner_field/providers/barcode_result.dart
 import 'package:vouchervault/barcode_scanner_field/providers/ml_providers.dart';
 import 'package:vouchervault/barcode_scanner_field/providers/ops.dart';
 import 'package:vouchervault/barcode_scanner_field/lib/camera_utils.dart';
+import 'package:vouchervault/lib/riverpod.dart';
 
 final _log = Logger('barcode_scanner_field/providers/providers.dart');
 
@@ -24,23 +25,33 @@ final cameraProvider = Provider((ref) => ref.watch(camerasProvider).maybeWhen(
       orElse: () => O.none<CameraDescription>(),
     ));
 
-final cameraControllerProvider =
-    Provider.autoDispose((ref) => ref.watch(cameraProvider).p(O.map((camera) {
-          final controller = CameraController(
-            camera,
-            ResolutionPreset.high,
-            enableAudio: false,
-          );
+final cameraPaused = StateProvider.autoDispose((ref) => false);
 
-          ref.onDispose(() async {
-            if (controller.value.isStreamingImages) {
-              await controller.stopImageStream();
-            }
-            await controller.dispose();
-          });
+final cameraControllerProvider = Provider.autoDispose((ref) {
+  final paused = ref.watch(cameraPaused);
 
-          return controller;
-        })));
+  return ref
+      .watch(cameraProvider)
+      .p(O.filter((_) => !paused))
+      .p(O.map((camera) {
+    final controller = CameraController(
+      camera,
+      ResolutionPreset.high,
+      enableAudio: false,
+    );
+
+    ref.onDispose(() async {
+      if (controller.value.isStreamingImages) {
+        try {
+          await controller.stopImageStream();
+        } catch (_) {}
+      }
+      await controller.dispose();
+    });
+
+    return controller;
+  }));
+});
 
 final initializedCameraController = FutureProvider.autoDispose(
     (ref) => ref.watch(cameraControllerProvider).p(O.fold(
@@ -57,11 +68,11 @@ final flashProvider = Provider.autoDispose((ref) {
   c.whenData((c) => c.setFlashMode(enabled ? FlashMode.torch : FlashMode.off));
 });
 
-final imageProvider = Provider.autoDispose(
-    (ref) => ref.watch(initializedCameraController).maybeWhen(
-          data: cameraImageStream,
-          orElse: () => neverStream<CameraControllerWithImage>(),
-        ));
+final imageProvider = Provider.autoDispose((ref) => ref
+    .watch(initializedCameraController)
+    .p(asyncValueToOption)
+    .p(O.map(cameraImageStream))
+    .p(O.getOrElse(() => neverStream())));
 
 final mlContextProvider = Provider.autoDispose((ref) => MlContext(
       textRecognizer: ref.watch(textRecognizerProvider),
@@ -69,7 +80,7 @@ final mlContextProvider = Provider.autoDispose((ref) => MlContext(
       entityExtractor: ref.watch(entityRecognizerProvider),
     ));
 
-final barcodeResultProvider = StreamProvider.autoDispose((ref) {
+final barcodeResultProvider = Provider.autoDispose((ref) {
   final c = ref.watch(mlContextProvider);
 
   return ref
@@ -85,5 +96,6 @@ final barcodeResultProvider = StreamProvider.autoDispose((ref) {
           return const [];
         },
         (r) => [r],
-      ));
+      ))
+      .asBroadcastStream();
 });

@@ -22,85 +22,105 @@ Widget _scannerDialog(
 }) {
   final controller = ref.watch(initializedCameraController);
 
-  final stream = ref.watch(barcodeResultProvider.stream);
+  // Listen for scans
+  final stream = ref.watch(barcodeResultProvider);
   useEffect(() => stream.take(1).listen(onScan).cancel, [stream]);
 
+  // File picker
   final mlContext = ref.watch(mlContextProvider);
-  final onPressedPicker = useCallback(() {
-    extractAllFromFile.p(RTE.tap(onScan)).p(RTE.tapLeft((err) =>
-        Fluttertoast.showToast(msg: err.friendlyMessage)))(mlContext)();
+  final onPressedPicker = useCallback(() async {
+    ref.read(cameraPaused.notifier).state = true;
+
+    extractAllFromFile.p(RTE.tap(onScan)).p(RTE.tapLeft((err) {
+      Fluttertoast.showToast(msg: err.friendlyMessage);
+
+      // Only un-pause on failure
+      ref.read(cameraPaused.notifier).state = false;
+    }))(mlContext)();
   }, [onScan, mlContext]);
+
+  // Toggle flash
+  ref.watch(flashProvider);
+  final onPressedFlash = useCallback(() {
+    ref.read(flashEnabled.notifier).update((state) => !state);
+  }, []);
 
   return AnnotatedRegion(
     value: SystemUiOverlayStyle.light,
     child: _PreviewDialog(
       controller: controller.maybeWhen(data: O.some, orElse: O.none),
       onPressedPicker: onPressedPicker,
+      onPressedFlash: onPressedFlash,
     ),
   );
 }
 
-@cwidget
+@swidget
 Widget __previewDialog(
-  BuildContext context,
-  WidgetRef ref, {
+  BuildContext context, {
   required Option<CameraController> controller,
   required void Function() onPressedPicker,
-}) {
-  ref.watch(flashProvider);
-
-  return Scaffold(
-    resizeToAvoidBottomInset: false,
-    body: Stack(
-      children: [
-        controller.p(O.fold(
-          () => Container(color: Colors.black),
-          (c) => Positioned.fill(
-            child: AspectRatio(
-              aspectRatio: c.value.aspectRatio,
-              child: CameraPreview(c),
+  required void Function() onPressedFlash,
+}) =>
+    Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          controller.p(O.fold(
+            () => Container(color: Colors.black),
+            (c) => Positioned.fill(
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: _CameraPreview(controller: c),
+              ),
             ),
-          ),
-        )),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: SafeArea(
-            top: false,
-            bottom: true,
-            child: Padding(
-              padding: EdgeInsets.all(AppTheme.space3),
-              child: Row(
-                children: [
-                  const Spacer(),
-                  IconButton(
-                    color: Colors.white,
-                    icon: const Icon(Icons.add_photo_alternate),
-                    onPressed: onPressedPicker,
-                  ),
-                  SizedBox(width: AppTheme.space3),
-                  ElevatedButton(
-                    onPressed: () => ref
-                        .read(flashEnabled.notifier)
-                        .update((state) => !state),
-                    child: const Text('Toggle flash'),
-                  ),
-                  SizedBox(width: AppTheme.space3),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      onPrimary: Colors.black,
+          )),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              top: false,
+              bottom: true,
+              child: Padding(
+                padding: EdgeInsets.all(AppTheme.space3),
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    IconButton(
+                      color: Colors.white,
+                      icon: const Icon(Icons.add_photo_alternate),
+                      onPressed: onPressedPicker,
                     ),
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Cancel'),
-                  ),
-                ],
+                    SizedBox(width: AppTheme.space3),
+                    ElevatedButton(
+                      onPressed: onPressedFlash,
+                      child: const Text('Toggle flash'),
+                    ),
+                    SizedBox(width: AppTheme.space3),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
+                      ),
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Cancel'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+
+@swidget
+Widget __cameraPreview({
+  required CameraController controller,
+}) =>
+    SizedBox(
+      height: controller.value.previewSize!.width,
+      width: controller.value.previewSize!.height,
+      child: controller.buildPreview(),
+    );

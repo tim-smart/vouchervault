@@ -23,7 +23,10 @@ void _updateFieldIfEmpty<T>(
 ) =>
     O
         .fromNullable(k.currentState!.fields[field])
-        .p(O.filter((f) => f.value != null))
+        .p(O.filter((f) =>
+            f.value == null ||
+            f.value is! String ||
+            (f.value as String).isEmpty))
         .p(O.tap((f) => update().p(O.tap(f.didChange))));
 
 @swidget
@@ -70,8 +73,8 @@ Widget voucherForm(
               O.fromNullable(formKey.currentState!.fields['codeType']).p(O.map(
                   (f) => f.didChange(
                       barcode.codeTypeValueFromFormat(r.barcode.format))));
-              _updateFieldIfEmpty(
-                  formKey, 'balanceMilliunits', () => r.balance);
+              _updateFieldIfEmpty(formKey, 'balanceMilliunits',
+                  () => r.balance.p(O.flatMap(millis.toString)));
               _updateFieldIfEmpty(formKey, 'expires', () => r.expires);
               _updateFieldIfEmpty(formKey, 'description', () => r.merchant);
             }),
@@ -127,19 +130,15 @@ Widget voucherForm(
           ),
         ),
         SizedBox(height: AppTheme.space3),
-        FormBuilderField<int>(
+        FormBuilderTextField(
           name: 'balanceMilliunits',
-          builder: (field) => TextFormField(
-            initialValue: millis.toString(field.value).p(O.getOrElse(() => '')),
-            onChanged: millis.fromString.c(O.toNullable).c(field.didChange),
-            keyboardType: const TextInputType.numberWithOptions(
-              signed: true,
-              decimal: true,
-            ),
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Balance',
-            ),
+          keyboardType: const TextInputType.numberWithOptions(
+            signed: true,
+            decimal: true,
+          ),
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Balance',
           ),
         ),
         SizedBox(height: AppTheme.space3),
