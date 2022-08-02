@@ -80,18 +80,23 @@ final mlContextProvider = Provider.autoDispose((ref) => MlContext(
     ));
 
 final barcodeResultProvider = Provider.autoDispose((ref) {
-  final c = ref.watch(mlContextProvider);
+  final ctx = ref.watch(mlContextProvider);
 
   return ref
       .watch(imageProvider)
       .exhaustMap(
         (t) => inputImage(t.second, camera: t.first.description)
-            .p(O.map((image) => Stream.fromFuture(extractAll(image)(c)())))
+            .p(O.map((image) => Stream.fromFuture(extractAll(image)(ctx)())))
             .p(O.getOrElse(() => const Stream.empty())),
       )
       .expand<BarcodeResult>(E.fold(
         (left) {
-          _log.info(left);
+          left.when(
+            barcodeNotFound: () {},
+            pickerError: _log.info,
+            mlkitError: _log.info,
+          );
+
           return const [];
         },
         (r) => [r],
