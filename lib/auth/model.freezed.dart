@@ -196,7 +196,9 @@ class _$Unauthenticated extends Unauthenticated {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UnauthenticatedToJson(this);
+    return _$$UnauthenticatedToJson(
+      this,
+    );
   }
 }
 
@@ -342,7 +344,9 @@ class _$Authenticated extends Authenticated {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AuthenticatedToJson(this);
+    return _$$AuthenticatedToJson(
+      this,
+    );
   }
 }
 
@@ -354,7 +358,7 @@ abstract class Authenticated extends AuthState {
   factory Authenticated.fromJson(Map<String, dynamic> json) =
       _$Authenticated.fromJson;
 
-  AuthenticatedReason get reason => throw _privateConstructorUsedError;
+  AuthenticatedReason get reason;
   @JsonKey(ignore: true)
   _$$AuthenticatedCopyWith<_$Authenticated> get copyWith =>
       throw _privateConstructorUsedError;

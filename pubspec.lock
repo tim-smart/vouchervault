@@ -396,7 +396,7 @@ packages:
       name: fpdt
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.61"
+    version: "0.0.62"
   freezed:
     dependency: "direct dev"
     description:
@@ -752,6 +752,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  recase:
+    dependency: "direct main"
+    description:
+      name: recase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
   riverpod:
     dependency: transitive
     description:

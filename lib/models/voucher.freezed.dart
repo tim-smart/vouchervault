@@ -302,7 +302,9 @@ class _$_Voucher extends _Voucher {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VoucherToJson(this);
+    return _$$_VoucherToJson(
+      this,
+    );
   }
 }
 
@@ -323,25 +325,25 @@ abstract class _Voucher extends Voucher {
   factory _Voucher.fromJson(Map<String, dynamic> json) = _$_Voucher.fromJson;
 
   @override
-  O.Option<String> get uuid => throw _privateConstructorUsedError;
+  O.Option<String> get uuid;
   @override
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
-  O.Option<String> get code => throw _privateConstructorUsedError;
+  O.Option<String> get code;
   @override
-  VoucherCodeType get codeType => throw _privateConstructorUsedError;
+  VoucherCodeType get codeType;
   @override
-  O.Option<DateTime> get expires => throw _privateConstructorUsedError;
+  O.Option<DateTime> get expires;
   @override
-  bool get removeOnceExpired => throw _privateConstructorUsedError;
+  bool get removeOnceExpired;
   @override
-  O.Option<double> get balance => throw _privateConstructorUsedError;
+  O.Option<double> get balance;
   @override
-  O.Option<int> get balanceMilliunits => throw _privateConstructorUsedError;
+  O.Option<int> get balanceMilliunits;
   @override
-  String get notes => throw _privateConstructorUsedError;
+  String get notes;
   @override
-  VoucherColor get color => throw _privateConstructorUsedError;
+  VoucherColor get color;
   @override
   @JsonKey(ignore: true)
   _$$_VoucherCopyWith<_$_Voucher> get copyWith =>

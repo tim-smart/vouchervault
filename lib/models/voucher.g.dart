@@ -44,7 +44,7 @@ Map<String, dynamic> _$$_VoucherToJson(_$_Voucher instance) =>
       'code': instance.code.toJson(
         (value) => value,
       ),
-      'codeType': _$VoucherCodeTypeEnumMap[instance.codeType],
+      'codeType': _$VoucherCodeTypeEnumMap[instance.codeType]!,
       'expires': instance.expires.toJson(
         (value) => value.toIso8601String(),
       ),
@@ -56,7 +56,7 @@ Map<String, dynamic> _$$_VoucherToJson(_$_Voucher instance) =>
         (value) => value,
       ),
       'notes': instance.notes,
-      'color': _$VoucherColorEnumMap[instance.color],
+      'color': _$VoucherColorEnumMap[instance.color]!,
     };
 
 const _$VoucherCodeTypeEnumMap = {

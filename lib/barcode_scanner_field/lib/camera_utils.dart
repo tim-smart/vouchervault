@@ -70,21 +70,5 @@ Option<InputImage> inputImage(
       );
     }));
 
-final _neverStream = StreamController(sync: true).stream;
-Stream<T> neverStream<T>() => _neverStream.cast();
-
-Future<List<Barcode>> processInputImage(
-  InputImage image, {
-  required BarcodeScanner barcodeScanner,
-  required TextRecognizer textRecognizer,
-  required EntityExtractor entityExtractor,
-}) async {
-  final textResult = await textRecognizer.processImage(image);
-
-  if (textResult.text.isNotEmpty) {
-    final entityResult = await entityExtractor.annotateText(textResult.text);
-    print("processed entities");
-  }
-
-  return barcodeScanner.processImage(image);
-}
+final _neverController = StreamController.broadcast(sync: true);
+Stream<T> neverStream<T>() => _neverController.stream.cast();

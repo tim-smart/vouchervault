@@ -32,7 +32,6 @@ Widget voucherForm(
       children: [
         const SizedBox(height: 4),
         FormBuilderTextField(
-          autofocus: true,
           name: 'description',
           textCapitalization: TextCapitalization.words,
           decoration: const InputDecoration(
@@ -47,6 +46,7 @@ Widget voucherForm(
           valueTransformer: optionOfString.c(O.toNullable),
           validator: FormBuilderValidators.required(),
           builder: (field) => BarcodeScannerField(
+            launchScannerImmediately: true,
             labelText: 'Code',
             onChange: field.didChange,
             errorText: optionOfString(field.errorText),
@@ -56,11 +56,29 @@ Widget voucherForm(
                 .p(O.map((f) => f.value as String))
                 .p(O.alt(() => optionOfString(initialFormValue['codeType'])))
                 .p(O.flatMap(barcode.fromCodeTypeJson)),
-            onScan: O.some((f) => O
-                .fromNullable(formKey.currentState!.fields['codeType'])
-                .p(O.map((f) => f.didChange))
-                .p(O.map((didChange) =>
-                    didChange(barcode.codeTypeValueFromFormat(f))))),
+            onScan: O.some((r) {
+              final fields = formKey.currentState!.fields;
+
+              O.fromNullable(fields['codeType']).p(O.map((f) => f.didChange(
+                  barcode.codeTypeValueFromFormat(r.barcode.format))));
+
+              O
+                  .fromNullable(fields['balanceMilliunits'])
+                  .p(O.tap((f) => O.fromNullable(f.value as int?).p(O.fold(() {
+                        r.balance.p(O.tap(f.didChange));
+                      }, (value) {}))));
+
+              O
+                  .fromNullable(fields['expires'])
+                  .p(O.tap((f) => optionOfString(f.value).p(O.fold(() {
+                        r.expires.p(O.tap(f.didChange));
+                      }, (value) {}))));
+
+              O.fromNullable(fields['description']).p(
+                  O.tap((f) => optionOfString(f.value as String?).p(O.fold(() {
+                        r.merchant.p(O.tap(f.didChange));
+                      }, (value) {}))));
+            }),
           ),
         ),
         FormBuilderChoiceChip(

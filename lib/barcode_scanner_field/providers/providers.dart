@@ -2,12 +2,17 @@ import 'dart:async';
 
 import 'package:camera/camera.dart';
 import 'package:fpdt/fpdt.dart';
+import 'package:fpdt/either.dart' as E;
 import 'package:fpdt/option.dart' as O;
-import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:vouchervault/barcode_scanner_field/providers/barcode_result.dart';
 import 'package:vouchervault/barcode_scanner_field/providers/ml_providers.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/utils.dart';
+import 'package:vouchervault/barcode_scanner_field/providers/ops.dart';
+import 'package:vouchervault/barcode_scanner_field/lib/camera_utils.dart';
+
+final _log = Logger('barcode_scanner_field/providers/providers.dart');
 
 final camerasProvider = FutureProvider((ref) => availableCameras());
 
@@ -58,23 +63,27 @@ final imageProvider = Provider.autoDispose(
           orElse: () => neverStream<CameraControllerWithImage>(),
         ));
 
-final barcodeProvider = Provider.autoDispose((ref) {
-  final scanner = ref.watch(barcodeScannerProvider);
-  final textRecognizer = ref.watch(textRecognizerProvider);
-  final entityExtractor = ref.watch(entityRecognizerProvider);
+final mlContextProvider = Provider.autoDispose((ref) => MlContext(
+      textRecognizer: ref.watch(textRecognizerProvider),
+      barcodeScanner: ref.watch(barcodeScannerProvider),
+      entityExtractor: ref.watch(entityRecognizerProvider),
+    ));
+
+final barcodeResultProvider = StreamProvider.autoDispose((ref) {
+  final c = ref.watch(mlContextProvider);
 
   return ref
       .watch(imageProvider)
       .exhaustMap(
-        (t) => inputImage(t.second, camera: t.first.description).p(O.fold(
-          () => const Stream.empty() as Stream<List<Barcode>>,
-          (image) => Stream.fromFuture(processInputImage(
-            image,
-            barcodeScanner: scanner,
-            textRecognizer: textRecognizer,
-            entityExtractor: entityExtractor,
-          )),
-        )),
+        (t) => inputImage(t.second, camera: t.first.description)
+            .p(O.map((image) => Stream.fromFuture(extractAll(image)(c)())))
+            .p(O.getOrElse(() => const Stream.empty())),
       )
-      .expand((b) => b);
+      .expand<BarcodeResult>(E.fold(
+        (left) {
+          _log.info(left);
+          return const [];
+        },
+        (r) => [r],
+      ));
 });

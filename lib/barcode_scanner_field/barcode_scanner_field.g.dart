@@ -14,7 +14,8 @@ class BarcodeScannerField extends HookWidget {
       required this.barcodeType,
       required this.labelText,
       this.errorText = const None(),
-      this.onScan = const None()})
+      this.onScan = const None(),
+      this.launchScannerImmediately = false})
       : super(key: key);
 
   final void Function(String) onChange;
@@ -27,7 +28,9 @@ class BarcodeScannerField extends HookWidget {
 
   final Option<String> errorText;
 
-  final Option<void Function(BarcodeFormat)> onScan;
+  final Option<void Function(BarcodeResult)> onScan;
+
+  final bool launchScannerImmediately;
 
   @override
   Widget build(BuildContext _context) => _barcodeScannerField(_context,
@@ -36,24 +39,25 @@ class BarcodeScannerField extends HookWidget {
       barcodeType: barcodeType,
       labelText: labelText,
       errorText: errorText,
-      onScan: onScan);
+      onScan: onScan,
+      launchScannerImmediately: launchScannerImmediately);
 }
 
-class _ScanButton extends StatelessWidget {
-  const _ScanButton(
+class _BarcodeButton extends StatelessWidget {
+  const _BarcodeButton(
       {Key? key,
       required this.barcodeType,
       required this.data,
-      required this.onScan})
+      required this.onPressed})
       : super(key: key);
 
   final Option<Barcode> barcodeType;
 
   final String data;
 
-  final void Function(BarcodeFormat, String) onScan;
+  final void Function() onPressed;
 
   @override
-  Widget build(BuildContext _context) => __scanButton(_context,
-      barcodeType: barcodeType, data: data, onScan: onScan);
+  Widget build(BuildContext _context) => __barcodeButton(_context,
+      barcodeType: barcodeType, data: data, onPressed: onPressed);
 }

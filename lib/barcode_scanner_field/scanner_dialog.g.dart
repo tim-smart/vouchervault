@@ -9,7 +9,7 @@ part of 'scanner_dialog.dart';
 class ScannerDialog extends HookConsumerWidget {
   const ScannerDialog({Key? key, required this.onScan}) : super(key: key);
 
-  final void Function(Barcode) onScan;
+  final void Function(BarcodeResult) onScan;
 
   @override
   Widget build(BuildContext _context, WidgetRef _ref) =>
@@ -17,11 +17,16 @@ class ScannerDialog extends HookConsumerWidget {
 }
 
 class _PreviewDialog extends ConsumerWidget {
-  const _PreviewDialog({Key? key, required this.controller}) : super(key: key);
+  const _PreviewDialog(
+      {Key? key, required this.controller, required this.onPressedPicker})
+      : super(key: key);
 
-  final CameraController controller;
+  final Option<CameraController> controller;
+
+  final void Function() onPressedPicker;
 
   @override
   Widget build(BuildContext _context, WidgetRef _ref) =>
-      __previewDialog(_context, _ref, controller: controller);
+      __previewDialog(_context, _ref,
+          controller: controller, onPressedPicker: onPressedPicker);
 }

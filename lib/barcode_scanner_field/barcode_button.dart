@@ -21,11 +21,11 @@ final _autoSizeText = optionOfString.c(O.map((text) => AutoSizeText(
     ) as Widget));
 
 @swidget
-Widget __scanButton(
+Widget __barcodeButton(
   BuildContext context, {
   required Option<Barcode> barcodeType,
   required String data,
-  required void Function(BarcodeFormat, String) onScan,
+  required void Function() onPressed,
 }) =>
     TextButton(
       style: TextButton.styleFrom(
@@ -33,17 +33,7 @@ Widget __scanButton(
         primary: Colors.black,
         minimumSize: Size.fromHeight(AppTheme.rem(7)),
       ),
-      onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ScannerDialog(
-            onScan: (barcode) {
-              onScan(barcode.format, barcode.rawValue!);
-              Navigator.of(context).pop();
-            },
-          ),
-          fullscreenDialog: true,
-        ));
-      },
+      onPressed: onPressed,
       child: Center(
         child: _barcodeWidget(barcodeType, optionOfString(data))
             .p(O.alt(() => _autoSizeText(data)))

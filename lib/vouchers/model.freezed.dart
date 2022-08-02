@@ -123,7 +123,7 @@ abstract class _VouchersState extends VouchersState {
   _VouchersState._() : super._();
 
   @override
-  IList<Voucher> get vouchers => throw _privateConstructorUsedError;
+  IList<Voucher> get vouchers;
   @override
   @JsonKey(ignore: true)
   _$$_VouchersStateCopyWith<_$_VouchersState> get copyWith =>

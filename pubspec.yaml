@@ -21,7 +21,7 @@ dependencies:
   flutter_hooks: ^0.18.0
   fluttertoast: ^8.0.7
   form_builder_validators: ^8.1.1
-  fpdt: ^0.0.61
+  fpdt: ^0.0.62
   freezed_annotation: ^2.0.3
   functional_widget_annotation: ^0.10.0
   google_mlkit_barcode_scanning: ^0.4.0
@@ -33,6 +33,7 @@ dependencies:
   local_auth: ^2.1.0
   logging: ^1.0.2
   path_provider: ^2.0.1
+  recase: ^4.0.0
   rxdart: ^0.27.5
   share: ^2.0.0
   uuid: ^3.0.1

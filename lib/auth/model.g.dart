@@ -24,7 +24,7 @@ _$Authenticated _$$AuthenticatedFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$AuthenticatedToJson(_$Authenticated instance) =>
     <String, dynamic>{
-      'reason': _$AuthenticatedReasonEnumMap[instance.reason],
+      'reason': _$AuthenticatedReasonEnumMap[instance.reason]!,
       'runtimeType': instance.$type,
     };
 
