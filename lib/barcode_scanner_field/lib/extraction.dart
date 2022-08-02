@@ -5,9 +5,10 @@ import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.da
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:recase/recase.dart';
 
+// === Merchant extraction
 Option<String> extractMerchant(RecognizedText rt) {
   final lines = eligibleMerchantLines(rt).where(_hasNoNoise);
-  return findMerchantWithSuffix(lines)
+  return findLineWithMerchantSuffix(lines)
       .p(O.alt(() => lines.firstOption))
       .p(O.map((s) => s.titleCase));
 }
@@ -45,7 +46,7 @@ final _suffixPatterns = [
 
 bool _hasSuffix(String s) => _suffixPatterns.any((r) => r.hasMatch(s));
 
-Option<String> findMerchantWithSuffix(Iterable<String> lines) =>
+Option<String> findLineWithMerchantSuffix(Iterable<String> lines) =>
     lines.where(_hasSuffix).firstOption;
 
 final _noiseWords = [
@@ -82,9 +83,7 @@ final _noisePatterns = [
 
 bool _hasNoNoise(String s) => !_noisePatterns.any((r) => r.hasMatch(s));
 
-int _moneyToMillis(MoneyEntity e) =>
-    (e.integerPart * 1000) + (e.fractionPart * 10);
-
+// === Balance extraction
 Option<int> extractBalance(List<EntityAnnotation> e) => e
     .expand((e) => e.entities)
     .where((e) => e.type == EntityType.money)
@@ -94,13 +93,12 @@ Option<int> extractBalance(List<EntityAnnotation> e) => e
     .sort()
     .lastOption;
 
-DateTime _toDateTime(DateTimeEntity e) {
-  final dateTime = DateTime.fromMillisecondsSinceEpoch(e.timestamp * 1000);
+int _moneyToMillis(MoneyEntity e) =>
+    (e.integerPart * 1000) + (e.fractionPart * 10);
 
-  return e.dateTimeGranularity == DateTimeGranularity.month
-      ? dateTime.endOfMonth
-      : dateTime;
-}
+// === Expiry extraction
+Option<DateTime> extractExpires(List<EntityAnnotation> e) =>
+    _extractDateTimes(e).where((dt) => dt.isFuture).lastOption;
 
 List<DateTime> _extractDateTimes(List<EntityAnnotation> e) {
   final dates = e
@@ -118,5 +116,10 @@ List<DateTime> _extractDateTimes(List<EntityAnnotation> e) {
   return dates;
 }
 
-Option<DateTime> extractExpires(List<EntityAnnotation> e) =>
-    _extractDateTimes(e).where((dt) => dt.isFuture).lastOption;
+DateTime _toDateTime(DateTimeEntity e) {
+  final dateTime = DateTime.fromMillisecondsSinceEpoch(e.timestamp * 1000);
+
+  return e.dateTimeGranularity == DateTimeGranularity.month
+      ? dateTime.endOfMonth
+      : dateTime;
+}

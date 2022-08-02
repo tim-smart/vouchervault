@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/reader_task_either.dart' as RTE;
@@ -26,7 +27,8 @@ Widget _scannerDialog(
 
   final mlContext = ref.watch(mlContextProvider);
   final onPressedPicker = useCallback(() {
-    extractAllFromFile.p(RTE.tap(onScan))(mlContext)();
+    extractAllFromFile.p(RTE.tap(onScan)).p(RTE.tapLeft((err) =>
+        Fluttertoast.showToast(msg: err.friendlyMessage)))(mlContext)();
   }, [onScan, mlContext]);
 
   return AnnotatedRegion(

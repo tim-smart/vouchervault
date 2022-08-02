@@ -21,16 +21,34 @@ class MlContext with _$MlContext {
   }) = _MlContext;
 }
 
-typedef BarcodeOp<A> = ReaderTaskEither<MlContext, String, A>;
+@freezed
+class MlError with _$MlError {
+  const MlError._();
+
+  const factory MlError.barcodeNotFound() = _MlErrorBarcodeNotFound;
+  const factory MlError.pickerError(String message) = _MlErrorPicker;
+  const factory MlError.mlkitError({
+    required String op,
+    required dynamic err,
+  }) = _MlErrorMlKit;
+
+  String get friendlyMessage => when(
+        barcodeNotFound: () => 'Could not find a barcode',
+        pickerError: (msg) => 'Could not load image: $msg',
+        mlkitError: (op, err) => 'Could not process image in method: $op',
+      );
+}
+
+typedef BarcodeOp<A> = ReaderTaskEither<MlContext, MlError, A>;
 
 BarcodeOp<List<Barcode>> scan(InputImage image) => TE.tryCatchK(
       (c) => c.barcodeScanner.processImage(image),
-      (err, stackTrace) => 'scan err: $err',
+      (err, stackTrace) => MlError.mlkitError(op: 'scan', err: err),
     );
 
 BarcodeOp<RecognizedText> ocr(InputImage image) => TE.tryCatchK(
       (c) => c.textRecognizer.processImage(image),
-      (err, stackTrace) => 'ocr err: $err',
+      (err, stackTrace) => MlError.mlkitError(op: 'ocr', err: err),
     );
 
 BarcodeOp<List<EntityAnnotation>> extractEntities(
@@ -39,19 +57,20 @@ BarcodeOp<List<EntityAnnotation>> extractEntities(
 }) =>
     TE.tryCatchK(
       (c) => c.entityExtractor.annotateText(text, entityTypesFilter: filter),
-      (err, stackTrace) => 'extractEntities err: $err',
+      (err, stackTrace) => MlError.mlkitError(op: 'extractEntities', err: err),
     );
 
 BarcodeOp<BarcodeResult> extractAll(InputImage image) => scan(image)
     .p(RTE.flatMap(
-      (b) => b.firstOption
-          .p(O.map((b) => BarcodeResult(barcode: b)))
-          .p(RTE.fromOption((p0) => 'extractAll: no barcode found')),
-    ))
+        (b) => b.firstOption.p(O.map((b) => BarcodeResult(barcode: b))).p(
+              RTE.fromOption((p0) => const MlError.barcodeNotFound()),
+            )))
     .p(RTE.flatMap((result) => _embellishResult(image: image, result: result)));
 
-final BarcodeOp<BarcodeResult> extractAllFromFile =
-    pickInputImage.p(RTE.fromTaskEither).p(RTE.flatMap(extractAll));
+final BarcodeOp<BarcodeResult> extractAllFromFile = pickInputImage
+    .p(TE.mapLeft((e) => MlError.pickerError(e)))
+    .p(RTE.fromTaskEither)
+    .p(RTE.flatMap(extractAll));
 
 BarcodeOp<BarcodeResult> _embellishResult({
   required InputImage image,
