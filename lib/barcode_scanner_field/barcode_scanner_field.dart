@@ -24,6 +24,7 @@ Widget _barcodeScannerField(
   Option<String> errorText = const None(),
   Option<void Function(BarcodeResult)> onScan = const None(),
   bool launchScannerImmediately = false,
+  bool enableSmartScan = false,
 }) {
   final theme = Theme.of(context);
   final controller = useTextEditingController(text: initialValue);
@@ -38,6 +39,7 @@ Widget _barcodeScannerField(
   final showDialog = useCallback(() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => ScannerDialog(
+        enableSmartScan: enableSmartScan,
         onScan: (r) {
           setText(r.barcode.rawValue!);
           onChange(r.barcode.rawValue!);

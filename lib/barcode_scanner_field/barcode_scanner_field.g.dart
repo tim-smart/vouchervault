@@ -15,7 +15,8 @@ class BarcodeScannerField extends HookWidget {
       required this.labelText,
       this.errorText = const None(),
       this.onScan = const None(),
-      this.launchScannerImmediately = false})
+      this.launchScannerImmediately = false,
+      this.enableSmartScan = false})
       : super(key: key);
 
   final void Function(String) onChange;
@@ -32,6 +33,8 @@ class BarcodeScannerField extends HookWidget {
 
   final bool launchScannerImmediately;
 
+  final bool enableSmartScan;
+
   @override
   Widget build(BuildContext _context) => _barcodeScannerField(_context,
       onChange: onChange,
@@ -40,7 +43,8 @@ class BarcodeScannerField extends HookWidget {
       labelText: labelText,
       errorText: errorText,
       onScan: onScan,
-      launchScannerImmediately: launchScannerImmediately);
+      launchScannerImmediately: launchScannerImmediately,
+      enableSmartScan: enableSmartScan);
 }
 
 class _BarcodeButton extends StatelessWidget {

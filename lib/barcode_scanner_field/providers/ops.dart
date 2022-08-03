@@ -60,17 +60,24 @@ BarcodeOp<List<EntityAnnotation>> extractEntities(
       (err, stackTrace) => MlError.mlkitError(op: 'extractEntities', err: err),
     );
 
-BarcodeOp<BarcodeResult> extractAll(InputImage image) => scan(image)
-    .p(RTE.flatMap(
-        (b) => b.firstOption.p(O.map((b) => BarcodeResult(barcode: b))).p(
-              RTE.fromOption((p0) => const MlError.barcodeNotFound()),
-            )))
-    .p(RTE.flatMap((result) => _embellishResult(image: image, result: result)));
+BarcodeOp<BarcodeResult> extractAll(
+  InputImage image, {
+  bool embellish = false,
+}) =>
+    scan(image)
+        .p(RTE.flatMap(
+            (b) => b.firstOption.p(O.map((b) => BarcodeResult(barcode: b))).p(
+                  RTE.fromOption((p0) => const MlError.barcodeNotFound()),
+                )))
+        .p(embellish
+            ? RTE.flatMap(
+                (result) => _embellishResult(image: image, result: result))
+            : identity);
 
-final BarcodeOp<BarcodeResult> extractAllFromFile = pickInputImage
+BarcodeOp<BarcodeResult> extractAllFromFile(bool embellish) => pickInputImage
     .p(TE.mapLeft((e) => MlError.pickerError(e)))
     .p(RTE.fromTaskEither)
-    .p(RTE.flatMap(extractAll));
+    .p(RTE.flatMap((i) => extractAll(i, embellish: embellish)));
 
 BarcodeOp<BarcodeResult> _embellishResult({
   required InputImage image,

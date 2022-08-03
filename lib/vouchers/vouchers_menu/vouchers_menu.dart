@@ -8,16 +8,19 @@ enum VouchersMenuAction {
   import,
   export,
   authentication,
+  smartScan,
 }
 
 final _actionLabel = enums.valueMap({
   VouchersMenuAction.import: 'Import',
   VouchersMenuAction.export: 'Export',
   VouchersMenuAction.authentication: 'App lock',
+  VouchersMenuAction.smartScan: 'Smart scan',
 }, () => 'N/A');
 
 final _actionHasCheckbox = enums.valueMap({
   VouchersMenuAction.authentication: true,
+  VouchersMenuAction.smartScan: true,
 }, () => false);
 
 @swidget

@@ -14,5 +14,5 @@ class VoucherFormDialog extends HookWidget {
 
   @override
   Widget build(BuildContext _context) =>
-      voucherFormDialog(_context, initialValue: initialValue);
+      _voucherFormDialog(_context, initialValue: initialValue);
 }

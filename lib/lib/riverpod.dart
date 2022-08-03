@@ -32,5 +32,26 @@ Provider<StateRTEMachine<S, C, L>> persistedSMProvider<S, C, L>({
       ),
     );
 
+StateNotifierProvider<Notifier, A>
+    persistedStateNotifierProvider<Notifier extends StateNotifier<A>, A>({
+  required Notifier Function(StateNotifierProviderRef<Notifier, A>, A?) create,
+  required String key,
+  required FromJson<A> fromJson,
+  required ToJson<A> toJson,
+}) =>
+        persistProvider<StateNotifierProvider<Notifier, A>, A>(
+          (read, write) => StateNotifierProvider((ref) {
+            final n = create(ref, read(ref));
+            n.addListener(write(ref));
+            return n;
+          }),
+          buildStorage: (ref) => SharedPreferencesStorage(
+            key: key,
+            toJson: toJson,
+            fromJson: fromJson,
+            instance: ref.watch(sharedPreferencesProvider),
+          ),
+        );
+
 Option<A> asyncValueToOption<A>(AsyncValue<A> value) =>
     value.maybeWhen(data: O.some, orElse: O.none);

@@ -19,12 +19,13 @@ part 'scanner_dialog.g.dart';
 @hcwidget
 Widget _scannerDialog(
   WidgetRef ref, {
+  required bool enableSmartScan,
   required void Function(BarcodeResult) onScan,
 }) {
   final controller = ref.watch(initializedCameraController);
 
   // Listen for scans
-  final barcodeResults = ref.watch(barcodeResultProvider);
+  final barcodeResults = ref.watch(barcodeResultProvider(enableSmartScan));
   useEffect(
     () => barcodeResults.take(1).listen(onScan).cancel,
     [barcodeResults],
@@ -35,13 +36,13 @@ Widget _scannerDialog(
   final onPressedPicker = useCallback(() async {
     ref.read(cameraPaused.notifier).state = true;
 
-    extractAllFromFile.p(RTE.tap(onScan)).p(RTE.tapLeft((err) {
+    extractAllFromFile(enableSmartScan).p(RTE.tap(onScan)).p(RTE.tapLeft((err) {
       Fluttertoast.showToast(msg: err.friendlyMessage);
 
       // Only un-pause on failure
       ref.read(cameraPaused.notifier).state = false;
     }))(mlContext)();
-  }, [onScan, mlContext]);
+  }, [onScan, mlContext, enableSmartScan]);
 
   // Toggle flash
   final onPressedFlash = useCallback(() {

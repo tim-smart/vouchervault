@@ -7,13 +7,17 @@ part of 'scanner_dialog.dart';
 // **************************************************************************
 
 class ScannerDialog extends HookConsumerWidget {
-  const ScannerDialog({Key? key, required this.onScan}) : super(key: key);
+  const ScannerDialog(
+      {Key? key, required this.enableSmartScan, required this.onScan})
+      : super(key: key);
+
+  final bool enableSmartScan;
 
   final void Function(BarcodeResult) onScan;
 
   @override
   Widget build(BuildContext _context, WidgetRef _ref) =>
-      _scannerDialog(_ref, onScan: onScan);
+      _scannerDialog(_ref, enableSmartScan: enableSmartScan, onScan: onScan);
 }
 
 class _PreviewDialog extends StatelessWidget {

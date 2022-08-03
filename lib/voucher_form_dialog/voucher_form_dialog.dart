@@ -3,7 +3,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/app/providers.dart';
 import 'package:vouchervault/app_scaffold/app_scaffold.dart';
 import 'package:vouchervault/models/voucher.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
@@ -12,7 +14,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 part 'voucher_form_dialog.g.dart';
 
 @hwidget
-Widget voucherFormDialog(
+Widget _voucherFormDialog(
   BuildContext context, {
   Option<Voucher> initialValue = const None(),
 }) {
@@ -35,9 +37,13 @@ Widget voucherFormDialog(
           horizontal: AppTheme.space4,
         ),
         sliver: SliverToBoxAdapter(
-          child: VoucherForm(
-            formKey: formKey,
-            initialValue: initialValue.p(O.getOrElse(() => Voucher())),
+          child: Consumer(
+            builder: (context, ref, child) => VoucherForm(
+              formKey: formKey,
+              initialValue: initialValue.p(O.getOrElse(() => Voucher())),
+              enableSmartScan:
+                  ref.watch(settingsProvider.select((s) => s.smartScan)),
+            ),
           ),
         ),
       ),

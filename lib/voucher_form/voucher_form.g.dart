@@ -8,14 +8,21 @@ part of 'voucher_form.dart';
 
 class VoucherForm extends StatelessWidget {
   const VoucherForm(
-      {Key? key, required this.formKey, required this.initialValue})
+      {Key? key,
+      required this.formKey,
+      required this.initialValue,
+      this.enableSmartScan = false})
       : super(key: key);
 
   final GlobalKey<FormBuilderState> formKey;
 
   final Voucher initialValue;
 
+  final bool enableSmartScan;
+
   @override
-  Widget build(BuildContext _context) =>
-      voucherForm(_context, formKey: formKey, initialValue: initialValue);
+  Widget build(BuildContext _context) => voucherForm(_context,
+      formKey: formKey,
+      initialValue: initialValue,
+      enableSmartScan: enableSmartScan);
 }

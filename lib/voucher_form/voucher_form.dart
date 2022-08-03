@@ -43,6 +43,7 @@ Widget voucherForm(
   BuildContext context, {
   required GlobalKey<FormBuilderState> formKey,
   required Voucher initialValue,
+  bool enableSmartScan = false,
 }) {
   final theme = Theme.of(context);
   final initialFormValue = initialValue.toFormValue();
@@ -70,6 +71,7 @@ Widget voucherForm(
           validator: FormBuilderValidators.required(),
           builder: (field) => BarcodeScannerField(
             launchScannerImmediately: true,
+            enableSmartScan: enableSmartScan,
             labelText: 'Code',
             onChange: field.didChange,
             errorText: optionOfString(field.errorText),

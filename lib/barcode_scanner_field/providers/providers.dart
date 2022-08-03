@@ -64,14 +64,16 @@ final imageProvider = Provider.autoDispose(
           orElse: () => neverStream<CameraControllerWithImage>(),
         ));
 
-final barcodeResultProvider = Provider.autoDispose((ref) {
+final barcodeResultProvider =
+    Provider.autoDispose.family((ref, bool enableSmartScan) {
   final ctx = ref.watch(mlContextProvider);
 
   return ref
       .watch(imageProvider)
       .exhaustMap(
         (t) => inputImage(t.second, camera: t.first.description)
-            .p(O.map((image) => Stream.fromFuture(extractAll(image)(ctx)())))
+            .p(O.map((image) => Stream.fromFuture(
+                extractAll(image, embellish: enableSmartScan)(ctx)())))
             .p(O.getOrElse(() => const Stream.empty())),
       )
       .expand<BarcodeResult>(E.fold(
