@@ -1,0 +1,3 @@
+- Immediately open scanner when adding a new voucher
+- Added smart scanning features (english only)
+- Fixed some bugs
