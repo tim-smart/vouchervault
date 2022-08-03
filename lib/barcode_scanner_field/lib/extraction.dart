@@ -7,15 +7,23 @@ import 'package:recase/recase.dart';
 
 // === Merchant extraction
 Option<String> extractMerchant(RecognizedText rt) {
-  final lines = eligibleMerchantLines(rt)
-      .where(_hasNoNoise)
-      .map(_normalizeWhitespace)
-      .where(_hasNWords(4));
+  final lines = _eligibleMerchantLines(rt);
+  final suffixMerchant = _findLineWithMerchantSuffix(lines);
 
-  return findLineWithMerchantSuffix(lines)
+  return suffixMerchant
       .p(O.alt(() => lines.firstOption))
       .p(O.map((s) => s.toLowerCase().titleCase));
 }
+
+Iterable<String> _eligibleMerchantLines(RecognizedText rt) => rt.blocks
+    .where(_isValidBlock)
+    .expand((b) => b.lines)
+    .where((line) => line.elements.length <= 5)
+    .map((line) => line.text)
+    .map(_trimLine)
+    .where(_hasNoNoise)
+    .map(_normalizeWhitespace)
+    .where(_hasNWords(4));
 
 bool _isLargeBlock(TextBlock b) =>
     b.lines.length >= 5 || b.lines.any((l) => l.elements.length >= 7);
@@ -27,13 +35,6 @@ bool _isValidBlock(TextBlock b) => !_isLargeBlock(b) && _isEnglishBlock(b);
 String _trimLine(String s) => s
     .replaceAll(RegExp(r"^[^\p{L}]+", unicode: true), "")
     .replaceAll(RegExp(r"[^\p{L}]+$", unicode: true), "");
-
-Iterable<String> eligibleMerchantLines(RecognizedText rt) => rt.blocks
-    .where(_isValidBlock)
-    .expand((b) => b.lines)
-    .where((line) => line.elements.length <= 5)
-    .map((line) => line.text)
-    .map(_trimLine);
 
 final _suffixPatterns = [
   RegExp(r"\bCo\.?\b", caseSensitive: false),
@@ -50,18 +51,21 @@ final _suffixPatterns = [
 
 bool _hasSuffix(String s) => _suffixPatterns.any((r) => r.hasMatch(s));
 
-Option<String> findLineWithMerchantSuffix(Iterable<String> lines) =>
+Option<String> _findLineWithMerchantSuffix(Iterable<String> lines) =>
     lines.where(_hasSuffix).firstOption;
 
 final _noiseWords = [
   'accept',
   'card',
+  'cash',
   'conditions',
   'credit',
+  'details',
   'eftpos',
   'gst',
   'invoice',
   'online',
+  'promo',
   'purchase',
   'receipt',
   'register',
