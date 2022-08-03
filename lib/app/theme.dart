@@ -65,7 +65,8 @@ class AppTheme {
       ),
     ).copyWith(
       pageTransitionsTheme: const PageTransitionsTheme(builders: {
-        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder()
+        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
       }),
       toggleableActiveColor: Colors.red,
       chipTheme: ChipThemeData.fromDefaults(
