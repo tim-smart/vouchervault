@@ -58,26 +58,11 @@ final initializedCameraController = FutureProvider.autoDispose(
           (c) => c.initialize().then((value) => c),
         )));
 
-final flashEnabled = StateProvider.autoDispose((ref) => false);
-
-final flashProvider = Provider.autoDispose((ref) {
-  final c = ref.watch(initializedCameraController);
-  final enabled = ref.watch(flashEnabled);
-
-  c.whenData((c) => c.setFlashMode(enabled ? FlashMode.torch : FlashMode.off));
-});
-
 final imageProvider = Provider.autoDispose(
     (ref) => ref.watch(initializedCameraController).maybeWhen(
           data: cameraImageStream,
           orElse: () => neverStream<CameraControllerWithImage>(),
         ));
-
-final mlContextProvider = Provider.autoDispose((ref) => MlContext(
-      textRecognizer: ref.watch(textRecognizerProvider),
-      barcodeScanner: ref.watch(barcodeScannerProvider),
-      entityExtractor: ref.watch(entityRecognizerProvider),
-    ));
 
 final barcodeResultProvider = Provider.autoDispose((ref) {
   final ctx = ref.watch(mlContextProvider);

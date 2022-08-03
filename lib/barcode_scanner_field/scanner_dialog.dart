@@ -10,6 +10,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/barcode_scanner_field/providers/barcode_result.dart';
+import 'package:vouchervault/barcode_scanner_field/providers/ml_providers.dart';
 import 'package:vouchervault/barcode_scanner_field/providers/ops.dart';
 import 'package:vouchervault/barcode_scanner_field/providers/providers.dart';
 
@@ -40,10 +41,15 @@ Widget _scannerDialog(
   }, [onScan, mlContext]);
 
   // Toggle flash
-  ref.watch(flashProvider);
   final onPressedFlash = useCallback(() {
-    ref.read(flashEnabled.notifier).update((state) => !state);
-  }, []);
+    controller.whenData((c) {
+      if (c.value.flashMode == FlashMode.off) {
+        c.setFlashMode(FlashMode.torch);
+      } else {
+        c.setFlashMode(FlashMode.off);
+      }
+    });
+  }, [controller]);
 
   return AnnotatedRegion(
     value: SystemUiOverlayStyle.light,
