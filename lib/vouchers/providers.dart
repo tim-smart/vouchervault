@@ -2,7 +2,7 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/lib/riverpod.dart';
-import 'package:vouchervault/vouchers/model.dart';
+import 'package:vouchervault/vouchers/models/state.dart';
 import 'package:vouchervault/vouchers/ops.dart';
 
 final createVouchersSMProvider = ([VouchersState? initialOverride]) =>

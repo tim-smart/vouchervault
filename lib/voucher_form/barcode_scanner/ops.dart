@@ -2,42 +2,14 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/reader_task_either.dart' as RTE;
 import 'package:fpdt/task_either.dart' as TE;
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:vouchervault/barcode_scanner_field/lib/camera_utils.dart';
-import 'package:vouchervault/barcode_scanner_field/lib/extraction.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/barcode_result.dart';
-
-part 'ops.freezed.dart';
-
-@freezed
-class MlContext with _$MlContext {
-  const factory MlContext({
-    required TextRecognizer textRecognizer,
-    required BarcodeScanner barcodeScanner,
-    required EntityExtractor entityExtractor,
-  }) = _MlContext;
-}
-
-@freezed
-class MlError with _$MlError {
-  const MlError._();
-
-  const factory MlError.barcodeNotFound() = _MlErrorBarcodeNotFound;
-  const factory MlError.pickerError(String message) = _MlErrorPicker;
-  const factory MlError.mlkitError({
-    required String op,
-    required dynamic err,
-  }) = _MlErrorMlKit;
-
-  String get friendlyMessage => when(
-        barcodeNotFound: () => 'Could not find a barcode',
-        pickerError: (msg) => 'Could not load image: $msg',
-        mlkitError: (op, err) => 'Could not process image in method: $op',
-      );
-}
+import 'package:vouchervault/voucher_form/barcode_scanner/lib/camera_utils.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/lib/extraction.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/models/barcode_result.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/models/ml_context.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/models/ml_error.dart';
 
 typedef BarcodeOp<A> = ReaderTaskEither<MlContext, MlError, A>;
 

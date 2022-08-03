@@ -1,6 +1,6 @@
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
@@ -10,12 +10,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/voucher_vault_app.dart';
 import 'package:vouchervault/hooks/hooks.dart';
 import 'package:vouchervault/lib/option.dart';
-import 'package:vouchervault/models/voucher.dart' as V;
-import 'package:vouchervault/models/voucher.dart' show Voucher;
-import 'package:vouchervault/voucher_dialog/voucher_dialog.dart';
-import 'package:vouchervault/voucher_form_dialog/voucher_form_dialog.dart';
-import 'package:vouchervault/vouchers/providers.dart';
+import 'package:vouchervault/vouchers/models/voucher.dart' as V;
+import 'package:vouchervault/vouchers/models/voucher.dart' show Voucher;
+import 'package:vouchervault/voucher_form/voucher_form_dialog.dart';
 import 'package:vouchervault/vouchers/ops.dart' as Ops;
+import 'package:vouchervault/vouchers/providers.dart';
+import 'package:vouchervault/vouchers/dialog/voucher_dialog.dart';
 
 part 'voucher_dialog_container.g.dart';
 

@@ -6,10 +6,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/auth/auth_screen.dart';
 import 'package:vouchervault/auth/providers.dart';
-import 'package:vouchervault/models/voucher.dart';
-import 'package:vouchervault/vouchers/model.dart';
+import 'package:vouchervault/vouchers/models/state.dart';
+import 'package:vouchervault/vouchers/models/voucher.dart';
 import 'package:vouchervault/vouchers/providers.dart';
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:vouchervault/vouchers/vouchers_screen.dart';
 
 part 'voucher_vault_app.g.dart';
 

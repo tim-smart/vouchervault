@@ -6,10 +6,11 @@ import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/barcode.dart' as B;
-import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/lib/option.dart';
-import 'package:vouchervault/models/voucher.dart' as V;
-import 'package:vouchervault/models/voucher.dart' show Voucher, VoucherCodeType;
+import 'package:vouchervault/vouchers/models/voucher.dart' as V;
+import 'package:vouchervault/vouchers/models/voucher.dart'
+    show Voucher, VoucherCodeType;
+import 'package:vouchervault/shared/voucher_details/voucher_details.dart';
 
 export 'voucher_dialog_container.dart';
 export 'voucher_spend_dialog.dart';

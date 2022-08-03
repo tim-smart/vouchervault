@@ -7,9 +7,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/providers.dart';
 import 'package:vouchervault/auth/ops.dart';
 import 'package:vouchervault/auth/providers.dart';
+import 'package:vouchervault/vouchers/menu/vouchers_menu.dart';
 import 'package:vouchervault/vouchers/ops.dart' as Ops;
 import 'package:vouchervault/vouchers/providers.dart';
-import 'package:vouchervault/vouchers/vouchers_menu/vouchers_menu.dart';
 
 part 'vouchers_menu_container.g.dart';
 

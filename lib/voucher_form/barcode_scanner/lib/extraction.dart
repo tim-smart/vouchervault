@@ -8,7 +8,8 @@ import 'package:recase/recase.dart';
 // === Merchant extraction
 Option<String> extractMerchant(RecognizedText rt) {
   final lines = _eligibleMerchantLines(rt);
-  final suffixMerchant = _findLineWithMerchantSuffix(lines);
+  final suffixMerchant =
+      _findLineWithMerchantSuffix(lines).p(O.map(_removeSuffix));
 
   return suffixMerchant
       .p(O.alt(() => lines.firstOption))
@@ -54,6 +55,9 @@ bool _hasSuffix(String s) => _suffixPatterns.any((r) => r.hasMatch(s));
 
 Option<String> _findLineWithMerchantSuffix(Iterable<String> lines) =>
     lines.where(_hasSuffix).firstOption;
+
+String _removeSuffix(String s) =>
+    _suffixPatterns.fold(s, (s, re) => s.replaceAll(re, '').trim());
 
 final _noiseWords = [
   'accept',

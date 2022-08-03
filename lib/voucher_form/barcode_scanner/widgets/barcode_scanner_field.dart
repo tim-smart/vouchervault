@@ -7,12 +7,12 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/barcode_result.dart';
-import 'package:vouchervault/barcode_scanner_field/scanner_dialog.dart';
 import 'package:vouchervault/lib/option.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/models/barcode_result.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/widgets/scanner_dialog.dart';
 
-part 'barcode_scanner_field.g.dart';
 part 'barcode_button.dart';
+part 'barcode_scanner_field.g.dart';
 
 @hwidget
 Widget _barcodeScannerField(

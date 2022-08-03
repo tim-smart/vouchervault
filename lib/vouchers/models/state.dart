@@ -1,9 +1,9 @@
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:vouchervault/models/voucher.dart';
+import 'package:vouchervault/vouchers/models/voucher.dart';
 
-part 'model.freezed.dart';
+part 'state.freezed.dart';
 
 @freezed
 class VouchersState with _$VouchersState {

@@ -2,7 +2,7 @@ import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart
 import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/ops.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/models/ml_context.dart';
 
 final barcodeScannerProvider = Provider.autoDispose((ref) {
   final scanner = BarcodeScanner();

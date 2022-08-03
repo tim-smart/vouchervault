@@ -1,20 +1,15 @@
-import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/lib/lib.dart';
+import 'package:vouchervault/lib/datetime.dart';
+import 'package:vouchervault/lib/intersperse.dart';
 import 'package:vouchervault/lib/milliunits.dart' as millis;
 import 'package:vouchervault/lib/option.dart';
-import 'package:vouchervault/models/voucher.dart';
+import 'package:vouchervault/vouchers/models/voucher.dart';
 
-part 'voucher_utils.g.dart';
-
-String formatExpires(DateTime dt) {
-  dt = dt.endOfDay;
-  return dt.isPast ? 'Expired' : dt.timeago(allowFromNow: true);
-}
+part 'voucher_details.g.dart';
 
 List<Widget> buildVoucherDetails(
   BuildContext context,

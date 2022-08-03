@@ -6,8 +6,8 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/app/providers.dart';
-import 'package:vouchervault/app_scaffold/app_scaffold.dart';
-import 'package:vouchervault/models/voucher.dart';
+import 'package:vouchervault/shared/scaffold/app_scaffold.dart';
+import 'package:vouchervault/vouchers/models/voucher.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 

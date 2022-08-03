@@ -13,8 +13,8 @@ import 'package:vouchervault/app/providers.dart';
 import 'package:vouchervault/lib/files.dart' as files;
 import 'package:vouchervault/lib/milliunits.dart' as millis;
 import 'package:vouchervault/lib/srte.dart';
-import 'package:vouchervault/models/voucher.dart';
-import 'package:vouchervault/vouchers/model.dart';
+import 'package:vouchervault/vouchers/models/voucher.dart';
+import 'package:vouchervault/vouchers/models/state.dart';
 
 final vouchersLogProvider = loggerProvider('vouchers/ops.dart');
 

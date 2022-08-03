@@ -7,10 +7,10 @@ import 'package:fpdt/option.dart' as O;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/barcode_result.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/ml_providers.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/ops.dart';
-import 'package:vouchervault/barcode_scanner_field/lib/camera_utils.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/models/barcode_result.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/providers/ml_providers.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/ops.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/lib/camera_utils.dart';
 
 final _log = Logger('barcode_scanner_field/providers/providers.dart');
 

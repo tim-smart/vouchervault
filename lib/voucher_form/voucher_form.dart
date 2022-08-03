@@ -6,13 +6,13 @@ import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/barcode_scanner_field/barcode_scanner_field.dart';
 import 'package:vouchervault/lib/barcode.dart' as barcode;
 import 'package:vouchervault/lib/milliunits.dart' as millis;
 import 'package:vouchervault/lib/option.dart';
-import 'package:vouchervault/models/voucher.dart'
+import 'package:vouchervault/voucher_form/barcode_scanner/widgets/barcode_scanner_field.dart';
+import 'package:vouchervault/vouchers/models/voucher.dart'
     show Voucher, VoucherCodeType, VoucherColor;
-import 'package:vouchervault/models/voucher.dart' as V;
+import 'package:vouchervault/vouchers/models/voucher.dart' as V;
 
 part 'voucher_form.g.dart';
 

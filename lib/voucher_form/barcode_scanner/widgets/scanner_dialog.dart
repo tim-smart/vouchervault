@@ -9,10 +9,10 @@ import 'package:fpdt/reader_task_either.dart' as RTE;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/barcode_result.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/ml_providers.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/ops.dart';
-import 'package:vouchervault/barcode_scanner_field/providers/providers.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/models/barcode_result.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/providers/ml_providers.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/ops.dart';
+import 'package:vouchervault/voucher_form/barcode_scanner/providers/providers.dart';
 
 part 'scanner_dialog.g.dart';
 

@@ -25,6 +25,5 @@ final authProvider = Provider(
   (ref) => stateMachineStateProvider(ref, ref.watch(authSMProvider)),
 );
 
-final authEnabledProvider = Provider((ref) => ref.watch(authProvider).enabled);
-final authAvailableProvider =
-    Provider((ref) => ref.watch(authProvider).available);
+final authEnabledProvider = authProvider.select((s) => s.enabled);
+final authAvailableProvider = authProvider.select((s) => s.available);
