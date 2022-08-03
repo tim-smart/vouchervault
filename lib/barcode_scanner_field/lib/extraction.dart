@@ -57,6 +57,7 @@ Option<String> _findLineWithMerchantSuffix(Iterable<String> lines) =>
 
 final _noiseWords = [
   'accept',
+  'balance',
   'card',
   'cash',
   'cheque',
@@ -68,6 +69,7 @@ final _noiseWords = [
   'enquir',
   'expires',
   'gst',
+  'inquiry',
   'invoice',
   'online',
   'price',
