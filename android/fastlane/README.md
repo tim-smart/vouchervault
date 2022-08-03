@@ -37,7 +37,7 @@ Submit a new build to Google Play internal track
 [bundle exec] fastlane android beta
 ```
 
-Submit a new build to Google Play alpha track
+Submit a new build to Google Play beta track
 
 ### android release
 
