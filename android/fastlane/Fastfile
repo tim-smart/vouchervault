@@ -30,12 +30,12 @@ platform :android do
     )
   end
 
-  desc "Submit a new build to Google Play alpha track"
+  desc "Submit a new build to Google Play beta track"
   lane :beta do
     alpha()
     upload_to_play_store(
       track: "internal",
-      track_promote_to: "alpha",
+      track_promote_to: "beta",
       version_code: build_number.to_s,
     )
   end
