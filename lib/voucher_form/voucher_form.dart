@@ -29,6 +29,15 @@ void _updateFieldIfEmpty<T>(
             (f.value as String).isEmpty))
         .p(O.tap((f) => update().p(O.tap(f.didChange))));
 
+Widget _resetIconButton(
+  GlobalKey<FormBuilderState> formKey,
+  String field,
+) =>
+    IconButton(
+      onPressed: () => formKey.currentState!.fields[field]?.didChange(null),
+      icon: const Icon(Icons.close),
+    );
+
 @swidget
 Widget voucherForm(
   BuildContext context, {
@@ -107,11 +116,7 @@ Widget voucherForm(
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             labelText: 'Expires',
-            suffixIcon: IconButton(
-              onPressed: () =>
-                  formKey.currentState!.fields['expires']?.didChange(null),
-              icon: const Icon(Icons.close),
-            ),
+            suffixIcon: _resetIconButton(formKey, 'expires'),
           ),
           valueTransformer: O
               .fromNullableWith<DateTime>()
@@ -136,9 +141,10 @@ Widget voucherForm(
             signed: true,
             decimal: true,
           ),
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
             labelText: 'Balance',
+            suffixIcon: _resetIconButton(formKey, 'balanceMilliunits'),
           ),
         ),
         SizedBox(height: AppTheme.space3),
