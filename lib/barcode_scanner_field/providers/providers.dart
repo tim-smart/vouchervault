@@ -26,7 +26,7 @@ final cameraProvider = Provider((ref) => ref.watch(camerasProvider).maybeWhen(
 
 final cameraPaused = StateProvider.autoDispose((ref) => false);
 
-final cameraControllerProvider = Provider.autoDispose((ref) {
+final _cameraControllerProvider = Provider.autoDispose((ref) {
   final paused = ref.watch(cameraPaused);
 
   return ref
@@ -53,7 +53,7 @@ final cameraControllerProvider = Provider.autoDispose((ref) {
 });
 
 final initializedCameraController = FutureProvider.autoDispose(
-    (ref) => ref.watch(cameraControllerProvider).p(O.fold(
+    (ref) => ref.watch(_cameraControllerProvider).p(O.fold(
           () => Future.any<CameraController>([]),
           (c) => c.initialize().then((value) => c),
         )));

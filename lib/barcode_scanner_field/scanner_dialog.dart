@@ -24,8 +24,11 @@ Widget _scannerDialog(
   final controller = ref.watch(initializedCameraController);
 
   // Listen for scans
-  final stream = ref.watch(barcodeResultProvider);
-  useEffect(() => stream.take(1).listen(onScan).cancel, [stream]);
+  final barcodeResults = ref.watch(barcodeResultProvider);
+  useEffect(
+    () => barcodeResults.take(1).listen(onScan).cancel,
+    [barcodeResults],
+  );
 
   // File picker
   final mlContext = ref.watch(mlContextProvider);
