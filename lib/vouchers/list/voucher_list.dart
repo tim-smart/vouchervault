@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/vouchers/models/voucher.dart';
-import 'voucher_item.dart';
-
-export 'voucher_item.dart';
+import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'voucher_list.g.dart';
 
 @swidget
-Widget voucherList({
+Widget _voucherList({
   required IList<Voucher> vouchers,
   required void Function(Voucher) onPressed,
 }) {

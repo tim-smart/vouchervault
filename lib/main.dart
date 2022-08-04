@@ -3,8 +3,7 @@ import 'package:fpdt/fpdt.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/app/providers.dart';
-import 'package:vouchervault/vouchers/models/voucher.dart';
+import 'package:vouchervault/vouchers/vouchers.dart';
 
 void main({IList<Voucher>? vouchers}) async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -9,12 +9,9 @@ import 'package:fpdt/task_either.dart' as TE;
 import 'package:logging/logging.dart';
 import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
-import 'package:vouchervault/app/providers.dart';
-import 'package:vouchervault/lib/files.dart' as files;
-import 'package:vouchervault/lib/milliunits.dart' as millis;
-import 'package:vouchervault/lib/srte.dart';
-import 'package:vouchervault/vouchers/models/voucher.dart';
-import 'package:vouchervault/vouchers/models/state.dart';
+import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/lib/lib.dart';
+import 'package:vouchervault/vouchers/vouchers.dart';
 
 final vouchersLogProvider = loggerProvider('vouchers/ops.dart');
 
@@ -63,7 +60,7 @@ VouchersOp<void> update(Voucher voucher) =>
 
 // == Update voucher balance from string
 final _newBalance = (Voucher v) => (Option<String> s) => s
-    .p(O.flatMap(millis.fromString))
+    .p(O.flatMap(millisFromString))
     .p(O.map2K(v.balanceOption, (amount, int balance) => balance - amount));
 
 final maybeUpdateBalance = (Voucher v) => _newBalance(v).c(O.fold(
@@ -80,8 +77,7 @@ VouchersOp<void> remove(Voucher voucher) =>
         ));
 
 // == Import and replace vouchers
-final _importFromFiles = files
-    .pick()
+final _importFromFiles = pickFile()
     .p(TE.map((r) => String.fromCharCodes(r.second)))
     .p(TE.chainTryCatchK(
       jsonDecode,
@@ -104,7 +100,7 @@ final _writeStateToFile = (String fileName) => (VouchersState value) => TE
       () => jsonEncode(value.toJson()),
       (err, stack) => 'encode json error: $err',
     )
-    .p(TE.flatMap(files.writeString(fileName)));
+    .p(TE.flatMap(writeStringToFile(fileName)));
 
 final _shareFile = TE
     .tryCatchK(

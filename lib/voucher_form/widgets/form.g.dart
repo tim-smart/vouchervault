@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'voucher_form.dart';
+part of 'form.dart';
 
 // **************************************************************************
 // FunctionalWidgetGenerator

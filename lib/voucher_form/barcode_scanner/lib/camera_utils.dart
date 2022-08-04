@@ -10,7 +10,7 @@ import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart
 import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:vouchervault/lib/files.dart';
+import 'package:vouchervault/lib/lib.dart';
 
 typedef CameraControllerWithImage = Tuple2<CameraController, CameraImage>;
 

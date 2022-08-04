@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/vouchers/models/voucher.dart' as V;
-import 'package:vouchervault/vouchers/models/voucher.dart' show Voucher;
+import 'package:vouchervault/vouchers/vouchers.dart' as V;
+import 'package:vouchervault/vouchers/vouchers.dart' show Voucher;
 import 'package:vouchervault/shared/voucher_details/voucher_details.dart';
 
 part 'voucher_item.g.dart';

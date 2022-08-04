@@ -5,7 +5,7 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart';
 import 'package:fpdt/state_reader_task_either.dart' as SRTE;
 import 'package:fpdt/task_either.dart' as TE;
-import 'package:vouchervault/hooks/use_route_observer.dart';
+import 'package:vouchervault/hooks/hooks.dart';
 
 void useFullBrightness(
   RouteObserver<ModalRoute> routeObserver, {

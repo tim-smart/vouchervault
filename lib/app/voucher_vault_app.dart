@@ -4,12 +4,8 @@ import 'package:fpdt/fpdt.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/auth/auth_screen.dart';
-import 'package:vouchervault/auth/providers.dart';
-import 'package:vouchervault/vouchers/models/state.dart';
-import 'package:vouchervault/vouchers/models/voucher.dart';
-import 'package:vouchervault/vouchers/providers.dart';
-import 'package:vouchervault/vouchers/vouchers_screen.dart';
+import 'package:vouchervault/auth/auth.dart';
+import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'voucher_vault_app.g.dart';
 

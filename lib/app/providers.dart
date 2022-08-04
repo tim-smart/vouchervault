@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:riverpod_persistence/riverpod_persistence.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vouchervault/app/settings.dart';
+import 'package:vouchervault/app/app.dart';
 
 final sharedPreferencesProvider =
     Provider<SharedPreferences>((ref) => throw UnimplementedError());

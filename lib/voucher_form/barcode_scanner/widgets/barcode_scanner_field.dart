@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -7,11 +6,8 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/lib/option.dart';
-import 'package:vouchervault/voucher_form/barcode_scanner/models/barcode_result.dart';
-import 'package:vouchervault/voucher_form/barcode_scanner/widgets/scanner_dialog.dart';
+import 'package:vouchervault/voucher_form/voucher_form.dart';
 
-part 'barcode_button.dart';
 part 'barcode_scanner_field.g.dart';
 
 @hwidget
@@ -63,7 +59,7 @@ Widget _barcodeScannerField(
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      _BarcodeButton(
+      BarcodeButton(
         barcodeType: barcodeType,
         data: initialValue,
         onPressed: showDialog,

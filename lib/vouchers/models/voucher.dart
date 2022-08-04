@@ -5,8 +5,7 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:vouchervault/lib/milliunits.dart' as millis;
-import 'package:vouchervault/lib/option.dart';
+import 'package:vouchervault/lib/lib.dart';
 
 part 'voucher.freezed.dart';
 part 'voucher.g.dart';
@@ -89,10 +88,10 @@ class Voucher with _$Voucher {
       normalizedExpires.p(O.filter((_) => removeOnceExpired));
 
   late final Option<int> balanceOption =
-      balanceMilliunits.p(O.alt(() => balance.p(O.map(millis.fromDouble))));
+      balanceMilliunits.p(O.alt(() => balance.p(O.map(millisFromDouble))));
 
   late final Option<double> balanceDoubleOption =
-      balanceOption.p(O.map(millis.toDouble));
+      balanceOption.p(O.map(millisToDouble));
 
   late final Option<String> notesOption = optionOfString(notes);
 
@@ -104,13 +103,13 @@ class Voucher with _$Voucher {
       Voucher.fromJson(<String, dynamic>{
         ...json,
         'balanceMilliunits':
-            millis.fromString(json['balanceMilliunits']).p(O.toNullable),
+            millisFromString(json['balanceMilliunits']).p(O.toNullable),
       });
 
   dynamic toFormValue() => <String, dynamic>{
         ...toJson(),
         'balanceMilliunits':
-            balanceOption.p(O.flatMap(millis.toString)).p(O.toNullable),
+            balanceOption.p(O.flatMap(millisToString)).p(O.toNullable),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
         'expires': O.toNullable(expires),
         'color': _$VoucherColorEnumMap[this.color],

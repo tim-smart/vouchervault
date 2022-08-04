@@ -46,22 +46,3 @@ class BarcodeScannerField extends HookWidget {
       launchScannerImmediately: launchScannerImmediately,
       enableSmartScan: enableSmartScan);
 }
-
-class _BarcodeButton extends StatelessWidget {
-  const _BarcodeButton(
-      {Key? key,
-      required this.barcodeType,
-      required this.data,
-      required this.onPressed})
-      : super(key: key);
-
-  final Option<Barcode> barcodeType;
-
-  final String data;
-
-  final void Function() onPressed;
-
-  @override
-  Widget build(BuildContext _context) => __barcodeButton(_context,
-      barcodeType: barcodeType, data: data, onPressed: onPressed);
-}

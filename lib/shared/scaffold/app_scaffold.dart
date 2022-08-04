@@ -4,7 +4,7 @@ import 'package:fpdt/option.dart' show Option;
 import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/hooks/use_system_overlay_style.dart';
+import 'package:vouchervault/hooks/hooks.dart';
 
 part 'app_scaffold.g.dart';
 

@@ -4,7 +4,7 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:uuid/uuid.dart';
 import 'package:vouchervault/main.dart' as app;
-import 'package:vouchervault/vouchers/models/voucher.dart';
+import 'package:vouchervault/vouchers/vouchers.dart';
 
 void main() async {
   WidgetsApp.debugAllowBannerOverride = false;

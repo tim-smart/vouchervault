@@ -5,11 +5,7 @@ import 'package:fpdt/task_either.dart' as TE;
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:vouchervault/voucher_form/barcode_scanner/lib/camera_utils.dart';
-import 'package:vouchervault/voucher_form/barcode_scanner/lib/extraction.dart';
-import 'package:vouchervault/voucher_form/barcode_scanner/models/barcode_result.dart';
-import 'package:vouchervault/voucher_form/barcode_scanner/models/ml_context.dart';
-import 'package:vouchervault/voucher_form/barcode_scanner/models/ml_error.dart';
+import 'package:vouchervault/voucher_form/voucher_form.dart';
 
 typedef BarcodeOp<A> = ReaderTaskEither<MlContext, MlError, A>;
 

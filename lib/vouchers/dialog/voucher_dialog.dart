@@ -5,10 +5,10 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/lib/barcode.dart' as B;
-import 'package:vouchervault/lib/option.dart';
-import 'package:vouchervault/vouchers/models/voucher.dart' as V;
-import 'package:vouchervault/vouchers/models/voucher.dart'
+import 'package:vouchervault/lib/lib.dart' as B;
+import 'package:vouchervault/lib/lib.dart';
+import 'package:vouchervault/vouchers/vouchers.dart' as V;
+import 'package:vouchervault/vouchers/vouchers.dart'
     show Voucher, VoucherCodeType;
 import 'package:vouchervault/shared/voucher_details/voucher_details.dart';
 
@@ -139,7 +139,7 @@ Widget __barcode(
   required VoidCallback onTap,
 }) {
   final theme = Theme.of(context);
-  final barcode = B.fromCodeType(type);
+  final barcode = B.barcodeFromCodeType(type);
   return SizedBox(
     height: AppTheme.rem(barcode.p(O.fold(
       () => 6,

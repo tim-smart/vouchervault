@@ -7,9 +7,9 @@ import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_ios/local_auth_ios.dart';
 import 'package:logging/logging.dart';
-import 'package:vouchervault/app/providers.dart';
-import 'package:vouchervault/auth/model.dart';
-import 'package:vouchervault/lib/srte.dart';
+import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/auth/auth.dart';
+import 'package:vouchervault/lib/lib.dart';
 
 final authLogProvider = loggerProvider('auth/ops.dart');
 

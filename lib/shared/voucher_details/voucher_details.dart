@@ -3,10 +3,7 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/lib/datetime.dart';
-import 'package:vouchervault/lib/intersperse.dart';
-import 'package:vouchervault/lib/milliunits.dart' as millis;
-import 'package:vouchervault/lib/option.dart';
+import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/vouchers/models/voucher.dart';
 
 part 'voucher_details.g.dart';
@@ -29,7 +26,7 @@ List<Widget> buildVoucherDetails(
             )
           ])),
       ...voucher.balanceOption
-          .p(O.flatMap(millis.toString))
+          .p(O.flatMap(millisToString))
           .p(ifSomeList((b) => [
                 _VoucherDetailRow(
                   textColor,

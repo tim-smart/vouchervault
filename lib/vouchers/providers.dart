@@ -1,9 +1,8 @@
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vouchervault/lib/riverpod.dart';
-import 'package:vouchervault/vouchers/models/state.dart';
-import 'package:vouchervault/vouchers/ops.dart';
+import 'package:vouchervault/lib/lib.dart';
+import 'package:vouchervault/vouchers/vouchers.dart';
 
 final createVouchersSMProvider = ([VouchersState? initialOverride]) =>
     persistedSMProvider<VouchersState, VouchersContext, String>(

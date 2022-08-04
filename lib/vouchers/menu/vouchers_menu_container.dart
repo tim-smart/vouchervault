@@ -4,18 +4,15 @@ import 'package:fpdt/function.dart';
 import 'package:fpdt/option.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vouchervault/app/providers.dart';
-import 'package:vouchervault/auth/ops.dart';
-import 'package:vouchervault/auth/providers.dart';
-import 'package:vouchervault/vouchers/menu/vouchers_menu.dart';
-import 'package:vouchervault/vouchers/ops.dart' as Ops;
-import 'package:vouchervault/vouchers/providers.dart';
+import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/auth/auth.dart';
+import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'vouchers_menu_container.g.dart';
 
 final _actionMap = enums.optionValueMap({
-  VouchersMenuAction.import: Ops.import,
-  VouchersMenuAction.export: Ops.export,
+  VouchersMenuAction.import: import,
+  VouchersMenuAction.export: export,
 });
 
 final _authActionMap = enums.optionValueMap({

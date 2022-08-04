@@ -3,8 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/auth/ops.dart';
-import 'package:vouchervault/auth/providers.dart';
+import 'package:vouchervault/auth/auth.dart';
 import 'package:vouchervault/shared/scaffold/app_scaffold_simple.dart';
 
 part 'auth_screen.g.dart';

@@ -7,15 +7,11 @@ import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/task.dart' as T;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vouchervault/app/voucher_vault_app.dart';
+import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/hooks/hooks.dart';
-import 'package:vouchervault/lib/option.dart';
-import 'package:vouchervault/vouchers/models/voucher.dart' as V;
-import 'package:vouchervault/vouchers/models/voucher.dart' show Voucher;
-import 'package:vouchervault/voucher_form/voucher_form_dialog.dart';
-import 'package:vouchervault/vouchers/ops.dart' as Ops;
-import 'package:vouchervault/vouchers/providers.dart';
-import 'package:vouchervault/vouchers/dialog/voucher_dialog.dart';
+import 'package:vouchervault/lib/lib.dart';
+import 'package:vouchervault/voucher_form/voucher_form.dart';
+import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'voucher_dialog_container.g.dart';
 
@@ -28,7 +24,7 @@ Widget _voucherDialogContainer(
   // Full brightness unless text barcode
   useFullBrightness(
     routeObserver,
-    enabled: voucher.codeType != V.VoucherCodeType.TEXT,
+    enabled: voucher.codeType != VoucherCodeType.TEXT,
   );
 
   // state
@@ -50,7 +46,7 @@ Widget _voucherDialogContainer(
               builder: (context) => const VoucherSpendDialog(),
             ))
         .p(T.map(optionOfString))
-        .p(T.map(Ops.maybeUpdateBalance(v)))
+        .p(T.map(maybeUpdateBalance(v)))
         .p(T.map(sm.run)),
     [sm, v],
   );
@@ -64,7 +60,7 @@ Widget _voucherDialogContainer(
       ),
     );
 
-    O.fromNullable(voucher).p(O.map(Ops.update)).p(O.map(sm.run));
+    O.fromNullable(voucher).p(O.map(update)).p(O.map(sm.run));
   }, [sm, v]);
 
   final onRemove = useCallback(
@@ -80,7 +76,7 @@ Widget _voucherDialogContainer(
           ),
           TextButton(
             onPressed: () {
-              sm.evaluate(Ops.remove(v));
+              sm.evaluate(remove(v));
               Navigator.pop(context, true);
             },
             child: const Text('Remove'),

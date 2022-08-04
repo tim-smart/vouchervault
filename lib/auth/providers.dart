@@ -2,9 +2,8 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:vouchervault/auth/model.dart';
-import 'package:vouchervault/auth/ops.dart';
-import 'package:vouchervault/lib/riverpod.dart';
+import 'package:vouchervault/auth/auth.dart';
+import 'package:vouchervault/lib/lib.dart';
 
 final localAuthProvider = Provider((ref) => LocalAuthentication());
 
