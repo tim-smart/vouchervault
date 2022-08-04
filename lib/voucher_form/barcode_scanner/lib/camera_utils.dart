@@ -39,26 +39,24 @@ Stream<CameraControllerWithImage> cameraImageStream(
 Option<InputImageData> inputImageData(
   CameraImage image, {
   required CameraDescription camera,
-}) {
-  final rotation = O.fromNullable(
-      InputImageRotationValue.fromRawValue(camera.sensorOrientation));
-  final format =
-      O.fromNullable(InputImageFormatValue.fromRawValue(image.format.raw));
-
-  return tuple2(rotation, format)
-      .p(O.mapTuple2((rotation, format) => InputImageData(
-            size: Size(image.width.toDouble(), image.height.toDouble()),
-            imageRotation: rotation,
-            inputImageFormat: format,
-            planeData: image.planes
-                .map((p) => InputImagePlaneMetadata(
-                      bytesPerRow: p.bytesPerRow,
-                      height: p.height,
-                      width: p.width,
-                    ))
-                .toList(),
-          )));
-}
+}) =>
+    O
+        .fromNullable(
+            InputImageRotationValue.fromRawValue(camera.sensorOrientation))
+        .p(O.flatMapTuple2((_) => O.fromNullable(
+            InputImageFormatValue.fromRawValue(image.format.raw))))
+        .p(O.map((t) => InputImageData(
+              size: Size(image.width.toDouble(), image.height.toDouble()),
+              imageRotation: t.first,
+              inputImageFormat: t.second,
+              planeData: image.planes
+                  .map((p) => InputImagePlaneMetadata(
+                        bytesPerRow: p.bytesPerRow,
+                        height: p.height,
+                        width: p.width,
+                      ))
+                  .toList(),
+            )));
 
 Option<InputImage> inputImage(
   CameraImage image, {
@@ -66,6 +64,7 @@ Option<InputImage> inputImage(
 }) =>
     inputImageData(image, camera: camera).p(O.map((data) {
       final wb = WriteBuffer();
+
       for (final plane in image.planes) {
         wb.putUint8List(plane.bytes);
       }
@@ -79,7 +78,7 @@ Option<InputImage> inputImage(
 final _neverController = StreamController.broadcast(sync: true);
 Stream<T> neverStream<T>() => _neverController.stream.cast();
 
-final pickInputImage = pickImage().p(TE.flatMap((i) => O
+final pickInputImage = pickImage.p(TE.flatMap((i) => O
     .fromNullable(i.path)
     .p(O.map(InputImage.fromFilePath))
     .p(TE.fromOption(() => 'pickInputImage: pickImage returned empty path'))));

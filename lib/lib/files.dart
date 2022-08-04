@@ -55,7 +55,7 @@ TaskEither<String, Tuple2<PlatformFile, List<int>>> pickFile({
         ))
         .p(TE.flatMap(_readPlatformFileStream));
 
-TaskEither<String, PlatformFile> pickImage() => TE
+final pickImage = TE
     .tryCatch(
       () => FilePicker.platform.pickFiles(type: FileType.image),
       (err, s) => 'pickFiles failed: $err',

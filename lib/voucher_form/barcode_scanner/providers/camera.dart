@@ -13,11 +13,11 @@ final _log = Logger('barcode_scanner_field/providers/providers.dart');
 
 final camerasProvider = FutureProvider((ref) => availableCameras());
 
-bool isRearCamera(CameraDescription d) =>
+bool _isRearCamera(CameraDescription d) =>
     d.lensDirection == CameraLensDirection.back;
 
 final cameraProvider = Provider((ref) => ref.watch(camerasProvider).maybeWhen(
-      data: (cameras) => cameras.firstWhereOption(isRearCamera),
+      data: (cameras) => cameras.firstWhereOption(_isRearCamera),
       orElse: () => O.none<CameraDescription>(),
     ));
 
@@ -52,7 +52,7 @@ final _cameraControllerProvider = Provider.autoDispose((ref) {
 final initializedCameraController = FutureProvider.autoDispose(
     (ref) => ref.watch(_cameraControllerProvider).p(O.fold(
           () => Future.any<CameraController>([]),
-          (c) => c.initialize().then((value) => c),
+          (c) => c.initialize().then((_) => c),
         )));
 
 final imageProvider = Provider.autoDispose(
