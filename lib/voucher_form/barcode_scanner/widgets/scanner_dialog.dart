@@ -44,7 +44,7 @@ Widget _scannerDialog(
   // Toggle flash
   final onPressedFlash = useCallback(() {
     controller.whenData((c) {
-      if (c.value.flashMode == FlashMode.off) {
+      if (c.value.flashMode != FlashMode.torch) {
         c.setFlashMode(FlashMode.torch);
       } else {
         c.setFlashMode(FlashMode.off);
