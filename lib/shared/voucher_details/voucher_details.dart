@@ -25,15 +25,13 @@ List<Widget> buildVoucherDetails(
               formatExpires(dt),
             )
           ])),
-      ...voucher.balanceOption
-          .p(O.flatMap(millisToString))
-          .p(ifSomeList((b) => [
-                _VoucherDetailRow(
-                  textColor,
-                  Icons.account_balance,
-                  '\$$b',
-                ),
-              ])),
+      ...voucher.balanceOption.p(O.map(millisToString)).p(ifSomeList((b) => [
+            _VoucherDetailRow(
+              textColor,
+              Icons.account_balance,
+              '\$$b',
+            ),
+          ])),
       ...voucher.notesOption
           .p(O.filter((_) => includeNotes))
           .p(ifSomeList((notes) => [

@@ -83,7 +83,7 @@ Widget voucherForm(
                   (f) =>
                       f.didChange(codeTypeValueFromFormat(r.barcode.format))));
               _updateFieldIfEmpty(formKey, 'balanceMilliunits',
-                  () => r.balance.p(O.flatMap(millisToString)));
+                  () => r.balance.p(O.map(millisToString)));
               _updateFieldIfEmpty(formKey, 'expires', () => r.expires);
               _updateFieldIfEmpty(formKey, 'description', () => r.merchant);
             }),

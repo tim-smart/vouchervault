@@ -109,7 +109,7 @@ class Voucher with _$Voucher {
   dynamic toFormValue() => <String, dynamic>{
         ...toJson(),
         'balanceMilliunits':
-            balanceOption.p(O.flatMap(millisToString)).p(O.toNullable),
+            balanceOption.p(O.map(millisToString)).p(O.toNullable),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
         'expires': O.toNullable(expires),
         'color': _$VoucherColorEnumMap[this.color],
