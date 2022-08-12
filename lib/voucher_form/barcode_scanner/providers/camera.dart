@@ -37,6 +37,8 @@ final _cameraControllerProvider = Provider.autoDispose((ref) {
     );
 
     ref.onDispose(() async {
+      controller.setFlashMode(FlashMode.off);
+
       if (controller.value.isStreamingImages) {
         try {
           await controller.stopImageStream();
