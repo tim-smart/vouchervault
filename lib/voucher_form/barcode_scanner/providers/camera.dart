@@ -32,7 +32,7 @@ final _cameraControllerProvider = Provider.autoDispose((ref) {
       .p(O.map((camera) {
     final controller = CameraController(
       camera,
-      ResolutionPreset.high,
+      ResolutionPreset.veryHigh,
       enableAudio: false,
     );
 
