@@ -14,8 +14,8 @@ import 'package:vouchervault/lib/lib.dart';
 final authLogProvider = loggerProvider('auth/ops.dart');
 
 typedef AuthOp<R> = StateReaderTaskEither<AuthState, AuthContext, String, R>;
-AuthOp<AuthContext> _ask() => SRTE.ask();
-AuthOp<AuthState> _get() => SRTE.get();
+final AuthOp<AuthContext> _ask = SRTE.ask();
+final AuthOp<AuthState> _get = SRTE.get();
 
 class AuthContext {
   const AuthContext({
@@ -27,7 +27,7 @@ class AuthContext {
   final LocalAuthentication localAuth;
 }
 
-final init = _get()
+final init = _get
     .p(SRTE.filter(
       (s) => !s.enabled,
       (_) => 'Auth already enabled',
@@ -41,9 +41,9 @@ final init = _get()
     .p(tapLeftC((c) => c.log.info));
 
 final toggle =
-    _get().p(SRTE.chainModify((s) => s.enabled ? s.disable() : s.enable()));
+    _get.p(SRTE.chainModify((s) => s.enabled ? s.disable() : s.enable()));
 
-final _cancel = _ask().p(SRTE.chainTryCatchK(
+final _cancel = _ask.p(SRTE.chainTryCatchK(
   (c) => c.localAuth.stopAuthentication(),
   (err, stackTrace) => 'Could not cancel previous auth requests',
 ));
