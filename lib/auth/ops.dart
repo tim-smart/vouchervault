@@ -51,9 +51,10 @@ final _cancel = _ask().p(SRTE.chainTryCatchK(
 final authenticate = _cancel
     .p(SRTE.flatMapReaderTaskEither((_) => TE.tryCatchK(
           (c) => c.localAuth.authenticate(
-            localizedReason: 'Please authenticate to view your vouchers',
+            localizedReason: ' ',
             authMessages: const [
               AndroidAuthMessages(
+                signInTitle: 'Unlock your vouchers',
                 biometricHint: '',
               ),
               IOSAuthMessages(),
