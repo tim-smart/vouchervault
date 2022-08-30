@@ -26,28 +26,28 @@ class AppTheme {
     ).textTheme;
 
     textTheme = textTheme.copyWith(
-      headline2: textTheme.headline2!.copyWith(
+      displayMedium: textTheme.displayMedium!.copyWith(
         color: textColor,
         fontSize: px(34),
         fontStyle: FontStyle.italic,
         fontWeight: FontWeight.w900,
       ),
-      headline3: textTheme.headline3!.copyWith(
+      displaySmall: textTheme.displaySmall!.copyWith(
         color: textColor,
         fontSize: px(20),
         fontWeight: FontWeight.w700,
       ),
-      bodyText1: textTheme.bodyText1!.copyWith(
+      bodyLarge: textTheme.bodyLarge!.copyWith(
         color: textColor,
         fontSize: rem(1),
         fontWeight: FontWeight.w400,
       ),
-      bodyText2: textTheme.bodyText2!.copyWith(
+      bodyMedium: textTheme.bodyMedium!.copyWith(
         color: textColor,
         fontSize: rem(1),
         fontWeight: FontWeight.w800,
       ),
-      button: textTheme.button!.copyWith(
+      labelLarge: textTheme.labelLarge!.copyWith(
         fontSize: px(20),
         fontWeight: FontWeight.w900,
       ),
@@ -68,24 +68,23 @@ class AppTheme {
         TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
       }),
-      toggleableActiveColor: Colors.red,
       chipTheme: ChipThemeData.fromDefaults(
         brightness: brightness,
         secondaryColor: Colors.red,
-        labelStyle: textTheme.bodyText2!.copyWith(fontSize: rem(0.8)),
+        labelStyle: textTheme.bodyMedium!.copyWith(fontSize: rem(0.8)),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           minimumSize: Size(0, rem(2.5)),
-          primary: Colors.red,
-          onPrimary: Colors.white,
+          backgroundColor: Colors.red,
+          foregroundColor: Colors.white,
         ),
       ),
       appBarTheme: AppBarTheme(
         centerTitle: false,
         color: backgroundColor,
         iconTheme: IconThemeData(
-          color: textTheme.bodyText1!.color,
+          color: textTheme.bodyLarge!.color,
         ),
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(

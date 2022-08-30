@@ -50,7 +50,7 @@ Widget _voucherDialog(
         children: [
           Text(
             voucher.description,
-            style: theme.textTheme.headline3,
+            style: theme.textTheme.displaySmall,
           ),
           ...voucher.code.p(ifSomeList((data) => [
                 SizedBox(height: AppTheme.space3),
@@ -93,8 +93,8 @@ Widget _voucherDialog(
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
                 ),
                 onPressed: onClose,
                 child: const Text('Close'),
@@ -168,7 +168,7 @@ Widget __barcode(
             (type) => BarcodeWidget(
               backgroundColor: Colors.transparent,
               data: data,
-              style: theme.textTheme.bodyText2!.copyWith(
+              style: theme.textTheme.bodyMedium!.copyWith(
                 color: Colors.black,
               ),
               barcode: type,

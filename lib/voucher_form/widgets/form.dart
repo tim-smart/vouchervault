@@ -127,7 +127,7 @@ Widget voucherForm(
           name: 'removeOnceExpired',
           title: Text(
             'Remove once expired',
-            style: theme.textTheme.bodyText1,
+            style: theme.textTheme.bodyLarge,
           ),
           decoration: const InputDecoration(
             border: InputBorder.none,

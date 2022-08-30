@@ -69,13 +69,13 @@ Widget __voucherDetailRow(
     selectable
         ? SelectableText(
             text,
-            style: theme.textTheme.bodyText1!.copyWith(
+            style: theme.textTheme.bodyLarge!.copyWith(
               color: textColor,
             ),
           )
         : Text(
             text,
-            style: theme.textTheme.bodyText1!.copyWith(
+            style: theme.textTheme.bodyLarge!.copyWith(
               color: textColor,
             ),
           ),

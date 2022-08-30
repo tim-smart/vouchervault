@@ -38,7 +38,7 @@ Widget appScaffold(
               ),
               title: Text(
                 title,
-                style: theme.textTheme.headline2!
+                style: theme.textTheme.displayMedium!
                     .copyWith(fontSize: AppTheme.rem(1.2)),
               ),
             ),
