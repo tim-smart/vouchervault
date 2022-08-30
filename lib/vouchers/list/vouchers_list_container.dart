@@ -26,6 +26,7 @@ class _DialogRoute extends PageRoute with MaterialRouteTransitionMixin {
 @cwidget
 Widget _vouchersListContainer(BuildContext context, WidgetRef ref) {
   final state = ref.watch(vouchersProvider);
+
   return VoucherList(
     vouchers: state.sortedVouchers,
     onPressed: (v) => Navigator.push(

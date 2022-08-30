@@ -59,7 +59,8 @@ VouchersOp<void> update(Voucher voucher) =>
         ));
 
 // == Update voucher balance from string
-final _newBalance = (Voucher v) => (Option<String> s) => s
+final _newBalance = (Voucher v) => (String s) => s
+    .p(optionOfString)
     .p(O.flatMap(millisFromString))
     .p(O.map2K(v.balanceOption, (amount, int balance) => balance - amount));
 
