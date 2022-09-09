@@ -91,6 +91,7 @@ class AppTheme {
         backgroundColor: Colors.red,
         foregroundColor: Colors.white,
       ),
+      toggleableActiveColor: Colors.red,
     );
   }
 
