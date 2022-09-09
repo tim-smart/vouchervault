@@ -33,10 +33,9 @@ BarcodeOp<BarcodeResult> extractAll(
   bool embellish = false,
 }) =>
     scan(image)
-        .p(RTE.flatMap(
-            (b) => b.firstOption.p(O.map((b) => BarcodeResult(barcode: b))).p(
-                  RTE.fromOption((p0) => const MlError.barcodeNotFound()),
-                )))
+        .p(RTE.flatMap((b) => b.firstOption
+            .p(O.map((b) => BarcodeResult(barcode: b)))
+            .p(RTE.fromOption(() => const MlError.barcodeNotFound()))))
         .p(embellish
             ? RTE.flatMap(
                 (result) => _embellishResult(image: image, result: result))

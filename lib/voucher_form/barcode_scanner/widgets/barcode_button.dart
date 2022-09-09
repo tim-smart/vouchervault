@@ -38,7 +38,7 @@ Widget _barcodeButton(
     TextButton(
       style: TextButton.styleFrom(
         backgroundColor: AppColors.lightGrey,
-        foregroundColor: Colors.black,
+        primary: Colors.black,
         minimumSize: Size.fromHeight(AppTheme.rem(7)),
       ),
       onPressed: onPressed,

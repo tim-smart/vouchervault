@@ -1,6 +1,6 @@
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
-import 'package:fpdt/riverpod.dart';
+import 'package:fpdt_flutter/fpdt_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_persistence/riverpod_persistence.dart';
 import 'package:vouchervault/app/app.dart';

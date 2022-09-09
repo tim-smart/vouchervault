@@ -107,8 +107,8 @@ Widget __previewDialog(
                     SizedBox(width: AppTheme.space3),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black,
+                        primary: Colors.white,
+                        onPrimary: Colors.black,
                       ),
                       onPressed: () => Navigator.of(context).pop(),
                       child: const Text('Cancel'),

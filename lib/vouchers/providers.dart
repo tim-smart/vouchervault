@@ -1,5 +1,5 @@
 import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/riverpod.dart';
+import 'package:fpdt_flutter/fpdt_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';

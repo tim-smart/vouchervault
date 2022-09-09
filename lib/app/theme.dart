@@ -76,8 +76,8 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           minimumSize: Size(0, rem(2.5)),
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
+          primary: Colors.red,
+          onPrimary: Colors.white,
         ),
       ),
       appBarTheme: AppBarTheme(

@@ -1,5 +1,5 @@
 import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/riverpod.dart';
+import 'package:fpdt_flutter/fpdt_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:vouchervault/auth/auth.dart';
