@@ -44,7 +44,7 @@ platform :android do
   lane :release do
     beta()
     upload_to_play_store(
-      track: "alpha",
+      track: "beta",
       track_promote_to: "production",
       version_code: build_number.to_s,
     )
