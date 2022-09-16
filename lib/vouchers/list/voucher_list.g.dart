@@ -7,14 +7,19 @@ part of 'voucher_list.dart';
 // **************************************************************************
 
 class VoucherList extends StatelessWidget {
-  const VoucherList({Key? key, required this.vouchers, required this.onPressed})
-      : super(key: key);
+  const VoucherList({
+    Key? key,
+    required this.vouchers,
+    required this.onPressed,
+  }) : super(key: key);
 
   final IList<Voucher> vouchers;
 
   final void Function(Voucher) onPressed;
 
   @override
-  Widget build(BuildContext _context) =>
-      _voucherList(vouchers: vouchers, onPressed: onPressed);
+  Widget build(BuildContext _context) => _voucherList(
+        vouchers: vouchers,
+        onPressed: onPressed,
+      );
 }

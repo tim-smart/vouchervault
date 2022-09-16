@@ -7,11 +7,16 @@ part of 'app_scaffold_simple.dart';
 // **************************************************************************
 
 class AppScaffoldSimple extends HookWidget {
-  const AppScaffoldSimple({Key? key, required this.body}) : super(key: key);
+  const AppScaffoldSimple({
+    Key? key,
+    required this.body,
+  }) : super(key: key);
 
   final Widget body;
 
   @override
-  Widget build(BuildContext _context) =>
-      appScaffoldSimple(_context, body: body);
+  Widget build(BuildContext _context) => appScaffoldSimple(
+        _context,
+        body: body,
+      );
 }

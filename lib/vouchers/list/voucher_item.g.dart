@@ -7,12 +7,12 @@ part of 'voucher_item.dart';
 // **************************************************************************
 
 class VoucherItem extends StatelessWidget {
-  const VoucherItem(
-      {Key? key,
-      required this.voucher,
-      required this.onPressed,
-      this.bottomPadding = 0})
-      : super(key: key);
+  const VoucherItem({
+    Key? key,
+    required this.voucher,
+    required this.onPressed,
+    this.bottomPadding = 0,
+  }) : super(key: key);
 
   final Voucher voucher;
 
@@ -21,6 +21,10 @@ class VoucherItem extends StatelessWidget {
   final double bottomPadding;
 
   @override
-  Widget build(BuildContext _context) => voucherItem(_context,
-      voucher: voucher, onPressed: onPressed, bottomPadding: bottomPadding);
+  Widget build(BuildContext _context) => voucherItem(
+        _context,
+        voucher: voucher,
+        onPressed: onPressed,
+        bottomPadding: bottomPadding,
+      );
 }

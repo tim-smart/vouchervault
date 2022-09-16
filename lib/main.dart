@@ -13,12 +13,10 @@ void main({IList<Voucher>? vouchers}) async {
       // ignore: avoid_print
       print('${r.loggerName}: ${r.level.name}: ${r.time}: ${r.message}'));
 
-  final sharedPrefs = await SharedPreferences.getInstance();
+  final prefs = await SharedPreferences.getInstance();
 
   runApp(VoucherVaultApp(
     vouchers: vouchers,
-    overrides: [
-      sharedPreferencesProvider.overrideWithValue(sharedPrefs),
-    ],
+    initialValues: [sharedPrefs.withInitialValue(prefs)],
   ));
 }

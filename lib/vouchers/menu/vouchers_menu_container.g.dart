@@ -6,10 +6,9 @@ part of 'vouchers_menu_container.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class VouchersMenuContainer extends ConsumerWidget {
+class VouchersMenuContainer extends StatelessWidget {
   const VouchersMenuContainer({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context, WidgetRef _ref) =>
-      vouchersMenuContainer(_ref);
+  Widget build(BuildContext _context) => vouchersMenuContainer();
 }

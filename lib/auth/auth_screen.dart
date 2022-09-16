@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_nucleus/flutter_nucleus.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/auth/auth.dart';
 import 'package:vouchervault/shared/scaffold/app_scaffold_simple.dart';
 
 part 'auth_screen.g.dart';
 
-@hcwidget
-Widget authScreen(WidgetRef ref) {
-  final sm = ref.watch(authSMProvider);
+@hwidget
+Widget authScreen() {
+  final sm = useAtom(authState.parent);
   useEffect(() {
     sm.run(authenticate);
     return null;

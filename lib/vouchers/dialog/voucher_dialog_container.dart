@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_nucleus/flutter_nucleus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/task_option.dart' as TO;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/hooks/hooks.dart';
 import 'package:vouchervault/lib/navigator.dart';
@@ -15,10 +15,9 @@ import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'voucher_dialog_container.g.dart';
 
-@hcwidget
+@hwidget
 Widget _voucherDialogContainer(
-  BuildContext context,
-  WidgetRef ref, {
+  BuildContext context, {
   required Voucher voucher,
 }) {
   // Full brightness unless text barcode
@@ -28,9 +27,8 @@ Widget _voucherDialogContainer(
   );
 
   // state
-  final sm = ref.watch(vouchersSMProvider);
-  final v =
-      ref.watch(voucherProvider(voucher.uuid)).p(O.getOrElse(() => voucher));
+  final sm = useAtom(vouchersState.parent);
+  final v = useAtom(voucherAtom(voucher.uuid)).p(O.getOrElse(() => voucher));
 
   final onTapBarcode = useCallback(
     () => v.code.p(O.map((code) {

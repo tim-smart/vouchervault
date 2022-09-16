@@ -7,12 +7,12 @@ part of 'barcode_button.dart';
 // **************************************************************************
 
 class BarcodeButton extends StatelessWidget {
-  const BarcodeButton(
-      {Key? key,
-      required this.barcodeType,
-      required this.data,
-      required this.onPressed})
-      : super(key: key);
+  const BarcodeButton({
+    Key? key,
+    required this.barcodeType,
+    required this.data,
+    required this.onPressed,
+  }) : super(key: key);
 
   final Option<Barcode> barcodeType;
 
@@ -21,6 +21,10 @@ class BarcodeButton extends StatelessWidget {
   final void Function() onPressed;
 
   @override
-  Widget build(BuildContext _context) => _barcodeButton(_context,
-      barcodeType: barcodeType, data: data, onPressed: onPressed);
+  Widget build(BuildContext _context) => _barcodeButton(
+        _context,
+        barcodeType: barcodeType,
+        data: data,
+        onPressed: onPressed,
+      );
 }

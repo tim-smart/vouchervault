@@ -7,23 +7,17 @@ import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_ios/local_auth_ios.dart';
 import 'package:logging/logging.dart';
-import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/auth/auth.dart';
 import 'package:vouchervault/lib/lib.dart';
 
-final authLogProvider = loggerProvider('auth/ops.dart');
+final _log = Logger('auth/ops.dart');
 
 typedef AuthOp<R> = StateReaderTaskEither<AuthState, AuthContext, String, R>;
 final AuthOp<AuthContext> _ask = SRTE.ask();
 final AuthOp<AuthState> _get = SRTE.get();
 
 class AuthContext {
-  const AuthContext({
-    required this.log,
-    required this.localAuth,
-  });
-
-  final Logger log;
+  const AuthContext({required this.localAuth});
   final LocalAuthentication localAuth;
 }
 
@@ -38,7 +32,7 @@ final init = _get
         )))
     .p(SRTE.flatMap((available) =>
         SRTE.put(available ? AuthState.notRequired : AuthState.notAvailable)))
-    .p(tapLeftC((c) => c.log.info));
+    .p(tapLeftC((c) => _log.info));
 
 final toggle =
     _get.p(SRTE.chainModify((s) => s.enabled ? s.disable() : s.enable()));
@@ -64,4 +58,4 @@ final authenticate = _cancel
         )))
     .p(SRTE.filter(identity, (_) => 'Authentication failed'))
     .p(SRTE.chainPut(AuthState.success))
-    .p(tapLeftC((c) => c.log.info));
+    .p(tapLeftC((c) => _log.info));

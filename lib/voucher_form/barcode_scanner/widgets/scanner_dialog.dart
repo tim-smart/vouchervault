@@ -2,48 +2,49 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_nucleus/flutter_nucleus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/reader_task_either.dart' as RTE;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
 
 part 'scanner_dialog.g.dart';
 
-@hcwidget
+@hwidget
 Widget _scannerDialog(
-  WidgetRef ref, {
-  required bool enableSmartScan,
+  BuildContext context, {
   required void Function(BarcodeResult) onScan,
 }) {
-  final controller = ref.watch(initializedCameraController);
+  final smartScan = useAtom(appSettings.select((a) => a.smartScan));
+  final setPaused = context.setAtom(cameraPaused);
+  final controller = useAtom(initializedCameraController);
 
   // Listen for scans
-  final barcodeResults = ref.watch(barcodeResultProvider(enableSmartScan));
+  final barcodeResults = useAtom(barcodeResultProvider);
   useEffect(
     () => barcodeResults.take(1).listen(onScan).cancel,
     [barcodeResults],
   );
 
   // File picker
-  final mlContext = ref.watch(mlContextProvider);
+  final mlContext = useAtom(mlContextProvider);
   final onPressedPicker = useCallback(() async {
-    ref.read(cameraPaused.notifier).state = true;
+    setPaused(true);
 
-    extractAllFromFile(enableSmartScan).p(RTE.tap(onScan)).p(RTE.tapLeft((err) {
+    extractAllFromFile(smartScan).p(RTE.tap(onScan)).p(RTE.tapLeft((err) {
       Fluttertoast.showToast(msg: err.friendlyMessage);
 
       // Only un-pause on failure
-      ref.read(cameraPaused.notifier).state = false;
+      setPaused(false);
     }))(mlContext)();
-  }, [onScan, mlContext, enableSmartScan]);
+  }, [onScan, mlContext, smartScan, setPaused]);
 
   // Toggle flash
   final onPressedFlash = useCallback(() {
-    controller.whenData((c) {
+    controller.map((c) {
       if (c.value.flashMode != FlashMode.torch) {
         c.setFlashMode(FlashMode.torch);
       } else {
@@ -55,7 +56,7 @@ Widget _scannerDialog(
   return AnnotatedRegion(
     value: SystemUiOverlayStyle.light,
     child: _PreviewDialog(
-      controller: controller.maybeWhen(data: O.some, orElse: O.none),
+      controller: controller.whenOrElse(data: O.some, orElse: O.none),
       onPressedPicker: onPressedPicker,
       onPressedFlash: onPressedFlash,
     ),

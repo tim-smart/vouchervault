@@ -7,12 +7,12 @@ part of 'vouchers_menu.dart';
 // **************************************************************************
 
 class VouchersMenu extends StatelessWidget {
-  const VouchersMenu(
-      {Key? key,
-      required this.onSelected,
-      required this.values,
-      required this.disabled})
-      : super(key: key);
+  const VouchersMenu({
+    Key? key,
+    required this.onSelected,
+    required this.values,
+    required this.disabled,
+  }) : super(key: key);
 
   final void Function(VouchersMenuAction) onSelected;
 
@@ -21,6 +21,9 @@ class VouchersMenu extends StatelessWidget {
   final Set<VouchersMenuAction> disabled;
 
   @override
-  Widget build(BuildContext _context) =>
-      vouchersMenu(onSelected: onSelected, values: values, disabled: disabled);
+  Widget build(BuildContext _context) => vouchersMenu(
+        onSelected: onSelected,
+        values: values,
+        disabled: disabled,
+      );
 }

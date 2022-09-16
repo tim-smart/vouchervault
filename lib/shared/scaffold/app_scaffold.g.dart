@@ -7,14 +7,14 @@ part of 'app_scaffold.dart';
 // **************************************************************************
 
 class AppScaffold extends HookWidget {
-  const AppScaffold(
-      {Key? key,
-      required this.title,
-      required this.slivers,
-      this.actions = const [],
-      this.floatingActionButton = O.kNone,
-      this.leading = false})
-      : super(key: key);
+  const AppScaffold({
+    Key? key,
+    required this.title,
+    required this.slivers,
+    this.actions = const [],
+    this.floatingActionButton = O.kNone,
+    this.leading = false,
+  }) : super(key: key);
 
   final String title;
 
@@ -27,10 +27,12 @@ class AppScaffold extends HookWidget {
   final bool leading;
 
   @override
-  Widget build(BuildContext _context) => appScaffold(_context,
-      title: title,
-      slivers: slivers,
-      actions: actions,
-      floatingActionButton: floatingActionButton,
-      leading: leading);
+  Widget build(BuildContext _context) => appScaffold(
+        _context,
+        title: title,
+        slivers: slivers,
+        actions: actions,
+        floatingActionButton: floatingActionButton,
+        leading: leading,
+      );
 }

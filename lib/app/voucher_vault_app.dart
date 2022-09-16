@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_nucleus/flutter_nucleus.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/auth/auth.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
@@ -15,28 +16,26 @@ final routeObserver = RouteObserver<ModalRoute>();
 Widget _voucherVaultApp(
   BuildContext context, {
   IList<Voucher>? vouchers,
-  List<Override> overrides = const [],
+  List<AtomInitialValue> initialValues = const [],
 }) =>
-    ProviderScope(
-      overrides: [
-        ...overrides,
+    AtomScope(
+      initialValues: [
+        ...initialValues,
         if (vouchers != null)
-          vouchersSMProvider.overrideWithProvider(
-            createVouchersSMProvider(VouchersState(vouchers)),
-          ),
+          vouchersState.parent
+              .withInitialValue(createVoucherSM(VouchersState(vouchers)))
       ],
       child: const _App(),
     );
 
-@hcwidget
-Widget __app(WidgetRef ref) {
-  // Auth state
-  final authState = ref.watch(authProvider);
+@hwidget
+Widget __app() {
+  final auth = useAtom(authState);
 
   return MaterialApp(
     theme: AppTheme.light(),
     darkTheme: AppTheme.dark(),
-    home: authState.when(
+    home: auth.when(
       unauthenticated: () => const AuthScreen(),
       authenticated: (_) => const VouchersScreen(),
     ),

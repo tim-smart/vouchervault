@@ -6,9 +6,9 @@ part of 'auth_screen.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class AuthScreen extends HookConsumerWidget {
+class AuthScreen extends HookWidget {
   const AuthScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context, WidgetRef _ref) => authScreen(_ref);
+  Widget build(BuildContext _context) => authScreen();
 }

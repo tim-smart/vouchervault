@@ -6,10 +6,9 @@ part of 'vouchers_screen.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class VouchersScreen extends ConsumerWidget {
+class VouchersScreen extends StatelessWidget {
   const VouchersScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context, WidgetRef _ref) =>
-      _vouchersScreen(_context, _ref);
+  Widget build(BuildContext _context) => _vouchersScreen(_context);
 }

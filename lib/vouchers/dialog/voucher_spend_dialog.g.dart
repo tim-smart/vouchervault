@@ -6,10 +6,9 @@ part of 'voucher_spend_dialog.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class VoucherSpendDialog extends ConsumerWidget {
+class VoucherSpendDialog extends HookWidget {
   const VoucherSpendDialog({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context, WidgetRef _ref) =>
-      _voucherSpendDialog(_context, _ref);
+  Widget build(BuildContext _context) => _voucherSpendDialog(_context);
 }

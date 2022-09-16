@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nucleus/flutter_nucleus.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'vouchers_list_container.g.dart';
@@ -23,22 +23,23 @@ class _DialogRoute extends PageRoute with MaterialRouteTransitionMixin {
   Color get barrierColor => Colors.black54;
 }
 
-@cwidget
-Widget _vouchersListContainer(BuildContext context, WidgetRef ref) {
-  final state = ref.watch(vouchersProvider);
+@swidget
+Widget _vouchersListContainer(BuildContext context) =>
+    AtomBuilder((context, watch, child) {
+      final state = watch(vouchersState);
 
-  return VoucherList(
-    vouchers: state.sortedVouchers,
-    onPressed: (v) => Navigator.push(
-      context,
-      _DialogRoute(
-        (context) => Dismissible(
-          key: const Key('VoucherDialogDismissable'),
-          direction: DismissDirection.vertical,
-          onDismissed: (d) => Navigator.pop(context),
-          child: Center(child: VoucherDialogContainer(voucher: v)),
+      return VoucherList(
+        vouchers: state.sortedVouchers,
+        onPressed: (v) => Navigator.push(
+          context,
+          _DialogRoute(
+            (context) => Dismissible(
+              key: const Key('VoucherDialogDismissable'),
+              direction: DismissDirection.vertical,
+              onDismissed: (d) => Navigator.pop(context),
+              child: Center(child: VoucherDialogContainer(voucher: v)),
+            ),
+          ),
         ),
-      ),
-    ),
-  );
-}
+      );
+    });

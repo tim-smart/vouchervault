@@ -7,17 +7,16 @@ part of 'barcode_scanner_field.dart';
 // **************************************************************************
 
 class BarcodeScannerField extends HookWidget {
-  const BarcodeScannerField(
-      {Key? key,
-      required this.onChange,
-      required this.initialValue,
-      required this.barcodeType,
-      required this.labelText,
-      this.errorText = const None(),
-      this.onScan = const None(),
-      this.launchScannerImmediately = false,
-      this.enableSmartScan = false})
-      : super(key: key);
+  const BarcodeScannerField({
+    Key? key,
+    required this.onChange,
+    required this.initialValue,
+    required this.barcodeType,
+    required this.labelText,
+    this.errorText = const None(),
+    this.onScan = const None(),
+    this.launchScannerImmediately = false,
+  }) : super(key: key);
 
   final void Function(String) onChange;
 
@@ -33,16 +32,15 @@ class BarcodeScannerField extends HookWidget {
 
   final bool launchScannerImmediately;
 
-  final bool enableSmartScan;
-
   @override
-  Widget build(BuildContext _context) => _barcodeScannerField(_context,
-      onChange: onChange,
-      initialValue: initialValue,
-      barcodeType: barcodeType,
-      labelText: labelText,
-      errorText: errorText,
-      onScan: onScan,
-      launchScannerImmediately: launchScannerImmediately,
-      enableSmartScan: enableSmartScan);
+  Widget build(BuildContext _context) => _barcodeScannerField(
+        _context,
+        onChange: onChange,
+        initialValue: initialValue,
+        barcodeType: barcodeType,
+        labelText: labelText,
+        errorText: errorText,
+        onScan: onScan,
+        launchScannerImmediately: launchScannerImmediately,
+      );
 }

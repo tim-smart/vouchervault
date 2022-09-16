@@ -9,19 +9,13 @@ import 'package:fpdt/task_either.dart' as TE;
 import 'package:logging/logging.dart';
 import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
-import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
 
-final vouchersLogProvider = loggerProvider('vouchers/ops.dart');
+final _log = Logger('vouchers/ops.dart');
 
 class VouchersContext {
-  const VouchersContext({
-    required this.log,
-    this.uuid = const Uuid(),
-  });
-
-  final Logger log;
+  const VouchersContext({this.uuid = const Uuid()});
   final Uuid uuid;
 }
 
@@ -33,7 +27,7 @@ VouchersOp<VouchersContext> _ask() => SRTE.ask();
 VouchersOp<void> _rightVoid() => SRTE.right(null);
 
 VouchersOp<R> _logWarning<R>(VouchersOp<R> op) =>
-    op.p(tapLeftC((c) => c.log.warning));
+    op.p(tapLeftC((c) => _log.warning));
 
 // == Remove expired vouchers
 IList<Voucher> _removeExpired(IList<Voucher> vouchers) => vouchers.removeWhere(

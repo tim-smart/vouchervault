@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nucleus/flutter_nucleus.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:fpdt/task_option.dart' as TO;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/lib/navigator.dart';
 import 'package:vouchervault/shared/scaffold/scaffold.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
@@ -13,8 +12,8 @@ import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'vouchers_screen.g.dart';
 
-@cwidget
-Widget _vouchersScreen(BuildContext context, WidgetRef ref) => AppScaffold(
+@swidget
+Widget _vouchersScreen(BuildContext context) => AppScaffold(
       title: 'Vouchers',
       actions: const [VouchersMenuContainer()],
       slivers: [
@@ -33,10 +32,10 @@ Widget _vouchersScreen(BuildContext context, WidgetRef ref) => AppScaffold(
             builder: (context) => const VoucherFormDialog(),
             fullscreenDialog: true,
           ),
-        ).p(TO.tap(_createVoucher(ref.read))),
+        ).p(TO.tap(_createVoucher(context.getAtom))),
         child: const Icon(Icons.add),
       )),
     );
 
-void Function(Voucher) _createVoucher(RefRead read) =>
-    (v) => read(vouchersSMProvider).run(create(v));
+void Function(Voucher) _createVoucher(AtomGetter get) =>
+    (v) => get(vouchersState.parent).run(create(v));
