@@ -11,12 +11,12 @@ import 'package:vouchervault/app/atoms.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
 
 final _log = Logger('barcode_scanner_field/providers/providers.dart');
-final camerasProvider = futureAtom((get) => availableCameras())..keepAlive();
+final cameras = futureAtom((get) => availableCameras())..keepAlive();
 
 bool _isRearCamera(CameraDescription d) =>
     d.lensDirection == CameraLensDirection.back;
 
-final cameraProvider = atom((get) => get(camerasProvider).whenOrElse(
+final cameraProvider = atom((get) => get(cameras).whenOrElse(
       data: (cameras) => cameras.firstWhereOption(_isRearCamera),
       orElse: () => O.none<CameraDescription>(),
     ))

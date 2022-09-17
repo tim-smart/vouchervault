@@ -37,5 +37,5 @@ Widget _vouchersScreen(BuildContext context) => AppScaffold(
       )),
     );
 
-void Function(Voucher) _createVoucher(AtomGetter get) =>
+void Function(Voucher) _createVoucher(GetAtom get) =>
     (v) => get(vouchersState.parent).run(create(v));
