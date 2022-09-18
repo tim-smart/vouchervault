@@ -18,7 +18,7 @@ dependencies:
   file_picker: ^5.0.0
   flutter_form_builder: ^7.5.0
   flutter_hooks: ^0.18.0
-  flutter_nucleus: ^0.1.0
+  flutter_nucleus: ^0.1.1
   fluttertoast: ^8.0.7
   form_builder_validators: ^8.1.1
   fpdt: ^0.0.62
