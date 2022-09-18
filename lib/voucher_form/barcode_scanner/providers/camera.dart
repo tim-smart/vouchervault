@@ -36,7 +36,7 @@ final _cameraControllerProvider = atom((get) {
     );
 
     get.onDispose(() async {
-      controller.setFlashMode(FlashMode.off);
+      await controller.setFlashMode(FlashMode.off);
 
       if (controller.value.isStreamingImages) {
         try {
