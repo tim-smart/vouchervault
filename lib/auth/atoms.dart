@@ -11,7 +11,7 @@ final authState = smAtom<AuthState, AuthContext, String>(
     initial?.init() ?? AuthState.notAvailable,
     AuthContext(localAuth: get(localAuthProvider)),
   )..run(init),
-  key: 'rp_persist_AuthBloc',
+  key: 'pbs_AuthBloc',
   fromJson: (json) => AuthState.fromJson(json),
   toJson: (s) => s.toJson(),
 )..keepAlive();
