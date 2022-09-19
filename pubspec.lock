@@ -358,7 +358,7 @@ packages:
       name: flutter_nucleus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "0.1.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -639,7 +639,7 @@ packages:
       name: nucleus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.10"
+    version: "0.1.15"
   package_config:
     dependency: transitive
     description:
