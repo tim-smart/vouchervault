@@ -19,7 +19,7 @@ Widget _scannerDialog(
   required void Function(BarcodeResult) onScan,
 }) {
   final smartScan = useAtom(appSettings.select((a) => a.smartScan));
-  final setPaused = context.setAtom(cameraPaused);
+  final setCameraPaused = context.setAtom(cameraPaused);
   final controller = useAtom(initializedCameraController);
 
   // Listen for scans
@@ -32,15 +32,15 @@ Widget _scannerDialog(
   // File picker
   final mlContext = useAtom(mlContextProvider);
   final onPressedPicker = useCallback(() async {
-    setPaused(true);
+    setCameraPaused(true);
 
     extractAllFromFile(smartScan).p(RTE.tap(onScan)).p(RTE.tapLeft((err) {
       Fluttertoast.showToast(msg: err.friendlyMessage);
 
       // Only un-pause on failure
-      setPaused(false);
+      setCameraPaused(false);
     }))(mlContext)();
-  }, [onScan, mlContext, smartScan, setPaused]);
+  }, [onScan, mlContext, smartScan, setCameraPaused]);
 
   // Toggle flash
   final onPressedFlash = useCallback(() {

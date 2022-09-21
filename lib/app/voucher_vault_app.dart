@@ -28,20 +28,20 @@ Widget _voucherVaultApp(
       child: const _App(),
     );
 
-@hwidget
-Widget __app() {
-  final auth = useAtom(authState);
+@swidget
+Widget __app() => AtomBuilder((context, watch, child) {
+      final auth = watch(authState);
 
-  return MaterialApp(
-    theme: AppTheme.light(),
-    darkTheme: AppTheme.dark(),
-    home: auth.when(
-      unauthenticated: () => const AuthScreen(),
-      authenticated: (_) => const VouchersScreen(),
-    ),
-    navigatorObservers: [routeObserver],
-    localizationsDelegates: const [
-      FormBuilderLocalizations.delegate,
-    ],
-  );
-}
+      return MaterialApp(
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
+        home: auth.when(
+          unauthenticated: () => const AuthScreen(),
+          authenticated: (_) => const VouchersScreen(),
+        ),
+        navigatorObservers: [routeObserver],
+        localizationsDelegates: const [
+          FormBuilderLocalizations.delegate,
+        ],
+      );
+    });

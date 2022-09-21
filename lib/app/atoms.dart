@@ -5,8 +5,7 @@ import 'package:vouchervault/app/app.dart';
 final sharedPrefs = atom<SharedPreferences>((get) => throw UnimplementedError())
   ..keepAlive();
 
-final nucleusStorage = atom((get) => SharedPrefsStorage(get(sharedPrefs)))
-  ..keepAlive();
+final nucleusStorage = atom((get) => SharedPrefsStorage(get(sharedPrefs)));
 
 final appSettings = stateAtomWithStorage(
   const VoucherVaultSettings(),
@@ -14,4 +13,4 @@ final appSettings = stateAtomWithStorage(
   storage: nucleusStorage,
   fromJson: VoucherVaultSettings.fromJson,
   toJson: (s) => s.toJson(),
-)..keepAlive();
+);

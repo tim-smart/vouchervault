@@ -11,7 +11,7 @@ import 'package:vouchervault/app/atoms.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
 
 final _log = Logger('barcode_scanner_field/providers/providers.dart');
-final cameras = futureAtom((get) => availableCameras())..keepAlive();
+final cameras = futureAtom((get) => availableCameras());
 
 bool _isRearCamera(CameraDescription d) =>
     d.lensDirection == CameraLensDirection.back;
