@@ -1,8 +1,5 @@
-import 'package:enum_utils/enum_utils.dart' as enums;
 import 'package:flutter/material.dart';
 import 'package:flutter_nucleus/flutter_nucleus.dart';
-import 'package:fpdt/function.dart';
-import 'package:fpdt/option.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/auth/auth.dart';
@@ -10,42 +7,39 @@ import 'package:vouchervault/vouchers/vouchers.dart';
 
 part 'vouchers_menu_container.g.dart';
 
-final _actionMap = enums.optionValueMap({
-  VouchersMenuAction.import: import,
-  VouchersMenuAction.export: export,
-});
-
-final _authActionMap = enums.optionValueMap({
-  VouchersMenuAction.authentication: toggle,
-});
-
-final _contextActionMap = enums.optionValueMap({
-  VouchersMenuAction.smartScan: (BuildContext x) =>
-      x.updateAtom(appSettings)((s) => s.copyWith(smartScan: !s.smartScan)),
-});
+extension _VoucherMenuActions on VouchersMenuAction {
+  void execute(BuildContext x) {
+    switch (this) {
+      case VouchersMenuAction.import:
+        x.getAtom(vouchersState.parent).run(import);
+        return;
+      case VouchersMenuAction.export:
+        x.getAtom(vouchersState.parent).run(export);
+        return;
+      case VouchersMenuAction.authentication:
+        x.getAtom(authState.parent).run(toggle);
+        return;
+      case VouchersMenuAction.smartScan:
+        x.updateAtom(appSettings)((s) => s.copyWith(smartScan: !s.smartScan));
+        return;
+    }
+  }
+}
 
 @swidget
-Widget vouchersMenuContainer() => AtomBuilder((context, watch, child) {
-      final bloc = watch(vouchersState.parent);
+Widget vouchersMenuContainer() {
+  return AtomBuilder((context, watch, child) {
+    final authAvailable = watch(authAvailableAtom);
 
-      final authSM = watch(authState.parent);
-      final authEnabled = watch(authEnabledAtom);
-      final authAvailable = watch(authAvailableAtom);
-
-      final settings = watch(appSettings);
-
-      return VouchersMenu(
-        onSelected: (action) {
-          _actionMap(action).p(tap(bloc.evaluate));
-          _authActionMap(action).p(tap(authSM.run));
-          _contextActionMap(action).p(tap((f) => f(context)));
-        },
-        values: {
-          VouchersMenuAction.authentication: authEnabled,
-          VouchersMenuAction.smartScan: settings.smartScan,
-        },
-        disabled: {
-          if (!authAvailable) VouchersMenuAction.authentication,
-        },
-      );
-    });
+    return VouchersMenu(
+      onSelected: (action) => action.execute(context),
+      values: {
+        VouchersMenuAction.authentication: watch(authEnabledAtom),
+        VouchersMenuAction.smartScan: watch(appSettings).smartScan,
+      },
+      disabled: {
+        if (!authAvailable) VouchersMenuAction.authentication,
+      },
+    );
+  });
+}

@@ -1,27 +1,28 @@
-import 'package:enum_utils/enum_utils.dart' as enums;
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 
 part 'vouchers_menu.g.dart';
 
 enum VouchersMenuAction {
-  import,
-  export,
-  authentication,
-  smartScan,
+  import(label: "Import"),
+  export(label: "Export"),
+  authentication(
+    label: "App lock",
+    hasCheckbox: true,
+  ),
+  smartScan(
+    label: "Smart scan",
+    hasCheckbox: true,
+  );
+
+  const VouchersMenuAction({
+    required this.label,
+    this.hasCheckbox = false,
+  });
+
+  final String label;
+  final bool hasCheckbox;
 }
-
-final _actionLabel = enums.valueMap({
-  VouchersMenuAction.import: 'Import',
-  VouchersMenuAction.export: 'Export',
-  VouchersMenuAction.authentication: 'App lock',
-  VouchersMenuAction.smartScan: 'Smart scan',
-}, () => 'N/A');
-
-final _actionHasCheckbox = enums.valueMap({
-  VouchersMenuAction.authentication: true,
-  VouchersMenuAction.smartScan: true,
-}, () => false);
 
 @swidget
 Widget vouchersMenu({
@@ -37,8 +38,8 @@ Widget vouchersMenu({
                 enabled: !disabled.contains(a),
                 child: Row(
                   children: [
-                    Text(_actionLabel(a)),
-                    if (_actionHasCheckbox(a)) ...[
+                    Text(a.label),
+                    if (a.hasCheckbox) ...[
                       const Spacer(),
                       Checkbox(
                         value: values[a] ?? false,
