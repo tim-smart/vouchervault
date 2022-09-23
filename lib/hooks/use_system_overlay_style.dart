@@ -10,15 +10,15 @@ SystemUiOverlayStyle useSystemOverlayStyle() {
     () => theme.brightness == Brightness.light
         ? SystemUiOverlayStyle.dark.copyWith(
             statusBarColor: Colors.transparent,
-            systemNavigationBarColor: theme.scaffoldBackgroundColor,
+            systemNavigationBarColor: theme.colorScheme.background,
             systemNavigationBarIconBrightness: Brightness.dark,
           )
         : SystemUiOverlayStyle.light.copyWith(
             statusBarColor: Colors.transparent,
-            systemNavigationBarColor: theme.scaffoldBackgroundColor,
+            systemNavigationBarColor: theme.colorScheme.background,
             systemNavigationBarIconBrightness: Brightness.light,
           ),
-    [theme.brightness],
+    [theme],
   );
 
   return style;

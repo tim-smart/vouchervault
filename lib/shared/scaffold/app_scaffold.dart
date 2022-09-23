@@ -20,10 +20,10 @@ Widget appScaffold(
   final theme = Theme.of(context);
   final style = useSystemOverlayStyle();
 
-  return AnnotatedRegion(
-    value: style,
-    child: Scaffold(
-      body: CustomScrollView(
+  return Scaffold(
+    body: AnnotatedRegion(
+      value: style,
+      child: CustomScrollView(
         slivers: [
           SliverAppBar(
             systemOverlayStyle: style,
@@ -46,7 +46,7 @@ Widget appScaffold(
           ...slivers,
         ],
       ),
-      floatingActionButton: O.toNullable(floatingActionButton),
     ),
+    floatingActionButton: O.toNullable(floatingActionButton),
   );
 }
