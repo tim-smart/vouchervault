@@ -25,7 +25,7 @@ class VoucherVaultApp extends StatelessWidget {
       );
 }
 
-class _App extends HookWidget {
+class _App extends StatelessWidget {
   const _App({Key? key}) : super(key: key);
 
   @override

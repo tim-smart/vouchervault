@@ -130,7 +130,7 @@ class __$$_BarcodeResultCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BarcodeResult with DiagnosticableTreeMixin implements _BarcodeResult {
+class _$_BarcodeResult implements _BarcodeResult {
   const _$_BarcodeResult(
       {required this.barcode,
       this.merchant = kNone,
@@ -150,19 +150,8 @@ class _$_BarcodeResult with DiagnosticableTreeMixin implements _BarcodeResult {
   final Option<DateTime> expires;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BarcodeResult(barcode: $barcode, merchant: $merchant, balance: $balance, expires: $expires)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'BarcodeResult'))
-      ..add(DiagnosticsProperty('barcode', barcode))
-      ..add(DiagnosticsProperty('merchant', merchant))
-      ..add(DiagnosticsProperty('balance', balance))
-      ..add(DiagnosticsProperty('expires', expires));
   }
 
   @override
