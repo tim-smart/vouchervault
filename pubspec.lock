@@ -64,13 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  brightness_volume:
-    dependency: "direct main"
-    description:
-      name: brightness_volume
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   build:
     dependency: transitive
     description:
@@ -358,7 +351,7 @@ packages:
       name: flutter_nucleus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.4"
+    version: "0.1.5"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -625,7 +618,7 @@ packages:
       name: nucleus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.17"
+    version: "0.1.19"
   package_config:
     dependency: transitive
     description:
@@ -766,6 +759,41 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.5"
+  screen_brightness:
+    dependency: "direct main"
+    description:
+      name: screen_brightness
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
+  screen_brightness_android:
+    dependency: transitive
+    description:
+      name: screen_brightness_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
+  screen_brightness_ios:
+    dependency: transitive
+    description:
+      name: screen_brightness_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
+  screen_brightness_macos:
+    dependency: transitive
+    description:
+      name: screen_brightness_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0+1"
+  screen_brightness_platform_interface:
+    dependency: transitive
+    description:
+      name: screen_brightness_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   share:
     dependency: "direct main"
     description:

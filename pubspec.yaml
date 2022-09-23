@@ -11,14 +11,13 @@ dependencies:
     sdk: flutter
   auto_size_text: ^3.0.0-nullsafety.0
   barcode_widget: ^2.0.0
-  brightness_volume: ^1.0.3
   camera: ^0.10.0
   dart_date: ^1.1.0
   enum_utils: ^0.3.0
   file_picker: ^5.0.0
   flutter_form_builder: ^7.5.0
   flutter_hooks: ^0.18.0
-  flutter_nucleus: ^0.1.4
+  flutter_nucleus: ^0.1.5
   fluttertoast: ^8.0.7
   form_builder_validators: ^8.1.1
   fpdt: ^0.0.62
@@ -35,6 +34,7 @@ dependencies:
   recase: ^4.0.0
   rxdart: ^0.27.5
   share: ^2.0.0
+  screen_brightness: ^0.2.1
   uuid: ^3.0.1
   shared_preferences: ^2.0.13
 

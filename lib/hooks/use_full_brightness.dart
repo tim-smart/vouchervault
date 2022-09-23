@@ -1,10 +1,9 @@
-import 'package:brightness_volume/brightness_volume.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart';
 import 'package:fpdt/state_reader_task_either.dart' as SRTE;
-import 'package:fpdt/task_either.dart' as TE;
+import 'package:screen_brightness/screen_brightness.dart';
 import 'package:vouchervault/hooks/hooks.dart';
 
 void useFullBrightness(
@@ -39,24 +38,29 @@ void useFullBrightness(
 }
 
 // State
-StateRTEMachine<bool, void, String> _createSM(bool initial) =>
-    StateRTEMachine(initial, null);
+StateRTEMachine<bool, ScreenBrightness, String> _createSM(bool initial) =>
+    StateRTEMachine(initial, ScreenBrightness());
 
-typedef _BrightnessOp<R> = StateReaderTaskEither<bool, void, String, R>;
+typedef _BrightnessOp<R>
+    = StateReaderTaskEither<bool, ScreenBrightness, String, R>;
 _BrightnessOp<bool> _get() => SRTE.get();
+_BrightnessOp<ScreenBrightness> _ask() => SRTE.ask();
 
-final _set = TE.tryCatchK(
-  (double brightness) => BVUtils.setBrightness(brightness),
-  (err, stackTrace) => 'Could not set brightness: $err',
-);
+final _goDark = _get().p(SRTE.call(_reset)).p(SRTE.chainPut(false));
+final _goBright = _get().p(SRTE.call(_fullBrightness)).p(SRTE.chainPut(true));
 
-final _reset = TE.tryCatch(
-  () => BVUtils.resetCustomBrightness(),
-  (err, stackTrace) => 'Could not reset brightness $err',
-);
+_BrightnessOp<Unit> _set(double brightness) => _ask()
+    .p(SRTE.chainTryCatchK(
+      (s) => s.setScreenBrightness(brightness),
+      (err, stackTrace) => 'Could not set brightness: $err',
+    ))
+    .p(SRTE.call(SRTE.right(unit)));
 
-final _goDark =
-    _get().p(SRTE.flatMapTaskEither((_) => _reset)).p(SRTE.chainPut(false));
+final _fullBrightness = _set(1);
 
-final _goBright =
-    _get().p(SRTE.flatMapTaskEither((_) => _set(1))).p(SRTE.chainPut(true));
+final _BrightnessOp<Unit> _reset = _ask()
+    .p(SRTE.chainTryCatchK(
+      (s) => s.resetScreenBrightness(),
+      (err, stackTrace) => 'Could not reset brightness $err',
+    ))
+    .p(SRTE.call(SRTE.right(unit)));
