@@ -19,8 +19,7 @@ bool _isRearCamera(CameraDescription d) =>
 final cameraProvider = atom((get) => get(cameras).whenOrElse(
       data: (cameras) => cameras.firstWhereOption(_isRearCamera),
       orElse: () => O.none<CameraDescription>(),
-    ))
-  ..keepAlive();
+    )).keepAlive();
 
 final cameraPaused = stateAtom(false);
 

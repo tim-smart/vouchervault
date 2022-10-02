@@ -126,35 +126,35 @@ packages:
       name: camera
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0+1"
+    version: "0.10.0+3"
   camera_android:
     dependency: transitive
     description:
       name: camera_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0+2"
+    version: "0.10.0+3"
   camera_avfoundation:
     dependency: transitive
     description:
       name: camera_avfoundation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.8+5"
+    version: "0.9.8+6"
   camera_platform_interface:
     dependency: transitive
     description:
       name: camera_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.2"
   camera_web:
     dependency: transitive
     description:
       name: camera_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.0+1"
   characters:
     dependency: transitive
     description:
@@ -287,7 +287,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.0"
+    version: "5.2.0+1"
   fixnum:
     dependency: transitive
     description:
@@ -344,7 +344,7 @@ packages:
       name: flutter_nucleus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.7"
+    version: "0.3.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -520,7 +520,7 @@ packages:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.4.0"
+    version: "6.4.1"
   lints:
     dependency: transitive
     description:
@@ -541,28 +541,28 @@ packages:
       name: local_auth_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.12"
+    version: "1.0.13"
   local_auth_ios:
     dependency: transitive
     description:
       name: local_auth_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.9"
+    version: "1.0.10"
   local_auth_platform_interface:
     dependency: transitive
     description:
       name: local_auth_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   local_auth_windows:
     dependency: transitive
     description:
       name: local_auth_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   logging:
     dependency: "direct main"
     description:
@@ -611,7 +611,7 @@ packages:
       name: nucleus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.26"
+    version: "0.3.0"
   package_config:
     dependency: transitive
     description:
@@ -667,7 +667,7 @@ packages:
       name: path_provider_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   path_provider_windows:
     dependency: transitive
     description:
@@ -744,7 +744,7 @@ packages:
       name: recase
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.1.0"
   rxdart:
     dependency: "direct main"
     description:
@@ -758,7 +758,7 @@ packages:
       name: screen_brightness
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "0.2.2"
   screen_brightness_android:
     dependency: transitive
     description:
@@ -784,6 +784,13 @@ packages:
     dependency: transitive
     description:
       name: screen_brightness_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
+  screen_brightness_windows:
+    dependency: transitive
+    description:
+      name: screen_brightness_windows
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.0"

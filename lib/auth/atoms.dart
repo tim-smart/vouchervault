@@ -14,7 +14,7 @@ final authState = smAtom<AuthState, AuthContext, String>(
   key: 'pbs_AuthBloc',
   fromJson: (json) => AuthState.fromJson(json),
   toJson: (s) => s.toJson(),
-)..keepAlive();
+).keepAlive();
 
 final authEnabledAtom = authState.select((s) => s.enabled);
 final authAvailableAtom = authState.select((s) => s.available);

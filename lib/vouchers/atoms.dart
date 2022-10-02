@@ -9,12 +9,12 @@ final createVoucherSM = ([VouchersState? initialState]) =>
       const VouchersContext(),
     );
 
-final vouchersState = smAtom(
+final vouchersState = smAtom<VouchersState, VouchersContext, String>(
   (get, initialValue) => createVoucherSM(initialValue)..run(removeExpired),
   key: 'pbs_VouchersBloc',
   fromJson: VouchersState.fromJson,
   toJson: (s) => s.toJson(),
-)..keepAlive();
+).keepAlive();
 
 final voucherAtom = atomFamily((Option<String> uuid) => vouchersState
     .select((s) => s.vouchers.firstWhereOption((v) => v.uuid == uuid)));
