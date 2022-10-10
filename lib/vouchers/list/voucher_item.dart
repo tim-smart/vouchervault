@@ -50,8 +50,8 @@ Widget voucherItem(
                         top: Radius.circular(kVoucherItemBorderRadius),
                       ),
               ),
-              primary: color,
-              onPrimary: textColor,
+              backgroundColor: color,
+              foregroundColor: textColor,
             ).copyWith(
               elevation: MaterialStateProperty.all(0),
             ),

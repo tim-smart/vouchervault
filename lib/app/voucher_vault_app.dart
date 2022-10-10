@@ -32,6 +32,7 @@ Widget __app() => AtomBuilder((context, watch, child) {
       final auth = watch(authState);
 
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         home: auth.when(

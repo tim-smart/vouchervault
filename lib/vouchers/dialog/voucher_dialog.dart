@@ -93,8 +93,8 @@ Widget _voucherDialog(
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
                 ),
                 onPressed: onClose,
                 child: const Text('Close'),
