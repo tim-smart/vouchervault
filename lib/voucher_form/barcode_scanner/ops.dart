@@ -58,5 +58,5 @@ BarcodeOp<BarcodeResult> _embellishResult({
         .p(RTE.map((t) => result.copyWith(
               merchant: extractMerchant(t.first),
               balance: extractBalance(t.second),
-              expires: extractExpires(t.second),
+              expires: extractExpires(t.first, t.second),
             )));

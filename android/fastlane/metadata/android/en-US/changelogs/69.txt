@@ -1,0 +1,10 @@
+Smart scanning!
+
+In addition to scanning barcodes, the scanner also tries to extract the voucher's description, expiry date and balance.
+At this stage it only supports the English language.
+
+You can toggle this setting in the menu.
+
+Other changes:
+- Immediately open scanner when adding a new voucher
+- Fixed some bugs

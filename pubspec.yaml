@@ -16,7 +16,6 @@ dependencies:
   file_picker: ^5.0.0
   flutter_form_builder: ^7.5.0
   flutter_hooks: ^0.18.0
-  flutter_jimtl: ^0.0.3
   flutter_localizations:
     sdk: flutter
   flutter_nucleus: ^0.3.0
@@ -51,7 +50,6 @@ dev_dependencies:
     sdk: flutter
   freezed: ^2.0.3
   functional_widget: ^0.10.0
-  jimtl_codegen: ^0.0.3
   json_serializable: ^6.0.1
   test: any
 

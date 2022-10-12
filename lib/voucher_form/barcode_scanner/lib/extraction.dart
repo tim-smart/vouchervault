@@ -3,6 +3,7 @@ import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/option.dart' as O;
 import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
 
 // === Merchant extraction
@@ -122,8 +123,41 @@ int _moneyToMillis(MoneyEntity e) =>
     (e.integerPart * 1000) + (e.fractionPart * 10);
 
 // === Expiry extraction
-Option<DateTime> extractExpires(List<EntityAnnotation> e) =>
-    _extractDateTimes(e).where((dt) => dt.isFuture).lastOption;
+Option<DateTime> extractExpires(
+  RecognizedText text,
+  List<EntityAnnotation> e,
+) =>
+    _extractDateTimes(e)
+        .where((dt) => dt.isFuture)
+        .followedBy(_extractDateTimesFromText(text))
+        .lastOption;
+
+final _datePatterns = <Tuple2<RegExp, DateTime? Function(String)>>[
+  tuple2(RegExp(r"\d{1,2}[-/]\d{1,2}[-/]\s{2,4}"),
+      (match) => DateFormat.yMd().parseLoose(match)),
+  tuple2(
+    RegExp(r"\d{1,2} [a-z]{3} \d{2,4}", caseSensitive: false),
+    (match) => DateFormat('d MMM y').parseLoose(match),
+  ),
+];
+
+final _dateMispellings = {'0ct': 'oct'};
+
+List<DateTime> _extractDateTimesFromText(RecognizedText rt) {
+  final text = _dateMispellings.entries.fold(
+    rt.text.toLowerCase(),
+    (String text, e) => text.replaceAll(e.key, e.value),
+  );
+
+  return _datePatterns
+      .map((t) => O
+          .fromNullable(t.first.firstMatch(text)?[0])
+          .p(O.chainNullableK(t.second))
+          .p(O.toNullable))
+      .where((dt) => dt != null)
+      .toList()
+      .cast();
+}
 
 List<DateTime> _extractDateTimes(List<EntityAnnotation> e) {
   final dates = e

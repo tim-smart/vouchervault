@@ -98,7 +98,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.1"
+    version: "2.3.0"
   build_runner_core:
     dependency: transitive
     description:
@@ -280,7 +280,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.0+1"
+    version: "5.2.1"
   fixnum:
     dependency: transitive
     description:
@@ -312,13 +312,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.18.5+1"
-  flutter_jimtl:
-    dependency: "direct main"
-    description:
-      name: flutter_jimtl
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -493,13 +486,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.0"
-  intl_generator:
-    dependency: transitive
-    description:
-      name: intl_generator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   io:
     dependency: transitive
     description:
@@ -507,20 +493,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  jimtl:
-    dependency: transitive
-    description:
-      name: jimtl
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.6"
-  jimtl_codegen:
-    dependency: "direct dev"
-    description:
-      name: jimtl_codegen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   js:
     dependency: transitive
     description:
@@ -541,7 +513,7 @@ packages:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.5.0"
+    version: "6.5.1"
   lints:
     dependency: transitive
     description:
@@ -917,7 +889,7 @@ packages:
       name: source_gen
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.5"
+    version: "1.2.6"
   source_helper:
     dependency: transitive
     description:
