@@ -141,7 +141,10 @@ final _datePatterns = <Tuple2<RegExp, DateTime? Function(String)>>[
   ),
 ];
 
-final _dateMispellings = {'0ct': 'oct'};
+final _dateMispellings = {
+  '0ct': 'oct',
+  'n0v': 'nov',
+};
 
 List<DateTime> _extractDateTimesFromText(RecognizedText rt) {
   final text = _dateMispellings.entries.fold(
