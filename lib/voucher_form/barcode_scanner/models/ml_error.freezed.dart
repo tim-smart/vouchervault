@@ -25,9 +25,9 @@ mixin _$MlError {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? barcodeNotFound,
-    TResult Function(String message)? pickerError,
-    TResult Function(String op, dynamic err)? mlkitError,
+    TResult? Function()? barcodeNotFound,
+    TResult? Function(String message)? pickerError,
+    TResult? Function(String op, dynamic err)? mlkitError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$MlError {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_MlErrorBarcodeNotFound value)? barcodeNotFound,
-    TResult Function(_MlErrorPicker value)? pickerError,
-    TResult Function(_MlErrorMlKit value)? mlkitError,
+    TResult? Function(_MlErrorBarcodeNotFound value)? barcodeNotFound,
+    TResult? Function(_MlErrorPicker value)? pickerError,
+    TResult? Function(_MlErrorMlKit value)? mlkitError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,16 +65,18 @@ mixin _$MlError {
 /// @nodoc
 abstract class $MlErrorCopyWith<$Res> {
   factory $MlErrorCopyWith(MlError value, $Res Function(MlError) then) =
-      _$MlErrorCopyWithImpl<$Res>;
+      _$MlErrorCopyWithImpl<$Res, MlError>;
 }
 
 /// @nodoc
-class _$MlErrorCopyWithImpl<$Res> implements $MlErrorCopyWith<$Res> {
+class _$MlErrorCopyWithImpl<$Res, $Val extends MlError>
+    implements $MlErrorCopyWith<$Res> {
   _$MlErrorCopyWithImpl(this._value, this._then);
 
-  final MlError _value;
   // ignore: unused_field
-  final $Res Function(MlError) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -86,15 +88,11 @@ abstract class _$$_MlErrorBarcodeNotFoundCopyWith<$Res> {
 
 /// @nodoc
 class __$$_MlErrorBarcodeNotFoundCopyWithImpl<$Res>
-    extends _$MlErrorCopyWithImpl<$Res>
+    extends _$MlErrorCopyWithImpl<$Res, _$_MlErrorBarcodeNotFound>
     implements _$$_MlErrorBarcodeNotFoundCopyWith<$Res> {
   __$$_MlErrorBarcodeNotFoundCopyWithImpl(_$_MlErrorBarcodeNotFound _value,
       $Res Function(_$_MlErrorBarcodeNotFound) _then)
-      : super(_value, (v) => _then(v as _$_MlErrorBarcodeNotFound));
-
-  @override
-  _$_MlErrorBarcodeNotFound get _value =>
-      super._value as _$_MlErrorBarcodeNotFound;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -130,9 +128,9 @@ class _$_MlErrorBarcodeNotFound extends _MlErrorBarcodeNotFound {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? barcodeNotFound,
-    TResult Function(String message)? pickerError,
-    TResult Function(String op, dynamic err)? mlkitError,
+    TResult? Function()? barcodeNotFound,
+    TResult? Function(String message)? pickerError,
+    TResult? Function(String op, dynamic err)? mlkitError,
   }) {
     return barcodeNotFound?.call();
   }
@@ -164,9 +162,9 @@ class _$_MlErrorBarcodeNotFound extends _MlErrorBarcodeNotFound {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_MlErrorBarcodeNotFound value)? barcodeNotFound,
-    TResult Function(_MlErrorPicker value)? pickerError,
-    TResult Function(_MlErrorMlKit value)? mlkitError,
+    TResult? Function(_MlErrorBarcodeNotFound value)? barcodeNotFound,
+    TResult? Function(_MlErrorPicker value)? pickerError,
+    TResult? Function(_MlErrorMlKit value)? mlkitError,
   }) {
     return barcodeNotFound?.call(this);
   }
@@ -196,25 +194,25 @@ abstract class _$$_MlErrorPickerCopyWith<$Res> {
   factory _$$_MlErrorPickerCopyWith(
           _$_MlErrorPicker value, $Res Function(_$_MlErrorPicker) then) =
       __$$_MlErrorPickerCopyWithImpl<$Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_MlErrorPickerCopyWithImpl<$Res> extends _$MlErrorCopyWithImpl<$Res>
+class __$$_MlErrorPickerCopyWithImpl<$Res>
+    extends _$MlErrorCopyWithImpl<$Res, _$_MlErrorPicker>
     implements _$$_MlErrorPickerCopyWith<$Res> {
   __$$_MlErrorPickerCopyWithImpl(
       _$_MlErrorPicker _value, $Res Function(_$_MlErrorPicker) _then)
-      : super(_value, (v) => _then(v as _$_MlErrorPicker));
+      : super(_value, _then);
 
-  @override
-  _$_MlErrorPicker get _value => super._value as _$_MlErrorPicker;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_$_MlErrorPicker(
-      message == freezed
+      null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -240,15 +238,15 @@ class _$_MlErrorPicker extends _MlErrorPicker {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MlErrorPicker &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MlErrorPickerCopyWith<_$_MlErrorPicker> get copyWith =>
       __$$_MlErrorPickerCopyWithImpl<_$_MlErrorPicker>(this, _$identity);
 
@@ -265,9 +263,9 @@ class _$_MlErrorPicker extends _MlErrorPicker {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? barcodeNotFound,
-    TResult Function(String message)? pickerError,
-    TResult Function(String op, dynamic err)? mlkitError,
+    TResult? Function()? barcodeNotFound,
+    TResult? Function(String message)? pickerError,
+    TResult? Function(String op, dynamic err)? mlkitError,
   }) {
     return pickerError?.call(message);
   }
@@ -299,9 +297,9 @@ class _$_MlErrorPicker extends _MlErrorPicker {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_MlErrorBarcodeNotFound value)? barcodeNotFound,
-    TResult Function(_MlErrorPicker value)? pickerError,
-    TResult Function(_MlErrorMlKit value)? mlkitError,
+    TResult? Function(_MlErrorBarcodeNotFound value)? barcodeNotFound,
+    TResult? Function(_MlErrorPicker value)? pickerError,
+    TResult? Function(_MlErrorMlKit value)? mlkitError,
   }) {
     return pickerError?.call(this);
   }
@@ -336,30 +334,30 @@ abstract class _$$_MlErrorMlKitCopyWith<$Res> {
   factory _$$_MlErrorMlKitCopyWith(
           _$_MlErrorMlKit value, $Res Function(_$_MlErrorMlKit) then) =
       __$$_MlErrorMlKitCopyWithImpl<$Res>;
+  @useResult
   $Res call({String op, dynamic err});
 }
 
 /// @nodoc
-class __$$_MlErrorMlKitCopyWithImpl<$Res> extends _$MlErrorCopyWithImpl<$Res>
+class __$$_MlErrorMlKitCopyWithImpl<$Res>
+    extends _$MlErrorCopyWithImpl<$Res, _$_MlErrorMlKit>
     implements _$$_MlErrorMlKitCopyWith<$Res> {
   __$$_MlErrorMlKitCopyWithImpl(
       _$_MlErrorMlKit _value, $Res Function(_$_MlErrorMlKit) _then)
-      : super(_value, (v) => _then(v as _$_MlErrorMlKit));
+      : super(_value, _then);
 
-  @override
-  _$_MlErrorMlKit get _value => super._value as _$_MlErrorMlKit;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? op = freezed,
-    Object? err = freezed,
+    Object? op = null,
+    Object? err = null,
   }) {
     return _then(_$_MlErrorMlKit(
-      op: op == freezed
+      op: null == op
           ? _value.op
           : op // ignore: cast_nullable_to_non_nullable
               as String,
-      err: err == freezed
+      err: null == err
           ? _value.err
           : err // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -387,18 +385,17 @@ class _$_MlErrorMlKit extends _MlErrorMlKit {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MlErrorMlKit &&
-            const DeepCollectionEquality().equals(other.op, op) &&
+            (identical(other.op, op) || other.op == op) &&
             const DeepCollectionEquality().equals(other.err, err));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(op),
-      const DeepCollectionEquality().hash(err));
+  int get hashCode =>
+      Object.hash(runtimeType, op, const DeepCollectionEquality().hash(err));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MlErrorMlKitCopyWith<_$_MlErrorMlKit> get copyWith =>
       __$$_MlErrorMlKitCopyWithImpl<_$_MlErrorMlKit>(this, _$identity);
 
@@ -415,9 +412,9 @@ class _$_MlErrorMlKit extends _MlErrorMlKit {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? barcodeNotFound,
-    TResult Function(String message)? pickerError,
-    TResult Function(String op, dynamic err)? mlkitError,
+    TResult? Function()? barcodeNotFound,
+    TResult? Function(String message)? pickerError,
+    TResult? Function(String op, dynamic err)? mlkitError,
   }) {
     return mlkitError?.call(op, err);
   }
@@ -449,9 +446,9 @@ class _$_MlErrorMlKit extends _MlErrorMlKit {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_MlErrorBarcodeNotFound value)? barcodeNotFound,
-    TResult Function(_MlErrorPicker value)? pickerError,
-    TResult Function(_MlErrorMlKit value)? mlkitError,
+    TResult? Function(_MlErrorBarcodeNotFound value)? barcodeNotFound,
+    TResult? Function(_MlErrorPicker value)? pickerError,
+    TResult? Function(_MlErrorMlKit value)? mlkitError,
   }) {
     return mlkitError?.call(this);
   }

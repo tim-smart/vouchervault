@@ -28,7 +28,8 @@ mixin _$MlContext {
 /// @nodoc
 abstract class $MlContextCopyWith<$Res> {
   factory $MlContextCopyWith(MlContext value, $Res Function(MlContext) then) =
-      _$MlContextCopyWithImpl<$Res>;
+      _$MlContextCopyWithImpl<$Res, MlContext>;
+  @useResult
   $Res call(
       {TextRecognizer textRecognizer,
       BarcodeScanner barcodeScanner,
@@ -36,33 +37,36 @@ abstract class $MlContextCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MlContextCopyWithImpl<$Res> implements $MlContextCopyWith<$Res> {
+class _$MlContextCopyWithImpl<$Res, $Val extends MlContext>
+    implements $MlContextCopyWith<$Res> {
   _$MlContextCopyWithImpl(this._value, this._then);
 
-  final MlContext _value;
   // ignore: unused_field
-  final $Res Function(MlContext) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? textRecognizer = freezed,
-    Object? barcodeScanner = freezed,
-    Object? entityExtractor = freezed,
+    Object? textRecognizer = null,
+    Object? barcodeScanner = null,
+    Object? entityExtractor = null,
   }) {
     return _then(_value.copyWith(
-      textRecognizer: textRecognizer == freezed
+      textRecognizer: null == textRecognizer
           ? _value.textRecognizer
           : textRecognizer // ignore: cast_nullable_to_non_nullable
               as TextRecognizer,
-      barcodeScanner: barcodeScanner == freezed
+      barcodeScanner: null == barcodeScanner
           ? _value.barcodeScanner
           : barcodeScanner // ignore: cast_nullable_to_non_nullable
               as BarcodeScanner,
-      entityExtractor: entityExtractor == freezed
+      entityExtractor: null == entityExtractor
           ? _value.entityExtractor
           : entityExtractor // ignore: cast_nullable_to_non_nullable
               as EntityExtractor,
-    ));
+    ) as $Val);
   }
 }
 
@@ -72,6 +76,7 @@ abstract class _$$_MlContextCopyWith<$Res> implements $MlContextCopyWith<$Res> {
           _$_MlContext value, $Res Function(_$_MlContext) then) =
       __$$_MlContextCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {TextRecognizer textRecognizer,
       BarcodeScanner barcodeScanner,
@@ -79,31 +84,30 @@ abstract class _$$_MlContextCopyWith<$Res> implements $MlContextCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MlContextCopyWithImpl<$Res> extends _$MlContextCopyWithImpl<$Res>
+class __$$_MlContextCopyWithImpl<$Res>
+    extends _$MlContextCopyWithImpl<$Res, _$_MlContext>
     implements _$$_MlContextCopyWith<$Res> {
   __$$_MlContextCopyWithImpl(
       _$_MlContext _value, $Res Function(_$_MlContext) _then)
-      : super(_value, (v) => _then(v as _$_MlContext));
+      : super(_value, _then);
 
-  @override
-  _$_MlContext get _value => super._value as _$_MlContext;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? textRecognizer = freezed,
-    Object? barcodeScanner = freezed,
-    Object? entityExtractor = freezed,
+    Object? textRecognizer = null,
+    Object? barcodeScanner = null,
+    Object? entityExtractor = null,
   }) {
     return _then(_$_MlContext(
-      textRecognizer: textRecognizer == freezed
+      textRecognizer: null == textRecognizer
           ? _value.textRecognizer
           : textRecognizer // ignore: cast_nullable_to_non_nullable
               as TextRecognizer,
-      barcodeScanner: barcodeScanner == freezed
+      barcodeScanner: null == barcodeScanner
           ? _value.barcodeScanner
           : barcodeScanner // ignore: cast_nullable_to_non_nullable
               as BarcodeScanner,
-      entityExtractor: entityExtractor == freezed
+      entityExtractor: null == entityExtractor
           ? _value.entityExtractor
           : entityExtractor // ignore: cast_nullable_to_non_nullable
               as EntityExtractor,
@@ -136,23 +140,21 @@ class _$_MlContext implements _MlContext {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MlContext &&
-            const DeepCollectionEquality()
-                .equals(other.textRecognizer, textRecognizer) &&
-            const DeepCollectionEquality()
-                .equals(other.barcodeScanner, barcodeScanner) &&
-            const DeepCollectionEquality()
-                .equals(other.entityExtractor, entityExtractor));
+            (identical(other.textRecognizer, textRecognizer) ||
+                other.textRecognizer == textRecognizer) &&
+            (identical(other.barcodeScanner, barcodeScanner) ||
+                other.barcodeScanner == barcodeScanner) &&
+            (identical(other.entityExtractor, entityExtractor) ||
+                other.entityExtractor == entityExtractor));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(textRecognizer),
-      const DeepCollectionEquality().hash(barcodeScanner),
-      const DeepCollectionEquality().hash(entityExtractor));
+  int get hashCode =>
+      Object.hash(runtimeType, textRecognizer, barcodeScanner, entityExtractor);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MlContextCopyWith<_$_MlContext> get copyWith =>
       __$$_MlContextCopyWithImpl<_$_MlContext>(this, _$identity);
 }

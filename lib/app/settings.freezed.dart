@@ -32,29 +32,33 @@ mixin _$VoucherVaultSettings {
 abstract class $VoucherVaultSettingsCopyWith<$Res> {
   factory $VoucherVaultSettingsCopyWith(VoucherVaultSettings value,
           $Res Function(VoucherVaultSettings) then) =
-      _$VoucherVaultSettingsCopyWithImpl<$Res>;
+      _$VoucherVaultSettingsCopyWithImpl<$Res, VoucherVaultSettings>;
+  @useResult
   $Res call({bool smartScan});
 }
 
 /// @nodoc
-class _$VoucherVaultSettingsCopyWithImpl<$Res>
+class _$VoucherVaultSettingsCopyWithImpl<$Res,
+        $Val extends VoucherVaultSettings>
     implements $VoucherVaultSettingsCopyWith<$Res> {
   _$VoucherVaultSettingsCopyWithImpl(this._value, this._then);
 
-  final VoucherVaultSettings _value;
   // ignore: unused_field
-  final $Res Function(VoucherVaultSettings) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? smartScan = freezed,
+    Object? smartScan = null,
   }) {
     return _then(_value.copyWith(
-      smartScan: smartScan == freezed
+      smartScan: null == smartScan
           ? _value.smartScan
           : smartScan // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -65,26 +69,25 @@ abstract class _$$_VoucherVaultSettingsCopyWith<$Res>
           $Res Function(_$_VoucherVaultSettings) then) =
       __$$_VoucherVaultSettingsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool smartScan});
 }
 
 /// @nodoc
 class __$$_VoucherVaultSettingsCopyWithImpl<$Res>
-    extends _$VoucherVaultSettingsCopyWithImpl<$Res>
+    extends _$VoucherVaultSettingsCopyWithImpl<$Res, _$_VoucherVaultSettings>
     implements _$$_VoucherVaultSettingsCopyWith<$Res> {
   __$$_VoucherVaultSettingsCopyWithImpl(_$_VoucherVaultSettings _value,
       $Res Function(_$_VoucherVaultSettings) _then)
-      : super(_value, (v) => _then(v as _$_VoucherVaultSettings));
+      : super(_value, _then);
 
-  @override
-  _$_VoucherVaultSettings get _value => super._value as _$_VoucherVaultSettings;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? smartScan = freezed,
+    Object? smartScan = null,
   }) {
     return _then(_$_VoucherVaultSettings(
-      smartScan: smartScan == freezed
+      smartScan: null == smartScan
           ? _value.smartScan
           : smartScan // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -114,16 +117,17 @@ class _$_VoucherVaultSettings implements _VoucherVaultSettings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_VoucherVaultSettings &&
-            const DeepCollectionEquality().equals(other.smartScan, smartScan));
+            (identical(other.smartScan, smartScan) ||
+                other.smartScan == smartScan));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(smartScan));
+  int get hashCode => Object.hash(runtimeType, smartScan);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_VoucherVaultSettingsCopyWith<_$_VoucherVaultSettings> get copyWith =>
       __$$_VoucherVaultSettingsCopyWithImpl<_$_VoucherVaultSettings>(
           this, _$identity);

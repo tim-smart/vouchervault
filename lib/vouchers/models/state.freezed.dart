@@ -27,29 +27,32 @@ mixin _$VouchersState {
 abstract class $VouchersStateCopyWith<$Res> {
   factory $VouchersStateCopyWith(
           VouchersState value, $Res Function(VouchersState) then) =
-      _$VouchersStateCopyWithImpl<$Res>;
+      _$VouchersStateCopyWithImpl<$Res, VouchersState>;
+  @useResult
   $Res call({IList<Voucher> vouchers});
 }
 
 /// @nodoc
-class _$VouchersStateCopyWithImpl<$Res>
+class _$VouchersStateCopyWithImpl<$Res, $Val extends VouchersState>
     implements $VouchersStateCopyWith<$Res> {
   _$VouchersStateCopyWithImpl(this._value, this._then);
 
-  final VouchersState _value;
   // ignore: unused_field
-  final $Res Function(VouchersState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? vouchers = freezed,
+    Object? vouchers = null,
   }) {
     return _then(_value.copyWith(
-      vouchers: vouchers == freezed
+      vouchers: null == vouchers
           ? _value.vouchers
           : vouchers // ignore: cast_nullable_to_non_nullable
               as IList<Voucher>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -60,26 +63,25 @@ abstract class _$$_VouchersStateCopyWith<$Res>
           _$_VouchersState value, $Res Function(_$_VouchersState) then) =
       __$$_VouchersStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({IList<Voucher> vouchers});
 }
 
 /// @nodoc
 class __$$_VouchersStateCopyWithImpl<$Res>
-    extends _$VouchersStateCopyWithImpl<$Res>
+    extends _$VouchersStateCopyWithImpl<$Res, _$_VouchersState>
     implements _$$_VouchersStateCopyWith<$Res> {
   __$$_VouchersStateCopyWithImpl(
       _$_VouchersState _value, $Res Function(_$_VouchersState) _then)
-      : super(_value, (v) => _then(v as _$_VouchersState));
+      : super(_value, _then);
 
-  @override
-  _$_VouchersState get _value => super._value as _$_VouchersState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? vouchers = freezed,
+    Object? vouchers = null,
   }) {
     return _then(_$_VouchersState(
-      vouchers == freezed
+      null == vouchers
           ? _value.vouchers
           : vouchers // ignore: cast_nullable_to_non_nullable
               as IList<Voucher>,
@@ -114,6 +116,7 @@ class _$_VouchersState extends _VouchersState {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_VouchersStateCopyWith<_$_VouchersState> get copyWith =>
       __$$_VouchersStateCopyWithImpl<_$_VouchersState>(this, _$identity);
 }

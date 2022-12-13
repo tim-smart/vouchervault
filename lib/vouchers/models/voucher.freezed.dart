@@ -39,7 +39,8 @@ mixin _$Voucher {
 /// @nodoc
 abstract class $VoucherCopyWith<$Res> {
   factory $VoucherCopyWith(Voucher value, $Res Function(Voucher) then) =
-      _$VoucherCopyWithImpl<$Res>;
+      _$VoucherCopyWithImpl<$Res, Voucher>;
+  @useResult
   $Res call(
       {O.Option<String> uuid,
       String description,
@@ -54,68 +55,71 @@ abstract class $VoucherCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VoucherCopyWithImpl<$Res> implements $VoucherCopyWith<$Res> {
+class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
+    implements $VoucherCopyWith<$Res> {
   _$VoucherCopyWithImpl(this._value, this._then);
 
-  final Voucher _value;
   // ignore: unused_field
-  final $Res Function(Voucher) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = freezed,
-    Object? description = freezed,
-    Object? code = freezed,
-    Object? codeType = freezed,
-    Object? expires = freezed,
-    Object? removeOnceExpired = freezed,
-    Object? balance = freezed,
-    Object? balanceMilliunits = freezed,
-    Object? notes = freezed,
-    Object? color = freezed,
+    Object? uuid = null,
+    Object? description = null,
+    Object? code = null,
+    Object? codeType = null,
+    Object? expires = null,
+    Object? removeOnceExpired = null,
+    Object? balance = null,
+    Object? balanceMilliunits = null,
+    Object? notes = null,
+    Object? color = null,
   }) {
     return _then(_value.copyWith(
-      uuid: uuid == freezed
+      uuid: null == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as O.Option<String>,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      code: code == freezed
+      code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as O.Option<String>,
-      codeType: codeType == freezed
+      codeType: null == codeType
           ? _value.codeType
           : codeType // ignore: cast_nullable_to_non_nullable
               as VoucherCodeType,
-      expires: expires == freezed
+      expires: null == expires
           ? _value.expires
           : expires // ignore: cast_nullable_to_non_nullable
               as O.Option<DateTime>,
-      removeOnceExpired: removeOnceExpired == freezed
+      removeOnceExpired: null == removeOnceExpired
           ? _value.removeOnceExpired
           : removeOnceExpired // ignore: cast_nullable_to_non_nullable
               as bool,
-      balance: balance == freezed
+      balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as O.Option<double>,
-      balanceMilliunits: balanceMilliunits == freezed
+      balanceMilliunits: null == balanceMilliunits
           ? _value.balanceMilliunits
           : balanceMilliunits // ignore: cast_nullable_to_non_nullable
               as O.Option<int>,
-      notes: notes == freezed
+      notes: null == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String,
-      color: color == freezed
+      color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as VoucherColor,
-    ));
+    ) as $Val);
   }
 }
 
@@ -125,6 +129,7 @@ abstract class _$$_VoucherCopyWith<$Res> implements $VoucherCopyWith<$Res> {
           _$_Voucher value, $Res Function(_$_Voucher) then) =
       __$$_VoucherCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {O.Option<String> uuid,
       String description,
@@ -139,65 +144,64 @@ abstract class _$$_VoucherCopyWith<$Res> implements $VoucherCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_VoucherCopyWithImpl<$Res> extends _$VoucherCopyWithImpl<$Res>
+class __$$_VoucherCopyWithImpl<$Res>
+    extends _$VoucherCopyWithImpl<$Res, _$_Voucher>
     implements _$$_VoucherCopyWith<$Res> {
   __$$_VoucherCopyWithImpl(_$_Voucher _value, $Res Function(_$_Voucher) _then)
-      : super(_value, (v) => _then(v as _$_Voucher));
+      : super(_value, _then);
 
-  @override
-  _$_Voucher get _value => super._value as _$_Voucher;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uuid = freezed,
-    Object? description = freezed,
-    Object? code = freezed,
-    Object? codeType = freezed,
-    Object? expires = freezed,
-    Object? removeOnceExpired = freezed,
-    Object? balance = freezed,
-    Object? balanceMilliunits = freezed,
-    Object? notes = freezed,
-    Object? color = freezed,
+    Object? uuid = null,
+    Object? description = null,
+    Object? code = null,
+    Object? codeType = null,
+    Object? expires = null,
+    Object? removeOnceExpired = null,
+    Object? balance = null,
+    Object? balanceMilliunits = null,
+    Object? notes = null,
+    Object? color = null,
   }) {
     return _then(_$_Voucher(
-      uuid: uuid == freezed
+      uuid: null == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as O.Option<String>,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      code: code == freezed
+      code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as O.Option<String>,
-      codeType: codeType == freezed
+      codeType: null == codeType
           ? _value.codeType
           : codeType // ignore: cast_nullable_to_non_nullable
               as VoucherCodeType,
-      expires: expires == freezed
+      expires: null == expires
           ? _value.expires
           : expires // ignore: cast_nullable_to_non_nullable
               as O.Option<DateTime>,
-      removeOnceExpired: removeOnceExpired == freezed
+      removeOnceExpired: null == removeOnceExpired
           ? _value.removeOnceExpired
           : removeOnceExpired // ignore: cast_nullable_to_non_nullable
               as bool,
-      balance: balance == freezed
+      balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as O.Option<double>,
-      balanceMilliunits: balanceMilliunits == freezed
+      balanceMilliunits: null == balanceMilliunits
           ? _value.balanceMilliunits
           : balanceMilliunits // ignore: cast_nullable_to_non_nullable
               as O.Option<int>,
-      notes: notes == freezed
+      notes: null == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String,
-      color: color == freezed
+      color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as VoucherColor,
@@ -265,38 +269,40 @@ class _$_Voucher extends _Voucher {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Voucher &&
-            const DeepCollectionEquality().equals(other.uuid, uuid) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.code, code) &&
-            const DeepCollectionEquality().equals(other.codeType, codeType) &&
-            const DeepCollectionEquality().equals(other.expires, expires) &&
-            const DeepCollectionEquality()
-                .equals(other.removeOnceExpired, removeOnceExpired) &&
-            const DeepCollectionEquality().equals(other.balance, balance) &&
-            const DeepCollectionEquality()
-                .equals(other.balanceMilliunits, balanceMilliunits) &&
-            const DeepCollectionEquality().equals(other.notes, notes) &&
-            const DeepCollectionEquality().equals(other.color, color));
+            (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.codeType, codeType) ||
+                other.codeType == codeType) &&
+            (identical(other.expires, expires) || other.expires == expires) &&
+            (identical(other.removeOnceExpired, removeOnceExpired) ||
+                other.removeOnceExpired == removeOnceExpired) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.balanceMilliunits, balanceMilliunits) ||
+                other.balanceMilliunits == balanceMilliunits) &&
+            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.color, color) || other.color == color));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(uuid),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(code),
-      const DeepCollectionEquality().hash(codeType),
-      const DeepCollectionEquality().hash(expires),
-      const DeepCollectionEquality().hash(removeOnceExpired),
-      const DeepCollectionEquality().hash(balance),
-      const DeepCollectionEquality().hash(balanceMilliunits),
-      const DeepCollectionEquality().hash(notes),
-      const DeepCollectionEquality().hash(color));
+      uuid,
+      description,
+      code,
+      codeType,
+      expires,
+      removeOnceExpired,
+      balance,
+      balanceMilliunits,
+      notes,
+      color);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_VoucherCopyWith<_$_Voucher> get copyWith =>
       __$$_VoucherCopyWithImpl<_$_Voucher>(this, _$identity);
 

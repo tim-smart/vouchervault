@@ -30,7 +30,8 @@ mixin _$BarcodeResult {
 abstract class $BarcodeResultCopyWith<$Res> {
   factory $BarcodeResultCopyWith(
           BarcodeResult value, $Res Function(BarcodeResult) then) =
-      _$BarcodeResultCopyWithImpl<$Res>;
+      _$BarcodeResultCopyWithImpl<$Res, BarcodeResult>;
+  @useResult
   $Res call(
       {Barcode barcode,
       Option<String> merchant,
@@ -39,39 +40,41 @@ abstract class $BarcodeResultCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BarcodeResultCopyWithImpl<$Res>
+class _$BarcodeResultCopyWithImpl<$Res, $Val extends BarcodeResult>
     implements $BarcodeResultCopyWith<$Res> {
   _$BarcodeResultCopyWithImpl(this._value, this._then);
 
-  final BarcodeResult _value;
   // ignore: unused_field
-  final $Res Function(BarcodeResult) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? barcode = freezed,
-    Object? merchant = freezed,
-    Object? balance = freezed,
-    Object? expires = freezed,
+    Object? barcode = null,
+    Object? merchant = null,
+    Object? balance = null,
+    Object? expires = null,
   }) {
     return _then(_value.copyWith(
-      barcode: barcode == freezed
+      barcode: null == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as Barcode,
-      merchant: merchant == freezed
+      merchant: null == merchant
           ? _value.merchant
           : merchant // ignore: cast_nullable_to_non_nullable
               as Option<String>,
-      balance: balance == freezed
+      balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as Option<int>,
-      expires: expires == freezed
+      expires: null == expires
           ? _value.expires
           : expires // ignore: cast_nullable_to_non_nullable
               as Option<DateTime>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -82,6 +85,7 @@ abstract class _$$_BarcodeResultCopyWith<$Res>
           _$_BarcodeResult value, $Res Function(_$_BarcodeResult) then) =
       __$$_BarcodeResultCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Barcode barcode,
       Option<String> merchant,
@@ -91,36 +95,34 @@ abstract class _$$_BarcodeResultCopyWith<$Res>
 
 /// @nodoc
 class __$$_BarcodeResultCopyWithImpl<$Res>
-    extends _$BarcodeResultCopyWithImpl<$Res>
+    extends _$BarcodeResultCopyWithImpl<$Res, _$_BarcodeResult>
     implements _$$_BarcodeResultCopyWith<$Res> {
   __$$_BarcodeResultCopyWithImpl(
       _$_BarcodeResult _value, $Res Function(_$_BarcodeResult) _then)
-      : super(_value, (v) => _then(v as _$_BarcodeResult));
+      : super(_value, _then);
 
-  @override
-  _$_BarcodeResult get _value => super._value as _$_BarcodeResult;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? barcode = freezed,
-    Object? merchant = freezed,
-    Object? balance = freezed,
-    Object? expires = freezed,
+    Object? barcode = null,
+    Object? merchant = null,
+    Object? balance = null,
+    Object? expires = null,
   }) {
     return _then(_$_BarcodeResult(
-      barcode: barcode == freezed
+      barcode: null == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as Barcode,
-      merchant: merchant == freezed
+      merchant: null == merchant
           ? _value.merchant
           : merchant // ignore: cast_nullable_to_non_nullable
               as Option<String>,
-      balance: balance == freezed
+      balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as Option<int>,
-      expires: expires == freezed
+      expires: null == expires
           ? _value.expires
           : expires // ignore: cast_nullable_to_non_nullable
               as Option<DateTime>,
@@ -159,22 +161,20 @@ class _$_BarcodeResult implements _BarcodeResult {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BarcodeResult &&
-            const DeepCollectionEquality().equals(other.barcode, barcode) &&
-            const DeepCollectionEquality().equals(other.merchant, merchant) &&
-            const DeepCollectionEquality().equals(other.balance, balance) &&
-            const DeepCollectionEquality().equals(other.expires, expires));
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
+            (identical(other.merchant, merchant) ||
+                other.merchant == merchant) &&
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.expires, expires) || other.expires == expires));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(barcode),
-      const DeepCollectionEquality().hash(merchant),
-      const DeepCollectionEquality().hash(balance),
-      const DeepCollectionEquality().hash(expires));
+  int get hashCode =>
+      Object.hash(runtimeType, barcode, merchant, balance, expires);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BarcodeResultCopyWith<_$_BarcodeResult> get copyWith =>
       __$$_BarcodeResultCopyWithImpl<_$_BarcodeResult>(this, _$identity);
 }
