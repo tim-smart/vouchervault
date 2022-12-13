@@ -15,7 +15,6 @@
     "create": "Créer",
     "update": "Modifier",
     "scanBarcode": "Scanner un code barre",
-    "toggleFlash": "Flash",
     "description": "Description",
     "code": "Code",
     "expires": "Date d'expiration",
