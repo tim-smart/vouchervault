@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'vouchers_menu.g.dart';
 
-// TODO: i18n
 enum VouchersMenuAction {
-  import(label: "Import"),
-  export(label: "Export"),
-  authentication(
-    label: "App lock",
-    hasCheckbox: true,
-  ),
-  smartScan(
-    label: "Smart scan",
-    hasCheckbox: true,
-  );
+  import,
+  export,
+  authentication(hasCheckbox: true),
+  smartScan(hasCheckbox: true);
 
   const VouchersMenuAction({
-    required this.label,
     this.hasCheckbox = false,
   });
 
-  final String label;
+  String label(AppLocalizations locales) {
+    switch (this) {
+      case VouchersMenuAction.import:
+        return locales.import;
+      case VouchersMenuAction.export:
+        return locales.export;
+      case VouchersMenuAction.authentication:
+        return locales.appLock;
+      case VouchersMenuAction.smartScan:
+        return locales.smartScan;
+    }
+  }
+
   final bool hasCheckbox;
 }
 
@@ -39,7 +44,7 @@ Widget vouchersMenu({
                 enabled: !disabled.contains(a),
                 child: Row(
                   children: [
-                    Text(a.label),
+                    Text(a.label(AppLocalizations.of(context)!)),
                     if (a.hasCheckbox) ...[
                       const Spacer(),
                       Checkbox(

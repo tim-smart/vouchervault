@@ -20,5 +20,9 @@
     "expires": "Expires",
     "removeOnceExpired": "Remove once expired",
     "balance": "Balance",
-    "notes": "Notes"
+    "notes": "Notes",
+    "import": "Import",
+    "export": "Export",
+    "appLock": "App lock",
+    "smartScan": "Smart scan"
 }
