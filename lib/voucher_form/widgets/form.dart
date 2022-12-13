@@ -113,7 +113,7 @@ Widget voucherForm(
           lastDate: DateTime.now().add(const Duration(days: 365 * 100)),
           resetIcon: null,
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             labelText: AppLocalizations.of(context)!.expires,
             suffixIcon: _resetIconButton(formKey, 'expires'),
           ),
@@ -141,7 +141,7 @@ Widget voucherForm(
             decimal: true,
           ),
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             labelText: AppLocalizations.of(context)!.balance,
             suffixIcon: _resetIconButton(formKey, 'balanceMilliunits'),
           ),

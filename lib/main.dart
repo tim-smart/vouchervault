@@ -4,7 +4,6 @@ import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main({IList<Voucher>? vouchers}) async {
   WidgetsFlutterBinding.ensureInitialized();
