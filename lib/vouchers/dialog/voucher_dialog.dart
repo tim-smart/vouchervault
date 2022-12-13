@@ -11,6 +11,7 @@ import 'package:vouchervault/vouchers/vouchers.dart' as V;
 import 'package:vouchervault/vouchers/vouchers.dart'
     show Voucher, VoucherCodeType;
 import 'package:vouchervault/shared/voucher_details/voucher_details.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 export 'voucher_dialog_container.dart';
 export 'voucher_spend_dialog.dart';
@@ -88,7 +89,7 @@ Widget _voucherDialog(
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
                 onPressed: onEdit,
-                child: const Text('Edit'),
+                child: Text(AppLocalizations.of(context)!.edit),
               ),
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
@@ -97,7 +98,7 @@ Widget _voucherDialog(
                   foregroundColor: Colors.black,
                 ),
                 onPressed: onClose,
-                child: const Text('Close'),
+                child: Text(AppLocalizations.of(context)!.close),
               ),
             ],
           ),

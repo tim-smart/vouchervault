@@ -9,12 +9,13 @@ import 'package:vouchervault/lib/navigator.dart';
 import 'package:vouchervault/shared/scaffold/scaffold.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'vouchers_screen.g.dart';
 
 @swidget
 Widget _vouchersScreen(BuildContext context) => AppScaffold(
-      title: 'Vouchers',
+      title: AppLocalizations.of(context)!.vouchers,
       actions: const [VouchersMenuContainer()],
       slivers: [
         SliverPadding(

@@ -5,8 +5,11 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/vouchers/models/voucher.dart';
+import 'package:intl/intl.dart';
 
 part 'voucher_details.g.dart';
+
+final formatCurrency = NumberFormat.simpleCurrency();
 
 List<Widget> buildVoucherDetails(
   BuildContext context,
@@ -15,6 +18,7 @@ List<Widget> buildVoucherDetails(
   Option<double> space = const None(),
   bool includeNotes = false,
 }) =>
+
     intersperse<Widget>(SizedBox(
       height: space.p(O.getOrElse(() => AppTheme.space1)),
     ))([
@@ -25,11 +29,11 @@ List<Widget> buildVoucherDetails(
               formatExpires(dt),
             )
           ])),
-      ...voucher.balanceOption.p(O.map(millisToString)).p(ifSomeList((b) => [
+      ...voucher.balanceDoubleOption.p(ifSomeList((b) => [
             _VoucherDetailRow(
               textColor,
               Icons.account_balance,
-              '\$$b',
+              formatCurrency.format(b),
             ),
           ])),
       ...voucher.notesOption

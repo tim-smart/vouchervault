@@ -7,6 +7,7 @@ import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/lib/lib.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'barcode_button.g.dart';
 
@@ -45,6 +46,6 @@ Widget _barcodeButton(
       child: Center(
         child: _barcodeWidget(barcodeType, optionOfString(data))
             .p(O.alt(() => _autoSizeText(data)))
-            .p(O.getOrElse(() => const Text('Scan barcode'))),
+            .p(O.getOrElse(() => Text(AppLocalizations.of(context)!.scanBarcode))),
       ),
     );

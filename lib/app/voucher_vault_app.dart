@@ -6,6 +6,8 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/auth/auth.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'voucher_vault_app.g.dart';
 
@@ -41,7 +43,12 @@ Widget __app() => AtomBuilder((context, watch, child) {
         ),
         navigatorObservers: [routeObserver],
         localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
           FormBuilderLocalizations.delegate,
         ],
+        supportedLocales: AppLocalizations.supportedLocales,
       );
     });

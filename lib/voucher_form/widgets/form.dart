@@ -11,6 +11,7 @@ import 'package:vouchervault/voucher_form/voucher_form.dart';
 import 'package:vouchervault/vouchers/vouchers.dart'
     show Voucher, VoucherCodeType, VoucherColor;
 import 'package:vouchervault/vouchers/vouchers.dart' as V;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'form.g.dart';
 
@@ -54,9 +55,9 @@ Widget voucherForm(
         FormBuilderTextField(
           name: 'description',
           textCapitalization: TextCapitalization.words,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Description',
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: AppLocalizations.of(context)!.description,
           ),
           validator: FormBuilderValidators.required(),
           valueTransformer: optionOfString.c(O.toNullable),
@@ -68,7 +69,7 @@ Widget voucherForm(
           validator: FormBuilderValidators.required(),
           builder: (field) => BarcodeScannerField(
             launchScannerImmediately: true,
-            labelText: 'Code',
+            labelText: AppLocalizations.of(context)!.code,
             onChange: field.didChange,
             errorText: optionOfString(field.errorText),
             initialValue: field.value ?? '',
@@ -112,8 +113,8 @@ Widget voucherForm(
           lastDate: DateTime.now().add(const Duration(days: 365 * 100)),
           resetIcon: null,
           decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: 'Expires',
+            border: OutlineInputBorder(),
+            labelText: AppLocalizations.of(context)!.expires,
             suffixIcon: _resetIconButton(formKey, 'expires'),
           ),
           valueTransformer: O
@@ -124,7 +125,7 @@ Widget voucherForm(
         FormBuilderSwitch(
           name: 'removeOnceExpired',
           title: Text(
-            'Remove once expired',
+            AppLocalizations.of(context)!.removeOnceExpired,
             style: theme.textTheme.bodyLarge,
           ),
           decoration: const InputDecoration(
@@ -140,8 +141,8 @@ Widget voucherForm(
             decimal: true,
           ),
           decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: 'Balance',
+            border: OutlineInputBorder(),
+            labelText: AppLocalizations.of(context)!.balance,
             suffixIcon: _resetIconButton(formKey, 'balanceMilliunits'),
           ),
         ),
@@ -152,9 +153,9 @@ Widget voucherForm(
           minLines: 2,
           maxLines: null,
           textCapitalization: TextCapitalization.sentences,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Notes',
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: AppLocalizations.of(context)!.notes,
           ),
         ),
         SizedBox(height: AppTheme.space3),

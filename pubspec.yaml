@@ -1,5 +1,5 @@
 name: vouchervault
-description: A new Flutter project.
+description: An app for storing vouchers and loyalty cards
 publish_to: "none"
 version: 1.2.0
 
@@ -55,6 +55,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   fonts:
     - family: Alegreya Sans

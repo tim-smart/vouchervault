@@ -8,6 +8,7 @@ import 'package:vouchervault/shared/scaffold/app_scaffold.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'dialog.g.dart';
 
@@ -18,12 +19,12 @@ Widget _voucherFormDialog(
 }) {
   final formKey = useMemoized(() => GlobalKey<FormBuilderState>());
   final title = initialValue.p(O.fold(
-    () => 'Add voucher',
-    (_) => 'Edit voucher',
+    () => AppLocalizations.of(context)!.addVoucher,
+    (_) => AppLocalizations.of(context)!.editVoucher,
   ));
   final action = initialValue.p(O.fold(
-    () => 'Create',
-    (_) => 'Update',
+    () => AppLocalizations.of(context)!.create,
+    (_) => AppLocalizations.of(context)!.update,
   ));
 
   return AppScaffold(

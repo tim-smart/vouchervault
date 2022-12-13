@@ -12,6 +12,7 @@ import 'package:vouchervault/hooks/hooks.dart';
 import 'package:vouchervault/lib/navigator.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
 import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'voucher_dialog_container.g.dart';
 
@@ -33,7 +34,7 @@ Widget _voucherDialogContainer(
   final onTapBarcode = useCallback(
     () => v.code.p(O.map((code) {
       Clipboard.setData(ClipboardData(text: code));
-      Fluttertoast.showToast(msg: 'Copied to clipboard');
+      Fluttertoast.showToast(msg: AppLocalizations.of(context)!.copiedToClipboard);
     })),
     [v.code],
   );
@@ -87,16 +88,16 @@ TaskOption<bool> _showRemoveDialog(
     showDialogTO<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Are you sure?'),
-        content: const Text('That you want to remove this voucher?'),
+        title: Text(AppLocalizations.of(context)!.areYouSure),
+        content: Text(AppLocalizations.of(context)!.confirmRemoveVoucher),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () => onPressed(context),
-            child: const Text('Remove'),
+            child: Text(AppLocalizations.of(context)!.remove),
           ),
         ],
       ),

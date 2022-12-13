@@ -3,6 +3,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 
 part 'vouchers_menu.g.dart';
 
+// TODO: i18n
 enum VouchersMenuAction {
   import(label: "Import"),
   export(label: "Export"),

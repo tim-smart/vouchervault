@@ -10,6 +10,7 @@ import 'package:fpdt/reader_task_either.dart' as RTE;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/app.dart';
 import 'package:vouchervault/voucher_form/voucher_form.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'scanner_dialog.g.dart';
 
@@ -101,9 +102,10 @@ Widget __previewDialog(
                       onPressed: onPressedPicker,
                     ),
                     SizedBox(width: AppTheme.space3),
-                    ElevatedButton(
-                      onPressed: onPressedFlash,
-                      child: const Text('Toggle flash'),
+                    IconButton(
+                        color: Colors.white,
+                        onPressed: onPressedFlash,
+                        icon: const Icon(Icons.flash_on) // TODO: Toggle icon ?
                     ),
                     SizedBox(width: AppTheme.space3),
                     ElevatedButton(
@@ -112,7 +114,7 @@ Widget __previewDialog(
                         foregroundColor: Colors.black,
                       ),
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Cancel'),
+                      child: Text(AppLocalizations.of(context)!.cancel),
                     ),
                   ],
                 ),
