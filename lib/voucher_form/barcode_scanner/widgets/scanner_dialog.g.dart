@@ -56,3 +56,15 @@ class _CameraPreview extends StatelessWidget {
   Widget build(BuildContext _context) =>
       __cameraPreview(controller: controller);
 }
+
+class _FlashIcon extends HookWidget {
+  const _FlashIcon({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final CameraController controller;
+
+  @override
+  Widget build(BuildContext _context) => __flashIcon(controller: controller);
+}

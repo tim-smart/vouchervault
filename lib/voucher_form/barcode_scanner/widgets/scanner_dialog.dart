@@ -101,12 +101,17 @@ Widget __previewDialog(
                       icon: const Icon(Icons.add_photo_alternate),
                       onPressed: onPressedPicker,
                     ),
-                    SizedBox(width: AppTheme.space3),
-                    IconButton(
-                        color: Colors.white,
-                        onPressed: onPressedFlash,
-                        icon: const Icon(Icons.flash_on) // TODO: Toggle icon ?
-                    ),
+                    ...controller.p(O.fold(
+                      () => [],
+                      (controller) => [
+                        SizedBox(width: AppTheme.space3),
+                        IconButton(
+                          color: Colors.white,
+                          onPressed: onPressedFlash,
+                          icon: _FlashIcon(controller: controller),
+                        ),
+                      ],
+                    )),
                     SizedBox(width: AppTheme.space3),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -134,3 +139,17 @@ Widget __cameraPreview({
       width: controller.value.previewSize!.height,
       child: controller.buildPreview(),
     );
+
+@hwidget
+Widget __flashIcon({
+  required CameraController controller,
+}) {
+  final mode = useListenableSelector(
+    controller,
+    () => controller.value.flashMode,
+  );
+
+  return mode != FlashMode.torch
+      ? const Icon(Icons.flash_on)
+      : const Icon(Icons.flash_off);
+}
