@@ -32,14 +32,19 @@ BarcodeOp<BarcodeResult> extractAll(
   InputImage image, {
   bool embellish = false,
 }) =>
-    scan(image)
-        .p(RTE.flatMap((b) => b.firstOption
-            .p(O.map((b) => BarcodeResult(barcode: b)))
-            .p(RTE.fromOption(() => const MlError.barcodeNotFound()))))
-        .p(embellish
-            ? RTE.flatMap(
-                (result) => _embellishResult(image: image, result: result))
-            : identity);
+    RTE.Do(($, c) async {
+      final results = await $(scan(image));
+
+      final result = await $(results.firstOption
+          .chain(O.map((b) => BarcodeResult(barcode: b)))
+          .chain(RTE.fromOption(() => const MlError.barcodeNotFound())));
+
+      if (embellish) {
+        return $(_embellishResult(image: image, result: result));
+      }
+
+      return result;
+    });
 
 BarcodeOp<BarcodeResult> extractAllFromFile(bool embellish) => pickInputImage
     .p(TE.mapLeft((e) => MlError.pickerError(e)))
@@ -50,13 +55,17 @@ BarcodeOp<BarcodeResult> _embellishResult({
   required InputImage image,
   required BarcodeResult result,
 }) =>
-    ocr(image)
-        .p(RTE.flatMapTuple2((rt) => extractEntities(
-              rt.text,
-              filter: [EntityType.money, EntityType.dateTime],
-            )))
-        .p(RTE.map((t) => result.copyWith(
-              merchant: extractMerchant(t.first),
-              balance: extractBalance(t.second),
-              expires: extractExpires(t.first, t.second),
-            )));
+    RTE.Do(($, c) async {
+      final rt = await $(ocr(image));
+
+      final annotations = await $(extractEntities(
+        rt.text,
+        filter: [EntityType.money, EntityType.dateTime],
+      ));
+
+      return result.copyWith(
+        merchant: extractMerchant(rt),
+        balance: extractBalance(annotations),
+        expires: extractExpires(rt, annotations),
+      );
+    });
