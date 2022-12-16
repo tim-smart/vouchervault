@@ -20,5 +20,9 @@
     "expires": "Date d'expiration",
     "removeOnceExpired": "Supprimer une fois expiré",
     "balance": "Solde",
-    "notes": "Notes"
+    "notes": "Notes",
+    "import": "Importer",
+    "export": "Exporter",
+    "appLock": "Verrouiller l'appli",
+    "smartScan": "Scan intelligent"
 }
