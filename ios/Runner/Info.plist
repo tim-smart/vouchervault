@@ -23,7 +23,7 @@
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSRequiresIPhoneOS</key>
-		<true/>
+		<true />
 		<key>NSCameraUsageDescription</key>
 		<string>Camera permission is required for barcode scanning.</string>
 		<key>UILaunchStoryboardName</key>
@@ -41,12 +41,14 @@
 			<string>UIInterfaceOrientationPortrait</string>
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
-		<false/>
+		<false />
 		<key>NSFaceIDUsageDescription</key>
 		<string>Face ID is being used to protect your vouchers.</string>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true/>
+		<true />
+		<key>FLTEnableImpeller</key>
+		<true />
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-</dict>
+		<true />
+	</dict>
 </plist>

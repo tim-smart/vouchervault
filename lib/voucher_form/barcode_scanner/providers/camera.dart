@@ -5,6 +5,7 @@ import 'package:flutter_nucleus/flutter_nucleus.dart';
 import 'package:fpdt/fpdt.dart';
 import 'package:fpdt/either.dart' as E;
 import 'package:fpdt/option.dart' as O;
+import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:vouchervault/app/atoms.dart';
@@ -67,10 +68,12 @@ final barcodeResultProvider = atom((get) {
   return get(imageProvider)
       .exhaustMap(
         (t) => inputImage(t.second, camera: t.first.description)
-            .p(O.map((image) => Stream.fromFuture(
-                  Future.sync(extractAll(image, embellish: smartScan)(ctx)),
-                )))
-            .p(O.getOrElse(() => const Stream.empty())),
+            .p(O.fold<InputImage, Stream<Either<MlError, BarcodeResult>>>(
+          () => const Stream.empty(),
+          (image) => Stream.fromFuture(
+            Future.sync(extractAll(image, embellish: smartScan)(ctx)),
+          ),
+        )),
       )
       .expand<BarcodeResult>(E.fold(
         (left) {

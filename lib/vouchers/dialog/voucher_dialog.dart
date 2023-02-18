@@ -34,7 +34,9 @@ Widget _voucherDialog(
       color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
   var theme = Theme.of(context);
   theme = theme.copyWith(
-    backgroundColor: color,
+    colorScheme: theme.colorScheme.copyWith(
+      background: color,
+    ),
     textTheme: theme.textTheme.apply(
       bodyColor: textColor,
       displayColor: textColor,
@@ -125,7 +127,7 @@ Widget __dialogWrap(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppTheme.rem(1)),
             ),
-            color: theme.backgroundColor,
+            color: theme.colorScheme.background,
             child: child,
           ),
         ),

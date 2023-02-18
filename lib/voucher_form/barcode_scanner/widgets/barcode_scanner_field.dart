@@ -77,7 +77,7 @@ Widget _barcodeScannerField(
           SizedBox(height: AppTheme.space2),
           Text(
             error,
-            style: TextStyle(color: theme.errorColor),
+            style: TextStyle(color: theme.colorScheme.error),
           ),
         ],
       )),
