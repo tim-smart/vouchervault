@@ -15,24 +15,25 @@ final _log = Logger('auth/ops.dart');
 typedef AuthOp<R> = StateReaderTaskEither<AuthState, AuthContext, String, R>;
 final AuthOp<AuthContext> _ask = SRTE.ask();
 final AuthOp<AuthState> _get = SRTE.get();
+final _do = SRTE.makeDo<AuthState, AuthContext, String>();
 
 class AuthContext {
   const AuthContext({required this.localAuth});
   final LocalAuthentication localAuth;
 }
 
-final init = _get
-    .p(SRTE.filter(
-      (s) => !s.enabled,
-      (_) => 'Auth already enabled',
-    ))
-    .p(SRTE.flatMapReaderTaskEither((s) => TE.tryCatchK(
-          (c) => c.localAuth.isDeviceSupported(),
-          (error, stackTrace) => 'Could not check if auth is available',
-        )))
-    .p(SRTE.flatMap((available) =>
-        SRTE.put(available ? AuthState.notRequired : AuthState.notAvailable)))
-    .p(tapLeftC((c) => _log.info));
+final init = _do(($, s, c) async {
+  if (s.enabled) return $(SRTE.unit());
+
+  final available = await $(SRTE.tryCatch(
+    () => c.localAuth.isDeviceSupported(),
+    (error, stackTrace) => 'Could not check if auth is available',
+  ));
+
+  return $(SRTE.put(
+    available.first ? AuthState.notRequired : AuthState.notAvailable,
+  ));
+}).p(tapLeftC((c) => _log.info));
 
 final toggle =
     _get.p(SRTE.chainModify((s) => s.enabled ? s.disable() : s.enable()));
@@ -42,20 +43,24 @@ final _cancel = _ask.p(SRTE.chainTryCatchK(
   (err, stackTrace) => 'Could not cancel previous auth requests',
 ));
 
-final authenticate = _cancel
-    .p(SRTE.flatMapReaderTaskEither((_) => TE.tryCatchK(
-          (c) => c.localAuth.authenticate(
-            localizedReason: ' ',
-            authMessages: const [
-              AndroidAuthMessages(
-                signInTitle: 'Unlock your vouchers',
-                biometricHint: '',
-              ),
-              IOSAuthMessages(),
-            ],
-          ),
-          (err, _) => 'Error trying to authenticate: $err',
-        )))
-    .p(SRTE.filter(identity, (_) => 'Authentication failed'))
-    .p(SRTE.chainPut(AuthState.success))
-    .p(tapLeftC((c) => _log.info));
+final authenticate = _do<Unit>(($, s, c) async {
+  await $(_cancel);
+
+  final success = await $(SRTE.tryCatch(
+    () => c.localAuth.authenticate(
+      localizedReason: ' ',
+      authMessages: const [
+        AndroidAuthMessages(
+          signInTitle: 'Unlock your vouchers',
+          biometricHint: '',
+        ),
+        IOSAuthMessages(),
+      ],
+    ),
+    (err, _) => 'Error trying to authenticate: $err',
+  ));
+
+  if (!success.first) return $(SRTE.left('Authentication failed'));
+
+  return $(SRTE.put(AuthState.success));
+}).p(tapLeftC((c) => _log.info));

@@ -68,7 +68,8 @@ final barcodeResultProvider = atom((get) {
       .exhaustMap(
         (t) => inputImage(t.second, camera: t.first.description)
             .p(O.map((image) => Stream.fromFuture(
-                extractAll(image, embellish: smartScan)(ctx)())))
+                  Future.sync(extractAll(image, embellish: smartScan)(ctx)),
+                )))
             .p(O.getOrElse(() => const Stream.empty())),
       )
       .expand<BarcodeResult>(E.fold(

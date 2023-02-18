@@ -7,7 +7,7 @@ final sharedPrefs =
 
 final nucleusStorage = atom((get) => SharedPrefsStorage(get(sharedPrefs)));
 
-final appSettings = stateAtomWithStorage(
+final appSettings = stateAtomWithStorage<VoucherVaultSettings>(
   const VoucherVaultSettings(),
   key: 'rp_persist_settingsProvider',
   storage: nucleusStorage,

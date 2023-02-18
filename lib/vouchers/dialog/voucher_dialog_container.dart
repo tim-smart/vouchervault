@@ -34,7 +34,8 @@ Widget _voucherDialogContainer(
   final onTapBarcode = useCallback(
     () => v.code.p(O.map((code) {
       Clipboard.setData(ClipboardData(text: code));
-      Fluttertoast.showToast(msg: AppLocalizations.of(context)!.copiedToClipboard);
+      Fluttertoast.showToast(
+          msg: AppLocalizations.of(context)!.copiedToClipboard);
     })),
     [v.code],
   );
@@ -42,7 +43,8 @@ Widget _voucherDialogContainer(
   final onSpend = useCallback(
     _showSpendDialog(context)
         .p(TO.map(maybeUpdateBalance(v)))
-        .p(TO.tap(sm.run)),
+        .p(TO.tap(sm.run))
+        .call,
     [sm, v],
   );
 
@@ -53,7 +55,7 @@ Widget _voucherDialogContainer(
         fullscreenDialog: true,
         builder: (context) => VoucherFormDialog(initialValue: O.some(v)),
       ),
-    ).p(TO.tap((v) => sm.run(update(v)))),
+    ).p(TO.tap((v) => sm.run(update(v)))).call,
     [sm, v],
   );
 
@@ -61,7 +63,10 @@ Widget _voucherDialogContainer(
     _showRemoveDialog(context, onPressed: (context) {
       sm.run(remove(v));
       Navigator.pop(context, true);
-    }).p(TO.filter(identity)).p(TO.tap((_) => Navigator.of(context).pop())),
+    })
+        .p(TO.filter(identity))
+        .p(TO.tap((_) => Navigator.of(context).pop()))
+        .call,
     [sm, v],
   );
 

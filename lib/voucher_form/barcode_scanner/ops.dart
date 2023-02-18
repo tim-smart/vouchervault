@@ -8,25 +8,30 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'package:vouchervault/voucher_form/voucher_form.dart';
 
 typedef BarcodeOp<A> = ReaderTaskEither<MlContext, MlError, A>;
+final _do = RTE.makeDo<MlContext, MlError>();
 
-BarcodeOp<List<Barcode>> scan(InputImage image) => TE.tryCatchK(
-      (c) => c.barcodeScanner.processImage(image),
-      (err, stackTrace) => MlError.mlkitError(op: 'scan', err: err),
-    );
+BarcodeOp<List<Barcode>> scan(InputImage image) =>
+    _do(($, context) async => $(RTE.tryCatch(
+          () => context.barcodeScanner.processImage(image),
+          (err, stackTrace) => MlError.mlkitError(op: 'scan', err: err),
+        )));
 
-BarcodeOp<RecognizedText> ocr(InputImage image) => TE.tryCatchK(
-      (c) => c.textRecognizer.processImage(image),
-      (err, stackTrace) => MlError.mlkitError(op: 'ocr', err: err),
-    );
+BarcodeOp<RecognizedText> ocr(InputImage image) =>
+    _do(($, context) async => $(RTE.tryCatch(
+          () => context.textRecognizer.processImage(image),
+          (err, stackTrace) => MlError.mlkitError(op: 'ocr', err: err),
+        )));
 
 BarcodeOp<List<EntityAnnotation>> extractEntities(
   String text, {
   List<EntityType> filter = const [],
 }) =>
-    TE.tryCatchK(
-      (c) => c.entityExtractor.annotateText(text, entityTypesFilter: filter),
-      (err, stackTrace) => MlError.mlkitError(op: 'extractEntities', err: err),
-    );
+    _do(($, context) async => $(RTE.tryCatch(
+          () => context.entityExtractor
+              .annotateText(text, entityTypesFilter: filter),
+          (err, stackTrace) =>
+              MlError.mlkitError(op: 'extractEntities', err: err),
+        )));
 
 BarcodeOp<BarcodeResult> extractAll(
   InputImage image, {
@@ -46,10 +51,13 @@ BarcodeOp<BarcodeResult> extractAll(
       return result;
     });
 
-BarcodeOp<BarcodeResult> extractAllFromFile(bool embellish) => pickInputImage
-    .p(TE.mapLeft((e) => MlError.pickerError(e)))
-    .p(RTE.fromTaskEither)
-    .p(RTE.flatMap((i) => extractAll(i, embellish: embellish)));
+BarcodeOp<BarcodeResult> extractAllFromFile(bool embellish) =>
+    _do((($, context) async {
+      final image = await $(RTE.fromTaskEither(
+        pickInputImage.p(TE.mapLeft((e) => MlError.pickerError(e))),
+      ));
+      return $(extractAll(image, embellish: embellish));
+    }));
 
 BarcodeOp<BarcodeResult> _embellishResult({
   required InputImage image,

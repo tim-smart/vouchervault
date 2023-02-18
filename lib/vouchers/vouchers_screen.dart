@@ -33,7 +33,7 @@ Widget _vouchersScreen(BuildContext context) => AppScaffold(
             builder: (context) => const VoucherFormDialog(),
             fullscreenDialog: true,
           ),
-        ).p(TO.tap(_createVoucher(context.getAtom))),
+        ).p(TO.tap(_createVoucher(context.getAtom))).call,
         child: const Icon(Icons.add),
       )),
     );
