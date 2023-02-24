@@ -45,8 +45,8 @@ class AuthService {
 
 // === layer
 
-final authLayer = Layer.scoped(ZIO.Do(($, env) async {
-  final ref = await $(StorageRef.makeScope<AuthState>(
+final authLayer = Layer<Never, AuthService>.scoped(ZIO.Do(($, env) {
+  final ref = $.sync(StorageRef.makeScope<AuthState>(
     AuthState.notAvailable,
     key: 'pbs_AuthBloc',
     fromJson: (_) => AuthState.fromJson(_),
@@ -62,22 +62,15 @@ final authLayer = Layer.scoped(ZIO.Do(($, env) async {
     );
   }
 
-  final available = await $(
-    EIO
-        .tryCatch(
-          () => localAuth.isDeviceSupported(),
-          (error, stackTrace) => 'Could not check if auth is available',
-        )
-        .logOrElse((_) => false)
-        .lift(),
-  );
-
-  await $(ref.set(available ? AuthState.notRequired : AuthState.notAvailable));
-
-  return AuthService(
-    ref: ref,
-    localAuth: localAuth,
-  );
+  return $(ZIO<Scope, String, bool>.tryCatch(
+    () => localAuth.isDeviceSupported(),
+    (error, stackTrace) => 'Could not check if auth is available',
+  )
+      .logOrElse((_) => false)
+      .flatMap(
+        (_) => ref.set(_ ? AuthState.notRequired : AuthState.notAvailable),
+      )
+      .as(AuthService(ref: ref, localAuth: localAuth)));
 }));
 
 // ==== atoms

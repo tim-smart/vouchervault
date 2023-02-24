@@ -277,10 +277,10 @@ packages:
     dependency: transitive
     description:
       name: elemental
-      sha256: "4eaf6b0570149addcb8a2d7029886ee0191490b6dacadbdf8418ee059c6bfe34"
+      sha256: b1de4024c70e47138d79d5d73f19fc90bbc8b64b234674fb583654543c265abf
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.77"
+    version: "0.0.78"
   emulators:
     dependency: "direct dev"
     description:
