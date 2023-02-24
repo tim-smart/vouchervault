@@ -1,7 +1,6 @@
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:vouchervault/vouchers/index.dart';
 
 part 'state.freezed.dart';
 
@@ -18,8 +17,8 @@ class VouchersState with _$VouchersState {
       );
 }
 
-final _unix =
-    O.map((DateTime d) => d.millisecondsSinceEpoch).c(O.getOrElse(() => 0));
+int _unix(Option<DateTime> dt) =>
+    dt.map((d) => d.millisecondsSinceEpoch).getOrElse(() => 0);
 
 int _compareVoucher(Voucher a, Voucher b) {
   final compare = a.description.compareTo(b.description);

@@ -1,15 +1,12 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_nucleus/flutter_nucleus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
-import 'package:fpdt/reader_task_either.dart' as RTE;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/voucher_form/voucher_form.dart';
+import 'package:vouchervault/app/index.dart';
+import 'package:vouchervault/voucher_form/index.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'scanner_dialog.g.dart';
@@ -19,6 +16,7 @@ Widget _scannerDialog(
   BuildContext context, {
   required void Function(BarcodeResult) onScan,
 }) {
+  final scanner = useAtom(barcodeScannerAtom);
   final smartScan = useAtom(appSettings.select((a) => a.smartScan));
   final setCameraPaused = context.setAtom(cameraPaused);
   final controller = useAtom(initializedCameraController);
@@ -31,17 +29,23 @@ Widget _scannerDialog(
   );
 
   // File picker
-  final mlContext = useAtom(mlContextProvider);
   final onPressedPicker = useCallback(() async {
     setCameraPaused(true);
 
-    extractAllFromFile(smartScan).p(RTE.tap(onScan)).p(RTE.tapLeft((err) {
-      Fluttertoast.showToast(msg: err.friendlyMessage);
+    context.runZIO(
+      scanner
+          .extractAllFromFile(smartScan)
+          .tap((_) => ZIO(() => onScan(_)))
+          .tapError(
+            (_) => ZIO(() {
+              Fluttertoast.showToast(msg: _.friendlyMessage);
 
-      // Only un-pause on failure
-      setCameraPaused(false);
-    }))(mlContext)();
-  }, [onScan, mlContext, smartScan, setCameraPaused]);
+              // Only un-pause on failure
+              setCameraPaused(false);
+            }),
+          ),
+    );
+  }, [onScan, smartScan, setCameraPaused]);
 
   // Toggle flash
   final onPressedFlash = useCallback(() {
@@ -57,7 +61,7 @@ Widget _scannerDialog(
   return AnnotatedRegion(
     value: SystemUiOverlayStyle.light,
     child: _PreviewDialog(
-      controller: controller.whenOrElse(data: O.some, orElse: O.none),
+      controller: controller.whenOrElse(data: Option.of, orElse: Option.none),
       onPressedPicker: onPressedPicker,
       onPressedFlash: onPressedFlash,
     ),
@@ -75,7 +79,7 @@ Widget __previewDialog(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          controller.p(O.fold(
+          controller.fold(
             () => Container(color: Colors.black),
             (c) => Positioned.fill(
               child: FittedBox(
@@ -83,7 +87,7 @@ Widget __previewDialog(
                 child: _CameraPreview(controller: c),
               ),
             ),
-          )),
+          ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -101,7 +105,7 @@ Widget __previewDialog(
                       icon: const Icon(Icons.add_photo_alternate),
                       onPressed: onPressedPicker,
                     ),
-                    ...controller.p(O.fold(
+                    ...controller.fold(
                       () => [],
                       (controller) => [
                         SizedBox(width: AppTheme.space3),
@@ -111,7 +115,7 @@ Widget __previewDialog(
                           icon: _FlashIcon(controller: controller),
                         ),
                       ],
-                    )),
+                    ),
                     SizedBox(width: AppTheme.space3),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(

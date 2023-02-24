@@ -1,42 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_nucleus/flutter_nucleus.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
-import 'package:fpdt/task_option.dart' as TO;
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/app/index.dart';
 import 'package:vouchervault/lib/navigator.dart';
 import 'package:vouchervault/shared/scaffold/scaffold.dart';
-import 'package:vouchervault/voucher_form/voucher_form.dart';
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:vouchervault/voucher_form/index.dart';
+import 'package:vouchervault/vouchers/index.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'vouchers_screen.g.dart';
 
 @swidget
-Widget _vouchersScreen(BuildContext context) => AppScaffold(
-      title: AppLocalizations.of(context)!.vouchers,
-      actions: const [VouchersMenuContainer()],
-      slivers: [
-        SliverPadding(
-          padding: EdgeInsets.only(
-            top: AppTheme.rem(1.5),
-            bottom: AppTheme.space6,
-          ),
-          sliver: const VouchersListContainer(),
+Widget _vouchersScreen(BuildContext context) {
+  return AppScaffold(
+    title: AppLocalizations.of(context)!.vouchers,
+    actions: const [VouchersMenuContainer()],
+    slivers: [
+      SliverPadding(
+        padding: EdgeInsets.only(
+          top: AppTheme.rem(1.5),
+          bottom: AppTheme.space6,
         ),
-      ],
-      floatingActionButton: O.some(FloatingActionButton(
-        onPressed: navPush<Voucher>(
+        sliver: const VouchersListContainer(),
+      ),
+    ],
+    floatingActionButton: Option.of(FloatingActionButton(
+      onPressed: () => context.runZIO(
+        navPush<Voucher>(
           context,
           () => MaterialPageRoute(
             builder: (context) => const VoucherFormDialog(),
             fullscreenDialog: true,
           ),
-        ).p(TO.tap(_createVoucher(context.getAtom))).call,
-        child: const Icon(Icons.add),
-      )),
-    );
+        ).tap(_createVoucher),
+      ),
+      child: const Icon(Icons.add),
+    )),
+  );
+}
 
-void Function(Voucher) _createVoucher(GetAtom get) =>
-    (v) => get(vouchersState.parent).run(create(v));
+IO<Unit> _createVoucher(Voucher v) =>
+    vouchersLayer.accessWithZIO((_) => _.create(v));

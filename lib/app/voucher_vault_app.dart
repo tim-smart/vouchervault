@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_nucleus/flutter_nucleus.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:fpdt/fpdt.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/auth/auth.dart';
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:vouchervault/app/index.dart';
+import 'package:vouchervault/auth/index.dart';
+import 'package:vouchervault/vouchers/index.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -16,16 +15,10 @@ final routeObserver = RouteObserver<ModalRoute>();
 @swidget
 Widget _voucherVaultApp(
   BuildContext context, {
-  IList<Voucher>? vouchers,
   List<AtomInitialValue> initialValues = const [],
 }) =>
     AtomScope(
-      initialValues: [
-        ...initialValues,
-        if (vouchers != null)
-          vouchersState.parent
-              .withInitialValue(createVoucherSM(VouchersState(vouchers)))
-      ],
+      initialValues: initialValues,
       child: const _App(),
     );
 

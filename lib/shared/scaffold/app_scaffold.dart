@@ -1,10 +1,9 @@
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/material.dart';
-import 'package:fpdt/option.dart' show Option;
-import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/hooks/hooks.dart';
+import 'package:vouchervault/app/index.dart';
+import 'package:vouchervault/hooks/index.dart';
 
 part 'app_scaffold.g.dart';
 
@@ -14,7 +13,7 @@ Widget appScaffold(
   required String title,
   required List<Widget> slivers,
   List<Widget> actions = const [],
-  Option<Widget> floatingActionButton = O.kNone,
+  Option<Widget> floatingActionButton = const None(),
   bool leading = false,
 }) {
   final theme = Theme.of(context);
@@ -47,6 +46,6 @@ Widget appScaffold(
         ],
       ),
     ),
-    floatingActionButton: O.toNullable(floatingActionButton),
+    floatingActionButton: floatingActionButton.toNullable(),
   );
 }

@@ -1,15 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/app/index.dart';
 import 'package:vouchervault/lib/lib.dart' as B;
 import 'package:vouchervault/lib/lib.dart';
-import 'package:vouchervault/vouchers/vouchers.dart' as V;
-import 'package:vouchervault/vouchers/vouchers.dart'
-    show Voucher, VoucherCodeType;
+import 'package:vouchervault/vouchers/index.dart' as V;
+import 'package:vouchervault/vouchers/index.dart' show Voucher, VoucherCodeType;
 import 'package:vouchervault/shared/voucher_details/voucher_details.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -55,14 +52,14 @@ Widget _voucherDialog(
             voucher.description,
             style: theme.textTheme.displaySmall,
           ),
-          ...voucher.code.p(ifSomeList((data) => [
+          ...voucher.code.ifSomeList((data) => [
                 SizedBox(height: AppTheme.space3),
                 _Barcode(
                   type: voucher.codeType,
                   data: data,
                   onTap: onTapBarcode,
                 ),
-              ])),
+              ]),
           if (voucher.hasDetailsOrNotes) ...[
             SizedBox(height: AppTheme.space4),
             ...buildVoucherDetails(
@@ -76,7 +73,7 @@ Widget _voucherDialog(
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              if (O.isSome(voucher.balanceOption))
+              if (voucher.balanceOption.isSome())
                 IconButton(
                   key: const ValueKey('SpendIconButton'),
                   color: textColor,
@@ -144,10 +141,10 @@ Widget __barcode(
   final theme = Theme.of(context);
   final barcode = B.barcodeFromCodeType(type);
   return SizedBox(
-    height: AppTheme.rem(barcode.p(O.fold(
+    height: AppTheme.rem(barcode.fold(
       () => 6,
       (_) => 10,
-    ))),
+    )),
     child: Material(
       color: Colors.white,
       elevation: 1,
@@ -157,7 +154,7 @@ Widget __barcode(
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.all(AppTheme.space4),
-          child: barcode.p(O.fold(
+          child: barcode.fold(
             () => Center(
               child: AutoSizeText(
                 data,
@@ -176,7 +173,7 @@ Widget __barcode(
               ),
               barcode: type,
             ),
-          )),
+          ),
         ),
       ),
     ),

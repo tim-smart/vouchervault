@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vouchervault/main.dart' as app;
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:vouchervault/vouchers/index.dart';
 
 void main() async {
   WidgetsApp.debugAllowBannerOverride = false;
@@ -13,36 +12,36 @@ void main() async {
   app.main(
     vouchers: IList([
       Voucher(
-        uuid: O.some(const Uuid().v4()),
+        uuid: Option.of(const Uuid().v4()),
         description: "Walmart",
-        code: O.some('12345'),
+        code: Option.of('12345'),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.BLUE,
-        balanceMilliunits: O.some(77 * 1000),
-        expires: DateTime.now().add(const Duration(days: 120)).chain(O.some),
+        balanceMilliunits: Option.of(77 * 1000),
+        expires: DateTime.now().add(const Duration(days: 120)).chain(Option.of),
       ),
       Voucher(
-        uuid: const Uuid().v4().chain(O.some),
+        uuid: const Uuid().v4().chain(Option.of),
         description: "Starbucks",
-        code: "12345".chain(O.some),
+        code: "12345".chain(Option.of),
         codeType: VoucherCodeType.CODE128,
         color: VoucherColor.GREEN,
-        balanceMilliunits: O.some(50 * 1000),
+        balanceMilliunits: Option.of(50 * 1000),
       ),
       Voucher(
-        uuid: const Uuid().v4().chain(O.some),
+        uuid: const Uuid().v4().chain(Option.of),
         description: "New World Clubcard",
-        code: "12345".chain(O.some),
+        code: "12345".chain(Option.of),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.RED,
       ),
       Voucher(
-        uuid: const Uuid().v4().chain(O.some),
+        uuid: const Uuid().v4().chain(Option.of),
         description: "Barkers",
-        code: "12345".chain(O.some),
+        code: "12345".chain(Option.of),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.GREY,
-        balanceMilliunits: O.some(100 * 1000),
+        balanceMilliunits: Option.of(100 * 1000),
       ),
     ]),
   );

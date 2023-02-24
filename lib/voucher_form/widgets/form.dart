@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:intl/intl.dart';
-import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/app/index.dart';
 import 'package:vouchervault/lib/lib.dart';
-import 'package:vouchervault/voucher_form/voucher_form.dart';
-import 'package:vouchervault/vouchers/vouchers.dart'
+import 'package:vouchervault/voucher_form/index.dart';
+import 'package:vouchervault/vouchers/index.dart'
     show Voucher, VoucherCodeType, VoucherColor;
-import 'package:vouchervault/vouchers/vouchers.dart' as V;
+import 'package:vouchervault/vouchers/index.dart' as V;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'form.g.dart';
 
-void _updateFieldIfEmpty<T>(
+IOOption<Unit> _updateFieldIfEmpty<T>(
   GlobalKey<FormBuilderState> k,
   String field,
-  Option<T> Function() update,
+  IOOption<T> update,
 ) =>
-    O
-        .fromNullable(k.currentState!.fields[field])
-        .p(O.filter((f) =>
+    IOOption.fromNullable(k.currentState!.fields[field])
+        .filter((f) =>
             f.value == null ||
             f.value is! String ||
-            (f.value as String).isEmpty))
-        .p(O.tap((f) => update().p(O.tap(f.didChange))));
+            (f.value as String).isEmpty)
+        .zip(update)
+        .tap((t) => ZIO(() => t.first.didChange(t.second)))
+        .asUnit;
 
 Widget _resetIconButton(
   GlobalKey<FormBuilderState> formKey,
@@ -60,12 +60,12 @@ Widget voucherForm(
             labelText: AppLocalizations.of(context)!.description,
           ),
           validator: FormBuilderValidators.required(),
-          valueTransformer: optionOfString.c(O.toNullable),
+          valueTransformer: (_) => optionOfString(_).toNullable(),
         ),
         SizedBox(height: AppTheme.space3),
         FormBuilderField<String>(
           name: 'code',
-          valueTransformer: optionOfString.c(O.toNullable),
+          valueTransformer: (_) => optionOfString(_).toNullable(),
           validator: FormBuilderValidators.required(),
           builder: (field) => BarcodeScannerField(
             launchScannerImmediately: true,
@@ -73,18 +73,42 @@ Widget voucherForm(
             onChange: field.didChange,
             errorText: optionOfString(field.errorText),
             initialValue: field.value ?? '',
-            barcodeType: optionOfString(
-                    formKey.currentState!.fields['codeType']?.value)
-                .p(O.alt(() => optionOfString(initialFormValue['codeType'])))
-                .p(O.flatMap(barcodeFromCodeTypeJson)),
-            onScan: O.some((r) {
-              O.fromNullable(formKey.currentState!.fields['codeType']).p(O.map(
-                  (f) =>
-                      f.didChange(codeTypeValueFromFormat(r.barcode.format))));
-              _updateFieldIfEmpty(formKey, 'balanceMilliunits',
-                  () => r.balance.p(O.map(millisToString)));
-              _updateFieldIfEmpty(formKey, 'expires', () => r.expires);
-              _updateFieldIfEmpty(formKey, 'description', () => r.merchant);
+            barcodeType:
+                optionOfString(formKey.currentState!.fields['codeType']?.value)
+                    .alt(() => optionOfString(initialFormValue['codeType']))
+                    .flatMap(barcodeFromCodeTypeJson),
+            onScan: Option.of((r) {
+              [
+                IOOption.fromNullable(
+                  formKey.currentState!.fields['codeType'],
+                ).tap(
+                  (_) => ZIO(() => _.didChange(
+                        codeTypeValueFromFormat(r.barcode.format),
+                      )),
+                ),
+                IOOption.fromNullable(
+                  formKey.currentState!.fields['codeType'],
+                ).tap(
+                  (_) => ZIO(() => _.didChange(
+                        codeTypeValueFromFormat(r.barcode.format),
+                      )),
+                ),
+                _updateFieldIfEmpty(
+                  formKey,
+                  'balanceMilliunits',
+                  ZIO.lazy(() => r.balance.map(millisToString).toZIO),
+                ),
+                _updateFieldIfEmpty(
+                  formKey,
+                  'expires',
+                  ZIO.lazy(() => r.expires.toZIO),
+                ),
+                _updateFieldIfEmpty(
+                  formKey,
+                  'description',
+                  ZIO.lazy(() => r.merchant.toZIO),
+                ),
+              ].collectDiscard.run();
             }),
           ),
         ),
@@ -117,10 +141,8 @@ Widget voucherForm(
             labelText: AppLocalizations.of(context)!.expires,
             suffixIcon: _resetIconButton(formKey, 'expires'),
           ),
-          valueTransformer: O
-              .fromNullableWith<DateTime>()
-              .c(O.map((d) => d.toString()))
-              .c(O.toNullable),
+          valueTransformer: (_) =>
+              Option.fromNullable(_).map((d) => d.toString()).toNullable(),
         ),
         FormBuilderSwitch(
           name: 'removeOnceExpired',
@@ -149,7 +171,7 @@ Widget voucherForm(
         SizedBox(height: AppTheme.space3),
         FormBuilderTextField(
           name: 'notes',
-          valueTransformer: optionOfString.c(O.toNullable),
+          valueTransformer: (_) => optionOfString(_).toNullable(),
           minLines: 2,
           maxLines: null,
           textCapitalization: TextCapitalization.sentences,

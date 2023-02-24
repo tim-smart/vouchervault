@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_nucleus/flutter_nucleus.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/auth/auth.dart';
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:vouchervault/app/index.dart';
+import 'package:vouchervault/auth/index.dart';
+import 'package:vouchervault/vouchers/index.dart';
 
 part 'vouchers_menu_container.g.dart';
 
@@ -11,13 +11,13 @@ extension _VoucherMenuActions on VouchersMenuAction {
   void execute(BuildContext x) {
     switch (this) {
       case VouchersMenuAction.import:
-        x.getAtom(vouchersState.parent).run(import);
+        x.runZIO(vouchersLayer.accessWithZIO((_) => _.import));
         return;
       case VouchersMenuAction.export:
-        x.getAtom(vouchersState.parent).run(export);
+        x.runZIO(vouchersLayer.accessWithZIO((_) => _.export));
         return;
       case VouchersMenuAction.authentication:
-        x.getAtom(authState.parent).run(toggle);
+        x.runZIO(authLayer.accessWithZIO((_) => _.toggle));
         return;
       case VouchersMenuAction.smartScan:
         x.updateAtom(appSettings)((s) => s.copyWith(smartScan: !s.smartScan));

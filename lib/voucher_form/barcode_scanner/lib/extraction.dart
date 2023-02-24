@@ -1,6 +1,5 @@
 import 'package:dart_date/dart_date.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:intl/intl.dart';
@@ -9,12 +8,11 @@ import 'package:recase/recase.dart';
 // === Merchant extraction
 Option<String> extractMerchant(RecognizedText rt) {
   final lines = _eligibleMerchantLines(rt);
-  final suffixMerchant =
-      _findLineWithMerchantSuffix(lines).p(O.map(_removeSuffix));
+  final suffixMerchant = _findLineWithMerchantSuffix(lines).map(_removeSuffix);
 
   return suffixMerchant
-      .p(O.alt(() => lines.firstOption))
-      .p(O.map((s) => s.toLowerCase().titleCase));
+      .alt(() => lines.firstOption)
+      .map((s) => s.toLowerCase().titleCase);
 }
 
 Iterable<String> _eligibleMerchantLines(RecognizedText rt) => rt.blocks
@@ -110,7 +108,7 @@ bool Function(String) _hasNWords(int count) =>
     (s) => s.split(" ").length <= count;
 
 // === Balance extraction
-Option<int> extractBalance(List<EntityAnnotation> e) => e
+Option<int> extractBalance(Iterable<EntityAnnotation> e) => e
     .expand((e) => e.entities)
     .where((e) => e.type == EntityType.money)
     .cast<MoneyEntity>()
@@ -125,7 +123,7 @@ int _moneyToMillis(MoneyEntity e) =>
 // === Expiry extraction
 Option<DateTime> extractExpires(
   RecognizedText text,
-  List<EntityAnnotation> e,
+  Iterable<EntityAnnotation> e,
 ) =>
     _extractDateTimes(e)
         .where((dt) => dt.isFuture)
@@ -153,16 +151,17 @@ List<DateTime> _extractDateTimesFromText(RecognizedText rt) {
   );
 
   return _datePatterns
-      .map((t) => O
-          .fromNullable(t.first.firstMatch(text)?[0])
-          .p(O.chainNullableK(t.second))
-          .p(O.toNullable))
+      .map(
+        (t) => Option.fromNullable(t.first.firstMatch(text)?[0])
+            .flatMapNullable(t.second)
+            .toNullable(),
+      )
       .where((dt) => dt != null)
       .toList()
       .cast();
 }
 
-List<DateTime> _extractDateTimes(List<EntityAnnotation> e) {
+List<DateTime> _extractDateTimes(Iterable<EntityAnnotation> e) {
   final dates = e
       .expand((e) => e.entities)
       .where((e) => e.type == EntityType.dateTime)

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/app/index.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/vouchers/models/voucher.dart';
 import 'package:intl/intl.dart';
@@ -18,36 +17,33 @@ List<Widget> buildVoucherDetails(
   Option<double> space = const None(),
   bool includeNotes = false,
 }) =>
-
     intersperse<Widget>(SizedBox(
-      height: space.p(O.getOrElse(() => AppTheme.space1)),
+      height: space.getOrElse(() => AppTheme.space1),
     ))([
-      ...voucher.normalizedExpires.p(ifSomeList((dt) => [
+      ...voucher.normalizedExpires.ifSomeList((dt) => [
             _VoucherDetailRow(
               textColor,
               Icons.history,
               formatExpires(dt),
             )
-          ])),
-      ...voucher.balanceDoubleOption.p(ifSomeList((b) => [
+          ]),
+      ...voucher.balanceDoubleOption.ifSomeList((b) => [
             _VoucherDetailRow(
               textColor,
               Icons.account_balance,
               formatCurrency.format(b),
             ),
-          ])),
-      ...voucher.notesOption
-          .p(O.filter((_) => includeNotes))
-          .p(ifSomeList((notes) => [
-                _VoucherDetailRow(
-                  textColor,
-                  Icons.article,
-                  notes,
-                  alignment: CrossAxisAlignment.start,
-                  iconPadding: true,
-                  selectable: true,
-                ),
-              ])),
+          ]),
+      ...voucher.notesOption.filter((_) => includeNotes).ifSomeList((notes) => [
+            _VoucherDetailRow(
+              textColor,
+              Icons.article,
+              notes,
+              alignment: CrossAxisAlignment.start,
+              iconPadding: true,
+              selectable: true,
+            ),
+          ]),
     ]).toList();
 
 @swidget

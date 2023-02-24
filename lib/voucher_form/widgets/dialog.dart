@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/app/index.dart';
 import 'package:vouchervault/shared/scaffold/app_scaffold.dart';
-import 'package:vouchervault/voucher_form/voucher_form.dart';
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:vouchervault/voucher_form/index.dart';
+import 'package:vouchervault/vouchers/index.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -18,14 +17,14 @@ Widget _voucherFormDialog(
   Option<Voucher> initialValue = const None(),
 }) {
   final formKey = useMemoized(() => GlobalKey<FormBuilderState>());
-  final title = initialValue.p(O.fold(
+  final title = initialValue.fold(
     () => AppLocalizations.of(context)!.addVoucher,
     (_) => AppLocalizations.of(context)!.editVoucher,
-  ));
-  final action = initialValue.p(O.fold(
+  );
+  final action = initialValue.fold(
     () => AppLocalizations.of(context)!.create,
     (_) => AppLocalizations.of(context)!.update,
-  ));
+  );
 
   return AppScaffold(
     leading: true,
@@ -38,7 +37,7 @@ Widget _voucherFormDialog(
         sliver: SliverToBoxAdapter(
           child: VoucherForm(
             formKey: formKey,
-            initialValue: initialValue.p(O.getOrElse(() => Voucher())),
+            initialValue: initialValue.getOrElse(() => Voucher()),
           ),
         ),
       ),
@@ -59,10 +58,10 @@ Widget _voucherFormDialog(
 
                 Navigator.pop(
                   context,
-                  initialValue.p(O.fold(
+                  initialValue.fold(
                     () => voucher,
                     (iv) => voucher.copyWith(uuid: iv.uuid),
-                  )),
+                  ),
                 );
               }
             },

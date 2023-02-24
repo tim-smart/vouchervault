@@ -135,9 +135,9 @@ class __$$_BarcodeResultCopyWithImpl<$Res>
 class _$_BarcodeResult implements _BarcodeResult {
   const _$_BarcodeResult(
       {required this.barcode,
-      this.merchant = kNone,
-      this.balance = kNone,
-      this.expires = kNone});
+      this.merchant = const None(),
+      this.balance = const None(),
+      this.expires = const None()});
 
   @override
   final Barcode barcode;

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_nucleus/flutter_nucleus.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
-import 'package:fpdt/task_option.dart' as TO;
-import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/hooks/hooks.dart';
-import 'package:vouchervault/lib/navigator.dart';
-import 'package:vouchervault/voucher_form/voucher_form.dart';
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:vouchervault/app/index.dart';
+import 'package:vouchervault/hooks/index.dart';
+import 'package:vouchervault/lib/navigator.dart';
+import 'package:vouchervault/voucher_form/index.dart';
+import 'package:vouchervault/vouchers/index.dart';
 
 part 'voucher_dialog_container.g.dart';
 
@@ -28,46 +25,42 @@ Widget _voucherDialogContainer(
   );
 
   // state
-  final sm = useAtom(vouchersState.parent);
-  final v = useAtom(voucherAtom(voucher.uuid)).p(O.getOrElse(() => voucher));
+  final v = useAtom(voucherAtom(voucher.uuid)).getOrElse(() => voucher);
 
   final onTapBarcode = useCallback(
-    () => v.code.p(O.map((code) {
+    () => v.code.map((code) {
       Clipboard.setData(ClipboardData(text: code));
       Fluttertoast.showToast(
           msg: AppLocalizations.of(context)!.copiedToClipboard);
-    })),
+    }),
     [v.code],
   );
 
-  final onSpend = useCallback(
-    _showSpendDialog(context)
-        .p(TO.map(maybeUpdateBalance(v)))
-        .p(TO.tap(sm.run))
-        .call,
-    [sm, v],
+  final onSpend = useZIO(
+    _showSpendDialog(context).flatMap(
+      (amountInput) => vouchersLayer
+          .accessWithZIO((_) => _.maybeUpdateBalance(v, amountInput)),
+    ),
+    [v],
   );
 
-  final onEdit = useCallback(
+  final onEdit = useZIO(
     navPush(
       context,
       () => MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => VoucherFormDialog(initialValue: O.some(v)),
+        builder: (context) => VoucherFormDialog(initialValue: Option.of(v)),
       ),
-    ).p(TO.tap((v) => sm.run(update(v)))).call,
-    [sm, v],
+    ).flatMap((v) => vouchersLayer.accessWithZIO((_) => _.update(v))),
+    [v],
   );
 
-  final onRemove = useCallback(
+  final onRemove = useZIO(
     _showRemoveDialog(context, onPressed: (context) {
-      sm.run(remove(v));
+      context.runZIO(vouchersLayer.accessWithZIO((_) => _.remove(v)));
       Navigator.pop(context, true);
-    })
-        .p(TO.filter(identity))
-        .p(TO.tap((_) => Navigator.of(context).pop()))
-        .call,
-    [sm, v],
+    }).filter(identity).tap((_) => ZIO(() => Navigator.of(context).pop())),
+    [v],
   );
 
   return VoucherDialog(
@@ -80,13 +73,12 @@ Widget _voucherDialogContainer(
   );
 }
 
-TaskOption<String> _showSpendDialog(BuildContext context) =>
-    showDialogTO<String>(
+IOOption<String> _showSpendDialog(BuildContext context) => showDialogTO<String>(
       context: context,
       builder: (context) => const VoucherSpendDialog(),
     );
 
-TaskOption<bool> _showRemoveDialog(
+IOOption<bool> _showRemoveDialog(
   BuildContext context, {
   required void Function(BuildContext) onPressed,
 }) =>

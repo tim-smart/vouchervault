@@ -1,9 +1,8 @@
 import 'package:barcode_widget/barcode_widget.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart'
     show BarcodeFormat;
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:vouchervault/vouchers/index.dart';
 
 final Map<VoucherCodeType, Barcode> _codeTypeMap = {
   VoucherCodeType.AZTEC: Barcode.aztec(minECCPercent: 5),
@@ -24,7 +23,7 @@ final Map<BarcodeFormat, VoucherCodeType> _barcodeFormatMap = {
   BarcodeFormat.pdf417: VoucherCodeType.PDF417,
   BarcodeFormat.qrCode: VoucherCodeType.QR,
 };
-final codeTypeFromFormat =
-    _barcodeFormatMap.lookup.c(O.getOrElse(() => VoucherCodeType.CODE128));
+VoucherCodeType codeTypeFromFormat(BarcodeFormat format) =>
+    _barcodeFormatMap.lookup(format).getOrElse(() => VoucherCodeType.CODE128);
 
 final codeTypeValueFromFormat = codeTypeFromFormat.c(codeTypeToJson);

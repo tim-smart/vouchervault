@@ -1,9 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:dart_date/dart_date.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
 import 'package:flutter/material.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:vouchervault/lib/lib.dart';
 
@@ -39,7 +38,8 @@ final _colors = <VoucherColor, Color>{
   VoucherColor.ORANGE: Colors.orange[800]!,
   VoucherColor.PURPLE: Colors.purple[500]!,
 };
-final color = _colors.lookup.c(O.getOrElse(() => Colors.grey[700]!));
+final color = (VoucherColor color) =>
+    _colors.lookup(color).getOrElse(() => Colors.grey[700]!);
 String colorToJson(VoucherColor c) => _$VoucherColorEnumMap[c]!;
 
 // Voucher code type functions
@@ -56,24 +56,25 @@ final Map<VoucherCodeType, String> _codeTypeLabelMap = {
 };
 String codeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type]!;
 
-final codeTypeFromJson = O
-    .fromNullableWith<String>()
-    .c(O.chainTryCatchK((s) => $enumDecode(_$VoucherCodeTypeEnumMap, s)))
-    .c(O.getOrElse(() => VoucherCodeType.CODE128));
+final codeTypeFromJson = (String? json) => Option.fromNullable(json)
+    .flatMap(
+      (t) => Option.tryCatch(() => $enumDecode(_$VoucherCodeTypeEnumMap, t)),
+    )
+    .getOrElse(() => VoucherCodeType.CODE128);
 
 @freezed
 class Voucher with _$Voucher {
   Voucher._();
 
   factory Voucher({
-    @Default(O.kNone) Option<String> uuid,
+    @Default(None()) Option<String> uuid,
     @Default('') String description,
-    @Default(O.kNone) Option<String> code,
+    @Default(None()) Option<String> code,
     @Default(VoucherCodeType.CODE128) VoucherCodeType codeType,
-    @Default(O.kNone) Option<DateTime> expires,
+    @Default(None()) Option<DateTime> expires,
     @Default(true) bool removeOnceExpired,
-    @Default(O.kNone) Option<double> balance,
-    @Default(O.kNone) Option<int> balanceMilliunits,
+    @Default(None()) Option<double> balance,
+    @Default(None()) Option<int> balanceMilliunits,
     @Default('') String notes,
     @Default(VoucherColor.GREY) VoucherColor color,
   }) = _Voucher;
@@ -82,36 +83,35 @@ class Voucher with _$Voucher {
       _$VoucherFromJson(Map<String, dynamic>.from(json));
 
   late final Option<DateTime> normalizedExpires =
-      expires.p(O.map((d) => d.endOfDay));
+      expires.map((d) => d.endOfDay);
 
   late final Option<DateTime> removeAt =
-      normalizedExpires.p(O.filter((_) => removeOnceExpired));
+      normalizedExpires.filter((_) => removeOnceExpired);
 
   late final Option<int> balanceOption =
-      balanceMilliunits.p(O.alt(() => balance.p(O.map(millisFromDouble))));
+      balanceMilliunits.alt(() => balance.map(millisFromDouble));
 
   late final Option<double> balanceDoubleOption =
-      balanceOption.p(O.map(millisToDouble));
+      balanceOption.map(millisToDouble);
 
   late final Option<String> notesOption = optionOfString(notes);
 
   late final bool hasDetails =
-      O.isSome(normalizedExpires) || O.isSome(balanceOption);
-  late final bool hasDetailsOrNotes = hasDetails || O.isSome(notesOption);
+      normalizedExpires.isSome() || balanceOption.isSome();
+  late final bool hasDetailsOrNotes = hasDetails || notesOption.isSome();
 
   static Voucher fromFormValue(dynamic json) =>
       Voucher.fromJson(<String, dynamic>{
         ...json,
         'balanceMilliunits':
-            millisFromString(json['balanceMilliunits']).p(O.toNullable),
+            millisFromString(json['balanceMilliunits']).toNullable(),
       });
 
   dynamic toFormValue() => <String, dynamic>{
         ...toJson(),
-        'balanceMilliunits':
-            balanceOption.p(O.map(millisToString)).p(O.toNullable),
+        'balanceMilliunits': balanceOption.map(millisToString).toNullable(),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
-        'expires': O.toNullable(expires),
+        'expires': expires.toNullable(),
         'color': _$VoucherColorEnumMap[this.color],
       };
 }

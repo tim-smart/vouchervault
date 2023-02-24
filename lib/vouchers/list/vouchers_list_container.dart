@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_nucleus/flutter_nucleus.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/vouchers/vouchers.dart';
+import 'package:vouchervault/vouchers/index.dart';
 
 part 'vouchers_list_container.g.dart';
 

@@ -20,14 +20,14 @@ Voucher _$VoucherFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Voucher {
-  O.Option<String> get uuid => throw _privateConstructorUsedError;
+  Option<String> get uuid => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  O.Option<String> get code => throw _privateConstructorUsedError;
+  Option<String> get code => throw _privateConstructorUsedError;
   VoucherCodeType get codeType => throw _privateConstructorUsedError;
-  O.Option<DateTime> get expires => throw _privateConstructorUsedError;
+  Option<DateTime> get expires => throw _privateConstructorUsedError;
   bool get removeOnceExpired => throw _privateConstructorUsedError;
-  O.Option<double> get balance => throw _privateConstructorUsedError;
-  O.Option<int> get balanceMilliunits => throw _privateConstructorUsedError;
+  Option<double> get balance => throw _privateConstructorUsedError;
+  Option<int> get balanceMilliunits => throw _privateConstructorUsedError;
   String get notes => throw _privateConstructorUsedError;
   VoucherColor get color => throw _privateConstructorUsedError;
 
@@ -42,14 +42,14 @@ abstract class $VoucherCopyWith<$Res> {
       _$VoucherCopyWithImpl<$Res, Voucher>;
   @useResult
   $Res call(
-      {O.Option<String> uuid,
+      {Option<String> uuid,
       String description,
-      O.Option<String> code,
+      Option<String> code,
       VoucherCodeType codeType,
-      O.Option<DateTime> expires,
+      Option<DateTime> expires,
       bool removeOnceExpired,
-      O.Option<double> balance,
-      O.Option<int> balanceMilliunits,
+      Option<double> balance,
+      Option<int> balanceMilliunits,
       String notes,
       VoucherColor color});
 }
@@ -82,7 +82,7 @@ class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
       uuid: null == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as O.Option<String>,
+              as Option<String>,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
-              as O.Option<String>,
+              as Option<String>,
       codeType: null == codeType
           ? _value.codeType
           : codeType // ignore: cast_nullable_to_non_nullable
@@ -98,7 +98,7 @@ class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
       expires: null == expires
           ? _value.expires
           : expires // ignore: cast_nullable_to_non_nullable
-              as O.Option<DateTime>,
+              as Option<DateTime>,
       removeOnceExpired: null == removeOnceExpired
           ? _value.removeOnceExpired
           : removeOnceExpired // ignore: cast_nullable_to_non_nullable
@@ -106,11 +106,11 @@ class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as O.Option<double>,
+              as Option<double>,
       balanceMilliunits: null == balanceMilliunits
           ? _value.balanceMilliunits
           : balanceMilliunits // ignore: cast_nullable_to_non_nullable
-              as O.Option<int>,
+              as Option<int>,
       notes: null == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
@@ -131,14 +131,14 @@ abstract class _$$_VoucherCopyWith<$Res> implements $VoucherCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {O.Option<String> uuid,
+      {Option<String> uuid,
       String description,
-      O.Option<String> code,
+      Option<String> code,
       VoucherCodeType codeType,
-      O.Option<DateTime> expires,
+      Option<DateTime> expires,
       bool removeOnceExpired,
-      O.Option<double> balance,
-      O.Option<int> balanceMilliunits,
+      Option<double> balance,
+      Option<int> balanceMilliunits,
       String notes,
       VoucherColor color});
 }
@@ -168,7 +168,7 @@ class __$$_VoucherCopyWithImpl<$Res>
       uuid: null == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as O.Option<String>,
+              as Option<String>,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -176,7 +176,7 @@ class __$$_VoucherCopyWithImpl<$Res>
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
-              as O.Option<String>,
+              as Option<String>,
       codeType: null == codeType
           ? _value.codeType
           : codeType // ignore: cast_nullable_to_non_nullable
@@ -184,7 +184,7 @@ class __$$_VoucherCopyWithImpl<$Res>
       expires: null == expires
           ? _value.expires
           : expires // ignore: cast_nullable_to_non_nullable
-              as O.Option<DateTime>,
+              as Option<DateTime>,
       removeOnceExpired: null == removeOnceExpired
           ? _value.removeOnceExpired
           : removeOnceExpired // ignore: cast_nullable_to_non_nullable
@@ -192,11 +192,11 @@ class __$$_VoucherCopyWithImpl<$Res>
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as O.Option<double>,
+              as Option<double>,
       balanceMilliunits: null == balanceMilliunits
           ? _value.balanceMilliunits
           : balanceMilliunits // ignore: cast_nullable_to_non_nullable
-              as O.Option<int>,
+              as Option<int>,
       notes: null == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
@@ -213,14 +213,14 @@ class __$$_VoucherCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Voucher extends _Voucher {
   _$_Voucher(
-      {this.uuid = O.kNone,
+      {this.uuid = const None(),
       this.description = '',
-      this.code = O.kNone,
+      this.code = const None(),
       this.codeType = VoucherCodeType.CODE128,
-      this.expires = O.kNone,
+      this.expires = const None(),
       this.removeOnceExpired = true,
-      this.balance = O.kNone,
-      this.balanceMilliunits = O.kNone,
+      this.balance = const None(),
+      this.balanceMilliunits = const None(),
       this.notes = '',
       this.color = VoucherColor.GREY})
       : super._();
@@ -230,28 +230,28 @@ class _$_Voucher extends _Voucher {
 
   @override
   @JsonKey()
-  final O.Option<String> uuid;
+  final Option<String> uuid;
   @override
   @JsonKey()
   final String description;
   @override
   @JsonKey()
-  final O.Option<String> code;
+  final Option<String> code;
   @override
   @JsonKey()
   final VoucherCodeType codeType;
   @override
   @JsonKey()
-  final O.Option<DateTime> expires;
+  final Option<DateTime> expires;
   @override
   @JsonKey()
   final bool removeOnceExpired;
   @override
   @JsonKey()
-  final O.Option<double> balance;
+  final Option<double> balance;
   @override
   @JsonKey()
-  final O.Option<int> balanceMilliunits;
+  final Option<int> balanceMilliunits;
   @override
   @JsonKey()
   final String notes;
@@ -316,14 +316,14 @@ class _$_Voucher extends _Voucher {
 
 abstract class _Voucher extends Voucher {
   factory _Voucher(
-      {final O.Option<String> uuid,
+      {final Option<String> uuid,
       final String description,
-      final O.Option<String> code,
+      final Option<String> code,
       final VoucherCodeType codeType,
-      final O.Option<DateTime> expires,
+      final Option<DateTime> expires,
       final bool removeOnceExpired,
-      final O.Option<double> balance,
-      final O.Option<int> balanceMilliunits,
+      final Option<double> balance,
+      final Option<int> balanceMilliunits,
       final String notes,
       final VoucherColor color}) = _$_Voucher;
   _Voucher._() : super._();
@@ -331,21 +331,21 @@ abstract class _Voucher extends Voucher {
   factory _Voucher.fromJson(Map<String, dynamic> json) = _$_Voucher.fromJson;
 
   @override
-  O.Option<String> get uuid;
+  Option<String> get uuid;
   @override
   String get description;
   @override
-  O.Option<String> get code;
+  Option<String> get code;
   @override
   VoucherCodeType get codeType;
   @override
-  O.Option<DateTime> get expires;
+  Option<DateTime> get expires;
   @override
   bool get removeOnceExpired;
   @override
-  O.Option<double> get balance;
+  Option<double> get balance;
   @override
-  O.Option<int> get balanceMilliunits;
+  Option<int> get balanceMilliunits;
   @override
   String get notes;
   @override

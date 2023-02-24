@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
 
 class _RouteObserverHook extends Hook<void> {
   const _RouteObserverHook(
@@ -46,22 +45,22 @@ class _RouteObserverHookState extends HookState<void, _RouteObserverHook>
 
   @override
   void didPopNext() {
-    hook.didPopNext.p(O.map((f) => f()));
+    hook.didPopNext.map((f) => f());
   }
 
   @override
   void didPush() {
-    hook.didPush.p(O.map((f) => f()));
+    hook.didPush.map((f) => f());
   }
 
   @override
   void didPop() {
-    hook.didPop.p(O.map((f) => f()));
+    hook.didPop.map((f) => f());
   }
 
   @override
   void didPushNext() {
-    hook.didPushNext.p(O.map((f) => f()));
+    hook.didPushNext.map((f) => f());
   }
 }
 

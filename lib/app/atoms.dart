@@ -1,11 +1,9 @@
-import 'package:flutter_nucleus/flutter_nucleus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vouchervault/app/app.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
+import 'package:vouchervault/app/index.dart';
 
-final sharedPrefs =
-    atom<SharedPreferences>((get) => throw UnimplementedError()).keepAlive();
-
-final nucleusStorage = atom((get) => SharedPrefsStorage(get(sharedPrefs)));
+final nucleusStorage = atom(
+  (get) => get(runtimeAtom).runSyncOrThrow(storageLayer.access),
+);
 
 final appSettings = stateAtomWithStorage<VoucherVaultSettings>(
   const VoucherVaultSettings(),

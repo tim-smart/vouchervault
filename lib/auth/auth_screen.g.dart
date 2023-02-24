@@ -10,5 +10,5 @@ class AuthScreen extends HookWidget {
   const AuthScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context) => authScreen();
+  Widget build(BuildContext _context) => authScreen(_context);
 }

@@ -8,26 +8,26 @@ part of 'voucher.dart';
 
 _$_Voucher _$$_VoucherFromJson(Map<String, dynamic> json) => _$_Voucher(
       uuid: json['uuid'] == null
-          ? O.kNone
+          ? const None()
           : Option<String>.fromJson(json['uuid'], (value) => value as String),
       description: json['description'] as String? ?? '',
       code: json['code'] == null
-          ? O.kNone
+          ? const None()
           : Option<String>.fromJson(json['code'], (value) => value as String),
       codeType:
           $enumDecodeNullable(_$VoucherCodeTypeEnumMap, json['codeType']) ??
               VoucherCodeType.CODE128,
       expires: json['expires'] == null
-          ? O.kNone
+          ? const None()
           : Option<DateTime>.fromJson(
               json['expires'], (value) => DateTime.parse(value as String)),
       removeOnceExpired: json['removeOnceExpired'] as bool? ?? true,
       balance: json['balance'] == null
-          ? O.kNone
+          ? const None()
           : Option<double>.fromJson(
               json['balance'], (value) => (value as num).toDouble()),
       balanceMilliunits: json['balanceMilliunits'] == null
-          ? O.kNone
+          ? const None()
           : Option<int>.fromJson(
               json['balanceMilliunits'], (value) => value as int),
       notes: json['notes'] as String? ?? '',

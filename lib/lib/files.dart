@@ -1,42 +1,43 @@
 import 'dart:io';
 
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/task_either.dart' as TE;
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-TaskEither<String, File> createFile(String filename) => TE
+EIO<String, File> createFile(String filename) => EIO
     .tryCatch(getTemporaryDirectory, (err, s) => 'Failed to get tmp dir: $err')
-    .p(TE.map((d) => File('${d.path}/$filename')));
+    .map((d) => File('${d.path}/$filename'));
 
-TaskEither<String, File> writeFile(String filename, List<int> bytes) =>
-    createFile(filename).p(TE.chainTryCatchK(
+EIO<String, File> writeFile(String filename, List<int> bytes) =>
+    createFile(filename).flatMapThrowable(
       (f) => f.writeAsBytes(bytes),
       (err, stackTrace) => 'Failed to write bytes: $err',
-    ));
+    );
 
-TaskEither<String, File> Function(String data) writeStringToFile(
-        String filename) =>
-    (data) => createFile(filename).p(TE.chainTryCatchK(
-          (f) => f.writeAsString(data),
-          (err, stackTrace) => 'Failed to write string: $err',
-        ));
+EIO<String, File> writeStringToFile(
+  String filename,
+  String content,
+) =>
+    createFile(filename).flatMapThrowable(
+      (f) => f.writeAsString(content),
+      (err, stackTrace) => 'Failed to write string: $err',
+    );
 
-TaskEither<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
+EIO<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
   PlatformFile f,
 ) =>
-    TE
+    EIO
         .tryCatch(
           () => f.readStream!.reduce((bytes, chunk) => bytes + chunk),
           (err, s) => 'Could not read file: $err',
         )
-        .p(TE.map((bytes) => tuple2(f, bytes)));
+        .map((bytes) => tuple2(f, bytes));
 
-TaskEither<String, Tuple2<PlatformFile, List<int>>> pickFile({
+EIO<String, Tuple2<PlatformFile, List<int>>> pickFile({
   FileType type = FileType.any,
   List<String>? extensions,
 }) =>
-    TE
+    EIO
         .tryCatch(
           () async {
             await FilePicker.platform.clearTemporaryFiles();
@@ -48,20 +49,20 @@ TaskEither<String, Tuple2<PlatformFile, List<int>>> pickFile({
           },
           (err, s) => 'pickFiles failed: $err',
         )
-        .p(TE.chainNullableK(identity, (_) => 'pickFiles gave no result'))
-        .p(TE.flatMap(
-          (r) => r.files.head
-              .p(TE.fromOption(() => 'pickFiles had an empty response')),
-        ))
-        .p(TE.flatMap(_readPlatformFileStream));
+        .flatMapNullableOrFail(identity, (_) => 'pickFiles gave no result')
+        .flatMapOptionOrFail(
+          (r) => r.files.head,
+          (_) => 'pickFiles had an empty response',
+        )
+        .flatMap(_readPlatformFileStream);
 
-final pickImage = TE
+final pickImage = EIO
     .tryCatch(
       () => FilePicker.platform.pickFiles(type: FileType.image),
       (err, s) => 'pickFiles failed: $err',
     )
-    .p(TE.chainNullableK(identity, (_) => 'file picker cancelled'))
-    .p(TE.flatMap(
-      (r) => r.files.head
-          .p(TE.fromOption(() => 'pickFiles had an empty response')),
-    ));
+    .flatMapNullableOrFail(identity, (_) => 'file picker cancelled')
+    .flatMapOptionOrFail(
+      (r) => r.files.head,
+      (_) => 'pickFiles had an empty response',
+    );

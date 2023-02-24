@@ -1,12 +1,11 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart' as O;
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:vouchervault/app/app.dart';
-import 'package:vouchervault/voucher_form/voucher_form.dart';
+import 'package:vouchervault/app/index.dart';
+import 'package:vouchervault/voucher_form/index.dart';
 
 part 'barcode_scanner_field.g.dart';
 
@@ -37,7 +36,7 @@ Widget _barcodeScannerField(
         onScan: (r) {
           setText(r.barcode.rawValue!);
           onChange(r.barcode.rawValue!);
-          onScan.p(O.map((f) => f(r)));
+          onScan.map((f) => f(r));
           Navigator.of(context).pop();
         },
       ),
@@ -71,7 +70,7 @@ Widget _barcodeScannerField(
         ),
         onChanged: onChange,
       ),
-      ...errorText.p(O.fold(
+      ...errorText.fold(
         () => [],
         (error) => [
           SizedBox(height: AppTheme.space2),
@@ -80,7 +79,7 @@ Widget _barcodeScannerField(
             style: TextStyle(color: theme.colorScheme.error),
           ),
         ],
-      )),
+      ),
     ],
   );
 }

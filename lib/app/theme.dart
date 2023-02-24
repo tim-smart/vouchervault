@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vouchervault/app/app.dart';
+import 'package:vouchervault/app/index.dart';
 
 class AppTheme {
   static const baseFontSize = 18;

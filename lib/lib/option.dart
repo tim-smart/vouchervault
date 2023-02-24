@@ -1,13 +1,14 @@
-import 'package:fpdt/fpdt.dart';
-import 'package:fpdt/option.dart';
+import 'package:flutter_elemental/flutter_elemental.dart';
 
-final optionOfString = fromNullableWith<String>()
-    .c(map((s) => s.trim()))
-    .c(filter((s) => s.isNotEmpty));
+Option<String> optionOfString(String? s) =>
+    Option.fromNullable(s).map((s) => s.trim()).filter((s) => s.isNotEmpty);
 
-final maybeParseInt = optionOfString.c(chainNullableK(int.tryParse));
+final maybeParseInt = optionOfString
+    .c((_) => _.flatMap((_) => Option.fromNullable(int.tryParse(_))));
 
-final maybeParseDouble = optionOfString.c(chainNullableK(double.tryParse));
+final maybeParseDouble = optionOfString
+    .c((_) => _.flatMap((_) => Option.fromNullable(double.tryParse(_))));
 
-Iterable<B> Function(Option<A>) ifSomeList<A, B>(Iterable<B> Function(A a) f) =>
-    fold(() => [], f);
+extension IfSomeListExt<A> on Option<A> {
+  Iterable<B> ifSomeList<B>(Iterable<B> Function(A a) f) => fold(() => [], f);
+}
