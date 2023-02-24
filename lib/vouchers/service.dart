@@ -14,15 +14,20 @@ final vouchersLayer = Layer.scoped(
     key: 'pbs_VouchersBloc',
     fromJson: VouchersState.fromJson,
     toJson: (a) => a.toJson(),
-  ).map((ref) => VouchersService(ref: ref)).orDie,
+  )
+      .map((_) => VouchersService(ref: _))
+      .tap((_) => _.removeExpired.lift())
+      .orDie,
 );
 
 final vouchersState = zioRefAtomSync(vouchersLayer.accessWith((_) => _.ref));
 
 final vouchersAtom = vouchersState.select((_) => _.sortedVouchers);
 
-final voucherAtom = atomFamily((Option<String> uuid) =>
-    vouchersState.select((s) => s.vouchers.where((v) => v.uuid == uuid).head));
+final voucherAtom = atomFamily(
+  (Option<String> uuid) =>
+      vouchersState.select((s) => s.vouchers.where((v) => v.uuid == uuid).head),
+);
 
 class VouchersService {
   const VouchersService({required this.ref});

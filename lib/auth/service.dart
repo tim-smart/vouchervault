@@ -51,7 +51,7 @@ final authLayer = Layer<Never, AuthService>.scoped(ZIO.Do(($, env) {
     key: 'pbs_AuthBloc',
     fromJson: (_) => AuthState.fromJson(_),
     toJson: (_) => _.toJson(),
-  ).orDie);
+  ).tap((_) => _.update((s) => s.init())).orDie);
 
   final localAuth = LocalAuthentication();
 
