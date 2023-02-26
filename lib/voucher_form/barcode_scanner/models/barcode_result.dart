@@ -8,8 +8,8 @@ part 'barcode_result.freezed.dart';
 class BarcodeResult with _$BarcodeResult {
   const factory BarcodeResult({
     required Barcode barcode,
-    @Default(None()) Option<String> merchant,
-    @Default(None()) Option<int> balance,
-    @Default(None()) Option<DateTime> expires,
+    @Default(Option.none()) Option<String> merchant,
+    @Default(Option.none()) Option<int> balance,
+    @Default(Option.none()) Option<DateTime> expires,
   }) = _BarcodeResult;
 }

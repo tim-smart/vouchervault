@@ -14,7 +14,7 @@ List<Widget> buildVoucherDetails(
   BuildContext context,
   Voucher voucher, {
   Color textColor = Colors.white,
-  Option<double> space = const None(),
+  Option<double> space = const Option.none(),
   bool includeNotes = false,
 }) =>
     intersperse<Widget>(SizedBox(

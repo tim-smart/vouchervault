@@ -277,10 +277,10 @@ packages:
     dependency: transitive
     description:
       name: elemental
-      sha256: "474add24c8c45778fc135d515d9925d3ddf596cd1fffef96530c2a8773ad714e"
+      sha256: d0cf1c9a9ad6ef7a8879673fc8519e1d7f89e01eb4f51cde0d27bacaf14ae08a
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.84"
+    version: "0.0.87"
   emulators:
     dependency: "direct dev"
     description:
@@ -351,10 +351,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_elemental
-      sha256: a9b68cd727035fcb514b1758e8557f692e4dfbb34af89c0decad6e64b7c29f5e
+      sha256: e0b0995d2db060501591a91ce1aa24678348e25453631a062e43c1bff8414d3b
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.11"
+    version: "0.0.12"
   flutter_form_builder:
     dependency: "direct main"
     description:
@@ -435,12 +435,13 @@ packages:
     source: hosted
     version: "8.5.0"
   fpdart:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: fpdart
-      sha256: "21053522d5a97347737525c84e8839340a0af3c0ef592f98fac37380fdd6a57b"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: "fix/never"
+      resolved-ref: "0e68ce48f990f2050f7f021e59fffb0bc354a4fe"
+      url: "https://github.com/tim-smart/fpdart.git"
+    source: git
     version: "0.4.1"
   fpdt:
     dependency: transitive

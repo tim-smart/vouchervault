@@ -67,14 +67,14 @@ class Voucher with _$Voucher {
   Voucher._();
 
   factory Voucher({
-    @Default(None()) Option<String> uuid,
+    @Default(Option.none()) Option<String> uuid,
     @Default('') String description,
-    @Default(None()) Option<String> code,
+    @Default(Option.none()) Option<String> code,
     @Default(VoucherCodeType.CODE128) VoucherCodeType codeType,
-    @Default(None()) Option<DateTime> expires,
+    @Default(Option.none()) Option<DateTime> expires,
     @Default(true) bool removeOnceExpired,
-    @Default(None()) Option<double> balance,
-    @Default(None()) Option<int> balanceMilliunits,
+    @Default(Option.none()) Option<double> balance,
+    @Default(Option.none()) Option<int> balanceMilliunits,
     @Default('') String notes,
     @Default(VoucherColor.GREY) VoucherColor color,
   }) = _Voucher;

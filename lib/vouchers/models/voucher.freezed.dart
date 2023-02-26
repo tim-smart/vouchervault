@@ -213,14 +213,14 @@ class __$$_VoucherCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Voucher extends _Voucher {
   _$_Voucher(
-      {this.uuid = const None(),
+      {this.uuid = const Option.none(),
       this.description = '',
-      this.code = const None(),
+      this.code = const Option.none(),
       this.codeType = VoucherCodeType.CODE128,
-      this.expires = const None(),
+      this.expires = const Option.none(),
       this.removeOnceExpired = true,
-      this.balance = const None(),
-      this.balanceMilliunits = const None(),
+      this.balance = const Option.none(),
+      this.balanceMilliunits = const Option.none(),
       this.notes = '',
       this.color = VoucherColor.GREY})
       : super._();

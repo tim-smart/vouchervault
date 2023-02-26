@@ -5,10 +5,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class _RouteObserverHook extends Hook<void> {
   const _RouteObserverHook(
     this.routeObserver, {
-    this.didPopNext = const None(),
-    this.didPush = const None(),
-    this.didPop = const None(),
-    this.didPushNext = const None(),
+    this.didPopNext = const Option.none(),
+    this.didPush = const Option.none(),
+    this.didPop = const Option.none(),
+    this.didPushNext = const Option.none(),
     List<Object?> keys = const [],
   }) : super(keys: keys);
 
@@ -66,10 +66,10 @@ class _RouteObserverHookState extends HookState<void, _RouteObserverHook>
 
 void useRouteObserver(
   RouteObserver<ModalRoute> routeObserver, {
-  Option<VoidCallback> didPopNext = const None(),
-  Option<VoidCallback> didPush = const None(),
-  Option<VoidCallback> didPop = const None(),
-  Option<VoidCallback> didPushNext = const None(),
+  Option<VoidCallback> didPopNext = const Option.none(),
+  Option<VoidCallback> didPush = const Option.none(),
+  Option<VoidCallback> didPop = const Option.none(),
+  Option<VoidCallback> didPushNext = const Option.none(),
   List<Object?> keys = const [],
 }) {
   use(_RouteObserverHook(

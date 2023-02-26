@@ -14,7 +14,7 @@ part 'dialog.g.dart';
 @hwidget
 Widget _voucherFormDialog(
   BuildContext context, {
-  Option<Voucher> initialValue = const None(),
+  Option<Voucher> initialValue = const Option.none(),
 }) {
   final formKey = useMemoized(() => GlobalKey<FormBuilderState>());
   final title = initialValue.fold(

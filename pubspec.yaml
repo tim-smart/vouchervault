@@ -18,7 +18,7 @@ dependencies:
   flutter_hooks: ^0.18.0
   flutter_localizations:
     sdk: flutter
-  flutter_elemental: ^0.0.11
+  flutter_elemental: ^0.0.12
   fluttertoast: ^8.0.7
   form_builder_validators: ^8.1.1
   freezed_annotation: ^2.0.3
@@ -39,6 +39,10 @@ dependencies:
   shared_preferences: ^2.0.13
 
 dependency_overrides:
+  fpdart:
+    git:
+      url: https://github.com/tim-smart/fpdart.git
+      ref: fix/never
   intl: ^0.18.0
 
 dev_dependencies:

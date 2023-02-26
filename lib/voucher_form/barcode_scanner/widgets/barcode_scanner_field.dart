@@ -16,8 +16,8 @@ Widget _barcodeScannerField(
   required String initialValue,
   required Option<Barcode> barcodeType,
   required String labelText,
-  Option<String> errorText = const None(),
-  Option<void Function(BarcodeResult)> onScan = const None(),
+  Option<String> errorText = const Option.none(),
+  Option<void Function(BarcodeResult)> onScan = const Option.none(),
   bool launchScannerImmediately = false,
 }) {
   final theme = Theme.of(context);
