@@ -46,7 +46,7 @@ class AuthService {
 // === layer
 
 final authLayer = Layer<Never, AuthService>.scoped(ZIO.Do(($, env) {
-  final ref = $.sync(StorageRef.makeScope<AuthState>(
+  final ref = $.sync(StorageRef.make<AuthState>(
     AuthState.notAvailable,
     key: 'pbs_AuthBloc',
     fromJson: (_) => AuthState.fromJson(_),

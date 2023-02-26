@@ -14,10 +14,10 @@ void main() async {
       Voucher(
         uuid: Option.of(const Uuid().v4()),
         description: "Walmart",
-        code: Option.of('12345'),
+        code: const Option.of('12345'),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.BLUE,
-        balanceMilliunits: Option.of(77 * 1000),
+        balanceMilliunits: const Option.of(77 * 1000),
         expires: DateTime.now().add(const Duration(days: 120)).chain(Option.of),
       ),
       Voucher(
@@ -26,7 +26,7 @@ void main() async {
         code: "12345".chain(Option.of),
         codeType: VoucherCodeType.CODE128,
         color: VoucherColor.GREEN,
-        balanceMilliunits: Option.of(50 * 1000),
+        balanceMilliunits: const Option.of(50 * 1000),
       ),
       Voucher(
         uuid: const Uuid().v4().chain(Option.of),
@@ -41,7 +41,7 @@ void main() async {
         code: "12345".chain(Option.of),
         codeType: VoucherCodeType.QR,
         color: VoucherColor.GREY,
-        balanceMilliunits: Option.of(100 * 1000),
+        balanceMilliunits: const Option.of(100 * 1000),
       ),
     ]),
   );

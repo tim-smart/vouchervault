@@ -277,10 +277,10 @@ packages:
     dependency: transitive
     description:
       name: elemental
-      sha256: "2023ffa8685e52e18eda43331d72082a5e00f9b684a90eddba0aa36d62b5af2f"
+      sha256: "474add24c8c45778fc135d515d9925d3ddf596cd1fffef96530c2a8773ad714e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.80"
+    version: "0.0.84"
   emulators:
     dependency: "direct dev"
     description:
@@ -351,10 +351,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_elemental
-      sha256: "054faec0e11b62b776e90b152edfc9d802292e2254c4805a7c06916b42732989"
+      sha256: a9b68cd727035fcb514b1758e8557f692e4dfbb34af89c0decad6e64b7c29f5e
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.10"
+    version: "0.0.11"
   flutter_form_builder:
     dependency: "direct main"
     description:
@@ -438,10 +438,10 @@ packages:
     dependency: transitive
     description:
       name: fpdart
-      sha256: "19db038cf3bb49bfe28b2a0b363ce84cf2e6a0f471a93ae09271cfef03dae935"
+      sha256: "21053522d5a97347737525c84e8839340a0af3c0ef592f98fac37380fdd6a57b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0"
+    version: "0.4.1"
   fpdt:
     dependency: transitive
     description:

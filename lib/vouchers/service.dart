@@ -9,7 +9,7 @@ import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/vouchers/index.dart';
 
 final vouchersLayer = Layer.scoped(
-  StorageRef.makeScope<VouchersState>(
+  StorageRef.make<VouchersState>(
     VouchersState(IList()),
     key: 'pbs_VouchersBloc',
     fromJson: VouchersState.fromJson,

@@ -18,7 +18,7 @@ dependencies:
   flutter_hooks: ^0.18.0
   flutter_localizations:
     sdk: flutter
-  flutter_elemental: ^0.0.10
+  flutter_elemental: ^0.0.11
   fluttertoast: ^8.0.7
   form_builder_validators: ^8.1.1
   freezed_annotation: ^2.0.3
