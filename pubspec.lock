@@ -141,10 +141,10 @@ packages:
     dependency: "direct main"
     description:
       name: camera
-      sha256: "0e0a7c190810a1d3be75de882a666ac86b36c8d763e203e23c76508ebe1ea5d1"
+      sha256: ad1c53c554a2f3e5708f3b01eb738d60b902bb61f7f4ad420c65c715e65a7379
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.3+1"
+    version: "0.10.3+2"
   camera_android:
     dependency: transitive
     description:
@@ -157,10 +157,10 @@ packages:
     dependency: transitive
     description:
       name: camera_avfoundation
-      sha256: c328d477e5af88b3edcf277183c3b68f6e73b0f4e4e1053a22026e1c175e5bdb
+      sha256: a1ebce7132e2c1ffd3138e672538f6f2360715e181cf5b7eb5a073f1a735235e
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.11+1"
+    version: "0.9.12"
   camera_platform_interface:
     dependency: transitive
     description:
@@ -277,10 +277,10 @@ packages:
     dependency: transitive
     description:
       name: elemental
-      sha256: d0cf1c9a9ad6ef7a8879673fc8519e1d7f89e01eb4f51cde0d27bacaf14ae08a
+      sha256: af879e42fe2b935fe8bc2e1fbe0399a9917b8e6d636f65030c775b35c9ffb13d
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.87"
+    version: "0.0.92"
   emulators:
     dependency: "direct dev"
     description:
@@ -351,10 +351,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_elemental
-      sha256: e0b0995d2db060501591a91ce1aa24678348e25453631a062e43c1bff8414d3b
+      sha256: "210988625f5602cbdc53da4dc0e673abecba950e48d1ae7f1e8f5da934ffa1ef"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.12"
+    version: "0.0.14"
   flutter_form_builder:
     dependency: "direct main"
     description:
@@ -439,7 +439,7 @@ packages:
     description:
       path: "."
       ref: "fix/never"
-      resolved-ref: "0e68ce48f990f2050f7f021e59fffb0bc354a4fe"
+      resolved-ref: "618b0956b90501dd9f39043527732e0e3040172f"
       url: "https://github.com/tim-smart/fpdart.git"
     source: git
     version: "0.4.1"

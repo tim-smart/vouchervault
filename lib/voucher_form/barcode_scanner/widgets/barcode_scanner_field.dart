@@ -17,7 +17,7 @@ Widget _barcodeScannerField(
   required Option<Barcode> barcodeType,
   required String labelText,
   Option<String> errorText = const Option.none(),
-  Option<void Function(BarcodeResult)> onScan = const Option.none(),
+  required void Function(BarcodeResult r) onScan,
   bool launchScannerImmediately = false,
 }) {
   final theme = Theme.of(context);
@@ -36,7 +36,7 @@ Widget _barcodeScannerField(
         onScan: (r) {
           setText(r.barcode.rawValue!);
           onChange(r.barcode.rawValue!);
-          onScan.map((f) => f(r));
+          onScan(r);
           Navigator.of(context).pop();
         },
       ),

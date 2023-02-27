@@ -14,7 +14,7 @@ class BarcodeScannerField extends HookWidget {
     required this.barcodeType,
     required this.labelText,
     this.errorText = const Option.none(),
-    this.onScan = const Option.none(),
+    required this.onScan,
     this.launchScannerImmediately = false,
   }) : super(key: key);
 
@@ -28,7 +28,7 @@ class BarcodeScannerField extends HookWidget {
 
   final Option<String> errorText;
 
-  final Option<void Function(BarcodeResult)> onScan;
+  final void Function(BarcodeResult) onScan;
 
   final bool launchScannerImmediately;
 

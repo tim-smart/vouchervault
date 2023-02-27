@@ -77,39 +77,31 @@ Widget voucherForm(
                 optionOfString(formKey.currentState!.fields['codeType']?.value)
                     .alt(() => optionOfString(initialFormValue['codeType']))
                     .flatMap(barcodeFromCodeTypeJson),
-            onScan: Option.of((r) {
+            onScan: (r) {
               [
                 IOOption.fromNullable(
                   formKey.currentState!.fields['codeType'],
                 ).tap(
-                  (_) => ZIO(() => _.didChange(
-                        codeTypeValueFromFormat(r.barcode.format),
-                      )),
-                ),
-                IOOption.fromNullable(
-                  formKey.currentState!.fields['codeType'],
-                ).tap(
-                  (_) => ZIO(() => _.didChange(
-                        codeTypeValueFromFormat(r.barcode.format),
-                      )),
+                  (_) => ZIO(() =>
+                      _.didChange(codeTypeValueFromFormat(r.barcode.format))),
                 ),
                 _updateFieldIfEmpty(
                   formKey,
                   'balanceMilliunits',
-                  ZIO.lazy(() => r.balance.map(millisToString).toZIO),
+                  r.balance.map(millisToString).toZIO,
                 ),
                 _updateFieldIfEmpty(
                   formKey,
                   'expires',
-                  ZIO.lazy(() => r.expires.toZIO),
+                  r.expires.toZIO,
                 ),
                 _updateFieldIfEmpty(
                   formKey,
                   'description',
-                  ZIO.lazy(() => r.merchant.toZIO),
+                  r.merchant.toZIO,
                 ),
               ].collectDiscard.run();
-            }),
+            },
           ),
         ),
         FormBuilderChoiceChip(

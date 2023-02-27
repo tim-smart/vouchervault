@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_elemental/flutter_elemental.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/index.dart';
-import 'package:vouchervault/lib/navigator.dart';
 import 'package:vouchervault/shared/scaffold/scaffold.dart';
 import 'package:vouchervault/voucher_form/index.dart';
 import 'package:vouchervault/vouchers/index.dart';
@@ -26,19 +24,18 @@ Widget _vouchersScreen(BuildContext context) {
       ),
     ],
     floatingActionButton: Option.of(FloatingActionButton(
-      onPressed: () => context.runZIO(
-        navPush<Voucher>(
-          context,
-          () => MaterialPageRoute(
+      onPressed: Navigator.of(context)
+          .pushIO(MaterialPageRoute<Voucher>(
             builder: (context) => const VoucherFormDialog(),
             fullscreenDialog: true,
-          ),
-        ).tap(_createVoucher),
-      ),
+          ))
+          .tap(_createVoucher)
+          .provide(context)
+          .run,
       child: const Icon(Icons.add),
     )),
   );
 }
 
-IO<Unit> _createVoucher(Voucher v) =>
-    vouchersLayer.accessWithZIO((_) => _.create(v));
+BuildContextIO<Unit> _createVoucher(Voucher v) =>
+    vouchersLayer.accessWithZIO((_) => _.create(v).lift());

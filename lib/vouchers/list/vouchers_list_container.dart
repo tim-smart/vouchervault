@@ -25,21 +25,17 @@ class _DialogRoute extends PageRoute with MaterialRouteTransitionMixin {
 
 @swidget
 Widget _vouchersListContainer(BuildContext context) =>
-    AtomBuilder((context, watch, child) {
-      final state = watch(vouchersState);
-
-      return VoucherList(
-        vouchers: state.sortedVouchers,
-        onPressed: (v) => Navigator.push(
-          context,
-          _DialogRoute(
-            (context) => Dismissible(
-              key: const Key('VoucherDialogDismissable'),
-              direction: DismissDirection.vertical,
-              onDismissed: (d) => Navigator.pop(context),
-              child: Center(child: VoucherDialogContainer(voucher: v)),
+    AtomBuilder((context, watch, child) => VoucherList(
+          vouchers: watch(vouchersAtom),
+          onPressed: (v) => Navigator.push(
+            context,
+            _DialogRoute(
+              (context) => Dismissible(
+                key: const Key('VoucherDialogDismissable'),
+                direction: DismissDirection.vertical,
+                onDismissed: (d) => Navigator.pop(context),
+                child: Center(child: VoucherDialogContainer(voucher: v)),
+              ),
             ),
           ),
-        ),
-      );
-    });
+        ));

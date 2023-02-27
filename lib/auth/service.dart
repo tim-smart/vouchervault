@@ -62,7 +62,7 @@ final authLayer = Layer<Never, AuthService>.scoped(ZIO.Do(($, env) {
     );
   }
 
-  return $(ZIO<Scope, String, bool>.tryCatch(
+  return $(ZIO<Scope<NoEnv>, String, bool>.tryCatch(
     () => localAuth.isDeviceSupported(),
     (error, stackTrace) => 'Could not check if auth is available',
   )

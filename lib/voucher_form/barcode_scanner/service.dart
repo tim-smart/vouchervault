@@ -47,7 +47,12 @@ class BarcodeScannerService {
     InputImage image, {
     bool embellish = false,
   }) =>
-      scan(image)
+      ZIO
+          .logDebug<NoEnv, MlError>(
+            "extractAll",
+            annotations: {'embellish': embellish},
+          )
+          .zipRight(scan(image))
           .flatMapOptionOrFail(
             (_) => _.firstOption.map((t) => BarcodeResult(barcode: t)),
             (_) => const MlError.barcodeNotFound(),
@@ -56,6 +61,9 @@ class BarcodeScannerService {
             (_) => embellish
                 ? _embellishResult(image: image, result: _)
                 : ZIO.succeed(_),
+          )
+          .tap(
+            (_) => ZIO.logDebug("extractAll", annotations: {'result': _}),
           );
 
   BarcodeIO<BarcodeResult> _embellishResult({

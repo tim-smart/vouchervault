@@ -6,7 +6,7 @@ part of 'vouchers_screen.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class VouchersScreen extends HookWidget {
+class VouchersScreen extends StatelessWidget {
   const VouchersScreen({Key? key}) : super(key: key);
 
   @override

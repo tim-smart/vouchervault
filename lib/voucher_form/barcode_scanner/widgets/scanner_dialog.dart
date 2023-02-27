@@ -32,19 +32,19 @@ Widget _scannerDialog(
   final onPressedPicker = useCallback(() async {
     setCameraPaused(true);
 
-    context.runZIO(
-      scanner
-          .extractAllFromFile(smartScan)
-          .tap((_) => ZIO(() => onScan(_)))
-          .tapError(
-            (_) => ZIO(() {
-              Fluttertoast.showToast(msg: _.friendlyMessage);
+    scanner
+        .extractAllFromFile(smartScan)
+        .tap((_) => ZIO(() => onScan(_)))
+        .tapError(
+          (_) => ZIO(() {
+            Fluttertoast.showToast(msg: _.friendlyMessage);
 
-              // Only un-pause on failure
-              setCameraPaused(false);
-            }),
-          ),
-    );
+            // Only un-pause on failure
+            setCameraPaused(false);
+          }),
+        )
+        .provideBuildContextRuntime(context)
+        .run();
   }, [onScan, smartScan, setCameraPaused]);
 
   // Toggle flash

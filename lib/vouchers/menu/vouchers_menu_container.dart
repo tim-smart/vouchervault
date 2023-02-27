@@ -11,13 +11,22 @@ extension _VoucherMenuActions on VouchersMenuAction {
   void execute(BuildContext x) {
     switch (this) {
       case VouchersMenuAction.import:
-        x.runZIO(vouchersLayer.accessWithZIO((_) => _.import));
+        vouchersLayer
+            .accessWithZIO((_) => _.import)
+            .provideBuildContextRuntime(x)
+            .run();
         return;
       case VouchersMenuAction.export:
-        x.runZIO(vouchersLayer.accessWithZIO((_) => _.export));
+        vouchersLayer
+            .accessWithZIO((_) => _.export)
+            .provideBuildContextRuntime(x)
+            .run();
         return;
       case VouchersMenuAction.authentication:
-        x.runZIO(authLayer.accessWithZIO((_) => _.toggle));
+        authLayer
+            .accessWithZIO((_) => _.toggle)
+            .provideBuildContextRuntime(x)
+            .run();
         return;
       case VouchersMenuAction.smartScan:
         x.updateAtom(appSettings)((s) => s.copyWith(smartScan: !s.smartScan));

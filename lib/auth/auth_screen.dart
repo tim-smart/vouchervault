@@ -10,8 +10,7 @@ part 'auth_screen.g.dart';
 
 @hwidget
 Widget authScreen(BuildContext context) {
-  final authenticate =
-      useZIO(authLayer.accessWithZIO((_) => _.authenticate), []);
+  final authenticate = useZIO(authLayer.accessWithZIO((_) => _.authenticate));
 
   useEffect(() {
     authenticate();
