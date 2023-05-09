@@ -14,18 +14,18 @@ dependencies:
   camera: ^0.10.0
   dart_date: ^1.1.0
   file_picker: ^5.0.0
-  flutter_form_builder: ^7.5.0
+  flutter_form_builder: ^8.0.0
   flutter_hooks: ^0.18.0
   flutter_localizations:
     sdk: flutter
-  flutter_elemental: ^0.0.14
+  flutter_elemental: ^0.1.0
   fluttertoast: ^8.0.7
   form_builder_validators: ^8.1.1
   freezed_annotation: ^2.0.3
   functional_widget_annotation: ^0.10.0
-  google_mlkit_barcode_scanning: ^0.5.0
-  google_mlkit_entity_extraction: ^0.6.0
-  google_mlkit_text_recognition: ^0.5.0
+  google_mlkit_barcode_scanning: ^0.6.0
+  google_mlkit_entity_extraction: ^0.7.0
+  google_mlkit_text_recognition: ^0.6.0
   intl: ^0.18.0
   json_annotation: ^4.6.0
   local_auth: ^2.1.0
@@ -50,7 +50,7 @@ dev_dependencies:
   emulators: ^0.4.10
   flutter_driver:
     sdk: flutter
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter

@@ -43,8 +43,7 @@ Widget _scannerDialog(
             setCameraPaused(false);
           }),
         )
-        .provideBuildContextRuntime(context)
-        .run();
+        .runContext(context);
   }, [onScan, smartScan, setCameraPaused]);
 
   // Toggle flash

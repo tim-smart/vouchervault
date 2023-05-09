@@ -55,10 +55,7 @@ Widget _voucherDialogContainer(
 
   final onRemove = useZIO(
     _showRemoveDialog(context, onPressed: (context) {
-      vouchersLayer
-          .accessWithZIO((_) => _.remove(v))
-          .provideBuildContextRuntime(context)
-          .run();
+      vouchersLayer.accessWithZIO((_) => _.remove(v)).runContext(context);
       Navigator.pop(context, true);
     }).filter(identity).zipLeft(ZIO(Navigator.of(context).pop)),
     [v],

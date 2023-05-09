@@ -72,7 +72,7 @@ final barcodeResultProvider = atom((get) {
             scanner
                 .extractAll(image, embellish: smartScan)
                 .either
-                .runFutureOrThrow(),
+                .runFutureOrThrowRegistry(get.registry),
           ),
         ),
       )

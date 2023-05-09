@@ -24,14 +24,14 @@ Widget _vouchersScreen(BuildContext context) {
       ),
     ],
     floatingActionButton: Option.of(FloatingActionButton(
-      onPressed: Navigator.of(context)
+      onPressed: () => Navigator.of(context)
           .pushIO(MaterialPageRoute<Voucher>(
             builder: (context) => const VoucherFormDialog(),
             fullscreenDialog: true,
           ))
           .tap(_createVoucher)
           .provide(context)
-          .run,
+          .runContext(context),
       child: const Icon(Icons.add),
     )),
   );
