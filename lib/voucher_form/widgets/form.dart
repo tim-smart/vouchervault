@@ -114,6 +114,7 @@ Widget voucherForm(
           visualDensity: VisualDensity.compact,
           options: VoucherCodeType.values
               .map((t) => FormBuilderChipOption(
+                    avatar: null,
                     value: V.codeTypeToJson(t),
                     child: Text(V.codeTypeLabel(t)),
                   ))
@@ -179,19 +180,23 @@ Widget voucherForm(
             border: InputBorder.none,
           ),
           alignment: WrapAlignment.spaceAround,
+          padding: EdgeInsets.zero,
           options: VoucherColor.values
-              .map((c) => FormBuilderChipOption(
-                    value: V.colorToJson(c),
-                    child: Material(
-                      elevation: 2,
-                      color: V.color(c),
-                      borderRadius: BorderRadius.circular(100),
-                      child: SizedBox(
-                        height: AppTheme.rem(1.2),
-                        width: AppTheme.rem(1.2),
-                      ),
+              .map(
+                (c) => FormBuilderChipOption(
+                  avatar: null,
+                  value: V.colorToJson(c),
+                  child: Material(
+                    elevation: 2,
+                    color: V.color(c),
+                    borderRadius: BorderRadius.circular(100),
+                    child: SizedBox(
+                      height: AppTheme.rem(1.1),
+                      width: AppTheme.rem(1.1),
                     ),
-                  ))
+                  ),
+                ),
+              )
               .toList(),
         ),
       ],
