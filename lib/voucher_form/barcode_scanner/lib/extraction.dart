@@ -28,7 +28,9 @@ Iterable<String> _eligibleMerchantLines(RecognizedText rt) => rt.blocks
 bool _isLargeBlock(TextBlock b) =>
     b.lines.length >= 5 || b.lines.any((l) => l.elements.length >= 7);
 
-bool _isEnglishBlock(TextBlock b) => b.recognizedLanguages.contains('en');
+bool _isEnglishBlock(TextBlock b) =>
+    b.recognizedLanguages.contains('en') ||
+    b.recognizedLanguages.contains("und");
 
 bool _isValidBlock(TextBlock b) => !_isLargeBlock(b) && _isEnglishBlock(b);
 
