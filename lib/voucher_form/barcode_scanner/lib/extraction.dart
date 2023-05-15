@@ -147,10 +147,15 @@ final _dateMispellings = {
 };
 
 List<DateTime> _extractDateTimesFromText(RecognizedText rt) {
-  final text = _dateMispellings.entries.fold(
-    rt.text.toLowerCase(),
-    (String text, e) => text.replaceAll(e.key, e.value),
-  );
+  final text = _dateMispellings.entries
+      .fold(
+        rt.text.toLowerCase(),
+        (String text, e) => text.replaceAll(e.key, e.value),
+      )
+      .replaceAllMapped(
+        RegExp(r"\bo(\d)\b", caseSensitive: false),
+        (_) => "0${_[1]}",
+      );
 
   return _datePatterns
       .map(
