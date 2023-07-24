@@ -79,9 +79,9 @@ class BarcodeScannerService {
           )
           .map(
             (_) => result.copyWith(
-              merchant: extractMerchant(_.first),
-              balance: extractBalance(_.second),
-              expires: extractExpires(_.first, _.second),
+              merchant: extractMerchant(_.$1),
+              balance: extractBalance(_.$2),
+              expires: extractExpires(_.$1, _.$2),
             ),
           );
 

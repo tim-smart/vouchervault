@@ -25,7 +25,7 @@ IOOption<Unit> _updateFieldIfEmpty<T>(
             f.value is! String ||
             (f.value as String).isEmpty)
         .zip(update)
-        .tap((t) => ZIO(() => t.first.didChange(t.second)))
+        .tap((t) => ZIO(() => t.$1.didChange(t.$2)))
         .asUnit;
 
 Widget _resetIconButton(

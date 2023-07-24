@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 import 'package:google_mlkit_entity_extraction/google_mlkit_entity_extraction.dart';
@@ -10,7 +9,7 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'package:rxdart/rxdart.dart';
 import 'package:vouchervault/lib/lib.dart';
 
-typedef CameraControllerWithImage = Tuple2<CameraController, CameraImage>;
+typedef CameraControllerWithImage = (CameraController, CameraImage);
 
 Stream<CameraControllerWithImage> cameraImageStream(
   CameraController c, {
@@ -19,8 +18,7 @@ Stream<CameraControllerWithImage> cameraImageStream(
 }) {
   late StreamController<CameraControllerWithImage> sc;
 
-  Future<void> onStart() =>
-      c.startImageStream((image) => sc.add(tuple2(c, image)));
+  Future<void> onStart() => c.startImageStream((image) => sc.add((c, image)));
 
   sc = StreamController(
     onListen: onStart,
@@ -34,45 +32,26 @@ Stream<CameraControllerWithImage> cameraImageStream(
       .asBroadcastStream();
 }
 
-Option<InputImageData> inputImageData(
-  CameraImage image, {
-  required CameraDescription camera,
-}) =>
-    Option.fromNullable(
-      InputImageRotationValue.fromRawValue(camera.sensorOrientation),
-    ).flatMap(
-      (rotation) => Option.fromNullable(
-        InputImageFormatValue.fromRawValue(image.format.raw),
-      ).map(
-        (format) => InputImageData(
-          size: Size(image.width.toDouble(), image.height.toDouble()),
-          imageRotation: rotation,
-          inputImageFormat: format,
-          planeData: image.planes
-              .map((p) => InputImagePlaneMetadata(
-                    bytesPerRow: p.bytesPerRow,
-                    height: p.height,
-                    width: p.width,
-                  ))
-              .toList(),
-        ),
-      ),
-    );
-
 Option<InputImage> inputImage(
   CameraImage image, {
   required CameraDescription camera,
 }) =>
-    inputImageData(image, camera: camera).map((data) {
-      final wb = WriteBuffer();
-
-      for (final plane in image.planes) {
-        wb.putUint8List(plane.bytes);
-      }
-
+    Option.Do(($) {
+      final rotation = $(Option.fromNullable(
+        InputImageRotationValue.fromRawValue(camera.sensorOrientation),
+      ));
+      final format = $(Option.fromNullable(
+        InputImageFormatValue.fromRawValue(image.format.raw),
+      ));
+      final plane = $(image.planes.head);
       return InputImage.fromBytes(
-        bytes: wb.done().buffer.asUint8List(),
-        inputImageData: data,
+        bytes: plane.bytes,
+        metadata: InputImageMetadata(
+          format: format,
+          rotation: rotation,
+          size: Size(image.width.toDouble(), image.height.toDouble()),
+          bytesPerRow: plane.bytesPerRow,
+        ),
       );
     });
 

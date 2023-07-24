@@ -23,7 +23,7 @@ EIO<String, File> writeStringToFile(
       (err, stackTrace) => 'Failed to write string: $err',
     );
 
-EIO<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
+EIO<String, (PlatformFile, List<int>)> _readPlatformFileStream(
   PlatformFile f,
 ) =>
     EIO
@@ -31,9 +31,9 @@ EIO<String, Tuple2<PlatformFile, List<int>>> _readPlatformFileStream(
           () => f.readStream!.reduce((bytes, chunk) => bytes + chunk),
           (err, s) => 'Could not read file: $err',
         )
-        .map((bytes) => tuple2(f, bytes));
+        .map((bytes) => (f, bytes));
 
-EIO<String, Tuple2<PlatformFile, List<int>>> pickFile({
+EIO<String, (PlatformFile, List<int>)> pickFile({
   FileType type = FileType.any,
   List<String>? extensions,
 }) =>

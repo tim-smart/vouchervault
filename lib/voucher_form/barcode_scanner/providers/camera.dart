@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter_elemental/flutter_elemental.dart' hide Logger;
@@ -27,8 +28,11 @@ final _cameraControllerProvider = atom((get) {
   return camera.filter((_) => !paused).map((camera) {
     final controller = CameraController(
       camera,
-      ResolutionPreset.veryHigh,
+      ResolutionPreset.high,
       enableAudio: false,
+      imageFormatGroup: Platform.isAndroid
+          ? ImageFormatGroup.nv21
+          : ImageFormatGroup.bgra8888,
     );
 
     get.onDispose(() async {
@@ -64,8 +68,8 @@ final barcodeResultProvider = atom((get) {
   return get(imageProvider)
       .exhaustMap(
         (t) => inputImage(
-          t.second,
-          camera: t.first.description,
+          t.$2,
+          camera: t.$1.description,
         ).fold<Stream<Either<MlError, BarcodeResult>>>(
           () => const Stream.empty(),
           (image) => Stream.fromFuture(

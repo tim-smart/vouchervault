@@ -132,10 +132,12 @@ Option<DateTime> extractExpires(
         .followedBy(_extractDateTimesFromText(text))
         .lastOption;
 
-final _datePatterns = <Tuple2<RegExp, DateTime? Function(String)>>[
-  tuple2(RegExp(r"\d{1,2}[-/]\d{1,2}[-/]\s{2,4}"),
-      (match) => DateFormat.yMd().parseLoose(match)),
-  tuple2(
+final _datePatterns = <(RegExp, DateTime? Function(String))>[
+  (
+    RegExp(r"\d{1,2}[-/]\d{1,2}[-/]\s{2,4}"),
+    (match) => DateFormat.yMd().parseLoose(match)
+  ),
+  (
     RegExp(r"\d{1,2} [a-z]{3} \d{2,4}", caseSensitive: false),
     (match) => DateFormat('d MMM y').parseLoose(match),
   ),
@@ -159,8 +161,8 @@ List<DateTime> _extractDateTimesFromText(RecognizedText rt) {
 
   return _datePatterns
       .map(
-        (t) => Option.fromNullable(t.first.firstMatch(text)?[0])
-            .flatMapNullable(t.second)
+        (t) => Option.fromNullable(t.$1.firstMatch(text)?[0])
+            .flatMapNullable(t.$2)
             .toNullable(),
       )
       .where((dt) => dt != null)

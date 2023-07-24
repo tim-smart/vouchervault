@@ -58,7 +58,6 @@ class AppTheme {
       colorScheme: ColorScheme.fromSwatch(
         brightness: brightness,
         primarySwatch: Colors.red,
-        primaryColorDark: Colors.red.shade800,
         accentColor: Colors.red,
         backgroundColor: backgroundColor,
         errorColor: Colors.orange.shade700,

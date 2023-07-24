@@ -80,7 +80,7 @@ Option<int> _newBalance(Voucher v, String s) => optionOfString(s)
 
 // == Import and replace vouchers
 final _importFromFiles = pickFile()
-    .map((r) => String.fromCharCodes(r.second))
+    .map((r) => String.fromCharCodes(r.$2))
     .flatMapThrowable(
       jsonDecode,
       (err, s) => 'Could not parse import JSON: $err',
