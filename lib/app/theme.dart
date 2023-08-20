@@ -62,6 +62,7 @@ class AppTheme {
         backgroundColor: backgroundColor,
         errorColor: Colors.orange.shade700,
       ),
+      useMaterial3: false,
     ).copyWith(
       pageTransitionsTheme: const PageTransitionsTheme(builders: {
         TargetPlatform.android: CupertinoPageTransitionsBuilder(),
@@ -90,6 +91,7 @@ class AppTheme {
         backgroundColor: Colors.red,
         foregroundColor: Colors.white,
       ),
+      // ignore: deprecated_member_use
       toggleableActiveColor: Colors.red,
     );
   }

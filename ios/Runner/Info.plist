@@ -46,8 +46,6 @@
 		<string>Face ID is being used to protect your vouchers.</string>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true />
-		<key>FLTEnableImpeller</key>
-		<true />
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true />
 	</dict>
