@@ -30,7 +30,7 @@
             ${flutter.unpack}/bin/unpack
             export PATH="${flutter_path}/flutter/bin:$PATH"
             mkdir -p android/keys
-            sops -d secrets/fastlane-google-key android/keys/google.json
+            sops -d secrets/fastlane-google-key > android/keys/google.json
           '';
         };
     });
