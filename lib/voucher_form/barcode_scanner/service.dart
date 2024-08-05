@@ -53,9 +53,11 @@ class BarcodeScannerService {
             annotations: {'embellish': embellish},
           )
           .zipRight(scan(image))
-          .flatMapOptionOrFail(
-            (_) => _.firstOption.map((t) => BarcodeResult(barcode: t)),
-            (_) => const MlError.barcodeNotFound(),
+          .flatMap(
+            (_) => _.firstOption
+                .map((t) => BarcodeResult(barcode: t))
+                .asZIO
+                .mapError((_) => const MlError.barcodeNotFound()),
           )
           .flatMap(
             (_) => embellish

@@ -12,7 +12,7 @@ part of 'voucher.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Voucher _$VoucherFromJson(Map<String, dynamic> json) {
   return _Voucher.fromJson(json);
@@ -124,10 +124,10 @@ class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
 }
 
 /// @nodoc
-abstract class _$$_VoucherCopyWith<$Res> implements $VoucherCopyWith<$Res> {
-  factory _$$_VoucherCopyWith(
-          _$_Voucher value, $Res Function(_$_Voucher) then) =
-      __$$_VoucherCopyWithImpl<$Res>;
+abstract class _$$VoucherImplCopyWith<$Res> implements $VoucherCopyWith<$Res> {
+  factory _$$VoucherImplCopyWith(
+          _$VoucherImpl value, $Res Function(_$VoucherImpl) then) =
+      __$$VoucherImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -144,10 +144,11 @@ abstract class _$$_VoucherCopyWith<$Res> implements $VoucherCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_VoucherCopyWithImpl<$Res>
-    extends _$VoucherCopyWithImpl<$Res, _$_Voucher>
-    implements _$$_VoucherCopyWith<$Res> {
-  __$$_VoucherCopyWithImpl(_$_Voucher _value, $Res Function(_$_Voucher) _then)
+class __$$VoucherImplCopyWithImpl<$Res>
+    extends _$VoucherCopyWithImpl<$Res, _$VoucherImpl>
+    implements _$$VoucherImplCopyWith<$Res> {
+  __$$VoucherImplCopyWithImpl(
+      _$VoucherImpl _value, $Res Function(_$VoucherImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -164,7 +165,7 @@ class __$$_VoucherCopyWithImpl<$Res>
     Object? notes = null,
     Object? color = null,
   }) {
-    return _then(_$_Voucher(
+    return _then(_$VoucherImpl(
       uuid: null == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -211,8 +212,8 @@ class __$$_VoucherCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Voucher extends _Voucher {
-  _$_Voucher(
+class _$VoucherImpl extends _Voucher {
+  _$VoucherImpl(
       {this.uuid = const Option.none(),
       this.description = '',
       this.code = const Option.none(),
@@ -225,8 +226,8 @@ class _$_Voucher extends _Voucher {
       this.color = VoucherColor.GREY})
       : super._();
 
-  factory _$_Voucher.fromJson(Map<String, dynamic> json) =>
-      _$$_VoucherFromJson(json);
+  factory _$VoucherImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VoucherImplFromJson(json);
 
   @override
   @JsonKey()
@@ -265,10 +266,10 @@ class _$_Voucher extends _Voucher {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Voucher &&
+            other is _$VoucherImpl &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -303,12 +304,12 @@ class _$_Voucher extends _Voucher {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VoucherCopyWith<_$_Voucher> get copyWith =>
-      __$$_VoucherCopyWithImpl<_$_Voucher>(this, _$identity);
+  _$$VoucherImplCopyWith<_$VoucherImpl> get copyWith =>
+      __$$VoucherImplCopyWithImpl<_$VoucherImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VoucherToJson(
+    return _$$VoucherImplToJson(
       this,
     );
   }
@@ -325,10 +326,10 @@ abstract class _Voucher extends Voucher {
       final Option<double> balance,
       final Option<int> balanceMilliunits,
       final String notes,
-      final VoucherColor color}) = _$_Voucher;
+      final VoucherColor color}) = _$VoucherImpl;
   _Voucher._() : super._();
 
-  factory _Voucher.fromJson(Map<String, dynamic> json) = _$_Voucher.fromJson;
+  factory _Voucher.fromJson(Map<String, dynamic> json) = _$VoucherImpl.fromJson;
 
   @override
   Option<String> get uuid;
@@ -352,6 +353,6 @@ abstract class _Voucher extends Voucher {
   VoucherColor get color;
   @override
   @JsonKey(ignore: true)
-  _$$_VoucherCopyWith<_$_Voucher> get copyWith =>
+  _$$VoucherImplCopyWith<_$VoucherImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

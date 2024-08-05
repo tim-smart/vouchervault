@@ -6,14 +6,14 @@ part of 'settings.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_VoucherVaultSettings _$$_VoucherVaultSettingsFromJson(
+_$VoucherVaultSettingsImpl _$$VoucherVaultSettingsImplFromJson(
         Map<String, dynamic> json) =>
-    _$_VoucherVaultSettings(
+    _$VoucherVaultSettingsImpl(
       smartScan: json['smartScan'] as bool? ?? true,
     );
 
-Map<String, dynamic> _$$_VoucherVaultSettingsToJson(
-        _$_VoucherVaultSettings instance) =>
+Map<String, dynamic> _$$VoucherVaultSettingsImplToJson(
+        _$VoucherVaultSettingsImpl instance) =>
     <String, dynamic>{
       'smartScan': instance.smartScan,
     };

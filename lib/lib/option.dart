@@ -10,5 +10,5 @@ final maybeParseDouble = optionOfString
     .c((_) => _.flatMap((_) => Option.fromNullable(double.tryParse(_))));
 
 extension IfSomeListExt<A> on Option<A> {
-  Iterable<B> ifSomeList<B>(Iterable<B> Function(A a) f) => fold(() => [], f);
+  Iterable<B> ifSomeList<B>(Iterable<B> Function(A a) f) => match(() => [], f);
 }

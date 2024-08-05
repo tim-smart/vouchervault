@@ -12,7 +12,7 @@ part of 'settings.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 VoucherVaultSettings _$VoucherVaultSettingsFromJson(Map<String, dynamic> json) {
   return _VoucherVaultSettings.fromJson(json);
@@ -63,22 +63,22 @@ class _$VoucherVaultSettingsCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_VoucherVaultSettingsCopyWith<$Res>
+abstract class _$$VoucherVaultSettingsImplCopyWith<$Res>
     implements $VoucherVaultSettingsCopyWith<$Res> {
-  factory _$$_VoucherVaultSettingsCopyWith(_$_VoucherVaultSettings value,
-          $Res Function(_$_VoucherVaultSettings) then) =
-      __$$_VoucherVaultSettingsCopyWithImpl<$Res>;
+  factory _$$VoucherVaultSettingsImplCopyWith(_$VoucherVaultSettingsImpl value,
+          $Res Function(_$VoucherVaultSettingsImpl) then) =
+      __$$VoucherVaultSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool smartScan});
 }
 
 /// @nodoc
-class __$$_VoucherVaultSettingsCopyWithImpl<$Res>
-    extends _$VoucherVaultSettingsCopyWithImpl<$Res, _$_VoucherVaultSettings>
-    implements _$$_VoucherVaultSettingsCopyWith<$Res> {
-  __$$_VoucherVaultSettingsCopyWithImpl(_$_VoucherVaultSettings _value,
-      $Res Function(_$_VoucherVaultSettings) _then)
+class __$$VoucherVaultSettingsImplCopyWithImpl<$Res>
+    extends _$VoucherVaultSettingsCopyWithImpl<$Res, _$VoucherVaultSettingsImpl>
+    implements _$$VoucherVaultSettingsImplCopyWith<$Res> {
+  __$$VoucherVaultSettingsImplCopyWithImpl(_$VoucherVaultSettingsImpl _value,
+      $Res Function(_$VoucherVaultSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -86,7 +86,7 @@ class __$$_VoucherVaultSettingsCopyWithImpl<$Res>
   $Res call({
     Object? smartScan = null,
   }) {
-    return _then(_$_VoucherVaultSettings(
+    return _then(_$VoucherVaultSettingsImpl(
       smartScan: null == smartScan
           ? _value.smartScan
           : smartScan // ignore: cast_nullable_to_non_nullable
@@ -97,11 +97,11 @@ class __$$_VoucherVaultSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VoucherVaultSettings implements _VoucherVaultSettings {
-  const _$_VoucherVaultSettings({this.smartScan = true});
+class _$VoucherVaultSettingsImpl implements _VoucherVaultSettings {
+  const _$VoucherVaultSettingsImpl({this.smartScan = true});
 
-  factory _$_VoucherVaultSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_VoucherVaultSettingsFromJson(json);
+  factory _$VoucherVaultSettingsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VoucherVaultSettingsImplFromJson(json);
 
   @override
   @JsonKey()
@@ -113,10 +113,10 @@ class _$_VoucherVaultSettings implements _VoucherVaultSettings {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VoucherVaultSettings &&
+            other is _$VoucherVaultSettingsImpl &&
             (identical(other.smartScan, smartScan) ||
                 other.smartScan == smartScan));
   }
@@ -128,13 +128,14 @@ class _$_VoucherVaultSettings implements _VoucherVaultSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VoucherVaultSettingsCopyWith<_$_VoucherVaultSettings> get copyWith =>
-      __$$_VoucherVaultSettingsCopyWithImpl<_$_VoucherVaultSettings>(
-          this, _$identity);
+  _$$VoucherVaultSettingsImplCopyWith<_$VoucherVaultSettingsImpl>
+      get copyWith =>
+          __$$VoucherVaultSettingsImplCopyWithImpl<_$VoucherVaultSettingsImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VoucherVaultSettingsToJson(
+    return _$$VoucherVaultSettingsImplToJson(
       this,
     );
   }
@@ -142,15 +143,15 @@ class _$_VoucherVaultSettings implements _VoucherVaultSettings {
 
 abstract class _VoucherVaultSettings implements VoucherVaultSettings {
   const factory _VoucherVaultSettings({final bool smartScan}) =
-      _$_VoucherVaultSettings;
+      _$VoucherVaultSettingsImpl;
 
   factory _VoucherVaultSettings.fromJson(Map<String, dynamic> json) =
-      _$_VoucherVaultSettings.fromJson;
+      _$VoucherVaultSettingsImpl.fromJson;
 
   @override
   bool get smartScan;
   @override
   @JsonKey(ignore: true)
-  _$$_VoucherVaultSettingsCopyWith<_$_VoucherVaultSettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$VoucherVaultSettingsImplCopyWith<_$VoucherVaultSettingsImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

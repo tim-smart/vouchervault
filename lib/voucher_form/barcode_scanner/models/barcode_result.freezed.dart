@@ -12,7 +12,7 @@ part of 'barcode_result.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$BarcodeResult {
@@ -79,11 +79,11 @@ class _$BarcodeResultCopyWithImpl<$Res, $Val extends BarcodeResult>
 }
 
 /// @nodoc
-abstract class _$$_BarcodeResultCopyWith<$Res>
+abstract class _$$BarcodeResultImplCopyWith<$Res>
     implements $BarcodeResultCopyWith<$Res> {
-  factory _$$_BarcodeResultCopyWith(
-          _$_BarcodeResult value, $Res Function(_$_BarcodeResult) then) =
-      __$$_BarcodeResultCopyWithImpl<$Res>;
+  factory _$$BarcodeResultImplCopyWith(
+          _$BarcodeResultImpl value, $Res Function(_$BarcodeResultImpl) then) =
+      __$$BarcodeResultImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -94,11 +94,11 @@ abstract class _$$_BarcodeResultCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BarcodeResultCopyWithImpl<$Res>
-    extends _$BarcodeResultCopyWithImpl<$Res, _$_BarcodeResult>
-    implements _$$_BarcodeResultCopyWith<$Res> {
-  __$$_BarcodeResultCopyWithImpl(
-      _$_BarcodeResult _value, $Res Function(_$_BarcodeResult) _then)
+class __$$BarcodeResultImplCopyWithImpl<$Res>
+    extends _$BarcodeResultCopyWithImpl<$Res, _$BarcodeResultImpl>
+    implements _$$BarcodeResultImplCopyWith<$Res> {
+  __$$BarcodeResultImplCopyWithImpl(
+      _$BarcodeResultImpl _value, $Res Function(_$BarcodeResultImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +109,7 @@ class __$$_BarcodeResultCopyWithImpl<$Res>
     Object? balance = null,
     Object? expires = null,
   }) {
-    return _then(_$_BarcodeResult(
+    return _then(_$BarcodeResultImpl(
       barcode: null == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
@@ -132,8 +132,8 @@ class __$$_BarcodeResultCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BarcodeResult implements _BarcodeResult {
-  const _$_BarcodeResult(
+class _$BarcodeResultImpl implements _BarcodeResult {
+  const _$BarcodeResultImpl(
       {required this.barcode,
       this.merchant = const Option.none(),
       this.balance = const Option.none(),
@@ -157,10 +157,10 @@ class _$_BarcodeResult implements _BarcodeResult {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BarcodeResult &&
+            other is _$BarcodeResultImpl &&
             (identical(other.barcode, barcode) || other.barcode == barcode) &&
             (identical(other.merchant, merchant) ||
                 other.merchant == merchant) &&
@@ -175,8 +175,8 @@ class _$_BarcodeResult implements _BarcodeResult {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BarcodeResultCopyWith<_$_BarcodeResult> get copyWith =>
-      __$$_BarcodeResultCopyWithImpl<_$_BarcodeResult>(this, _$identity);
+  _$$BarcodeResultImplCopyWith<_$BarcodeResultImpl> get copyWith =>
+      __$$BarcodeResultImplCopyWithImpl<_$BarcodeResultImpl>(this, _$identity);
 }
 
 abstract class _BarcodeResult implements BarcodeResult {
@@ -184,7 +184,7 @@ abstract class _BarcodeResult implements BarcodeResult {
       {required final Barcode barcode,
       final Option<String> merchant,
       final Option<int> balance,
-      final Option<DateTime> expires}) = _$_BarcodeResult;
+      final Option<DateTime> expires}) = _$BarcodeResultImpl;
 
   @override
   Barcode get barcode;
@@ -196,6 +196,6 @@ abstract class _BarcodeResult implements BarcodeResult {
   Option<DateTime> get expires;
   @override
   @JsonKey(ignore: true)
-  _$$_BarcodeResultCopyWith<_$_BarcodeResult> get copyWith =>
+  _$$BarcodeResultImplCopyWith<_$BarcodeResultImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

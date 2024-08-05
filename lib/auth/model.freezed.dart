@@ -12,7 +12,7 @@ part of 'model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AuthState _$AuthStateFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
@@ -88,30 +88,30 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
 }
 
 /// @nodoc
-abstract class _$$UnauthenticatedCopyWith<$Res> {
-  factory _$$UnauthenticatedCopyWith(
-          _$Unauthenticated value, $Res Function(_$Unauthenticated) then) =
-      __$$UnauthenticatedCopyWithImpl<$Res>;
+abstract class _$$UnauthenticatedImplCopyWith<$Res> {
+  factory _$$UnauthenticatedImplCopyWith(_$UnauthenticatedImpl value,
+          $Res Function(_$UnauthenticatedImpl) then) =
+      __$$UnauthenticatedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UnauthenticatedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$Unauthenticated>
-    implements _$$UnauthenticatedCopyWith<$Res> {
-  __$$UnauthenticatedCopyWithImpl(
-      _$Unauthenticated _value, $Res Function(_$Unauthenticated) _then)
+class __$$UnauthenticatedImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$UnauthenticatedImpl>
+    implements _$$UnauthenticatedImplCopyWith<$Res> {
+  __$$UnauthenticatedImplCopyWithImpl(
+      _$UnauthenticatedImpl _value, $Res Function(_$UnauthenticatedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$Unauthenticated extends Unauthenticated {
-  const _$Unauthenticated({final String? $type})
+class _$UnauthenticatedImpl extends Unauthenticated {
+  const _$UnauthenticatedImpl({final String? $type})
       : $type = $type ?? 'unauthenticated',
         super._();
 
-  factory _$Unauthenticated.fromJson(Map<String, dynamic> json) =>
-      _$$UnauthenticatedFromJson(json);
+  factory _$UnauthenticatedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UnauthenticatedImplFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -122,9 +122,9 @@ class _$Unauthenticated extends Unauthenticated {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Unauthenticated);
+        (other.runtimeType == runtimeType && other is _$UnauthenticatedImpl);
   }
 
   @JsonKey(ignore: true)
@@ -195,35 +195,35 @@ class _$Unauthenticated extends Unauthenticated {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UnauthenticatedToJson(
+    return _$$UnauthenticatedImplToJson(
       this,
     );
   }
 }
 
 abstract class Unauthenticated extends AuthState {
-  const factory Unauthenticated() = _$Unauthenticated;
+  const factory Unauthenticated() = _$UnauthenticatedImpl;
   const Unauthenticated._() : super._();
 
   factory Unauthenticated.fromJson(Map<String, dynamic> json) =
-      _$Unauthenticated.fromJson;
+      _$UnauthenticatedImpl.fromJson;
 }
 
 /// @nodoc
-abstract class _$$AuthenticatedCopyWith<$Res> {
-  factory _$$AuthenticatedCopyWith(
-          _$Authenticated value, $Res Function(_$Authenticated) then) =
-      __$$AuthenticatedCopyWithImpl<$Res>;
+abstract class _$$AuthenticatedImplCopyWith<$Res> {
+  factory _$$AuthenticatedImplCopyWith(
+          _$AuthenticatedImpl value, $Res Function(_$AuthenticatedImpl) then) =
+      __$$AuthenticatedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({AuthenticatedReason reason});
 }
 
 /// @nodoc
-class __$$AuthenticatedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$Authenticated>
-    implements _$$AuthenticatedCopyWith<$Res> {
-  __$$AuthenticatedCopyWithImpl(
-      _$Authenticated _value, $Res Function(_$Authenticated) _then)
+class __$$AuthenticatedImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthenticatedImpl>
+    implements _$$AuthenticatedImplCopyWith<$Res> {
+  __$$AuthenticatedImplCopyWithImpl(
+      _$AuthenticatedImpl _value, $Res Function(_$AuthenticatedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -231,7 +231,7 @@ class __$$AuthenticatedCopyWithImpl<$Res>
   $Res call({
     Object? reason = null,
   }) {
-    return _then(_$Authenticated(
+    return _then(_$AuthenticatedImpl(
       null == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
@@ -242,13 +242,13 @@ class __$$AuthenticatedCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$Authenticated extends Authenticated {
-  const _$Authenticated(this.reason, {final String? $type})
+class _$AuthenticatedImpl extends Authenticated {
+  const _$AuthenticatedImpl(this.reason, {final String? $type})
       : $type = $type ?? 'authenticated',
         super._();
 
-  factory _$Authenticated.fromJson(Map<String, dynamic> json) =>
-      _$$AuthenticatedFromJson(json);
+  factory _$AuthenticatedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AuthenticatedImplFromJson(json);
 
   @override
   final AuthenticatedReason reason;
@@ -262,10 +262,10 @@ class _$Authenticated extends Authenticated {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Authenticated &&
+            other is _$AuthenticatedImpl &&
             (identical(other.reason, reason) || other.reason == reason));
   }
 
@@ -276,8 +276,8 @@ class _$Authenticated extends Authenticated {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AuthenticatedCopyWith<_$Authenticated> get copyWith =>
-      __$$AuthenticatedCopyWithImpl<_$Authenticated>(this, _$identity);
+  _$$AuthenticatedImplCopyWith<_$AuthenticatedImpl> get copyWith =>
+      __$$AuthenticatedImplCopyWithImpl<_$AuthenticatedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -343,7 +343,7 @@ class _$Authenticated extends Authenticated {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AuthenticatedToJson(
+    return _$$AuthenticatedImplToJson(
       this,
     );
   }
@@ -351,14 +351,14 @@ class _$Authenticated extends Authenticated {
 
 abstract class Authenticated extends AuthState {
   const factory Authenticated(final AuthenticatedReason reason) =
-      _$Authenticated;
+      _$AuthenticatedImpl;
   const Authenticated._() : super._();
 
   factory Authenticated.fromJson(Map<String, dynamic> json) =
-      _$Authenticated.fromJson;
+      _$AuthenticatedImpl.fromJson;
 
   AuthenticatedReason get reason;
   @JsonKey(ignore: true)
-  _$$AuthenticatedCopyWith<_$Authenticated> get copyWith =>
+  _$$AuthenticatedImplCopyWith<_$AuthenticatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

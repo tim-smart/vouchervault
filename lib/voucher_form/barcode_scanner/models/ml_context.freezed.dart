@@ -12,7 +12,7 @@ part of 'ml_context.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MlContext {
@@ -71,10 +71,11 @@ class _$MlContextCopyWithImpl<$Res, $Val extends MlContext>
 }
 
 /// @nodoc
-abstract class _$$_MlContextCopyWith<$Res> implements $MlContextCopyWith<$Res> {
-  factory _$$_MlContextCopyWith(
-          _$_MlContext value, $Res Function(_$_MlContext) then) =
-      __$$_MlContextCopyWithImpl<$Res>;
+abstract class _$$MlContextImplCopyWith<$Res>
+    implements $MlContextCopyWith<$Res> {
+  factory _$$MlContextImplCopyWith(
+          _$MlContextImpl value, $Res Function(_$MlContextImpl) then) =
+      __$$MlContextImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -84,11 +85,11 @@ abstract class _$$_MlContextCopyWith<$Res> implements $MlContextCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MlContextCopyWithImpl<$Res>
-    extends _$MlContextCopyWithImpl<$Res, _$_MlContext>
-    implements _$$_MlContextCopyWith<$Res> {
-  __$$_MlContextCopyWithImpl(
-      _$_MlContext _value, $Res Function(_$_MlContext) _then)
+class __$$MlContextImplCopyWithImpl<$Res>
+    extends _$MlContextCopyWithImpl<$Res, _$MlContextImpl>
+    implements _$$MlContextImplCopyWith<$Res> {
+  __$$MlContextImplCopyWithImpl(
+      _$MlContextImpl _value, $Res Function(_$MlContextImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -98,7 +99,7 @@ class __$$_MlContextCopyWithImpl<$Res>
     Object? barcodeScanner = null,
     Object? entityExtractor = null,
   }) {
-    return _then(_$_MlContext(
+    return _then(_$MlContextImpl(
       textRecognizer: null == textRecognizer
           ? _value.textRecognizer
           : textRecognizer // ignore: cast_nullable_to_non_nullable
@@ -117,8 +118,8 @@ class __$$_MlContextCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MlContext implements _MlContext {
-  const _$_MlContext(
+class _$MlContextImpl implements _MlContext {
+  const _$MlContextImpl(
       {required this.textRecognizer,
       required this.barcodeScanner,
       required this.entityExtractor});
@@ -136,10 +137,10 @@ class _$_MlContext implements _MlContext {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MlContext &&
+            other is _$MlContextImpl &&
             (identical(other.textRecognizer, textRecognizer) ||
                 other.textRecognizer == textRecognizer) &&
             (identical(other.barcodeScanner, barcodeScanner) ||
@@ -155,15 +156,15 @@ class _$_MlContext implements _MlContext {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MlContextCopyWith<_$_MlContext> get copyWith =>
-      __$$_MlContextCopyWithImpl<_$_MlContext>(this, _$identity);
+  _$$MlContextImplCopyWith<_$MlContextImpl> get copyWith =>
+      __$$MlContextImplCopyWithImpl<_$MlContextImpl>(this, _$identity);
 }
 
 abstract class _MlContext implements MlContext {
   const factory _MlContext(
       {required final TextRecognizer textRecognizer,
       required final BarcodeScanner barcodeScanner,
-      required final EntityExtractor entityExtractor}) = _$_MlContext;
+      required final EntityExtractor entityExtractor}) = _$MlContextImpl;
 
   @override
   TextRecognizer get textRecognizer;
@@ -173,6 +174,6 @@ abstract class _MlContext implements MlContext {
   EntityExtractor get entityExtractor;
   @override
   @JsonKey(ignore: true)
-  _$$_MlContextCopyWith<_$_MlContext> get copyWith =>
+  _$$MlContextImplCopyWith<_$MlContextImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

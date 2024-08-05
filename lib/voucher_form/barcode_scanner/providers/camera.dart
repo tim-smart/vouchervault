@@ -51,7 +51,7 @@ final _cameraControllerProvider = atom((get) {
 });
 
 final initializedCameraController =
-    futureAtom((get) => get(_cameraControllerProvider).fold(
+    futureAtom((get) => get(_cameraControllerProvider).match(
           () => Future.any<CameraController>([]),
           (c) => c.initialize().then((_) => c),
         ));
@@ -70,7 +70,7 @@ final barcodeResultProvider = atom((get) {
         (t) => inputImage(
           t.$2,
           camera: t.$1.description,
-        ).fold<Stream<Either<MlError, BarcodeResult>>>(
+        ).match<Stream<Either<MlError, BarcodeResult>>>(
           () => const Stream.empty(),
           (image) => Stream.fromFuture(
             scanner
@@ -80,7 +80,7 @@ final barcodeResultProvider = atom((get) {
           ),
         ),
       )
-      .expand<BarcodeResult>((_) => _.fold(
+      .expand<BarcodeResult>((_) => _.match(
             (left) {
               left.when(
                 barcodeNotFound: () {},

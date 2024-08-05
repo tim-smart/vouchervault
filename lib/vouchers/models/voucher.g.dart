@@ -6,7 +6,8 @@ part of 'voucher.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Voucher _$$_VoucherFromJson(Map<String, dynamic> json) => _$_Voucher(
+_$VoucherImpl _$$VoucherImplFromJson(Map<String, dynamic> json) =>
+    _$VoucherImpl(
       uuid: json['uuid'] == null
           ? const Option.none()
           : Option<String>.fromJson(json['uuid'], (value) => value as String),
@@ -29,13 +30,13 @@ _$_Voucher _$$_VoucherFromJson(Map<String, dynamic> json) => _$_Voucher(
       balanceMilliunits: json['balanceMilliunits'] == null
           ? const Option.none()
           : Option<int>.fromJson(
-              json['balanceMilliunits'], (value) => value as int),
+              json['balanceMilliunits'], (value) => (value as num).toInt()),
       notes: json['notes'] as String? ?? '',
       color: $enumDecodeNullable(_$VoucherColorEnumMap, json['color']) ??
           VoucherColor.GREY,
     );
 
-Map<String, dynamic> _$$_VoucherToJson(_$_Voucher instance) =>
+Map<String, dynamic> _$$VoucherImplToJson(_$VoucherImpl instance) =>
     <String, dynamic>{
       'uuid': instance.uuid.toJson(
         (value) => value,

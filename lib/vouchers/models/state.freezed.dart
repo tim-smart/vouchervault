@@ -12,7 +12,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$VouchersState {
@@ -57,22 +57,22 @@ class _$VouchersStateCopyWithImpl<$Res, $Val extends VouchersState>
 }
 
 /// @nodoc
-abstract class _$$_VouchersStateCopyWith<$Res>
+abstract class _$$VouchersStateImplCopyWith<$Res>
     implements $VouchersStateCopyWith<$Res> {
-  factory _$$_VouchersStateCopyWith(
-          _$_VouchersState value, $Res Function(_$_VouchersState) then) =
-      __$$_VouchersStateCopyWithImpl<$Res>;
+  factory _$$VouchersStateImplCopyWith(
+          _$VouchersStateImpl value, $Res Function(_$VouchersStateImpl) then) =
+      __$$VouchersStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({IList<Voucher> vouchers});
 }
 
 /// @nodoc
-class __$$_VouchersStateCopyWithImpl<$Res>
-    extends _$VouchersStateCopyWithImpl<$Res, _$_VouchersState>
-    implements _$$_VouchersStateCopyWith<$Res> {
-  __$$_VouchersStateCopyWithImpl(
-      _$_VouchersState _value, $Res Function(_$_VouchersState) _then)
+class __$$VouchersStateImplCopyWithImpl<$Res>
+    extends _$VouchersStateCopyWithImpl<$Res, _$VouchersStateImpl>
+    implements _$$VouchersStateImplCopyWith<$Res> {
+  __$$VouchersStateImplCopyWithImpl(
+      _$VouchersStateImpl _value, $Res Function(_$VouchersStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -80,7 +80,7 @@ class __$$_VouchersStateCopyWithImpl<$Res>
   $Res call({
     Object? vouchers = null,
   }) {
-    return _then(_$_VouchersState(
+    return _then(_$VouchersStateImpl(
       null == vouchers
           ? _value.vouchers
           : vouchers // ignore: cast_nullable_to_non_nullable
@@ -91,8 +91,8 @@ class __$$_VouchersStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VouchersState extends _VouchersState {
-  _$_VouchersState(this.vouchers) : super._();
+class _$VouchersStateImpl extends _VouchersState {
+  _$VouchersStateImpl(this.vouchers) : super._();
 
   @override
   final IList<Voucher> vouchers;
@@ -103,10 +103,10 @@ class _$_VouchersState extends _VouchersState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VouchersState &&
+            other is _$VouchersStateImpl &&
             const DeepCollectionEquality().equals(other.vouchers, vouchers));
   }
 
@@ -117,18 +117,18 @@ class _$_VouchersState extends _VouchersState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VouchersStateCopyWith<_$_VouchersState> get copyWith =>
-      __$$_VouchersStateCopyWithImpl<_$_VouchersState>(this, _$identity);
+  _$$VouchersStateImplCopyWith<_$VouchersStateImpl> get copyWith =>
+      __$$VouchersStateImplCopyWithImpl<_$VouchersStateImpl>(this, _$identity);
 }
 
 abstract class _VouchersState extends VouchersState {
-  factory _VouchersState(final IList<Voucher> vouchers) = _$_VouchersState;
+  factory _VouchersState(final IList<Voucher> vouchers) = _$VouchersStateImpl;
   _VouchersState._() : super._();
 
   @override
   IList<Voucher> get vouchers;
   @override
   @JsonKey(ignore: true)
-  _$$_VouchersStateCopyWith<_$_VouchersState> get copyWith =>
+  _$$VouchersStateImplCopyWith<_$VouchersStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -70,7 +70,7 @@ Widget _barcodeScannerField(
         ),
         onChanged: onChange,
       ),
-      ...errorText.fold(
+      ...errorText.match(
         () => [],
         (error) => [
           SizedBox(height: AppTheme.space2),

@@ -43,3 +43,5 @@ android/fastlane/report.xml
 
 # macos platform
 /macos
+.direnv/
+/.flutter/

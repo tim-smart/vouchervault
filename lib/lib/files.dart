@@ -50,10 +50,8 @@ EIO<String, (PlatformFile, List<int>)> pickFile({
           (err, s) => 'pickFiles failed: $err',
         )
         .flatMapNullableOrFail(identity, (_) => 'pickFiles gave no result')
-        .flatMapOptionOrFail(
-          (r) => r.files.head,
-          (_) => 'pickFiles had an empty response',
-        )
+        .flatMap((r) => r.files.head.asZIO
+            .mapError((_) => 'pickFiles had an empty response'))
         .flatMap(_readPlatformFileStream);
 
 final pickImage = EIO
@@ -62,7 +60,7 @@ final pickImage = EIO
       (err, s) => 'pickFiles failed: $err',
     )
     .flatMapNullableOrFail(identity, (_) => 'file picker cancelled')
-    .flatMapOptionOrFail(
-      (r) => r.files.head,
-      (_) => 'pickFiles had an empty response',
+    .flatMap(
+      (r) =>
+          r.files.head.asZIO.mapError((_) => 'pickFiles had an empty response'),
     );

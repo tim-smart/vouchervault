@@ -40,7 +40,7 @@ class VouchersService {
 
   IO<Unit> create(Voucher voucher) => ref.update((_) => _.copyWith(
         vouchers: _.vouchers.add(voucher.copyWith(
-          uuid: some(uuid.v4()),
+          uuid: Option.of(uuid.v4()),
         )),
       ));
 
@@ -56,7 +56,7 @@ class VouchersService {
       _newBalance(voucher, input).match(
         () => ZIO.unit(),
         (balance) => update(voucher.copyWith(
-          balanceMilliunits: some(balance),
+          balanceMilliunits: Option.of(balance),
         )),
       );
 

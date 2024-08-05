@@ -41,10 +41,10 @@ void useFullBrightness(
   // If something gets pushed on top of the route, then go dark again.
   useRouteObserver(
     routeObserver,
-    didPushNext: some(() {
+    didPushNext: Option.of(() {
       goDark();
     }),
-    didPopNext: some(() {
+    didPopNext: Option.of(() {
       if (!enabled) return;
       goBright();
     }),

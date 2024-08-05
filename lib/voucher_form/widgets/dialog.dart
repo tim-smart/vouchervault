@@ -17,11 +17,11 @@ Widget _voucherFormDialog(
   Option<Voucher> initialValue = const Option.none(),
 }) {
   final formKey = useMemoized(() => GlobalKey<FormBuilderState>());
-  final title = initialValue.fold(
+  final title = initialValue.match(
     () => AppLocalizations.of(context)!.addVoucher,
     (_) => AppLocalizations.of(context)!.editVoucher,
   );
-  final action = initialValue.fold(
+  final action = initialValue.match(
     () => AppLocalizations.of(context)!.create,
     (_) => AppLocalizations.of(context)!.update,
   );
@@ -58,7 +58,7 @@ Widget _voucherFormDialog(
 
                 Navigator.pop(
                   context,
-                  initialValue.fold(
+                  initialValue.match(
                     () => voucher,
                     (iv) => voucher.copyWith(uuid: iv.uuid),
                   ),

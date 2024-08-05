@@ -6,23 +6,25 @@ part of 'model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$Unauthenticated _$$UnauthenticatedFromJson(Map<String, dynamic> json) =>
-    _$Unauthenticated(
+_$UnauthenticatedImpl _$$UnauthenticatedImplFromJson(
+        Map<String, dynamic> json) =>
+    _$UnauthenticatedImpl(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$UnauthenticatedToJson(_$Unauthenticated instance) =>
+Map<String, dynamic> _$$UnauthenticatedImplToJson(
+        _$UnauthenticatedImpl instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };
 
-_$Authenticated _$$AuthenticatedFromJson(Map<String, dynamic> json) =>
-    _$Authenticated(
+_$AuthenticatedImpl _$$AuthenticatedImplFromJson(Map<String, dynamic> json) =>
+    _$AuthenticatedImpl(
       $enumDecode(_$AuthenticatedReasonEnumMap, json['reason']),
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$AuthenticatedToJson(_$Authenticated instance) =>
+Map<String, dynamic> _$$AuthenticatedImplToJson(_$AuthenticatedImpl instance) =>
     <String, dynamic>{
       'reason': _$AuthenticatedReasonEnumMap[instance.reason]!,
       'runtimeType': instance.$type,

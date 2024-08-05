@@ -1,6 +1,8 @@
 include: package:flutter_lints/flutter.yaml
-  
+
 analyzer:
+  errors:
+    no_wildcard_variable_uses: ignore
   exclude:
     - lib/**/*.freezed.dart
     - lib/**/*.g.dart

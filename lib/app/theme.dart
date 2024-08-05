@@ -59,6 +59,7 @@ class AppTheme {
         brightness: brightness,
         primarySwatch: Colors.red,
         accentColor: Colors.red,
+        cardColor: backgroundColor,
         backgroundColor: backgroundColor,
         errorColor: Colors.orange.shade700,
       ),
@@ -91,8 +92,6 @@ class AppTheme {
         backgroundColor: Colors.red,
         foregroundColor: Colors.white,
       ),
-      // ignore: deprecated_member_use
-      toggleableActiveColor: Colors.red,
     );
   }
 

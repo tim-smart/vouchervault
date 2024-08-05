@@ -12,7 +12,7 @@ part of 'ml_error.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MlError {
@@ -80,25 +80,27 @@ class _$MlErrorCopyWithImpl<$Res, $Val extends MlError>
 }
 
 /// @nodoc
-abstract class _$$_MlErrorBarcodeNotFoundCopyWith<$Res> {
-  factory _$$_MlErrorBarcodeNotFoundCopyWith(_$_MlErrorBarcodeNotFound value,
-          $Res Function(_$_MlErrorBarcodeNotFound) then) =
-      __$$_MlErrorBarcodeNotFoundCopyWithImpl<$Res>;
+abstract class _$$MlErrorBarcodeNotFoundImplCopyWith<$Res> {
+  factory _$$MlErrorBarcodeNotFoundImplCopyWith(
+          _$MlErrorBarcodeNotFoundImpl value,
+          $Res Function(_$MlErrorBarcodeNotFoundImpl) then) =
+      __$$MlErrorBarcodeNotFoundImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_MlErrorBarcodeNotFoundCopyWithImpl<$Res>
-    extends _$MlErrorCopyWithImpl<$Res, _$_MlErrorBarcodeNotFound>
-    implements _$$_MlErrorBarcodeNotFoundCopyWith<$Res> {
-  __$$_MlErrorBarcodeNotFoundCopyWithImpl(_$_MlErrorBarcodeNotFound _value,
-      $Res Function(_$_MlErrorBarcodeNotFound) _then)
+class __$$MlErrorBarcodeNotFoundImplCopyWithImpl<$Res>
+    extends _$MlErrorCopyWithImpl<$Res, _$MlErrorBarcodeNotFoundImpl>
+    implements _$$MlErrorBarcodeNotFoundImplCopyWith<$Res> {
+  __$$MlErrorBarcodeNotFoundImplCopyWithImpl(
+      _$MlErrorBarcodeNotFoundImpl _value,
+      $Res Function(_$MlErrorBarcodeNotFoundImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_MlErrorBarcodeNotFound extends _MlErrorBarcodeNotFound {
-  const _$_MlErrorBarcodeNotFound() : super._();
+class _$MlErrorBarcodeNotFoundImpl extends _MlErrorBarcodeNotFound {
+  const _$MlErrorBarcodeNotFoundImpl() : super._();
 
   @override
   String toString() {
@@ -106,10 +108,10 @@ class _$_MlErrorBarcodeNotFound extends _MlErrorBarcodeNotFound {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MlErrorBarcodeNotFound);
+            other is _$MlErrorBarcodeNotFoundImpl);
   }
 
   @override
@@ -185,25 +187,25 @@ class _$_MlErrorBarcodeNotFound extends _MlErrorBarcodeNotFound {
 }
 
 abstract class _MlErrorBarcodeNotFound extends MlError {
-  const factory _MlErrorBarcodeNotFound() = _$_MlErrorBarcodeNotFound;
+  const factory _MlErrorBarcodeNotFound() = _$MlErrorBarcodeNotFoundImpl;
   const _MlErrorBarcodeNotFound._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_MlErrorPickerCopyWith<$Res> {
-  factory _$$_MlErrorPickerCopyWith(
-          _$_MlErrorPicker value, $Res Function(_$_MlErrorPicker) then) =
-      __$$_MlErrorPickerCopyWithImpl<$Res>;
+abstract class _$$MlErrorPickerImplCopyWith<$Res> {
+  factory _$$MlErrorPickerImplCopyWith(
+          _$MlErrorPickerImpl value, $Res Function(_$MlErrorPickerImpl) then) =
+      __$$MlErrorPickerImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_MlErrorPickerCopyWithImpl<$Res>
-    extends _$MlErrorCopyWithImpl<$Res, _$_MlErrorPicker>
-    implements _$$_MlErrorPickerCopyWith<$Res> {
-  __$$_MlErrorPickerCopyWithImpl(
-      _$_MlErrorPicker _value, $Res Function(_$_MlErrorPicker) _then)
+class __$$MlErrorPickerImplCopyWithImpl<$Res>
+    extends _$MlErrorCopyWithImpl<$Res, _$MlErrorPickerImpl>
+    implements _$$MlErrorPickerImplCopyWith<$Res> {
+  __$$MlErrorPickerImplCopyWithImpl(
+      _$MlErrorPickerImpl _value, $Res Function(_$MlErrorPickerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -211,7 +213,7 @@ class __$$_MlErrorPickerCopyWithImpl<$Res>
   $Res call({
     Object? message = null,
   }) {
-    return _then(_$_MlErrorPicker(
+    return _then(_$MlErrorPickerImpl(
       null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -222,8 +224,8 @@ class __$$_MlErrorPickerCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MlErrorPicker extends _MlErrorPicker {
-  const _$_MlErrorPicker(this.message) : super._();
+class _$MlErrorPickerImpl extends _MlErrorPicker {
+  const _$MlErrorPickerImpl(this.message) : super._();
 
   @override
   final String message;
@@ -234,10 +236,10 @@ class _$_MlErrorPicker extends _MlErrorPicker {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MlErrorPicker &&
+            other is _$MlErrorPickerImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -247,8 +249,8 @@ class _$_MlErrorPicker extends _MlErrorPicker {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MlErrorPickerCopyWith<_$_MlErrorPicker> get copyWith =>
-      __$$_MlErrorPickerCopyWithImpl<_$_MlErrorPicker>(this, _$identity);
+  _$$MlErrorPickerImplCopyWith<_$MlErrorPickerImpl> get copyWith =>
+      __$$MlErrorPickerImplCopyWithImpl<_$MlErrorPickerImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -320,30 +322,30 @@ class _$_MlErrorPicker extends _MlErrorPicker {
 }
 
 abstract class _MlErrorPicker extends MlError {
-  const factory _MlErrorPicker(final String message) = _$_MlErrorPicker;
+  const factory _MlErrorPicker(final String message) = _$MlErrorPickerImpl;
   const _MlErrorPicker._() : super._();
 
   String get message;
   @JsonKey(ignore: true)
-  _$$_MlErrorPickerCopyWith<_$_MlErrorPicker> get copyWith =>
+  _$$MlErrorPickerImplCopyWith<_$MlErrorPickerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_MlErrorMlKitCopyWith<$Res> {
-  factory _$$_MlErrorMlKitCopyWith(
-          _$_MlErrorMlKit value, $Res Function(_$_MlErrorMlKit) then) =
-      __$$_MlErrorMlKitCopyWithImpl<$Res>;
+abstract class _$$MlErrorMlKitImplCopyWith<$Res> {
+  factory _$$MlErrorMlKitImplCopyWith(
+          _$MlErrorMlKitImpl value, $Res Function(_$MlErrorMlKitImpl) then) =
+      __$$MlErrorMlKitImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String op, dynamic err});
 }
 
 /// @nodoc
-class __$$_MlErrorMlKitCopyWithImpl<$Res>
-    extends _$MlErrorCopyWithImpl<$Res, _$_MlErrorMlKit>
-    implements _$$_MlErrorMlKitCopyWith<$Res> {
-  __$$_MlErrorMlKitCopyWithImpl(
-      _$_MlErrorMlKit _value, $Res Function(_$_MlErrorMlKit) _then)
+class __$$MlErrorMlKitImplCopyWithImpl<$Res>
+    extends _$MlErrorCopyWithImpl<$Res, _$MlErrorMlKitImpl>
+    implements _$$MlErrorMlKitImplCopyWith<$Res> {
+  __$$MlErrorMlKitImplCopyWithImpl(
+      _$MlErrorMlKitImpl _value, $Res Function(_$MlErrorMlKitImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -352,7 +354,7 @@ class __$$_MlErrorMlKitCopyWithImpl<$Res>
     Object? op = null,
     Object? err = freezed,
   }) {
-    return _then(_$_MlErrorMlKit(
+    return _then(_$MlErrorMlKitImpl(
       op: null == op
           ? _value.op
           : op // ignore: cast_nullable_to_non_nullable
@@ -367,8 +369,8 @@ class __$$_MlErrorMlKitCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MlErrorMlKit extends _MlErrorMlKit {
-  const _$_MlErrorMlKit({required this.op, required this.err}) : super._();
+class _$MlErrorMlKitImpl extends _MlErrorMlKit {
+  const _$MlErrorMlKitImpl({required this.op, required this.err}) : super._();
 
   @override
   final String op;
@@ -381,10 +383,10 @@ class _$_MlErrorMlKit extends _MlErrorMlKit {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MlErrorMlKit &&
+            other is _$MlErrorMlKitImpl &&
             (identical(other.op, op) || other.op == op) &&
             const DeepCollectionEquality().equals(other.err, err));
   }
@@ -396,8 +398,8 @@ class _$_MlErrorMlKit extends _MlErrorMlKit {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MlErrorMlKitCopyWith<_$_MlErrorMlKit> get copyWith =>
-      __$$_MlErrorMlKitCopyWithImpl<_$_MlErrorMlKit>(this, _$identity);
+  _$$MlErrorMlKitImplCopyWith<_$MlErrorMlKitImpl> get copyWith =>
+      __$$MlErrorMlKitImplCopyWithImpl<_$MlErrorMlKitImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -470,12 +472,13 @@ class _$_MlErrorMlKit extends _MlErrorMlKit {
 
 abstract class _MlErrorMlKit extends MlError {
   const factory _MlErrorMlKit(
-      {required final String op, required final dynamic err}) = _$_MlErrorMlKit;
+      {required final String op,
+      required final dynamic err}) = _$MlErrorMlKitImpl;
   const _MlErrorMlKit._() : super._();
 
   String get op;
   dynamic get err;
   @JsonKey(ignore: true)
-  _$$_MlErrorMlKitCopyWith<_$_MlErrorMlKit> get copyWith =>
+  _$$MlErrorMlKitImplCopyWith<_$MlErrorMlKitImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

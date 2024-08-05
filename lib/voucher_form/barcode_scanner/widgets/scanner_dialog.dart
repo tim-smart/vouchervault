@@ -78,7 +78,7 @@ Widget __previewDialog(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          controller.fold(
+          controller.match(
             () => Container(color: Colors.black),
             (c) => Positioned.fill(
               child: FittedBox(
@@ -104,7 +104,7 @@ Widget __previewDialog(
                       icon: const Icon(Icons.add_photo_alternate),
                       onPressed: onPressedPicker,
                     ),
-                    ...controller.fold(
+                    ...controller.match(
                       () => [],
                       (controller) => [
                         SizedBox(width: AppTheme.space3),

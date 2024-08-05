@@ -11,41 +11,41 @@ dependencies:
     sdk: flutter
   auto_size_text: ^3.0.0
   barcode_widget: ^2.0.0
-  camera: ^0.10.0
+  camera: ^0.11.0+1
   dart_date: ^1.1.0
-  file_picker: ^5.0.0
+  file_picker: ^8.0.0+1
   flutter_form_builder: ^9.0.0
   flutter_hooks: ^0.19.0
   flutter_localizations:
     sdk: flutter
-  flutter_elemental: ^0.2.1
+  flutter_elemental: ^0.3.0
   fluttertoast: ^8.0.7
-  form_builder_validators: ^9.0.0
+  form_builder_validators: ^11.0.0
   freezed_annotation: ^2.0.3
   functional_widget_annotation: ^0.10.0
-  google_mlkit_barcode_scanning: ^0.9.0
-  google_mlkit_entity_extraction: ^0.10.0
-  google_mlkit_text_recognition: ^0.10.0
-  intl: ^0.18.0
-  json_annotation: ^4.6.0
+  google_mlkit_barcode_scanning: ^0.12.0
+  google_mlkit_entity_extraction: ^0.13.0
+  google_mlkit_text_recognition: ^0.13.0
+  intl: ^0.19.0
+  json_annotation: ^4.9.0
   local_auth: ^2.1.0
   logging: ^1.0.2
   path_provider: ^2.0.1
   recase: ^4.0.0
-  rxdart: ^0.27.5
+  rxdart: ^0.28.0
   share: ^2.0.0
-  screen_brightness: ^0.2.1
-  uuid: ^3.0.1
+  screen_brightness: ^1.0.1
+  uuid: ^4.4.2
   shared_preferences: ^2.0.13
   image_picker: ^1.0.2
 
 dev_dependencies:
   build_runner: ^2.0.1
-  emulators: ^0.5.0
+  emulators: ^0.6.0
   flutter_driver:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
-  flutter_lints: ^2.0.1
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
   freezed: ^2.0.3

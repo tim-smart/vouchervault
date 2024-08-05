@@ -124,7 +124,7 @@ Widget __dialogWrap(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppTheme.rem(1)),
             ),
-            color: theme.colorScheme.background,
+            color: theme.colorScheme.surface,
             child: child,
           ),
         ),
@@ -141,7 +141,7 @@ Widget __barcode(
   final theme = Theme.of(context);
   final barcode = B.barcodeFromCodeType(type);
   return SizedBox(
-    height: AppTheme.rem(barcode.fold(
+    height: AppTheme.rem(barcode.match(
       () => 6,
       (_) => 10,
     )),
@@ -154,7 +154,7 @@ Widget __barcode(
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.all(AppTheme.space4),
-          child: barcode.fold(
+          child: barcode.match(
             () => Center(
               child: AutoSizeText(
                 data,

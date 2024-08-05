@@ -58,7 +58,7 @@ Option<InputImage> inputImage(
 final _neverController = StreamController.broadcast(sync: true);
 Stream<T> neverStream<T>() => _neverController.stream.cast();
 
-final pickInputImage = pickImage.flatMapOptionOrFail(
-  (i) => Option.fromNullable(i.path).map(InputImage.fromFilePath),
-  (_) => 'pickInputImage: pickImage returned empty path',
-);
+final pickInputImage = pickImage.flatMap((i) => ZIO
+    .fromNullable(i.path)
+    .mapError((_) => 'pickInputImage: pickImage returned empty path')
+    .map(InputImage.fromFilePath));
