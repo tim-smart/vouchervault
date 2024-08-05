@@ -32,7 +32,7 @@ Widget _voucherDialog(
   var theme = Theme.of(context);
   theme = theme.copyWith(
     colorScheme: theme.colorScheme.copyWith(
-      background: color,
+      surface: color,
     ),
     textTheme: theme.textTheme.apply(
       bodyColor: textColor,

@@ -53,7 +53,7 @@ Widget voucherItem(
               backgroundColor: color,
               foregroundColor: textColor,
             ).copyWith(
-              elevation: MaterialStateProperty.all(0),
+              elevation: WidgetStateProperty.all(0),
             ),
             onPressed: onPressed,
             child: Container(),

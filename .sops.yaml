@@ -1,0 +1,7 @@
+keys:
+  - &admin_tim age1cqrnyaj8tcu6svafggn5f45juq5lnvghqlqsazvp5pvzt5wa2els9ak7pv
+creation_rules:
+  - path_regex: secrets/[^/]+$
+    key_groups:
+      - age:
+          - *admin_tim
