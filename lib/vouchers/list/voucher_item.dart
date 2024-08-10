@@ -75,6 +75,7 @@ Widget voucherItem(
                 voucher.description,
                 style: theme.textTheme.titleMedium!.copyWith(
                   color: textColor,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               if (voucher.hasDetails) ...[

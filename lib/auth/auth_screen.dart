@@ -11,6 +11,7 @@ part 'auth_screen.g.dart';
 @hwidget
 Widget authScreen(BuildContext context) {
   final authenticate = useZIO(authLayer.accessWithZIO((_) => _.authenticate));
+  final theme = Theme.of(context);
 
   useEffect(() {
     authenticate();
@@ -20,6 +21,10 @@ Widget authScreen(BuildContext context) {
   return AppScaffoldSimple(
     body: Center(
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: theme.colorScheme.primary,
+          foregroundColor: theme.colorScheme.onPrimary,
+        ),
         onPressed: authenticate,
         child: Row(
           mainAxisSize: MainAxisSize.min,

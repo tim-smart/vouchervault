@@ -16,6 +16,7 @@ Widget _voucherFormDialog(
   BuildContext context, {
   Option<Voucher> initialValue = const Option.none(),
 }) {
+  final theme = Theme.of(context);
   final formKey = useMemoized(() => GlobalKey<FormBuilderState>());
   final title = initialValue.match(
     () => AppLocalizations.of(context)!.addVoucher,
@@ -41,31 +42,46 @@ Widget _voucherFormDialog(
           ),
         ),
       ),
-      SliverPadding(
-        padding: EdgeInsets.only(
-          bottom: AppTheme.space5,
-          left: AppTheme.space4,
-          right: AppTheme.space4,
-          top: AppTheme.space3,
-        ),
-        sliver: SliverToBoxAdapter(
-          child: ElevatedButton(
-            child: Text(action),
-            onPressed: () {
-              if (formKey.currentState!.saveAndValidate()) {
-                final voucher = Voucher.fromFormValue(
-                  formKey.currentState!.value,
-                );
+      SliverSafeArea(
+        bottom: true,
+        top: false,
+        sliver: SliverPadding(
+          padding: EdgeInsets.only(
+            bottom: AppTheme.space5,
+            left: AppTheme.space4,
+            right: AppTheme.space4,
+            top: AppTheme.space3,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: theme.colorScheme.onPrimary,
+                backgroundColor: theme.colorScheme.primary,
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppTheme.space3,
+                  vertical: AppTheme.space3,
+                ),
+                textStyle: theme.textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              child: Text(action),
+              onPressed: () {
+                if (formKey.currentState!.saveAndValidate()) {
+                  final voucher = Voucher.fromFormValue(
+                    formKey.currentState!.value,
+                  );
 
-                Navigator.pop(
-                  context,
-                  initialValue.match(
-                    () => voucher,
-                    (iv) => voucher.copyWith(uuid: iv.uuid),
-                  ),
-                );
-              }
-            },
+                  Navigator.pop(
+                    context,
+                    initialValue.match(
+                      () => voucher,
+                      (iv) => voucher.copyWith(uuid: iv.uuid),
+                    ),
+                  );
+                }
+              },
+            ),
           ),
         ),
       ),

@@ -8,7 +8,7 @@ Future<void> main() async {
   // Shutdown all the running emulators
   await emu.shutdownAll();
 
-  await emu.forEach(['Pixel_3'])((device) async {
+  await emu.forEach(['pixel_8'])((device) async {
     final p = await emu.drive(
       device,
       'test_driver/main.dart',

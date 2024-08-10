@@ -50,7 +50,7 @@ Widget _voucherDialog(
         children: [
           Text(
             voucher.description,
-            style: theme.textTheme.headlineSmall,
+            style: theme.textTheme.titleLarge,
           ),
           ...voucher.code.ifSomeList((data) => [
                 SizedBox(height: AppTheme.space3),
@@ -87,15 +87,15 @@ Widget _voucherDialog(
               ),
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: theme.colorScheme.onPrimary,
+                  backgroundColor: theme.colorScheme.primary,
+                ),
                 onPressed: onEdit,
                 child: Text(AppLocalizations.of(context)!.edit),
               ),
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                ),
                 onPressed: onClose,
                 child: Text(AppLocalizations.of(context)!.close),
               ),
