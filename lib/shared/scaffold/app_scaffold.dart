@@ -28,17 +28,16 @@ Widget appScaffold(
             systemOverlayStyle: style,
             actions: actions,
             pinned: true,
-            expandedHeight: AppTheme.rem(5),
+            expandedHeight: AppTheme.rem(7),
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: false,
               titlePadding: EdgeInsetsDirectional.only(
                 start: leading ? AppTheme.rem(3) : AppTheme.space4,
-                bottom: AppTheme.rem(0.75),
+                bottom: AppTheme.rem(0.8),
               ),
               title: Text(
                 title,
-                style: theme.textTheme.displayMedium!
-                    .copyWith(fontSize: AppTheme.rem(1.2)),
+                style: theme.textTheme.titleLarge,
               ),
             ),
           ),

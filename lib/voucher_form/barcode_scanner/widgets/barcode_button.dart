@@ -44,6 +44,7 @@ Widget _barcodeButton(
       style: TextButton.styleFrom(
         backgroundColor: AppColors.lightGrey,
         foregroundColor: Colors.black,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         minimumSize: Size.fromHeight(AppTheme.rem(7)),
       ),
       onPressed: onPressed,

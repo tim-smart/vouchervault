@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vouchervault/app/index.dart';
 
 class AppTheme {
   static const baseFontSize = 18;
@@ -14,98 +13,15 @@ class AppTheme {
   static double get space6 => rem(2.5);
   static double get space7 => rem(4);
 
-  static ThemeData _build({
-    required Brightness brightness,
-    required Color backgroundColor,
-    required Color textColor,
-    required Color accentColor,
-  }) {
-    var textTheme = ThemeData(
-      brightness: brightness,
-      fontFamily: 'Alegreya Sans',
-    ).textTheme;
-
-    textTheme = textTheme.copyWith(
-      displayMedium: textTheme.displayMedium!.copyWith(
-        color: textColor,
-        fontSize: px(34),
-        fontStyle: FontStyle.italic,
-        fontWeight: FontWeight.w900,
-      ),
-      displaySmall: textTheme.displaySmall!.copyWith(
-        color: textColor,
-        fontSize: px(20),
-        fontWeight: FontWeight.w700,
-      ),
-      bodyLarge: textTheme.bodyLarge!.copyWith(
-        color: textColor,
-        fontSize: rem(1),
-        fontWeight: FontWeight.w400,
-      ),
-      bodyMedium: textTheme.bodyMedium!.copyWith(
-        color: textColor,
-        fontSize: rem(1),
-        fontWeight: FontWeight.w800,
-      ),
-      labelLarge: textTheme.labelLarge!.copyWith(
-        fontSize: px(20),
-        fontWeight: FontWeight.w900,
-      ),
-    );
-
+  static ThemeData build(ColorScheme scheme) {
     return ThemeData.from(
-      textTheme: textTheme,
-      colorScheme: ColorScheme.fromSwatch(
-        brightness: brightness,
-        primarySwatch: Colors.red,
-        accentColor: Colors.red,
-        cardColor: backgroundColor,
-        backgroundColor: backgroundColor,
-        errorColor: Colors.orange.shade700,
-      ),
-      useMaterial3: false,
+      useMaterial3: true,
+      colorScheme: scheme,
     ).copyWith(
       pageTransitionsTheme: const PageTransitionsTheme(builders: {
         TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
       }),
-      chipTheme: ChipThemeData.fromDefaults(
-        brightness: brightness,
-        secondaryColor: Colors.red,
-        labelStyle: textTheme.bodyMedium!.copyWith(fontSize: rem(0.8)),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          minimumSize: Size(0, rem(2.5)),
-          backgroundColor: Colors.red,
-          foregroundColor: Colors.white,
-        ),
-      ),
-      appBarTheme: AppBarTheme(
-        centerTitle: false,
-        color: backgroundColor,
-        iconTheme: IconThemeData(
-          color: textTheme.bodyLarge!.color,
-        ),
-      ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: Colors.red,
-        foregroundColor: Colors.white,
-      ),
     );
   }
-
-  static ThemeData light() => _build(
-        brightness: Brightness.light,
-        backgroundColor: AppColors.background,
-        accentColor: Colors.red.shade800,
-        textColor: Colors.black,
-      );
-
-  static ThemeData dark() => _build(
-        brightness: Brightness.dark,
-        backgroundColor: Colors.grey.shade900,
-        accentColor: Colors.red,
-        textColor: Colors.white,
-      );
 }

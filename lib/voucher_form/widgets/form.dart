@@ -111,6 +111,7 @@ Widget voucherForm(
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
           ),
+          labelStyle: const TextStyle(fontSize: 11),
           visualDensity: VisualDensity.compact,
           options: VoucherCodeType.values
               .map((t) => FormBuilderChipOption(
@@ -191,8 +192,8 @@ Widget voucherForm(
                     color: V.color(c),
                     borderRadius: BorderRadius.circular(100),
                     child: SizedBox(
-                      height: AppTheme.rem(1.1),
-                      width: AppTheme.rem(1.1),
+                      height: AppTheme.rem(1),
+                      width: AppTheme.rem(1),
                     ),
                   ),
                 ),

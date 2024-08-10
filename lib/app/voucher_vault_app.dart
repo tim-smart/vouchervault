@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -23,13 +24,26 @@ Widget _voucherVaultApp(
     );
 
 @swidget
-Widget __app() => AtomBuilder((context, watch, child) {
+Widget __app() {
+  return DynamicColorBuilder(builder: (lightThemeSystem, darkThemeSystem) {
+    final lightTheme = lightThemeSystem ??
+        ColorScheme.fromSeed(
+          brightness: Brightness.light,
+          seedColor: Colors.red,
+        );
+    final darkTheme = darkThemeSystem ??
+        ColorScheme.fromSeed(
+          brightness: Brightness.dark,
+          seedColor: Colors.red,
+        );
+
+    return AtomBuilder((context, watch, child) {
       final auth = watch(authState);
 
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: AppTheme.light(),
-        darkTheme: AppTheme.dark(),
+        theme: AppTheme.build(lightTheme),
+        darkTheme: AppTheme.build(darkTheme),
         home: auth.when(
           unauthenticated: () => const AuthScreen(),
           authenticated: (_) => const VouchersScreen(),
@@ -45,3 +59,5 @@ Widget __app() => AtomBuilder((context, watch, child) {
         supportedLocales: AppLocalizations.supportedLocales,
       );
     });
+  });
+}

@@ -38,6 +38,7 @@ dependencies:
   uuid: ^4.4.2
   shared_preferences: ^2.0.13
   image_picker: ^1.0.2
+  dynamic_color: ^1.7.0
 
 dev_dependencies:
   build_runner: ^2.0.1

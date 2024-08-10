@@ -50,7 +50,7 @@ Widget _voucherDialog(
         children: [
           Text(
             voucher.description,
-            style: theme.textTheme.displaySmall,
+            style: theme.textTheme.headlineSmall,
           ),
           ...voucher.code.ifSomeList((data) => [
                 SizedBox(height: AppTheme.space3),

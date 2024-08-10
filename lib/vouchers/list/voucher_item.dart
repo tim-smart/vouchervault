@@ -73,7 +73,7 @@ Widget voucherItem(
             children: [
               Text(
                 voucher.description,
-                style: theme.textTheme.displaySmall!.copyWith(
+                style: theme.textTheme.titleMedium!.copyWith(
                   color: textColor,
                 ),
               ),
