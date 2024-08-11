@@ -13,7 +13,6 @@ final formatCurrency = NumberFormat.simpleCurrency();
 List<Widget> buildVoucherDetails(
   BuildContext context,
   Voucher voucher, {
-  Color textColor = Colors.white,
   Option<double> space = const Option.none(),
   bool includeNotes = false,
 }) =>
@@ -22,21 +21,18 @@ List<Widget> buildVoucherDetails(
     ))([
       ...voucher.normalizedExpires.ifSomeList((dt) => [
             _VoucherDetailRow(
-              textColor,
               Icons.history,
               formatExpires(dt),
             )
           ]),
       ...voucher.balanceDoubleOption.ifSomeList((b) => [
             _VoucherDetailRow(
-              textColor,
               Icons.account_balance,
               formatCurrency.format(b),
             ),
           ]),
       ...voucher.notesOption.filter((_) => includeNotes).ifSomeList((notes) => [
             _VoucherDetailRow(
-              textColor,
               Icons.article,
               notes,
               alignment: CrossAxisAlignment.start,
@@ -49,7 +45,6 @@ List<Widget> buildVoucherDetails(
 @swidget
 Widget __voucherDetailRow(
   BuildContext context,
-  Color textColor,
   IconData icon,
   String text, {
   CrossAxisAlignment alignment = CrossAxisAlignment.center,
@@ -63,20 +58,24 @@ Widget __voucherDetailRow(
       padding: iconPadding
           ? EdgeInsets.only(top: AppTheme.rem(0.1))
           : EdgeInsets.zero,
-      child: Icon(icon, size: AppTheme.rem(1), color: textColor),
+      child: Icon(
+        icon,
+        size: AppTheme.rem(1),
+        color: theme.colorScheme.onPrimary,
+      ),
     ),
     SizedBox(width: AppTheme.space2),
     selectable
         ? SelectableText(
             text,
             style: theme.textTheme.bodyMedium!.copyWith(
-              color: textColor,
+              color: theme.colorScheme.onPrimary,
             ),
           )
         : Text(
             text,
             style: theme.textTheme.bodyMedium!.copyWith(
-              color: textColor,
+              color: theme.colorScheme.onPrimary,
             ),
           ),
   ]);

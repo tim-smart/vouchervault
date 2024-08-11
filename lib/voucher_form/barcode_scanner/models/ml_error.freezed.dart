@@ -77,6 +77,9 @@ class _$MlErrorCopyWithImpl<$Res, $Val extends MlError>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of MlError
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -95,6 +98,9 @@ class __$$MlErrorBarcodeNotFoundImplCopyWithImpl<$Res>
       _$MlErrorBarcodeNotFoundImpl _value,
       $Res Function(_$MlErrorBarcodeNotFoundImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of MlError
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -208,6 +214,8 @@ class __$$MlErrorPickerImplCopyWithImpl<$Res>
       _$MlErrorPickerImpl _value, $Res Function(_$MlErrorPickerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MlError
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -246,7 +254,9 @@ class _$MlErrorPickerImpl extends _MlErrorPicker {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MlError
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MlErrorPickerImplCopyWith<_$MlErrorPickerImpl> get copyWith =>
@@ -326,7 +336,10 @@ abstract class _MlErrorPicker extends MlError {
   const _MlErrorPicker._() : super._();
 
   String get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MlError
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MlErrorPickerImplCopyWith<_$MlErrorPickerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -348,6 +361,8 @@ class __$$MlErrorMlKitImplCopyWithImpl<$Res>
       _$MlErrorMlKitImpl _value, $Res Function(_$MlErrorMlKitImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MlError
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -395,7 +410,9 @@ class _$MlErrorMlKitImpl extends _MlErrorMlKit {
   int get hashCode =>
       Object.hash(runtimeType, op, const DeepCollectionEquality().hash(err));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MlError
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MlErrorMlKitImplCopyWith<_$MlErrorMlKitImpl> get copyWith =>
@@ -478,7 +495,10 @@ abstract class _MlErrorMlKit extends MlError {
 
   String get op;
   dynamic get err;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MlError
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MlErrorMlKitImplCopyWith<_$MlErrorMlKitImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

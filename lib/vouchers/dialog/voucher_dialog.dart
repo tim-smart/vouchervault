@@ -5,8 +5,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:vouchervault/app/index.dart';
 import 'package:vouchervault/lib/lib.dart' as B;
 import 'package:vouchervault/lib/lib.dart';
-import 'package:vouchervault/vouchers/index.dart' as V;
-import 'package:vouchervault/vouchers/index.dart' show Voucher, VoucherCodeType;
+import 'package:vouchervault/vouchers/index.dart';
 import 'package:vouchervault/shared/voucher_details/voucher_details.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -26,19 +25,7 @@ Widget _voucherDialog(
   required void Function() onSpend,
 }) {
   // colors
-  final color = V.color(voucher.color);
-  final textColor =
-      color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
-  var theme = Theme.of(context);
-  theme = theme.copyWith(
-    colorScheme: theme.colorScheme.copyWith(
-      surface: color,
-    ),
-    textTheme: theme.textTheme.apply(
-      bodyColor: textColor,
-      displayColor: textColor,
-    ),
-  );
+  final theme = voucher.color.theme(Theme.of(context));
 
   return _DialogWrap(
     theme: theme,
@@ -50,7 +37,9 @@ Widget _voucherDialog(
         children: [
           Text(
             voucher.description,
-            style: theme.textTheme.titleLarge,
+            style: theme.textTheme.titleLarge!.copyWith(
+              color: theme.colorScheme.onPrimary,
+            ),
           ),
           ...voucher.code.ifSomeList((data) => [
                 SizedBox(height: AppTheme.space3),
@@ -65,7 +54,6 @@ Widget _voucherDialog(
             ...buildVoucherDetails(
               context,
               voucher,
-              textColor: textColor,
               includeNotes: true,
             ),
           ],
@@ -76,26 +64,30 @@ Widget _voucherDialog(
               if (voucher.balanceOption.isSome())
                 IconButton(
                   key: const ValueKey('SpendIconButton'),
-                  color: textColor,
                   icon: const Icon(Icons.shopping_cart),
                   onPressed: onSpend,
+                  color: theme.colorScheme.onPrimary,
                 ),
               IconButton(
-                color: textColor,
                 icon: const Icon(Icons.delete),
                 onPressed: onRemove,
+                color: theme.colorScheme.onPrimary,
               ),
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: theme.colorScheme.onPrimary,
-                  backgroundColor: theme.colorScheme.primary,
+                  foregroundColor: theme.colorScheme.onPrimaryFixed,
+                  backgroundColor: theme.colorScheme.primaryFixed,
                 ),
                 onPressed: onEdit,
                 child: Text(AppLocalizations.of(context)!.edit),
               ),
               SizedBox(width: AppTheme.space3),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: theme.colorScheme.onSurface,
+                  backgroundColor: theme.colorScheme.surface,
+                ),
                 onPressed: onClose,
                 child: Text(AppLocalizations.of(context)!.close),
               ),
@@ -124,7 +116,7 @@ Widget __dialogWrap(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppTheme.rem(1)),
             ),
-            color: theme.colorScheme.surface,
+            color: theme.colorScheme.primary,
             child: child,
           ),
         ),
@@ -134,7 +126,7 @@ Widget __dialogWrap(
 @swidget
 Widget __barcode(
   BuildContext context, {
-  required V.VoucherCodeType type,
+  required VoucherCodeType type,
   required String data,
   required VoidCallback onTap,
 }) {
@@ -143,36 +135,30 @@ Widget __barcode(
   return SizedBox(
     height: AppTheme.rem(barcode.match(
       () => 6,
-      (_) => 10,
+      (_) => type.square ? 15 : 10,
     )),
-    child: Material(
-      color: Colors.white,
-      elevation: 1,
-      borderRadius: BorderRadius.circular(AppTheme.rem(0.5)),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(AppTheme.rem(0.5)),
-        onTap: onTap,
-        child: Padding(
-          padding: EdgeInsets.all(AppTheme.space4),
-          child: barcode.match(
-            () => Center(
-              child: AutoSizeText(
-                data,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 100,
-                ),
-                maxLines: 1,
-              ),
+    child: ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppTheme.rem(0.5)),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(AppTheme.space4),
+        child: barcode.match(
+          () => Center(
+            child: AutoSizeText(
+              data,
+              style: const TextStyle(fontSize: 100),
+              maxLines: 1,
             ),
-            (type) => BarcodeWidget(
-              backgroundColor: Colors.transparent,
-              data: data,
-              style: theme.textTheme.bodyMedium!.copyWith(
-                color: Colors.black,
-              ),
-              barcode: type,
-            ),
+          ),
+          (type) => BarcodeWidget(
+            data: data,
+            style: theme.textTheme.bodyMedium,
+            barcode: type,
           ),
         ),
       ),

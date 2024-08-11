@@ -10,51 +10,54 @@ part 'voucher.freezed.dart';
 part 'voucher.g.dart';
 
 enum VoucherCodeType {
-  AZTEC,
-  CODE128,
-  CODE39,
-  EAN13,
-  PDF417,
-  QR,
-  TEXT,
+  AZTEC(label: 'Aztec', square: true),
+  CODE128(label: 'Code128'),
+  CODE39(label: 'Code39'),
+  EAN13(label: 'EAN-13'),
+  PDF417(label: 'PDF417'),
+  QR(label: 'QR Code', square: true),
+  TEXT(label: 'Text');
+
+  final String label;
+  final bool square;
+
+  const VoucherCodeType({
+    required this.label,
+    this.square = false,
+  });
 }
 
 enum VoucherColor {
-  GREY,
-  BLUE,
-  GREEN,
-  ORANGE,
-  PURPLE,
-  RED,
-  YELLOW,
+  GREY(color: Color(0xFF616161)),
+  BLUE(color: Colors.blue),
+  GREEN(color: Color(0xFF43A047)),
+  ORANGE(color: Color(0xFFEF6C00)),
+  PURPLE(color: Colors.purple),
+  RED(color: Color(0xFFD32F2F)),
+  YELLOW(color: Color(0xFFFBC02D));
+
+  final Color color;
+
+  const VoucherColor({
+    required this.color,
+  });
+
+  ThemeData theme(ThemeData theme) {
+    return theme.copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        brightness: theme.brightness,
+        seedColor: color,
+        primary: color,
+        onPrimary: color.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+      ),
+    );
+  }
 }
 
-// Color functions
-final _colors = <VoucherColor, Color>{
-  VoucherColor.BLUE: Colors.blue,
-  VoucherColor.GREEN: Colors.green[600]!,
-  VoucherColor.RED: Colors.red[700]!,
-  VoucherColor.YELLOW: Colors.yellow[700]!,
-  VoucherColor.ORANGE: Colors.orange[800]!,
-  VoucherColor.PURPLE: Colors.purple[500]!,
-};
-final color = (VoucherColor color) =>
-    _colors.lookup(color).getOrElse(() => Colors.grey[700]!);
 String colorToJson(VoucherColor c) => _$VoucherColorEnumMap[c]!;
 
 // Voucher code type functions
 String codeTypeToJson(VoucherCodeType c) => _$VoucherCodeTypeEnumMap[c]!;
-
-final Map<VoucherCodeType, String> _codeTypeLabelMap = {
-  VoucherCodeType.AZTEC: 'Aztec',
-  VoucherCodeType.CODE128: 'Code128',
-  VoucherCodeType.CODE39: 'Code39',
-  VoucherCodeType.EAN13: 'EAN-13',
-  VoucherCodeType.PDF417: 'PDF417',
-  VoucherCodeType.QR: 'QR Code',
-  VoucherCodeType.TEXT: 'Text',
-};
-String codeTypeLabel(VoucherCodeType type) => _codeTypeLabelMap[type]!;
 
 final codeTypeFromJson = (String? json) => Option.fromNullable(json)
     .flatMap(
@@ -112,6 +115,6 @@ class Voucher with _$Voucher {
         'balanceMilliunits': balanceOption.map(millisToString).toNullable(),
         'codeType': _$VoucherCodeTypeEnumMap[codeType],
         'expires': expires.toNullable(),
-        'color': _$VoucherColorEnumMap[this.color],
+        'color': _$VoucherColorEnumMap[color],
       };
 }

@@ -62,7 +62,7 @@ Widget _voucherFormDialog(
                   vertical: AppTheme.space3,
                 ),
                 textStyle: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               child: Text(action),

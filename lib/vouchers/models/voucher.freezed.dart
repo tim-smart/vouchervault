@@ -31,8 +31,12 @@ mixin _$Voucher {
   String get notes => throw _privateConstructorUsedError;
   VoucherColor get color => throw _privateConstructorUsedError;
 
+  /// Serializes this Voucher to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Voucher
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $VoucherCopyWith<Voucher> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -64,6 +68,8 @@ class _$VoucherCopyWithImpl<$Res, $Val extends Voucher>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Voucher
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -151,6 +157,8 @@ class __$$VoucherImplCopyWithImpl<$Res>
       _$VoucherImpl _value, $Res Function(_$VoucherImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Voucher
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -286,7 +294,7 @@ class _$VoucherImpl extends _Voucher {
             (identical(other.color, color) || other.color == color));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -301,7 +309,9 @@ class _$VoucherImpl extends _Voucher {
       notes,
       color);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Voucher
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$VoucherImplCopyWith<_$VoucherImpl> get copyWith =>
@@ -351,8 +361,11 @@ abstract class _Voucher extends Voucher {
   String get notes;
   @override
   VoucherColor get color;
+
+  /// Create a copy of Voucher
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VoucherImplCopyWith<_$VoucherImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

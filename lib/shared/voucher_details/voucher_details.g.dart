@@ -8,7 +8,6 @@ part of 'voucher_details.dart';
 
 class _VoucherDetailRow extends StatelessWidget {
   const _VoucherDetailRow(
-    this.textColor,
     this.icon,
     this.text, {
     Key? key,
@@ -16,8 +15,6 @@ class _VoucherDetailRow extends StatelessWidget {
     this.iconPadding = false,
     this.selectable = false,
   }) : super(key: key);
-
-  final Color textColor;
 
   final IconData icon;
 
@@ -32,7 +29,6 @@ class _VoucherDetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext _context) => __voucherDetailRow(
         _context,
-        textColor,
         icon,
         text,
         alignment: alignment,

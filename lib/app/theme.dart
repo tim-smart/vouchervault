@@ -13,11 +13,18 @@ class AppTheme {
   static double get space6 => rem(2.5);
   static double get space7 => rem(4);
 
-  static ThemeData build(ColorScheme scheme) {
-    return ThemeData.from(
+  static ThemeData build(
+    ColorScheme scheme, {
+    TextTheme? textTheme,
+  }) {
+    final theme = ThemeData.from(
       useMaterial3: true,
-      colorScheme: scheme,
-    ).copyWith(
+      colorScheme: scheme.copyWith(
+        outline: scheme.outline.withAlpha(100),
+      ),
+      textTheme: textTheme,
+    );
+    return theme.copyWith(
       pageTransitionsTheme: const PageTransitionsTheme(builders: {
         TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),

@@ -20,7 +20,9 @@ mixin _$MlContext {
   BarcodeScanner get barcodeScanner => throw _privateConstructorUsedError;
   EntityExtractor get entityExtractor => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MlContext
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MlContextCopyWith<MlContext> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -46,6 +48,8 @@ class _$MlContextCopyWithImpl<$Res, $Val extends MlContext>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MlContext
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +96,8 @@ class __$$MlContextImplCopyWithImpl<$Res>
       _$MlContextImpl _value, $Res Function(_$MlContextImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MlContext
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -153,7 +159,9 @@ class _$MlContextImpl implements _MlContext {
   int get hashCode =>
       Object.hash(runtimeType, textRecognizer, barcodeScanner, entityExtractor);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MlContext
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MlContextImplCopyWith<_$MlContextImpl> get copyWith =>
@@ -172,8 +180,11 @@ abstract class _MlContext implements MlContext {
   BarcodeScanner get barcodeScanner;
   @override
   EntityExtractor get entityExtractor;
+
+  /// Create a copy of MlContext
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MlContextImplCopyWith<_$MlContextImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

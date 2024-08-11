@@ -22,8 +22,12 @@ VoucherVaultSettings _$VoucherVaultSettingsFromJson(Map<String, dynamic> json) {
 mixin _$VoucherVaultSettings {
   bool get smartScan => throw _privateConstructorUsedError;
 
+  /// Serializes this VoucherVaultSettings to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of VoucherVaultSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $VoucherVaultSettingsCopyWith<VoucherVaultSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$VoucherVaultSettingsCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of VoucherVaultSettings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +87,8 @@ class __$$VoucherVaultSettingsImplCopyWithImpl<$Res>
       $Res Function(_$VoucherVaultSettingsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of VoucherVaultSettings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -121,11 +129,13 @@ class _$VoucherVaultSettingsImpl implements _VoucherVaultSettings {
                 other.smartScan == smartScan));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, smartScan);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of VoucherVaultSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$VoucherVaultSettingsImplCopyWith<_$VoucherVaultSettingsImpl>
@@ -150,8 +160,11 @@ abstract class _VoucherVaultSettings implements VoucherVaultSettings {
 
   @override
   bool get smartScan;
+
+  /// Create a copy of VoucherVaultSettings
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VoucherVaultSettingsImplCopyWith<_$VoucherVaultSettingsImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

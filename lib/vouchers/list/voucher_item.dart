@@ -16,80 +16,79 @@ Widget voucherItem(
   required VoidCallback onPressed,
   double bottomPadding = 0,
 }) {
-  final color = V.color(voucher.color);
-  final textColor =
-      color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
-  final theme = Theme.of(context);
+  final theme = voucher.color.theme(Theme.of(context));
 
-  return Stack(
-    clipBehavior: Clip.none,
-    children: [
-      Positioned(
-        bottom: -bottomPadding,
-        left: 0,
-        right: 0,
-        top: 0,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(kVoucherItemBorderRadius),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(150),
-                offset: const Offset(0, 7),
-                blurRadius: 20,
-              ),
-            ],
-          ),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: bottomPadding == 0
-                    ? BorderRadius.circular(kVoucherItemBorderRadius)
-                    : const BorderRadius.vertical(
-                        top: Radius.circular(kVoucherItemBorderRadius),
-                      ),
-              ),
-              backgroundColor: color,
-              foregroundColor: textColor,
-            ).copyWith(
-              elevation: WidgetStateProperty.all(0),
+  return Theme(
+    data: theme,
+    child: Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned(
+          bottom: -bottomPadding,
+          left: 0,
+          right: 0,
+          top: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(kVoucherItemBorderRadius),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(150),
+                  offset: const Offset(0, 7),
+                  blurRadius: 20,
+                ),
+              ],
             ),
-            onPressed: onPressed,
-            child: Container(),
-          ),
-        ),
-      ),
-      IgnorePointer(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: AppTheme.space4,
-            right: AppTheme.space4,
-            top: AppTheme.space4,
-            bottom: AppTheme.space4,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                voucher.description,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: textColor,
-                  fontWeight: FontWeight.w600,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: bottomPadding == 0
+                      ? BorderRadius.circular(kVoucherItemBorderRadius)
+                      : const BorderRadius.vertical(
+                          top: Radius.circular(kVoucherItemBorderRadius),
+                        ),
                 ),
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.colorScheme.onPrimary,
+              ).copyWith(
+                elevation: WidgetStateProperty.all(0),
               ),
-              if (voucher.hasDetails) ...[
-                SizedBox(height: AppTheme.space2),
-                ...buildVoucherDetails(
-                  context,
-                  voucher,
-                  textColor: Color.alphaBlend(color.withAlpha(30), textColor),
-                ),
-              ]
-            ],
+              onPressed: onPressed,
+              child: Container(),
+            ),
           ),
         ),
-      ),
-    ],
+        IgnorePointer(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: AppTheme.space4,
+              right: AppTheme.space4,
+              top: AppTheme.space4,
+              bottom: AppTheme.space4,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  voucher.description,
+                  style: theme.textTheme.titleMedium!.copyWith(
+                    color: theme.colorScheme.onPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                if (voucher.hasDetails) ...[
+                  SizedBox(height: AppTheme.space2),
+                  ...buildVoucherDetails(
+                    context,
+                    voucher,
+                  ),
+                ]
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 }

@@ -18,7 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$VouchersState {
   IList<Voucher> get vouchers => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of VouchersState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $VouchersStateCopyWith<VouchersState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -42,6 +44,8 @@ class _$VouchersStateCopyWithImpl<$Res, $Val extends VouchersState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of VouchersState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -75,6 +79,8 @@ class __$$VouchersStateImplCopyWithImpl<$Res>
       _$VouchersStateImpl _value, $Res Function(_$VouchersStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of VouchersState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -114,7 +120,9 @@ class _$VouchersStateImpl extends _VouchersState {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(vouchers));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of VouchersState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$VouchersStateImplCopyWith<_$VouchersStateImpl> get copyWith =>
@@ -127,8 +135,11 @@ abstract class _VouchersState extends VouchersState {
 
   @override
   IList<Voucher> get vouchers;
+
+  /// Create a copy of VouchersState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VouchersStateImplCopyWith<_$VouchersStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

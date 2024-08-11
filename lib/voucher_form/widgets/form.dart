@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:vouchervault/app/index.dart';
 import 'package:vouchervault/lib/lib.dart';
 import 'package:vouchervault/voucher_form/index.dart';
-import 'package:vouchervault/vouchers/index.dart'
-    show Voucher, VoucherCodeType, VoucherColor;
-import 'package:vouchervault/vouchers/index.dart' as V;
+import 'package:vouchervault/vouchers/index.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'form.g.dart';
@@ -43,7 +42,7 @@ Widget voucherForm(
   required GlobalKey<FormBuilderState> formKey,
   required Voucher initialValue,
 }) {
-  final theme = Theme.of(context);
+  final theme = Theme.of(context).copyWith();
   final initialFormValue = initialValue.toFormValue();
 
   return FormBuilder(
@@ -116,8 +115,8 @@ Widget voucherForm(
           options: VoucherCodeType.values
               .map((t) => FormBuilderChipOption(
                     avatar: null,
-                    value: V.codeTypeToJson(t),
-                    child: Text(V.codeTypeLabel(t)),
+                    value: codeTypeToJson(t),
+                    child: Text(t.label),
                   ))
               .toList(),
           validator: FormBuilderValidators.required(),
@@ -186,10 +185,10 @@ Widget voucherForm(
               .map(
                 (c) => FormBuilderChipOption(
                   avatar: null,
-                  value: V.colorToJson(c),
+                  value: colorToJson(c),
                   child: Material(
                     elevation: 2,
-                    color: V.color(c),
+                    color: c.color,
                     borderRadius: BorderRadius.circular(100),
                     child: SizedBox(
                       height: AppTheme.rem(1),
