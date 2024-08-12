@@ -14,6 +14,15 @@ Future<void> main() async {
   setUpAll(() async {
     await driver.waitUntilFirstFrameRasterized();
     await screenshot.cleanStatusBar();
+    await emu.toolchain.adb([
+      "-s",
+      screenshot.device!.state.id,
+      "shell",
+      "pm",
+      "grant",
+      "co.timsmart.vouchervault",
+      "android.permission.CAMERA",
+    ]).string();
   });
 
   // Close the connection to the driver after the tests have completed.

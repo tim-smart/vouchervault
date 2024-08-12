@@ -13,15 +13,6 @@ Future<void> main() async {
       device,
       'test_driver/main.dart',
     );
-    await emu.toolchain.adb([
-      "-s",
-      device.state.id,
-      "shell",
-      "pm",
-      "grant",
-      "co.timsmart.vouchervault",
-      "android.permission.CAMERA",
-    ]).string();
     stderr.addStream(p.stderr);
     await stdout.addStream(p.stdout);
   });
