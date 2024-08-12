@@ -1,3 +1,4 @@
+import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_elemental/flutter_elemental.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
@@ -31,10 +32,11 @@ Widget _vouchersListContainer(BuildContext context) {
       onPressed: (v) => Navigator.push(
         context,
         _DialogRoute(
-          (context) => Dismissible(
-            key: const Key('VoucherDialogDismissable'),
-            direction: DismissDirection.vertical,
-            onDismissed: (d) => Navigator.pop(context),
+          (context) => DismissiblePage(
+            backgroundColor: Colors.transparent,
+            direction: DismissiblePageDismissDirection.multi,
+            minScale: 0.3,
+            onDismissed: () => Navigator.pop(context),
             child: Center(child: VoucherDialogContainer(voucher: v)),
           ),
         ),

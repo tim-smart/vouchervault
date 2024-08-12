@@ -11,6 +11,10 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {
         inherit system;
+        config = {
+          android_sdk.accept_license = true;
+          allowUnfree = true;
+        };
       };
       flutter_path = "$PWD/.flutter";
       flutter = import ./nix/flutter.nix {
@@ -29,6 +33,7 @@
           shellHook = ''
             ${flutter.unpack}/bin/unpack
             export PATH="${flutter_path}/flutter/bin:$PATH"
+            export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
             mkdir -p android/keys
             sops -d secrets/fastlane-google-key > android/keys/google.json
           '';

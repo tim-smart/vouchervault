@@ -157,7 +157,9 @@ Widget __barcode(
           ),
           (type) => BarcodeWidget(
             data: data,
-            style: theme.textTheme.bodyMedium,
+            style: theme.textTheme.bodyMedium!.copyWith(
+              color: Colors.black,
+            ),
             barcode: type,
           ),
         ),

@@ -8,11 +8,20 @@ Future<void> main() async {
   // Shutdown all the running emulators
   await emu.shutdownAll();
 
-  await emu.forEach(['pixel_8'])((device) async {
+  await emu.forEach(['Pixel_6'])((device) async {
     final p = await emu.drive(
       device,
       'test_driver/main.dart',
     );
+    await emu.toolchain.adb([
+      "-s",
+      device.state.id,
+      "shell",
+      "pm",
+      "grant",
+      "co.timsmart.vouchervault",
+      "android.permission.CAMERA",
+    ]).string();
     stderr.addStream(p.stderr);
     await stdout.addStream(p.stdout);
   });

@@ -52,6 +52,8 @@ Future<void> main() async {
     test('form', () async {
       await driver.tap(buttonFinder);
       await driver.waitUntilNoTransientCallbacks();
+      await driver.tap(find.text('Cancel'));
+      await driver.waitUntilNoTransientCallbacks();
       await screenshot.capture('04');
     });
   });
